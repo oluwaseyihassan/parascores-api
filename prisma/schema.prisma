@@ -6,9 +6,47 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model User {
+  id    String @id @default(cuid())
+  email String @unique
+  name  String
+
+  password String // hashed
+  role     Role   @default(USER)
+  metadata Json?  @default("{}")
+
+  //Branding
+  organization_name  String?
+  organization_logo  String?
+  organization_color String?
+
+  tournaments Tournament[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+enum Role {
+  USER
+  ORGANIZER
+  SUPER_ADMIN
+}
+
+model Tournament {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  start_date   DateTime
+  end_date     DateTime
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  organizer    User?    @relation(fields: [organizer_id], references: [id])
+  organizer_id String?
 }
