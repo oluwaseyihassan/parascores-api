@@ -4,6 +4,7 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { User } from 'src/auth/decorators/user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -19,17 +20,16 @@ export class UsersController {
         return this.usersService.findAll()
     }
     // delete user
-    // @Roles(Role.SUPER_ADMIN)
+    @Roles(Role.SUPER_ADMIN,Role.USER)
     @Delete(':id')
     @ApiOperation({ summary: 'Delete user' })
     @ApiResponse({ status: 200, description: 'User deleted' })
     @ApiResponse({ status: 401, description: 'Unauthorized' })
     @ApiResponse({ status: 403, description: 'Forbidden' })
-    deleteUser(@Param('id') id: string, @Req() req: any) {
-        const user = req.user
-        if (user.role !== Role.SUPER_ADMIN && user.sub !== id) {
-            throw new UnauthorizedException('Unauthorized')
-        }
+    deleteUser(@Param('id') id: string, @User() user: any) {
+        // if (user.role !== Role.SUPER_ADMIN && user.sub !== id) {
+        //     throw new UnauthorizedException('Unauthorized')
+        // }
         return this.usersService.delete(id)
     }
 }

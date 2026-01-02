@@ -33,18 +33,45 @@ export class AuthService {
     return ResponseUtil.success(result, 'User registered successfully');
   }
 
+  async validateGoogleUser(details: any) {
+    console.log(details)
+    const user = await this.usersService.findByEmail(details.email);
+    console.log('User found in db?', user)
+    if (user) {
+      if (user.password) {
+        // user already exists with password, we can link or just login. 
+        // For now, just login.
+      }
+      return user;
+    }
+    console.log('Creating new user from google profile')
+    const newUser = await this.usersService.create({
+      email: details.email,
+      name: details.firstName,
+      password: null, // No password for OAuth users
+      role: 'USER', // Default role
+      picture: details.picture,
+    });
+    return newUser;
+  }
+
+
   async login(dto: LoginDto, response: Response) {
     const user = await this.usersService.findByEmail(dto.email);
     if (!user) {
       return ResponseUtil.error('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    const isPasswordValid = await bcrypt.compare(dto.password, user.password);
-    if (!isPasswordValid) {
+    if (user.password) {
+      const isPasswordValid = bcrypt.compare(dto.password, user.password);
+      if (!isPasswordValid) {
+        return ResponseUtil.error('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      }
+    } else {
       return ResponseUtil.error('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    const payload = { email: user.email, sub: user.id, role: user.role };
+    const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
     const access_token = await this.generateToken(payload, "15m")
     const refresh_token = await this.generateToken(payload, "7d")
 
@@ -84,6 +111,15 @@ export class AuthService {
     } catch (e) {
       return ResponseUtil.error('Invalid Refresh Token', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  async getProfile(userId: string) {
+    const user = await this.usersService.findOne(userId);
+    if (!user) {
+      return ResponseUtil.error('User not found', HttpStatus.NOT_FOUND);
+    }
+    const { password, ...result } = user;
+    return ResponseUtil.success(result, 'User profile retrieved');
   }
 
   async generateToken(payload: any, expiresIn: string | number): Promise<string> {

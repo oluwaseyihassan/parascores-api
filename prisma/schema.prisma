@@ -17,10 +17,11 @@ model User {
   id    String @id @default(cuid())
   email String @unique
   name  String
+  picture String?
 
-  password String // hashed
-  role     Role   @default(USER)
-  metadata Json?  @default("{}")
+  password String? // hashed
+  role     Role    @default(USER)
+  metadata Json?   @default("{}")
 
   //Branding
   organization_name  String?
