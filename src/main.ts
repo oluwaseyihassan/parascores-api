@@ -11,14 +11,18 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   // Set global cors
-  app.enableCors({
-    origin: process.env.NODE_ENV === 'production'
-      ? ['https://yourdomain.com']
-      : ['http://localhost:3000', 'http://localhost:3001'],
-    credentials: true, // Important for cookies
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  });
+ app.enableCors({
+  origin: [
+    'http://localhost:3001',      // Localhost Frontend
+    'http://lvh.me:3001',         // Main Site Frontend
+    'http://app.lvh.me:3001',     // 🟢 Dashboard Frontend (MISSING BEFORE)
+    'https://parascores.com',     // Production Main
+    'https://app.parascores.com'  // Production Dashboard
+  ],
+  credentials: true, // Required for cookies to work
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+});
 
   app.use(cookieParser());
 
