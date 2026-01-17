@@ -1,8 +1,10 @@
-import { Controller, Post, Body, HttpCode, HttpStatus, Res, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus, Res, Get, Req, UseGuards, NotFoundException, UnauthorizedException, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { SignUpDto } from './dto/sign-up.dto';
 import { LoginDto } from './dto/login.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,25 +26,67 @@ export class AuthController {
   }
 
   @Public()
+  @Get('verify-email')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Verify user email address' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Email verified successfully' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid or expired token' })
+  verifyEmail(@Query('token') token: string) {
+    return this.authService.verifyEmail(token);
+  }
+
+  @Public()
+  @Post('resend-verification')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Resend verification email' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Verification email sent' })
+  resendVerification(@Body('email') email: string) {
+    return this.authService.resendVerificationEmail(email);
+  }
+
+  @Public()
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Request password reset email' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Password reset email sent if account exists' })
+  forgotPassword(@Body() forgotPasswordDto: ForgotPasswordDto) {
+    return this.authService.forgotPassword(forgotPasswordDto.email);
+  }
+
+  @Public()
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reset password with token' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Password reset successfully' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Invalid or expired token' })
+  resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return this.authService.resetPassword(resetPasswordDto.token, resetPasswordDto.password);
+  }
+
+  @Public()
   @Get('google')
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) { }
 
-  @Public()
-  @Get('google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect(@Req() req, @Res({ passthrough: true }) response: Response) {
-    const user = await this.authService.validateGoogleUser(req.user);
-    console.log(user)
-    const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
-    const access_token = await this.authService.generateToken(payload, "15m")
-    const refresh_token = await this.authService.generateToken(payload, "7d")
+@Public()
+@Get('google/callback')
+@UseGuards(AuthGuard('google'))
+async googleAuthRedirect(@Req() req, @Res() response: Response) {
+  console.log('🔥 CALLBACK HIT AT:', new Date().toISOString());
+  console.log('🔥 GOOGLE USER:', req.user);
+  const user = await this.authService.validateGoogleUser(req.user);
+  
+  const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
+  const access_token = await this.authService.generateToken(payload, "2m");
+  const refresh_token = await this.authService.generateToken(payload, "1d");
 
-    this.authService.setAccessTokenCookie(response, access_token)
-    this.authService.setRefreshTokenCookie(response, refresh_token)
+  this.authService.setAccessTokenCookie(response, access_token);
+  this.authService.setRefreshTokenCookie(response, refresh_token);
 
-    response.redirect(process.env.CLIENT_URL + '/dashboard' || 'http://localhost:3001/dashboard');
-  }
+  console.log('User logged in successfully, redirecting to frontend');
+  const frontendUrl = process.env.CLIENT_URL || 'http://manage.lvh.me:3001';
+  response.redirect(frontendUrl);
+}
 
 
   @Public()
@@ -73,7 +117,7 @@ export class AuthController {
   refresh(@Req() req: any, @Res({ passthrough: true }) response: Response) {
     const refreshToken = req.cookies['refresh_token'];
     if (!refreshToken) {
-      return response.status(HttpStatus.UNAUTHORIZED).json({ message: 'Refresh token not found' });
+      throw new UnauthorizedException('Refresh token not found');
     }
     return this.authService.refreshTokens(refreshToken, response);
   }
@@ -84,8 +128,9 @@ export class AuthController {
   @ApiOperation({ summary: 'Logout user' })
   @ApiResponse({ status: HttpStatus.OK, description: 'User logged out' })
   logout(@Res({ passthrough: true }) response: Response) {
-    response.clearCookie('access_token');
-    response.clearCookie('refresh_token');
+    const domain = process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+    response.clearCookie('access_token', { domain, path: '/' });
+    response.clearCookie('refresh_token', { domain, path: '/' });
     console.log('User logged out');
     return ResponseUtil.success({}, 'User logged out');
   }

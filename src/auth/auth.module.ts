@@ -7,12 +7,14 @@ import { jwtConstants } from './constants';
 import "dotenv/config";
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './strategies/google.strategy';
+import { EmailModule } from 'src/email/email.module';
 
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
+    EmailModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
