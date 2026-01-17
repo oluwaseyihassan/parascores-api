@@ -7,9 +7,10 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
+import { TournamentsModule } from './tournaments/tournaments.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, DatabaseModule],
+  imports: [AuthModule, UsersModule, DatabaseModule, TournamentsModule],
   controllers: [AppController],
   providers: [
     AppService,
