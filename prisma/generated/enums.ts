@@ -16,3 +16,62 @@ export const Role = {
 } as const
 
 export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const Visibility = {
+  PUBLIC: 'PUBLIC',
+  PRIVATE: 'PRIVATE',
+  UNLISTED: 'UNLISTED'
+} as const
+
+export type Visibility = (typeof Visibility)[keyof typeof Visibility]
+
+
+export const TournamentType = {
+  KNOCKOUT: 'KNOCKOUT',
+  LEAGUE: 'LEAGUE',
+  ROUND_ROBIN: 'ROUND_ROBIN'
+} as const
+
+export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]
+
+
+export const ParticipantType = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  TEAM: 'TEAM'
+} as const
+
+export type ParticipantType = (typeof ParticipantType)[keyof typeof ParticipantType]
+
+
+export const ParticipantStatus = {
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  DECLINED: 'DECLINED',
+  DISQUALIFIED: 'DISQUALIFIED'
+} as const
+
+export type ParticipantStatus = (typeof ParticipantStatus)[keyof typeof ParticipantStatus]
+
+
+export const FixtureStatus = {
+  SCHEDULED: 'SCHEDULED',
+  LIVE: 'LIVE',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type FixtureStatus = (typeof FixtureStatus)[keyof typeof FixtureStatus]
+
+
+export const MatchEventType = {
+  GOAL: 'GOAL',
+  OWN_GOAL: 'OWN_GOAL',
+  PENALTY: 'PENALTY',
+  YELLOW_CARD: 'YELLOW_CARD',
+  RED_CARD: 'RED_CARD',
+  SUBSTITUTION: 'SUBSTITUTION',
+  ASSIST: 'ASSIST'
+} as const
+
+export type MatchEventType = (typeof MatchEventType)[keyof typeof MatchEventType]

@@ -14,21 +14,32 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
-  name  String
+  id      String  @id @default(cuid())
+  email   String  @unique
+  name    String
   picture String?
 
   password String? // hashed
   role     Role    @default(USER)
   metadata Json?   @default("{}")
 
+  // Email Verification
+  isEmailVerified         Boolean   @default(false)
+  emailVerificationToken  String?
+  emailVerificationExpiry DateTime?
+
+  // Password Reset
+  passwordResetToken  String?
+  passwordResetExpiry DateTime?
+
   //Branding
   organization_name  String?
   organization_logo  String?
   organization_color String?
 
-  tournaments Tournament[]
+  organized_tournaments Tournament[]  @relation("OrganizedTournaments")
+  admin_tournaments     Tournament[]  @relation("TournamentAdmins")
+  playing_in            Participant[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -40,14 +51,193 @@ enum Role {
   SUPER_ADMIN
 }
 
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
+}
+
+enum TournamentType {
+  KNOCKOUT
+  LEAGUE
+  ROUND_ROBIN
+}
+
+enum ParticipantType {
+  INDIVIDUAL
+  TEAM
+}
+
+enum ParticipantStatus {
+  PENDING
+  CONFIRMED
+  DECLINED
+  DISQUALIFIED
+}
+
+enum FixtureStatus {
+  SCHEDULED
+  LIVE
+  COMPLETED
+  CANCELLED
+}
+
 model Tournament {
-  id           String   @id @default(cuid())
-  name         String
-  description  String?
-  start_date   DateTime
-  end_date     DateTime
-  created_at   DateTime @default(now())
-  updated_at   DateTime @updatedAt
-  organizer    User?    @relation(fields: [organizer_id], references: [id])
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+
+  // Branding
+  logoUrl   String?
+  bannerUrl String?
+
+  // Logistics
+  location   String?
+  timezone   String     @default("UTC")
+  visibility Visibility @default(PUBLIC)
+
+  // Rules & Config
+  sport           String
+  type            TournamentType
+  participantType ParticipantType
+  scoringRules    Json
+
+  // Registration
+  maxParticipants   Int?
+  registrationOpen  DateTime?
+  registrationClose DateTime?
+  autoApprove       Boolean   @default(true)
+
+  start_date DateTime
+  end_date   DateTime
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  organizer    User?   @relation("OrganizedTournaments", fields: [organizer_id], references: [id])
   organizer_id String?
+
+  admins       User[]        @relation("TournamentAdmins")
+  participants Participant[]
+  fixtures     Fixture[]
+  standings    Standing[]
+}
+
+model Participant {
+  id String @id @default(cuid())
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament_id String
+
+  user    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+
+  team    Team?   @relation(fields: [team_id], references: [id])
+  team_id String?
+
+  customName String?
+  seed       Int?
+  status     ParticipantStatus @default(PENDING)
+
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  home_fixtures Fixture[] @relation("HomeTeam")
+  away_fixtures Fixture[] @relation("AwayTeam")
+
+  matchEvents        MatchEvent[]
+  relatedMatchEvents MatchEvent[] @relation("RelatedParticipant")
+  standings          Standing[]
+}
+
+model Fixture {
+  id String @id @default(cuid())
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament_id String
+
+  round       Int
+  matchNumber Int
+  startTime   DateTime?
+
+  homeTeam   Participant? @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  homeTeamId String?
+  awayTeam   Participant? @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  awayTeamId String?
+
+  homeScore Int?
+  awayScore Int?
+  status    FixtureStatus @default(SCHEDULED)
+
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  matchEvents MatchEvent[]
+}
+
+model Team {
+  id           String        @id @default(cuid())
+  name         String
+  participants Participant[]
+}
+
+enum MatchEventType {
+  GOAL
+  OWN_GOAL
+  PENALTY
+  YELLOW_CARD
+  RED_CARD
+  SUBSTITUTION
+  ASSIST
+}
+
+model MatchEvent {
+  id String @id @default(cuid())
+
+  fixture    Fixture @relation(fields: [fixture_id], references: [id], onDelete: Cascade)
+  fixture_id String
+
+  // The participant (player/team) involved in the event
+  participant    Participant? @relation(fields: [participant_id], references: [id])
+  participant_id String?
+
+  // For substitutions: the player coming off
+  relatedParticipant    Participant? @relation("RelatedParticipant", fields: [relatedParticipant_id], references: [id])
+  relatedParticipant_id String?
+
+  type        MatchEventType
+  minute      Int? // Match minute when event occurred
+  description String?
+  metadata    Json? // Additional event-specific data
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Standing {
+  id String @id @default(cuid())
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
+  participant_id String
+
+  // Stats
+  played       Int @default(0)
+  wins         Int @default(0)
+  draws        Int @default(0)
+  losses       Int @default(0)
+  goalsFor     Int @default(0)
+  goalsAgainst Int @default(0)
+  goalDiff     Int @default(0)
+  points       Int @default(0)
+
+  // Position in standings
+  position Int?
+
+  // For group stages
+  group String?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@unique([tournament_id, participant_id])
 }

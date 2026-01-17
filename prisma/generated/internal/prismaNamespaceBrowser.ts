@@ -52,7 +52,12 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Tournament: 'Tournament'
+  Tournament: 'Tournament',
+  Participant: 'Participant',
+  Fixture: 'Fixture',
+  Team: 'Team',
+  MatchEvent: 'MatchEvent',
+  Standing: 'Standing'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -79,6 +84,11 @@ export const UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   metadata: 'metadata',
+  isEmailVerified: 'isEmailVerified',
+  emailVerificationToken: 'emailVerificationToken',
+  emailVerificationExpiry: 'emailVerificationExpiry',
+  passwordResetToken: 'passwordResetToken',
+  passwordResetExpiry: 'passwordResetExpiry',
   organization_name: 'organization_name',
   organization_logo: 'organization_logo',
   organization_color: 'organization_color',
@@ -93,6 +103,19 @@ export const TournamentScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
+  location: 'location',
+  timezone: 'timezone',
+  visibility: 'visibility',
+  sport: 'sport',
+  type: 'type',
+  participantType: 'participantType',
+  scoringRules: 'scoringRules',
+  maxParticipants: 'maxParticipants',
+  registrationOpen: 'registrationOpen',
+  registrationClose: 'registrationClose',
+  autoApprove: 'autoApprove',
   start_date: 'start_date',
   end_date: 'end_date',
   created_at: 'created_at',
@@ -101,6 +124,84 @@ export const TournamentScalarFieldEnum = {
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
+
+
+export const ParticipantScalarFieldEnum = {
+  id: 'id',
+  tournament_id: 'tournament_id',
+  user_id: 'user_id',
+  team_id: 'team_id',
+  customName: 'customName',
+  seed: 'seed',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
+
+
+export const FixtureScalarFieldEnum = {
+  id: 'id',
+  tournament_id: 'tournament_id',
+  round: 'round',
+  matchNumber: 'matchNumber',
+  startTime: 'startTime',
+  homeTeamId: 'homeTeamId',
+  awayTeamId: 'awayTeamId',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  status: 'status',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
+
+
+export const TeamScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
+
+
+export const MatchEventScalarFieldEnum = {
+  id: 'id',
+  fixture_id: 'fixture_id',
+  participant_id: 'participant_id',
+  relatedParticipant_id: 'relatedParticipant_id',
+  type: 'type',
+  minute: 'minute',
+  description: 'description',
+  metadata: 'metadata',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type MatchEventScalarFieldEnum = (typeof MatchEventScalarFieldEnum)[keyof typeof MatchEventScalarFieldEnum]
+
+
+export const StandingScalarFieldEnum = {
+  id: 'id',
+  tournament_id: 'tournament_id',
+  participant_id: 'participant_id',
+  played: 'played',
+  wins: 'wins',
+  draws: 'draws',
+  losses: 'losses',
+  goalsFor: 'goalsFor',
+  goalsAgainst: 'goalsAgainst',
+  goalDiff: 'goalDiff',
+  points: 'points',
+  position: 'position',
+  group: 'group',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typeof StandingScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -117,6 +218,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: 'JsonNull'
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
