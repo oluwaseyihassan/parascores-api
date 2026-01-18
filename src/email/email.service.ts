@@ -7,12 +7,14 @@ import * as path from 'path';
 @Injectable()
 export class EmailService {
   private resend: Resend;
-  private readonly fromEmail: string;
+  private readonly fromOluwaseyiEmail: string;
+  private readonly fromAdminEmail: string;
 
   constructor() {
     this.resend = new Resend(process.env.RESEND_API_KEY);
-    this.fromEmail =
-      process.env.EMAIL_FROM || 'ParaScores admin <admin@parascores.com>';
+    this.fromAdminEmail =
+      process.env.EMAIL_FROM_ADMIN || 'ParaScores admin <admin@parascores.com>';
+    this.fromOluwaseyiEmail = process.env.EMAIL_FROM_OLUWASEYI || 'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>'
   }
 
   private async compileTemplate(
@@ -38,7 +40,7 @@ export class EmailService {
     });
 
     const { error } = await this.resend.emails.send({
-      from: this.fromEmail,
+      from: this.fromAdminEmail,
       to: email,
       subject: 'Verify your Parascores account',
       html,
@@ -65,7 +67,7 @@ export class EmailService {
     });
 
     const { error } = await this.resend.emails.send({
-      from: this.fromEmail,
+      from: this.fromAdminEmail,
       to: email,
       subject: 'Reset your Parascores password',
       html,
@@ -88,7 +90,7 @@ export class EmailService {
     });
 
     const { error } = await this.resend.emails.send({
-      from: this.fromEmail,
+      from: this.fromOluwaseyiEmail,
       to: email,
       subject: 'Welcome to Parascores! 🎉',
       html,
