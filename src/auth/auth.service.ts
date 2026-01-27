@@ -221,6 +221,7 @@ export class AuthService {
       picture: details.picture,
       isEmailVerified: true, // Google accounts are pre-verified
     });
+    await this.emailService.sendWelcomeEmail(newUser.email, newUser.name);
     return newUser;
   }
 
