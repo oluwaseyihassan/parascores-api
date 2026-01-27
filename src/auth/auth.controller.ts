@@ -71,7 +71,7 @@ export class AuthController {
 @Public()
 @Get('google/callback')
 @UseGuards(AuthGuard('google'))
-async googleAuthRedirect(@Req() req, @Res() response: Response) {
+async googleAuthRedirect(@Req() req, @Res() response: Response,@Query("redirect_url") redirectUrl: string ) {
   console.log('🔥 CALLBACK HIT AT:', new Date().toISOString());
   console.log('🔥 GOOGLE USER:', req.user);
   const user = await this.authService.validateGoogleUser(req.user);
@@ -84,7 +84,7 @@ async googleAuthRedirect(@Req() req, @Res() response: Response) {
   this.authService.setRefreshTokenCookie(response, refresh_token);
 
   console.log('User logged in successfully, redirecting to frontend');
-  const frontendUrl = process.env.CLIENT_URL || 'http://manage.lvh.me:3001';
+  const frontendUrl = redirectUrl || 'http://manage.lvh.me:3001';
   response.redirect(frontendUrl);
 }
 
