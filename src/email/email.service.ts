@@ -82,7 +82,7 @@ export class EmailService {
   }
 
   async sendWelcomeEmail(email: string, name: string): Promise<void> {
-    const dashboardUrl = `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/dashboard`;
+    const dashboardUrl = `${process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001'}`;
 
     const html = await this.compileTemplate('welcome', {
       name,
