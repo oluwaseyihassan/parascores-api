@@ -23,4 +23,9 @@ export class AddParticipantDto {
   @IsString()
   @IsOptional()
   teamId?: string;
+
+  @ApiPropertyOptional({ description: 'Logo URL for the participant', example: 'https://example.com/logo.png' })
+  @IsString()
+  @IsOptional()
+  logoUrl?: string;
 }

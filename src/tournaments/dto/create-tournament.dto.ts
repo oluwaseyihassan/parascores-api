@@ -38,16 +38,26 @@ export class CreateTournamentDto {
 
   @ApiProperty({ description: 'Start date of the tournament', example: '2024-06-01T00:00:00Z' })
   @IsDateString()
-  startDate: string;
+  start_date: string;
 
   @ApiProperty({ description: 'End date of the tournament', example: '2024-06-30T23:59:59Z' })
   @IsDateString()
-  endDate: string;
+  end_date: string;
 
   @ApiPropertyOptional({ description: 'Location where the tournament is held', example: 'New York, NY' })
   @IsString()
   @IsOptional()
   location?: string;
+
+  @ApiPropertyOptional({ description: 'Number of groups for group stage', example: 4 })
+  @IsInt()
+  @IsOptional()
+  numberOfGroups?: number;
+
+  @ApiPropertyOptional({ description: 'Number of teams per group', example: 4 })
+  @IsInt()
+  @IsOptional()
+  teamsPerGroup?: number;
 
   @ApiPropertyOptional({ description: 'Timezone of the tournament location', example: 'America/New_York' })
   @IsString()
