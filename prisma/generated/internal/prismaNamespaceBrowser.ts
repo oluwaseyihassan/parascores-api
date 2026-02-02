@@ -53,11 +53,13 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Tournament: 'Tournament',
+  Group: 'Group',
   Participant: 'Participant',
   Fixture: 'Fixture',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
-  Standing: 'Standing'
+  Standing: 'Standing',
+  Player: 'Player'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -116,6 +118,8 @@ export const TournamentScalarFieldEnum = {
   registrationOpen: 'registrationOpen',
   registrationClose: 'registrationClose',
   autoApprove: 'autoApprove',
+  numberOfGroups: 'numberOfGroups',
+  teamsPerGroup: 'teamsPerGroup',
   start_date: 'start_date',
   end_date: 'end_date',
   created_at: 'created_at',
@@ -126,6 +130,17 @@ export const TournamentScalarFieldEnum = {
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
 
 
+export const GroupScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type GroupScalarFieldEnum = (typeof GroupScalarFieldEnum)[keyof typeof GroupScalarFieldEnum]
+
+
 export const ParticipantScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
@@ -133,7 +148,9 @@ export const ParticipantScalarFieldEnum = {
   team_id: 'team_id',
   customName: 'customName',
   seed: 'seed',
+  logoUrl: 'logoUrl',
   status: 'status',
+  groupId: 'groupId',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -144,11 +161,16 @@ export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[key
 export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
+  groupId: 'groupId',
   round: 'round',
+  roundName: 'roundName',
   matchNumber: 'matchNumber',
   startTime: 'startTime',
   homeTeamId: 'homeTeamId',
+  homeTeamPlaceholder: 'homeTeamPlaceholder',
   awayTeamId: 'awayTeamId',
+  awayTeamPlaceholder: 'awayTeamPlaceholder',
+  nextFixtureId: 'nextFixtureId',
   homeScore: 'homeScore',
   awayScore: 'awayScore',
   status: 'status',
@@ -177,7 +199,9 @@ export const MatchEventScalarFieldEnum = {
   description: 'description',
   metadata: 'metadata',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  playerId: 'playerId',
+  relatedPlayerId: 'relatedPlayerId'
 } as const
 
 export type MatchEventScalarFieldEnum = (typeof MatchEventScalarFieldEnum)[keyof typeof MatchEventScalarFieldEnum]
@@ -202,6 +226,19 @@ export const StandingScalarFieldEnum = {
 } as const
 
 export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typeof StandingScalarFieldEnum]
+
+
+export const PlayerScalarFieldEnum = {
+  id: 'id',
+  participantId: 'participantId',
+  name: 'name',
+  number: 'number',
+  position: 'position',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
 
 
 export const SortOrder = {

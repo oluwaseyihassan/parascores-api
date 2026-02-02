@@ -61,6 +61,7 @@ enum TournamentType {
   KNOCKOUT
   LEAGUE
   ROUND_ROBIN
+  GROUP
 }
 
 enum ParticipantType {
@@ -108,6 +109,10 @@ model Tournament {
   registrationClose DateTime?
   autoApprove       Boolean   @default(true)
 
+  // Group config
+  numberOfGroups Int?
+  teamsPerGroup  Int?
+
   start_date DateTime
   end_date   DateTime
   created_at DateTime @default(now())
@@ -120,6 +125,21 @@ model Tournament {
   participants Participant[]
   fixtures     Fixture[]
   standings    Standing[]
+  groups       Group[]
+}
+
+model Group {
+  id   String @id @default(cuid())
+  name String
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament_id String
+
+  participants Participant[]
+  fixtures     Fixture[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model Participant {
@@ -136,7 +156,11 @@ model Participant {
 
   customName String?
   seed       Int?
+  logoUrl    String?
   status     ParticipantStatus @default(PENDING)
+
+  group   Group?  @relation(fields: [groupId], references: [id])
+  groupId String?
 
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
@@ -146,6 +170,7 @@ model Participant {
   matchEvents        MatchEvent[]
   relatedMatchEvents MatchEvent[] @relation("RelatedParticipant")
   standings          Standing[]
+  players            Player[]
 }
 
 model Fixture {
@@ -154,18 +179,31 @@ model Fixture {
   tournament    Tournament @relation(fields: [tournament_id], references: [id])
   tournament_id String
 
+  group   Group?  @relation(fields: [groupId], references: [id])
+  groupId String?
+
   round       Int
+  roundName   String? // e.g., "Final", "Semi Final", "Quarter Final", "Round of 16"
   matchNumber Int
   startTime   DateTime?
 
-  homeTeam   Participant? @relation("HomeTeam", fields: [homeTeamId], references: [id])
-  homeTeamId String?
-  awayTeam   Participant? @relation("AwayTeam", fields: [awayTeamId], references: [id])
-  awayTeamId String?
+  homeTeam            Participant? @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  homeTeamId          String?
+  homeTeamPlaceholder String? // e.g., "QF1 Winner" - shown when homeTeamId is null
+  awayTeam            Participant? @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  awayTeamId          String?
+  awayTeamPlaceholder String? // e.g., "QF2 Winner" - shown when awayTeamId is null
 
-  homeScore Int?
-  awayScore Int?
-  status    FixtureStatus @default(SCHEDULED)
+  // Bracket relationships (for knockout tournaments)
+  nextFixture    Fixture?  @relation("BracketProgression", fields: [nextFixtureId], references: [id])
+  nextFixtureId  String?
+  sourceFixtures Fixture[] @relation("BracketProgression") // The two matches that feed into this fixture
+
+  homeScore        Int?
+  awayScore        Int?
+  homePenaltyScore Int?
+  awayPenaltyScore Int?
+  status           FixtureStatus @default(SCHEDULED)
 
   created_at  DateTime     @default(now())
   updated_at  DateTime     @updatedAt
@@ -209,6 +247,12 @@ model MatchEvent {
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  player   Player? @relation(fields: [playerId], references: [id])
+  playerId String?
+
+  relatedPlayer   Player? @relation("RelatedPlayer", fields: [relatedPlayerId], references: [id])
+  relatedPlayerId String?
 }
 
 model Standing {
@@ -240,4 +284,21 @@ model Standing {
   updated_at DateTime @updatedAt
 
   @@unique([tournament_id, participant_id])
+}
+
+model Player {
+  id String @id @default(cuid())
+
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  participantId String
+
+  name     String
+  number   Int?
+  position String? // GK, DEF, MID, FWD
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  matchEvents        MatchEvent[]
+  relatedMatchEvents MatchEvent[] @relation("RelatedPlayer")
 }

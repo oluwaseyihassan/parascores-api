@@ -10,9 +10,11 @@
  */
 export type * from './models/User'
 export type * from './models/Tournament'
+export type * from './models/Group'
 export type * from './models/Participant'
 export type * from './models/Fixture'
 export type * from './models/Team'
 export type * from './models/MatchEvent'
 export type * from './models/Standing'
+export type * from './models/Player'
 export type * from './commonInputTypes'

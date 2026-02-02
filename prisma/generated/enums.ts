@@ -30,7 +30,8 @@ export type Visibility = (typeof Visibility)[keyof typeof Visibility]
 export const TournamentType = {
   KNOCKOUT: 'KNOCKOUT',
   LEAGUE: 'LEAGUE',
-  ROUND_ROBIN: 'ROUND_ROBIN'
+  ROUND_ROBIN: 'ROUND_ROBIN',
+  GROUP: 'GROUP'
 } as const
 
 export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]

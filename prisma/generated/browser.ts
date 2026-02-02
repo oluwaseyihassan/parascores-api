@@ -28,6 +28,11 @@ export type User = Prisma.UserModel
  */
 export type Tournament = Prisma.TournamentModel
 /**
+ * Model Group
+ * 
+ */
+export type Group = Prisma.GroupModel
+/**
  * Model Participant
  * 
  */
@@ -52,3 +57,8 @@ export type MatchEvent = Prisma.MatchEventModel
  * 
  */
 export type Standing = Prisma.StandingModel
+/**
+ * Model Player
+ * 
+ */
+export type Player = Prisma.PlayerModel
