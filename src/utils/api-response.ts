@@ -8,13 +8,48 @@ export interface ApiResponse<T = any> {
   timestamp: string;
 }
 
-// 2. A Helper to generate responses quickly
+// 2. Paginated Response with metadata
+export interface PaginatedResponse<T = any> {
+  success: boolean;
+  message: string;
+  data: T[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+  timestamp: string;
+}
+
+// 3. A Helper to generate responses quickly
 export class ResponseUtil {
   static success<T>(data: T, message: string = 'Success'): ApiResponse<T> {
     return {
       success: true,
       message,
       data,
+      timestamp: new Date().toISOString(),
+    };
+  }
+
+  static paginated<T>(
+    data: T[],
+    page: number,
+    limit: number,
+    total: number,
+    message: string = 'Success',
+  ): PaginatedResponse<T> {
+    return {
+      success: true,
+      message,
+      data,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
       timestamp: new Date().toISOString(),
     };
   }
