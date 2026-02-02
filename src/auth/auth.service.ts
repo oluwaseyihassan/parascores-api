@@ -207,7 +207,7 @@ export class AuthService {
         // user already exists with password, we can link or just login. 
         // For now, just login.
         if (!user.picture && details.picture) {
-        user = await this.usersService.update(user.id, { picture: details.picture });
+        await this.usersService.update(user.id, { picture: details.picture });
       }
       }
       return user;
