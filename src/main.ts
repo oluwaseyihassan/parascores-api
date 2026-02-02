@@ -19,6 +19,9 @@ async function bootstrap() {
     'https://parascores.com',     // Production Main
     'https://app.parascores.com',  // Production Dashboard
     'https://parascores-web.vercel.app',
+    'http://manage.lvh.me:3001',
+    'https://manage.parascores.com',
+    
   ],
   credentials: true, // Required for cookies to work
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
