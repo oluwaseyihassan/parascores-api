@@ -52,6 +52,14 @@ export class AuthService {
       // Don't fail signup if email fails, user can resend
     }
 
+    // Send admin notification about new signup
+    try {
+      await this.emailService.sendNewUserAlertEmail(user.email, user.name);
+    } catch (error) {
+      console.error('Failed to send new user alert:', error);
+      // Don't fail signup if alert fails
+    }
+
     // Remove password from response
     const { password, emailVerificationToken, ...result } = user;
     return ResponseUtil.success(result, 'User registered successfully. Please check your email to verify your account.');
@@ -222,6 +230,14 @@ export class AuthService {
       isEmailVerified: true, // Google accounts are pre-verified
     });
     await this.emailService.sendWelcomeEmail(newUser.email, newUser.name);
+    
+    // Send admin notification about new Google signup
+    try {
+      await this.emailService.sendNewUserAlertEmail(newUser.email, newUser.name);
+    } catch (error) {
+      console.error('Failed to send new user alert:', error);
+    }
+    
     return newUser;
   }
 
