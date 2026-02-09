@@ -62,6 +62,8 @@ enum TournamentType {
   LEAGUE
   ROUND_ROBIN
   GROUP
+  FRIENDLY
+  HYBRID
 }
 
 enum ParticipantType {
@@ -126,6 +128,8 @@ model Tournament {
   fixtures     Fixture[]
   standings    Standing[]
   groups       Group[]
+  sponsors     Sponsor[]
+  socials      Social[]
 }
 
 model Group {
@@ -301,4 +305,31 @@ model Player {
 
   matchEvents        MatchEvent[]
   relatedMatchEvents MatchEvent[] @relation("RelatedPlayer")
+}
+
+model Sponsor {
+  id   String @id @default(cuid())
+  name String
+
+  logoUrl    String?
+  websiteUrl String?
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Social {
+  id       String  @id @default(cuid())
+  platform String // e.g., "twitter", "instagram", "facebook", "youtube", "tiktok"
+  url      String
+  handle   String? // e.g., "@tournamentname"
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
