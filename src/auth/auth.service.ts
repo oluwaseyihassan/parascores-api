@@ -247,8 +247,8 @@ export class AuthService {
     }
 
     const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
-    const access_token = await this.generateToken(payload, "15m")
-    const refresh_token = await this.generateToken(payload, "1d")
+    const access_token = await this.generateToken(payload, "7d")
+    const refresh_token = await this.generateToken(payload, "30d")
 
 
     // set http-only cookies
@@ -276,8 +276,8 @@ export class AuthService {
       }
 
       const newPayload = { email: user.email, sub: user.id, role: user.role };
-      const access_token = await this.generateToken(newPayload, "15m");
-      const refresh_token = await this.generateToken(newPayload, "1d");
+      const access_token = await this.generateToken(newPayload, "7d");
+      const refresh_token = await this.generateToken(newPayload, "30d");
 
       this.setAccessTokenCookie(response, access_token);
       this.setRefreshTokenCookie(response, refresh_token);
@@ -317,7 +317,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProduction,
       sameSite: 'strict',
-      maxAge: 2 * 60 * 1000, // 2 minutes
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
   }
   setRefreshTokenCookie(res: Response, token: string) {
@@ -329,7 +329,7 @@ export class AuthService {
       httpOnly: true,
       secure: isProduction,
       sameSite: 'strict',
-      maxAge: 1 * 24 * 60 * 60 * 1000, // 1 day
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 day
     });
   }
 }
