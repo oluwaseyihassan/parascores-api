@@ -72,12 +72,34 @@ export class FixturesService {
 
   // Update a fixture (status, scores, etc.)
   async update(fixtureId: string, dto: UpdateFixtureDto) {
+    console.log(dto);
     const fixture = await this.db.fixture.findUnique({
       where: { id: fixtureId },
     });
 
     if (!fixture) {
       throw new NotFoundException('Fixture not found');
+    }
+
+    // Validate penalty scores for knockout matches being completed
+    if (dto.status === 'COMPLETED') {
+      const homeScore = dto.homeScore ?? fixture.homeScore ?? 0;
+      const awayScore = dto.awayScore ?? fixture.awayScore ?? 0;
+      const homePen = dto.homePenaltyScore ?? fixture.homePenaltyScore ?? 0;
+      const awayPen = dto.awayPenaltyScore ?? fixture.awayPenaltyScore ?? 0;
+
+      // If scores are tied, penalty scores must not be equal
+      if (homeScore === awayScore && homePen === awayPen) {
+        // Check if this is a knockout tournament
+        const tournament = await this.db.tournament.findUnique({
+          where: { id: fixture.tournament_id },
+          select: { type: true },
+        });
+        
+        if (tournament?.type === 'KNOCKOUT') {
+          throw new BadRequestException('Penalty scores cannot be equal when regular scores are tied in a knockout match');
+        }
+      }
     }
 
     const updatedFixture = await this.db.fixture.update({
@@ -87,6 +109,8 @@ export class FixturesService {
         ...(dto.homeScore !== undefined && { homeScore: dto.homeScore }),
         ...(dto.awayScore !== undefined && { awayScore: dto.awayScore }),
         ...(dto.startTime !== undefined && { startTime: new Date(dto.startTime) }),
+        ...(dto.homePenaltyScore !== undefined && { homePenaltyScore: dto.homePenaltyScore }),
+        ...(dto.awayPenaltyScore !== undefined && { awayPenaltyScore: dto.awayPenaltyScore }),
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
       },
@@ -113,7 +137,7 @@ export class FixturesService {
       
       if (tournament.type === 'KNOCKOUT') {
         await this.handleKnockoutProgression(updatedFixture);
-      } else if (tournament.type === 'GROUP' || tournament.type === 'ROUND_ROBIN' || tournament.type === 'LEAGUE') {
+      } else if (tournament.type === 'GROUP' || tournament.type === 'ROUND_ROBIN' || tournament.type === 'LEAGUE' || tournament.type === 'HYBRID') {
          await this.updateStandings(updatedFixture.tournament_id);
       }
     }
@@ -138,11 +162,13 @@ export class FixturesService {
     } else if (awayScore > homeScore) {
       winnerId = fixture.awayTeamId;
     } else {
-      // Tie - check penalties
-      if (homePen > awayPen) {
-        winnerId = fixture.homeTeamId;
-      } else if (awayPen > homePen) {
-        winnerId = fixture.awayTeamId;
+      // Tie - check penalties (only if they're not equal)
+      if (homePen !== awayPen) {
+        if (homePen > awayPen) {
+          winnerId = fixture.homeTeamId;
+        } else {
+          winnerId = fixture.awayTeamId;
+        }
       }
     }
 
