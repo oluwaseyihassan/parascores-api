@@ -59,7 +59,9 @@ export const ModelName = {
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
-  Player: 'Player'
+  Player: 'Player',
+  Sponsor: 'Sponsor',
+  Social: 'Social'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -173,6 +175,8 @@ export const FixtureScalarFieldEnum = {
   nextFixtureId: 'nextFixtureId',
   homeScore: 'homeScore',
   awayScore: 'awayScore',
+  homePenaltyScore: 'homePenaltyScore',
+  awayPenaltyScore: 'awayPenaltyScore',
   status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -239,6 +243,32 @@ export const PlayerScalarFieldEnum = {
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+export const SponsorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  logoUrl: 'logoUrl',
+  websiteUrl: 'websiteUrl',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
+
+
+export const SocialScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  url: 'url',
+  handle: 'handle',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
 
 
 export const SortOrder = {

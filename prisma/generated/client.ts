@@ -82,3 +82,13 @@ export type Standing = Prisma.StandingModel
  * 
  */
 export type Player = Prisma.PlayerModel
+/**
+ * Model Sponsor
+ * 
+ */
+export type Sponsor = Prisma.SponsorModel
+/**
+ * Model Social
+ * 
+ */
+export type Social = Prisma.SocialModel

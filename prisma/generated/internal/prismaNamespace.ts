@@ -392,7 +392,9 @@ export const ModelName = {
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
-  Player: 'Player'
+  Player: 'Player',
+  Sponsor: 'Sponsor',
+  Social: 'Social'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "tournament" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player"
+    modelProps: "user" | "tournament" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1080,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Sponsor: {
+      payload: Prisma.$SponsorPayload<ExtArgs>
+      fields: Prisma.SponsorFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SponsorFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SponsorFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        findFirst: {
+          args: Prisma.SponsorFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SponsorFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        findMany: {
+          args: Prisma.SponsorFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        create: {
+          args: Prisma.SponsorCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        createMany: {
+          args: Prisma.SponsorCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SponsorCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        delete: {
+          args: Prisma.SponsorDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        update: {
+          args: Prisma.SponsorUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        deleteMany: {
+          args: Prisma.SponsorDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SponsorUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SponsorUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>[]
+        }
+        upsert: {
+          args: Prisma.SponsorUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SponsorPayload>
+        }
+        aggregate: {
+          args: Prisma.SponsorAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSponsor>
+        }
+        groupBy: {
+          args: Prisma.SponsorGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SponsorCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SponsorCountAggregateOutputType> | number
+        }
+      }
+    }
+    Social: {
+      payload: Prisma.$SocialPayload<ExtArgs>
+      fields: Prisma.SocialFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SocialFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SocialFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        findFirst: {
+          args: Prisma.SocialFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SocialFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        findMany: {
+          args: Prisma.SocialFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>[]
+        }
+        create: {
+          args: Prisma.SocialCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        createMany: {
+          args: Prisma.SocialCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SocialCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>[]
+        }
+        delete: {
+          args: Prisma.SocialDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        update: {
+          args: Prisma.SocialUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        deleteMany: {
+          args: Prisma.SocialDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SocialUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SocialUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>[]
+        }
+        upsert: {
+          args: Prisma.SocialUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SocialPayload>
+        }
+        aggregate: {
+          args: Prisma.SocialAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSocial>
+        }
+        groupBy: {
+          args: Prisma.SocialGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SocialCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SocialCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1212,6 +1362,8 @@ export const FixtureScalarFieldEnum = {
   nextFixtureId: 'nextFixtureId',
   homeScore: 'homeScore',
   awayScore: 'awayScore',
+  homePenaltyScore: 'homePenaltyScore',
+  awayPenaltyScore: 'awayPenaltyScore',
   status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -1278,6 +1430,32 @@ export const PlayerScalarFieldEnum = {
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+export const SponsorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  logoUrl: 'logoUrl',
+  websiteUrl: 'websiteUrl',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
+
+
+export const SocialScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  url: 'url',
+  handle: 'handle',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1612,6 +1790,8 @@ export type GlobalOmitConfig = {
   matchEvent?: Prisma.MatchEventOmit
   standing?: Prisma.StandingOmit
   player?: Prisma.PlayerOmit
+  sponsor?: Prisma.SponsorOmit
+  social?: Prisma.SocialOmit
 }
 
 /* Types for Logging */

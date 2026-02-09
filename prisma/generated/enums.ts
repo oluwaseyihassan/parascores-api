@@ -31,7 +31,9 @@ export const TournamentType = {
   KNOCKOUT: 'KNOCKOUT',
   LEAGUE: 'LEAGUE',
   ROUND_ROBIN: 'ROUND_ROBIN',
-  GROUP: 'GROUP'
+  GROUP: 'GROUP',
+  FRIENDLY: 'FRIENDLY',
+  HYBRID: 'HYBRID'
 } as const
 
 export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]
