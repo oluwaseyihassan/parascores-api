@@ -10,6 +10,7 @@ import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Throttle } from '@nestjs/throttler';
+import { GoogleAuthGuard } from './guards/google-auth.guard';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -69,15 +70,15 @@ export class AuthController {
 
   @Public()
   @Get('google')
-  @UseGuards(AuthGuard('google'))
+  @UseGuards(GoogleAuthGuard)
   async googleAuth(@Req() req) { }
 
 @Public()
 @Get('google/callback')
-@UseGuards(AuthGuard('google'))
-async googleAuthRedirect(@Req() req, @Res() response: Response,@Query("redirect_url") redirectUrl: string ) {
+@UseGuards(GoogleAuthGuard)
+async googleAuthRedirect(@Req() req, @Res() response: Response) {
   console.log('🔥 CALLBACK HIT AT:', new Date().toISOString());
-  console.log('🔥 GOOGLE USER:', req.user);
+  // req.user is populated by the strategy validation
   const user = await this.authService.validateGoogleUser(req.user);
   
   const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
@@ -86,7 +87,13 @@ async googleAuthRedirect(@Req() req, @Res() response: Response,@Query("redirect_
 
   this.authService.setAccessTokenCookie(response, access_token);
   this.authService.setRefreshTokenCookie(response, refresh_token);
-
+  
+  // Extract redirect_url from state
+  // Note: Passport might not put state in req.query if it consumes it?
+  // Actually, req.query.state should be present.
+  const redirectUrl = req.query.state as string;
+  
+  console.log("redirectUrl from state:", redirectUrl);
   console.log('User logged in successfully, redirecting to frontend');
   const frontendUrl = redirectUrl || 'http://manage.lvh.me:3001';
   response.redirect(frontendUrl);
