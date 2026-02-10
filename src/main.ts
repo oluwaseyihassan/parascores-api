@@ -17,6 +17,7 @@ async function bootstrap() {
     'http://lvh.me:3001',         // Main Site Frontend
     'http://app.lvh.me:3001',     // 🟢 Dashboard Frontend (MISSING BEFORE)
     'https://parascores.com',     // Production Main
+    'https://www.parascores.com', // Production Main (www)
     'https://app.parascores.com',  // Production Dashboard
     'https://parascores-web.vercel.app',
     'http://manage.lvh.me:3001',
