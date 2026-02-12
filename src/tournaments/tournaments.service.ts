@@ -55,7 +55,7 @@ export class TournamentsService {
       }),
     ]);
 
-    return { tournaments, total, page, limit };
+    return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
   async findAllMine(userId: string, page: number = 1, limit: number = 10) {
@@ -82,7 +82,7 @@ export class TournamentsService {
       }),
     ]);
 
-    return { tournaments, total, page, limit };
+    return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
   // fetch tournament by id
