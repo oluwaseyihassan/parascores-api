@@ -18,14 +18,13 @@ export class TournamentsController {
   constructor(private readonly tournamentsService: TournamentsService) { }
 
   @Public()
-  @Get()
+  @Get('public')
   @ApiOperation({ summary: 'Get all public tournaments (paginated)' })
   @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number' })
   @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Items per page' })
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
     const { page, limit } = paginationQuery;
-    const result = await this.tournamentsService.findAllPublic(page, limit);
-    return ResponseUtil.paginated(result.tournaments, result.page, result.limit, result.total);
+    return this.tournamentsService.findAllPublic(page, limit);
   }
 
   @Get('mine')
@@ -34,8 +33,7 @@ export class TournamentsController {
   @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Items per page' })
   async findAllMine(@Req() req, @Query() paginationQuery: PaginationQueryDto) {
     const { page, limit } = paginationQuery;
-    const result = await this.tournamentsService.findAllMine(req.user.sub, page, limit);
-    return ResponseUtil.paginated(result.tournaments, result.page, result.limit, result.total);
+    return this.tournamentsService.findAllMine(req.user.sub, page, limit);
   }
 
   // create tournament
