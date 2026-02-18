@@ -138,7 +138,12 @@ export class FixturesService {
       if (tournament.type === 'KNOCKOUT') {
         await this.handleKnockoutProgression(updatedFixture);
       } else if (tournament.type === 'GROUP' || tournament.type === 'ROUND_ROBIN' || tournament.type === 'LEAGUE' || tournament.type === 'HYBRID') {
-         await this.updateStandings(updatedFixture.tournament_id);
+         // For HYBRID, handle knockout progression if this is a knockout-stage fixture
+         if (tournament.type === 'HYBRID' && updatedFixture.stage === 'KNOCKOUT') {
+           await this.handleKnockoutProgression(updatedFixture);
+         } else {
+           await this.updateStandings(updatedFixture.tournament_id);
+         }
       }
     }
 
