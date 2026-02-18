@@ -85,6 +85,11 @@ enum FixtureStatus {
   CANCELLED
 }
 
+enum FixtureStage {
+  GROUP_STAGE
+  KNOCKOUT
+}
+
 model Tournament {
   id          String  @id @default(cuid())
   name        String
@@ -185,6 +190,8 @@ model Fixture {
 
   group   Group?  @relation(fields: [groupId], references: [id])
   groupId String?
+
+  stage FixtureStage?
 
   round       Int
   roundName   String? // e.g., "Final", "Semi Final", "Quarter Final", "Round of 16"
