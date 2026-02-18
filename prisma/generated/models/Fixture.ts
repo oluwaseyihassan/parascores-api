@@ -48,6 +48,7 @@ export type FixtureMinAggregateOutputType = {
   id: string | null
   tournament_id: string | null
   groupId: string | null
+  stage: $Enums.FixtureStage | null
   round: number | null
   roundName: string | null
   matchNumber: number | null
@@ -70,6 +71,7 @@ export type FixtureMaxAggregateOutputType = {
   id: string | null
   tournament_id: string | null
   groupId: string | null
+  stage: $Enums.FixtureStage | null
   round: number | null
   roundName: string | null
   matchNumber: number | null
@@ -92,6 +94,7 @@ export type FixtureCountAggregateOutputType = {
   id: number
   tournament_id: number
   groupId: number
+  stage: number
   round: number
   roundName: number
   matchNumber: number
@@ -134,6 +137,7 @@ export type FixtureMinAggregateInputType = {
   id?: true
   tournament_id?: true
   groupId?: true
+  stage?: true
   round?: true
   roundName?: true
   matchNumber?: true
@@ -156,6 +160,7 @@ export type FixtureMaxAggregateInputType = {
   id?: true
   tournament_id?: true
   groupId?: true
+  stage?: true
   round?: true
   roundName?: true
   matchNumber?: true
@@ -178,6 +183,7 @@ export type FixtureCountAggregateInputType = {
   id?: true
   tournament_id?: true
   groupId?: true
+  stage?: true
   round?: true
   roundName?: true
   matchNumber?: true
@@ -287,6 +293,7 @@ export type FixtureGroupByOutputType = {
   id: string
   tournament_id: string
   groupId: string | null
+  stage: $Enums.FixtureStage | null
   round: number
   roundName: string | null
   matchNumber: number
@@ -332,6 +339,7 @@ export type FixtureWhereInput = {
   id?: Prisma.StringFilter<"Fixture"> | string
   tournament_id?: Prisma.StringFilter<"Fixture"> | string
   groupId?: Prisma.StringNullableFilter<"Fixture"> | string | null
+  stage?: Prisma.EnumFixtureStageNullableFilter<"Fixture"> | $Enums.FixtureStage | null
   round?: Prisma.IntFilter<"Fixture"> | number
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
@@ -361,6 +369,7 @@ export type FixtureOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stage?: Prisma.SortOrderInput | Prisma.SortOrder
   round?: Prisma.SortOrder
   roundName?: Prisma.SortOrderInput | Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
@@ -393,6 +402,7 @@ export type FixtureWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FixtureWhereInput | Prisma.FixtureWhereInput[]
   tournament_id?: Prisma.StringFilter<"Fixture"> | string
   groupId?: Prisma.StringNullableFilter<"Fixture"> | string | null
+  stage?: Prisma.EnumFixtureStageNullableFilter<"Fixture"> | $Enums.FixtureStage | null
   round?: Prisma.IntFilter<"Fixture"> | number
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
@@ -422,6 +432,7 @@ export type FixtureOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stage?: Prisma.SortOrderInput | Prisma.SortOrder
   round?: Prisma.SortOrder
   roundName?: Prisma.SortOrderInput | Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
@@ -452,6 +463,7 @@ export type FixtureScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Fixture"> | string
   tournament_id?: Prisma.StringWithAggregatesFilter<"Fixture"> | string
   groupId?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
+  stage?: Prisma.EnumFixtureStageNullableWithAggregatesFilter<"Fixture"> | $Enums.FixtureStage | null
   round?: Prisma.IntWithAggregatesFilter<"Fixture"> | number
   roundName?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntWithAggregatesFilter<"Fixture"> | number
@@ -472,6 +484,7 @@ export type FixtureScalarWhereWithAggregatesInput = {
 
 export type FixtureCreateInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -498,6 +511,7 @@ export type FixtureUncheckedCreateInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -520,6 +534,7 @@ export type FixtureUncheckedCreateInput = {
 
 export type FixtureUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -546,6 +561,7 @@ export type FixtureUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -570,6 +586,7 @@ export type FixtureCreateManyInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -590,6 +607,7 @@ export type FixtureCreateManyInput = {
 
 export type FixtureUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -609,6 +627,7 @@ export type FixtureUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -646,6 +665,7 @@ export type FixtureCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  stage?: Prisma.SortOrder
   round?: Prisma.SortOrder
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
@@ -677,6 +697,7 @@ export type FixtureMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  stage?: Prisma.SortOrder
   round?: Prisma.SortOrder
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
@@ -699,6 +720,7 @@ export type FixtureMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  stage?: Prisma.SortOrder
   round?: Prisma.SortOrder
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
@@ -919,6 +941,10 @@ export type FixtureUncheckedCreateNestedManyWithoutNextFixtureInput = {
   connect?: Prisma.FixtureWhereUniqueInput | Prisma.FixtureWhereUniqueInput[]
 }
 
+export type NullableEnumFixtureStageFieldUpdateOperationsInput = {
+  set?: $Enums.FixtureStage | null
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
@@ -985,6 +1011,7 @@ export type FixtureUpdateOneRequiredWithoutMatchEventsNestedInput = {
 
 export type FixtureCreateWithoutTournamentInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1009,6 +1036,7 @@ export type FixtureCreateWithoutTournamentInput = {
 export type FixtureUncheckedCreateWithoutTournamentInput = {
   id?: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1062,6 +1090,7 @@ export type FixtureScalarWhereInput = {
   id?: Prisma.StringFilter<"Fixture"> | string
   tournament_id?: Prisma.StringFilter<"Fixture"> | string
   groupId?: Prisma.StringNullableFilter<"Fixture"> | string | null
+  stage?: Prisma.EnumFixtureStageNullableFilter<"Fixture"> | $Enums.FixtureStage | null
   round?: Prisma.IntFilter<"Fixture"> | number
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
@@ -1082,6 +1111,7 @@ export type FixtureScalarWhereInput = {
 
 export type FixtureCreateWithoutGroupInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1106,6 +1136,7 @@ export type FixtureCreateWithoutGroupInput = {
 export type FixtureUncheckedCreateWithoutGroupInput = {
   id?: string
   tournament_id: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1154,6 +1185,7 @@ export type FixtureUpdateManyWithWhereWithoutGroupInput = {
 
 export type FixtureCreateWithoutHomeTeamInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1179,6 +1211,7 @@ export type FixtureUncheckedCreateWithoutHomeTeamInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1210,6 +1243,7 @@ export type FixtureCreateManyHomeTeamInputEnvelope = {
 
 export type FixtureCreateWithoutAwayTeamInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1235,6 +1269,7 @@ export type FixtureUncheckedCreateWithoutAwayTeamInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1298,6 +1333,7 @@ export type FixtureUpdateManyWithWhereWithoutAwayTeamInput = {
 
 export type FixtureCreateWithoutSourceFixturesInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1323,6 +1359,7 @@ export type FixtureUncheckedCreateWithoutSourceFixturesInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1349,6 +1386,7 @@ export type FixtureCreateOrConnectWithoutSourceFixturesInput = {
 
 export type FixtureCreateWithoutNextFixtureInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1374,6 +1412,7 @@ export type FixtureUncheckedCreateWithoutNextFixtureInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1416,6 +1455,7 @@ export type FixtureUpdateToOneWithWhereWithoutSourceFixturesInput = {
 
 export type FixtureUpdateWithoutSourceFixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1441,6 +1481,7 @@ export type FixtureUncheckedUpdateWithoutSourceFixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1478,6 +1519,7 @@ export type FixtureUpdateManyWithWhereWithoutNextFixtureInput = {
 
 export type FixtureCreateWithoutMatchEventsInput = {
   id?: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1503,6 +1545,7 @@ export type FixtureUncheckedCreateWithoutMatchEventsInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1540,6 +1583,7 @@ export type FixtureUpdateToOneWithWhereWithoutMatchEventsInput = {
 
 export type FixtureUpdateWithoutMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1565,6 +1609,7 @@ export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1587,6 +1632,7 @@ export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
 export type FixtureCreateManyTournamentInput = {
   id?: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1607,6 +1653,7 @@ export type FixtureCreateManyTournamentInput = {
 
 export type FixtureUpdateWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1631,6 +1678,7 @@ export type FixtureUpdateWithoutTournamentInput = {
 export type FixtureUncheckedUpdateWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1654,6 +1702,7 @@ export type FixtureUncheckedUpdateWithoutTournamentInput = {
 export type FixtureUncheckedUpdateManyWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1675,6 +1724,7 @@ export type FixtureUncheckedUpdateManyWithoutTournamentInput = {
 export type FixtureCreateManyGroupInput = {
   id?: string
   tournament_id: string
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1695,6 +1745,7 @@ export type FixtureCreateManyGroupInput = {
 
 export type FixtureUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1719,6 +1770,7 @@ export type FixtureUpdateWithoutGroupInput = {
 export type FixtureUncheckedUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1742,6 +1794,7 @@ export type FixtureUncheckedUpdateWithoutGroupInput = {
 export type FixtureUncheckedUpdateManyWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1764,6 +1817,7 @@ export type FixtureCreateManyHomeTeamInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1785,6 +1839,7 @@ export type FixtureCreateManyAwayTeamInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1804,6 +1859,7 @@ export type FixtureCreateManyAwayTeamInput = {
 
 export type FixtureUpdateWithoutHomeTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1829,6 +1885,7 @@ export type FixtureUncheckedUpdateWithoutHomeTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1852,6 +1909,7 @@ export type FixtureUncheckedUpdateManyWithoutHomeTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1871,6 +1929,7 @@ export type FixtureUncheckedUpdateManyWithoutHomeTeamInput = {
 
 export type FixtureUpdateWithoutAwayTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1896,6 +1955,7 @@ export type FixtureUncheckedUpdateWithoutAwayTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1919,6 +1979,7 @@ export type FixtureUncheckedUpdateManyWithoutAwayTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1940,6 +2001,7 @@ export type FixtureCreateManyNextFixtureInput = {
   id?: string
   tournament_id: string
   groupId?: string | null
+  stage?: $Enums.FixtureStage | null
   round: number
   roundName?: string | null
   matchNumber: number
@@ -1959,6 +2021,7 @@ export type FixtureCreateManyNextFixtureInput = {
 
 export type FixtureUpdateWithoutNextFixtureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1984,6 +2047,7 @@ export type FixtureUncheckedUpdateWithoutNextFixtureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2007,6 +2071,7 @@ export type FixtureUncheckedUpdateManyWithoutNextFixtureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
   round?: Prisma.IntFieldUpdateOperationsInput | number
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2068,6 +2133,7 @@ export type FixtureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   id?: boolean
   tournament_id?: boolean
   groupId?: boolean
+  stage?: boolean
   round?: boolean
   roundName?: boolean
   matchNumber?: boolean
@@ -2098,6 +2164,7 @@ export type FixtureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   tournament_id?: boolean
   groupId?: boolean
+  stage?: boolean
   round?: boolean
   roundName?: boolean
   matchNumber?: boolean
@@ -2125,6 +2192,7 @@ export type FixtureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   id?: boolean
   tournament_id?: boolean
   groupId?: boolean
+  stage?: boolean
   round?: boolean
   roundName?: boolean
   matchNumber?: boolean
@@ -2152,6 +2220,7 @@ export type FixtureSelectScalar = {
   id?: boolean
   tournament_id?: boolean
   groupId?: boolean
+  stage?: boolean
   round?: boolean
   roundName?: boolean
   matchNumber?: boolean
@@ -2170,7 +2239,7 @@ export type FixtureSelectScalar = {
   updated_at?: boolean
 }
 
-export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "groupId" | "round" | "roundName" | "matchNumber" | "startTime" | "homeTeamId" | "homeTeamPlaceholder" | "awayTeamId" | "awayTeamPlaceholder" | "nextFixtureId" | "homeScore" | "awayScore" | "homePenaltyScore" | "awayPenaltyScore" | "status" | "created_at" | "updated_at", ExtArgs["result"]["fixture"]>
+export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "groupId" | "stage" | "round" | "roundName" | "matchNumber" | "startTime" | "homeTeamId" | "homeTeamPlaceholder" | "awayTeamId" | "awayTeamPlaceholder" | "nextFixtureId" | "homeScore" | "awayScore" | "homePenaltyScore" | "awayPenaltyScore" | "status" | "created_at" | "updated_at", ExtArgs["result"]["fixture"]>
 export type FixtureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Fixture$groupArgs<ExtArgs>
@@ -2211,6 +2280,7 @@ export type $FixturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     tournament_id: string
     groupId: string | null
+    stage: $Enums.FixtureStage | null
     round: number
     roundName: string | null
     matchNumber: number
@@ -2660,6 +2730,7 @@ export interface FixtureFieldRefs {
   readonly id: Prisma.FieldRef<"Fixture", 'String'>
   readonly tournament_id: Prisma.FieldRef<"Fixture", 'String'>
   readonly groupId: Prisma.FieldRef<"Fixture", 'String'>
+  readonly stage: Prisma.FieldRef<"Fixture", 'FixtureStage'>
   readonly round: Prisma.FieldRef<"Fixture", 'Int'>
   readonly roundName: Prisma.FieldRef<"Fixture", 'String'>
   readonly matchNumber: Prisma.FieldRef<"Fixture", 'Int'>

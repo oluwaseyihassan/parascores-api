@@ -362,6 +362,13 @@ export type EnumParticipantStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumParticipantStatusFilter<$PrismaModel>
 }
 
+export type EnumFixtureStageNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.FixtureStage | Prisma.EnumFixtureStageFieldRefInput<$PrismaModel> | null
+  in?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel> | $Enums.FixtureStage | null
+}
+
 export type IntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel>
@@ -378,6 +385,16 @@ export type EnumFixtureStatusFilter<$PrismaModel = never> = {
   in?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumFixtureStatusFilter<$PrismaModel> | $Enums.FixtureStatus
+}
+
+export type EnumFixtureStageNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FixtureStage | Prisma.EnumFixtureStageFieldRefInput<$PrismaModel> | null
+  in?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumFixtureStageNullableWithAggregatesFilter<$PrismaModel> | $Enums.FixtureStage | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
 }
 
 export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -730,11 +747,28 @@ export type NestedEnumParticipantStatusWithAggregatesFilter<$PrismaModel = never
   _max?: Prisma.NestedEnumParticipantStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumFixtureStageNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.FixtureStage | Prisma.EnumFixtureStageFieldRefInput<$PrismaModel> | null
+  in?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel> | $Enums.FixtureStage | null
+}
+
 export type NestedEnumFixtureStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.FixtureStatus | Prisma.EnumFixtureStatusFieldRefInput<$PrismaModel>
   in?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumFixtureStatusFilter<$PrismaModel> | $Enums.FixtureStatus
+}
+
+export type NestedEnumFixtureStageNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FixtureStage | Prisma.EnumFixtureStageFieldRefInput<$PrismaModel> | null
+  in?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.FixtureStage[] | Prisma.ListEnumFixtureStageFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumFixtureStageNullableWithAggregatesFilter<$PrismaModel> | $Enums.FixtureStage | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
 }
 
 export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {

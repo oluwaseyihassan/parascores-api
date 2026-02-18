@@ -164,6 +164,7 @@ export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
   groupId: 'groupId',
+  stage: 'stage',
   round: 'round',
   roundName: 'roundName',
   matchNumber: 'matchNumber',

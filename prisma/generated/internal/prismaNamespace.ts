@@ -1351,6 +1351,7 @@ export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
   groupId: 'groupId',
+  stage: 'stage',
   round: 'round',
   roundName: 'roundName',
   matchNumber: 'matchNumber',
@@ -1642,6 +1643,20 @@ export type EnumParticipantStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'ParticipantStatus[]'
  */
 export type ListEnumParticipantStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ParticipantStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FixtureStage'
+ */
+export type EnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage'>
+    
+
+
+/**
+ * Reference to a field of type 'FixtureStage[]'
+ */
+export type ListEnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage[]'>
     
 
 

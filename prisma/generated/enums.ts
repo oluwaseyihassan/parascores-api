@@ -67,6 +67,14 @@ export const FixtureStatus = {
 export type FixtureStatus = (typeof FixtureStatus)[keyof typeof FixtureStatus]
 
 
+export const FixtureStage = {
+  GROUP_STAGE: 'GROUP_STAGE',
+  KNOCKOUT: 'KNOCKOUT'
+} as const
+
+export type FixtureStage = (typeof FixtureStage)[keyof typeof FixtureStage]
+
+
 export const MatchEventType = {
   GOAL: 'GOAL',
   OWN_GOAL: 'OWN_GOAL',
