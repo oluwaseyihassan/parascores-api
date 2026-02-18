@@ -90,11 +90,13 @@ export class TournamentsController {
   @Get(':id/fixtures')
   @ApiOperation({ summary: 'Get fixtures of a tournament' })
   @ApiQuery({ name: 'round', required: false, type: Number, description: 'Filter by round number' })
+  @ApiQuery({ name: 'stage', required: false, type: String, description: 'Filter by stage (GROUP_STAGE or KNOCKOUT)' })
   async getFixtures(
     @Param('id') id: string,
     @Query('round') round?: string,
+    @Query('stage') stage?: string,
   ) {
-    return this.tournamentsService.getFixtures(id, round ? parseInt(round, 10) : undefined);
+    return this.tournamentsService.getFixtures(id, round ? parseInt(round, 10) : undefined, stage as any);
   }
 
   
