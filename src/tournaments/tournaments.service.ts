@@ -8,7 +8,7 @@ import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { AddSponsorDto, UpdateSponsorDto } from './dto/add-sponsor.dto';
 import { AddSocialDto, UpdateSocialDto } from './dto/add-social.dto';
 import { AdvanceGroupStageDto } from './dto/advance-group-stage.dto';
-import { Visibility, TournamentType, Participant, Tournament, Fixture, Group } from 'prisma/generated/client';
+import { Visibility, TournamentType, FixtureStage, Participant, Tournament, Fixture, Group } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -406,7 +406,8 @@ export class TournamentsService {
     
     const knockoutRounds = await this.generateKnockoutFixtures(tournament, qualifiedParticipants, {
         startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
-        intervalMinutes: 120 // Standard knockout time
+        intervalMinutes: 120, // Standard knockout time
+        stage: FixtureStage.KNOCKOUT,
     });
     
     const totalNew = knockoutRounds.reduce((sum, r) => sum + r.fixtures.length, 0);
@@ -422,7 +423,7 @@ export class TournamentsService {
   private async generateKnockoutFixtures(
     tournament: Tournament,
     participants: Participant[],
-    options: { startDate: Date; intervalMinutes: number },
+    options: { startDate: Date; intervalMinutes: number; stage?: FixtureStage },
   ) {
     const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
     const n = participants.length;
@@ -486,6 +487,7 @@ export class TournamentsService {
             homeTeamPlaceholder,
             awayTeamPlaceholder,
             status: 'SCHEDULED',
+            ...(options.stage && { stage: options.stage }),
           },
         });
 
@@ -697,6 +699,7 @@ export class TournamentsService {
                 homeTeamId: home.id,
                 awayTeamId: away.id,
                 status: 'SCHEDULED',
+                stage: FixtureStage.GROUP_STAGE,
               },
             });
             roundsMap[round].push(fixture);
@@ -742,6 +745,7 @@ export class TournamentsService {
               awayTeamId: f.homeTeamId,
               status: 'SCHEDULED',
               groupId: f.groupId,
+              stage: FixtureStage.GROUP_STAGE,
             },
           });
           secondLegFixtures.push(fixture);
@@ -912,7 +916,7 @@ export class TournamentsService {
   }
 
   // Get fixtures for a tournament
-  async getFixtures(tournamentId: string, round?: number) {
+  async getFixtures(tournamentId: string, round?: number, stage?: FixtureStage) {
     const tournament = await this.db.tournament.findUnique({
       where: { id: tournamentId },
     });
@@ -921,12 +925,16 @@ export class TournamentsService {
       throw new NotFoundException('Tournament not found');
     }
 
-    const whereClause: { tournament_id: string; round?: number } = {
+    const whereClause: { tournament_id: string; round?: number; stage?: FixtureStage } = {
       tournament_id: tournamentId,
     };
 
     if (round !== undefined) {
       whereClause.round = round;
+    }
+
+    if (stage !== undefined) {
+      whereClause.stage = stage;
     }
 
     const fixtures = await this.db.fixture.findMany({
