@@ -325,7 +325,7 @@ export class TournamentsService {
     // For HYBRID, we assume the first set of fixtures are group stage.
     // If we have "rounds", we could check round numbers, but easiest is to check if there are ANY uncompleted fixtures
     // that belong to a group.
-    const groupFixtures = tournament.fixtures.filter(f => f.groupId !== null);
+    const groupFixtures = tournament.fixtures.filter(f => f.stage === FixtureStage.GROUP_STAGE);
     
     if (groupFixtures.length === 0) {
         throw new BadRequestException('No group stage fixtures found. Generate fixtures first.');
