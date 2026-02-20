@@ -1,4 +1,4 @@
-import { IsBoolean, IsDateString, IsEnum, IsInt, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsDateString, IsEnum, IsInt, IsNotEmpty, IsObject, IsOptional, IsString, Matches } from 'class-validator';
 import { TournamentType, ParticipantType, Visibility } from 'prisma/generated/client';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -7,6 +7,12 @@ export class CreateTournamentDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @ApiPropertyOptional({ description: 'Unique custom name/slug for the tournament URL', example: 'summer-championship-2024' })
+  @IsString()
+  @IsOptional()
+  @Matches(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { message: 'customName must be a valid slug (lowercase letters, numbers, and hyphens only)' })
+  customName?: string;
 
   @ApiPropertyOptional({ description: 'A brief description of the tournament', example: 'Annual summer tournament for local teams.' })
   @IsString()
