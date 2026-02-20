@@ -93,6 +93,7 @@ enum FixtureStage {
 model Tournament {
   id          String  @id @default(cuid())
   name        String
+  customName  String? @unique
   description String?
 
   // Branding
