@@ -43,6 +43,15 @@ export class TournamentsController {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
   }
 
+  // Check if a custom name is available
+  @Public()
+  @Get('check-name/:customName')
+  @ApiOperation({ summary: 'Check if a tournament custom name is available' })
+  async checkName(@Param('customName') customName: string) {
+    return this.tournamentsService.checkCustomName(customName);
+  }
+
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get a tournament by ID' })
   async findOne(@Param('id') id: string) {
