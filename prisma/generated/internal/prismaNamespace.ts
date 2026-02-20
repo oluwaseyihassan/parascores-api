@@ -1293,6 +1293,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const TournamentScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  customName: 'customName',
   description: 'description',
   logoUrl: 'logoUrl',
   bannerUrl: 'bannerUrl',
