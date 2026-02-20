@@ -17,6 +17,15 @@ export class TournamentsService {
 
   async create(userId: string, dto: CreateTournamentDto) {
     const { start_date, end_date, ...rest } = dto;
+
+    // Check customName uniqueness
+    if (dto.customName) {
+      const existing = await this.db.tournament.findUnique({ where: { customName: dto.customName } });
+      if (existing) {
+        throw new BadRequestException(`The custom name '${dto.customName}' is already taken`);
+      }
+    }
+
     const tournament = await this.db.tournament.create({
       data: {
         ...rest,
@@ -85,10 +94,16 @@ export class TournamentsService {
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
-  // fetch tournament by id
-  async findOne(id: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id },
+  // fetch tournament by id or customName
+  async findOne(identifier: string) {
+    // Check if it looks like a CUID or a customName (slug)
+    const tournament = await this.db.tournament.findFirst({
+      where: {
+        OR: [
+          { id: identifier },
+          { customName: identifier },
+        ],
+      },
       include: {
         sponsors: true,
         socials: true,
@@ -100,9 +115,17 @@ export class TournamentsService {
     return ResponseUtil.success(tournament);
   }
 
+  // Check if a custom name is available
+  async checkCustomName(customName: string) {
+    const existing = await this.db.tournament.findUnique({
+      where: { customName },
+    });
+    return ResponseUtil.success({ customName, available: !existing });
+  }
+
   async addParticipant(tournamentId: string, dto: AddParticipantDto, userIdRef: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: true,
         admins: true,
@@ -142,7 +165,7 @@ export class TournamentsService {
 
     const participant = await this.db.participant.create({
       data: {
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
         user_id: dto.userId,
         customName: dto.customName,
         team_id: dto.teamId,
@@ -156,8 +179,14 @@ export class TournamentsService {
 
   // get participants of a tournament
   async getParticipants(tournamentId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] }
+    });
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
     const participants = await this.db.participant.findMany({
-      where: { tournament_id: tournamentId },
+      where: { tournament_id: tournament.id },
       include: {
         players: true,
       },
@@ -170,8 +199,8 @@ export class TournamentsService {
 
   // Generate fixtures for a tournament
   async generateFixtures(tournamentId: string, dto: GenerateFixturesDto, userId: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: {
           where: { status: 'CONFIRMED' },
@@ -202,10 +231,10 @@ export class TournamentsService {
     // Clear existing fixtures if requested
     if (dto.clearExisting && tournament.fixtures.length > 0) {
       await this.db.fixture.deleteMany({
-        where: { tournament_id: tournamentId },
+        where: { tournament_id: tournament.id },
       });
       await this.db.standing.deleteMany({
-        where: { tournament_id: tournamentId },
+        where: { tournament_id: tournament.id },
       });
     }
 
@@ -286,8 +315,8 @@ export class TournamentsService {
 
   // Advance group stage to knockout
   async advanceGroupStage(tournamentId: string, userId: string, dto: AdvanceGroupStageDto) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: {
           include: {
@@ -362,7 +391,7 @@ export class TournamentsService {
         // Actually, `initializeStandings` created them. We can fetch them.
         
         const standings = await this.db.standing.findMany({
-            where: { tournament_id: tournamentId },
+            where: { tournament_id: tournament.id },
             orderBy: [
                 { points: 'desc' },
                 { goalDiff: 'desc' },
@@ -917,8 +946,8 @@ export class TournamentsService {
 
   // Get fixtures for a tournament
   async getFixtures(tournamentId: string, round?: number, stage?: FixtureStage) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -926,7 +955,7 @@ export class TournamentsService {
     }
 
     const whereClause: { tournament_id: string; round?: number; stage?: FixtureStage } = {
-      tournament_id: tournamentId,
+      tournament_id: tournament.id,
     };
 
     if (round !== undefined) {
@@ -961,8 +990,8 @@ export class TournamentsService {
 
   // Get tournament standings
   async getStandings(tournamentId: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -970,7 +999,7 @@ export class TournamentsService {
     }
 
     const standings = await this.db.standing.findMany({
-      where: { tournament_id: tournamentId },
+      where: { tournament_id: tournament.id },
       include: {
         participant: {
           include: {
@@ -1197,8 +1226,8 @@ export class TournamentsService {
 
   // Add a sponsor to a tournament
   async addSponsor(tournamentId: string, dto: AddSponsorDto) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -1210,7 +1239,7 @@ export class TournamentsService {
         name: dto.name,
         logoUrl: dto.logoUrl,
         websiteUrl: dto.websiteUrl,
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
       },
     });
 
@@ -1219,8 +1248,8 @@ export class TournamentsService {
 
   // Get all sponsors for a tournament
   async getSponsors(tournamentId: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -1228,7 +1257,7 @@ export class TournamentsService {
     }
 
     const sponsors = await this.db.sponsor.findMany({
-      where: { tournament_id: tournamentId },
+      where: { tournament_id: tournament.id },
       orderBy: { created_at: 'asc' },
     });
 
@@ -1278,8 +1307,8 @@ export class TournamentsService {
 
   // Add a social link to a tournament
   async addSocial(tournamentId: string, dto: AddSocialDto) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -1291,7 +1320,7 @@ export class TournamentsService {
         platform: dto.platform,
         url: dto.url,
         handle: dto.handle,
-        tournament_id: tournamentId,
+        tournament_id: tournament.id,
       },
     });
 
@@ -1300,8 +1329,8 @@ export class TournamentsService {
 
   // Get all socials for a tournament
   async getSocials(tournamentId: string) {
-    const tournament = await this.db.tournament.findUnique({
-      where: { id: tournamentId },
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
 
     if (!tournament) {
@@ -1309,7 +1338,7 @@ export class TournamentsService {
     }
 
     const socials = await this.db.social.findMany({
-      where: { tournament_id: tournamentId },
+      where: { tournament_id: tournament.id },
       orderBy: { created_at: 'asc' },
     });
 
