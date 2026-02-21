@@ -3,9 +3,12 @@ import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { AddMatchEventDto } from './dto/add-match-event.dto';
 import { ResponseUtil } from 'src/utils/api-response';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class FixturesService {
+  public liveFixturesSubject = new Subject<{ type: string; data: any }>();
+
   constructor(private readonly db: DatabaseService) {}
 
   // Get a single fixture by ID
@@ -29,6 +32,16 @@ export class FixturesService {
         },
         matchEvents: {
           orderBy: { minute: 'asc' },
+          include: {
+            player: true,
+            relatedPlayer: true,
+            participant: {
+              include: {
+                team: true,
+                user: true
+              }
+            }
+          }
         },
         tournament: {
           select: { id: true, name: true, sport: true },
@@ -119,12 +132,14 @@ export class FixturesService {
           include: {
             user: { select: { id: true, name: true } },
             team: { select: { id: true, name: true } },
+            players: true,
           },
         },
         awayTeam: {
           include: {
             user: { select: { id: true, name: true } },
             team: { select: { id: true, name: true } },
+            players: true,
           },
         },
         tournament: { select: { id: true, type: true } },
@@ -146,6 +161,9 @@ export class FixturesService {
          }
       }
     }
+
+    // Emit live update
+    this.liveFixturesSubject.next({ type: 'fixture_updated', data: updatedFixture });
 
     return ResponseUtil.success(updatedFixture);
   }
@@ -298,6 +316,9 @@ export class FixturesService {
       },
     });
 
+    // Emit live update
+    this.liveFixturesSubject.next({ type: 'event_added', data: event });
+
     return ResponseUtil.success(event);
   }
 
@@ -342,6 +363,48 @@ export class FixturesService {
       where: { id: eventId },
     });
 
+    // Emit live update
+    this.liveFixturesSubject.next({ type: 'event_deleted', data: { eventId, fixtureId: event.fixture_id } });
+
     return ResponseUtil.success({ deleted: true });
+  }
+
+  // Update a match event
+  async updateEvent(eventId: string, dto: any) {
+    const event = await this.db.matchEvent.findUnique({
+      where: { id: eventId },
+    });
+
+    if (!event) {
+      throw new NotFoundException('Event not found');
+    }
+
+    const updatedEvent = await this.db.matchEvent.update({
+      where: { id: eventId },
+      data: {
+        ...(dto.type !== undefined && { type: dto.type }),
+        ...(dto.minute !== undefined && { minute: dto.minute }),
+        ...(dto.participantId !== undefined && { participant_id: dto.participantId }),
+        ...(dto.playerId !== undefined && { playerId: dto.playerId }),
+        ...(dto.relatedPlayerId !== undefined && { relatedPlayerId: dto.relatedPlayerId }),
+        ...(dto.description !== undefined && { description: dto.description }),
+        ...(dto.metadata !== undefined && { metadata: dto.metadata }),
+      },
+      include: {
+        player: true,
+        relatedPlayer: true,
+        participant: {
+          include: {
+            team: { select: { id: true, name: true } },
+            user: { select: { id: true, name: true } }
+          },
+        },
+      },
+    });
+
+    // Emit live update
+    this.liveFixturesSubject.next({ type: 'event_updated', data: updatedEvent });
+
+    return ResponseUtil.success(updatedEvent);
   }
 }
