@@ -1,14 +1,27 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Sse, MessageEvent } from '@nestjs/common';
 import { FixturesService } from './fixtures.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { AddMatchEventDto } from './dto/add-match-event.dto';
+import { UpdateMatchEventDto } from './dto/update-match-event.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @ApiTags('fixtures')
 @Controller('fixtures')
 export class FixturesController {
   constructor(private readonly fixturesService: FixturesService) {}
+
+  // SSE stream for live match updates
+  @Public()
+  @Sse('live/stream')
+  @ApiOperation({ summary: 'SSE stream for live fixtures' })
+  streamLiveFixtures(): Observable<MessageEvent> {
+    return this.fixturesService.liveFixturesSubject.asObservable().pipe(
+      map((payload) => ({ data: payload } as MessageEvent)),
+    );
+  }
 
   // Get all live fixtures
   @Public()
@@ -52,6 +65,16 @@ export class FixturesController {
     @Body() dto: AddMatchEventDto
   ) {
     return this.fixturesService.addEvent(id, dto);
+  }
+
+  // Update an event
+  @Patch('events/:eventId')
+  @ApiOperation({ summary: 'Update a match event' })
+  async updateEvent(
+    @Param('eventId') eventId: string,
+    @Body() dto: UpdateMatchEventDto
+  ) {
+    return this.fixturesService.updateEvent(eventId, dto);
   }
 
   // Delete an event
