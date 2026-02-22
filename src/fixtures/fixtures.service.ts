@@ -56,6 +56,50 @@ export class FixturesService {
     return ResponseUtil.success(fixture);
   }
 
+  // Get all fixtures for a specific tournament
+  async getTournamentFixtures(tournamentId: string, round?: number, stage?: any) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const whereClause: any = {
+      tournament_id: tournament.id,
+    };
+
+    if (round !== undefined) {
+      whereClause.round = round;
+    }
+
+    if (stage !== undefined) {
+      whereClause.stage = stage;
+    }
+
+    const fixtures = await this.db.fixture.findMany({
+      where: whereClause,
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+      },
+      orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
+    });
+
+    return ResponseUtil.success(fixtures);
+  }
+
   // Get all live fixtures
   async findLive() {
     const fixtures = await this.db.fixture.findMany({

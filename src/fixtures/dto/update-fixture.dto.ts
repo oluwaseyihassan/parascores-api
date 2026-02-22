@@ -20,22 +20,22 @@ export class UpdateFixtureDto {
   @IsOptional()
   awayScore?: number;
 
-  @ApiPropertyOptional({ description: 'Match start time', example: '2024-06-01T15:00:00Z' })
-  @IsDateString()
-  @IsOptional()
-  startTime?: string;
-
-  @ApiPropertyOptional({ description: 'Home team penalty score (for knockouts)', example: 5 })
+  @ApiPropertyOptional({ description: 'Home team penalty score (if penalty shootout)', example: 5 })
   @IsInt()
   @Min(0)
   @IsOptional()
   homePenaltyScore?: number;
 
-  @ApiPropertyOptional({ description: 'Away team penalty score (for knockouts)', example: 4 })
+  @ApiPropertyOptional({ description: 'Away team penalty score (if penalty shootout)', example: 4 })
   @IsInt()
   @Min(0)
   @IsOptional()
   awayPenaltyScore?: number;
+
+  @ApiPropertyOptional({ description: 'Match start time', example: '2024-06-01T15:00:00Z' })
+  @IsDateString()
+  @IsOptional()
+  startTime?: string;
 
   @ApiPropertyOptional({ description: 'Home team ID', example: 'participant-id' })
   @IsString()

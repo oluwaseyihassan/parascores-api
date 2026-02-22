@@ -11,6 +11,9 @@ import { DatabaseModule } from './database/database.module';
 import { TournamentsModule } from './tournaments/tournaments.module';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { UploadModule } from './upload/upload.module';
+import { SponsorsModule } from './sponsors/sponsors.module';
+import { SocialsModule } from './socials/socials.module';
+import { ParticipantsModule } from './participants/participants.module';
 
 @Module({
   imports: [
@@ -28,6 +31,9 @@ import { UploadModule } from './upload/upload.module';
     TournamentsModule,
     FixturesModule,
     UploadModule,
+    SponsorsModule,
+    SocialsModule,
+    ParticipantsModule,
   ],
   controllers: [AppController],
   providers: [

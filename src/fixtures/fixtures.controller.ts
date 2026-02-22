@@ -1,17 +1,59 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Sse, MessageEvent } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Sse, MessageEvent, Req, Query } from '@nestjs/common';
 import { FixturesService } from './fixtures.service';
+import { FixtureGeneratorService } from './fixture-generator/fixture-generator.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { AddMatchEventDto } from './dto/add-match-event.dto';
 import { UpdateMatchEventDto } from './dto/update-match-event.dto';
+import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
+import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiQuery } from '@nestjs/swagger';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @ApiTags('fixtures')
 @Controller('fixtures')
 export class FixturesController {
-  constructor(private readonly fixturesService: FixturesService) {}
+  constructor(
+    private readonly fixturesService: FixturesService,
+    private readonly fixtureGeneratorService: FixtureGeneratorService
+  ) {}
+
+  // Get all fixtures for a specific tournament
+  @Public()
+  @Get('tournaments/:tournamentId')
+  @ApiOperation({ summary: 'Get fixtures of a tournament' })
+  @ApiQuery({ name: 'round', required: false, type: Number, description: 'Filter by round number' })
+  @ApiQuery({ name: 'stage', required: false, type: String, description: 'Filter by stage (GROUP_STAGE or KNOCKOUT)' })
+  async getTournamentFixtures(
+    @Param('tournamentId') tournamentId: string,
+    @Query('round') round?: string,
+    @Query('stage') stage?: string,
+  ) {
+    return this.fixturesService.getTournamentFixtures(tournamentId, round ? parseInt(round, 10) : undefined, stage);
+  }
+
+  // Generate fixtures for a tournament
+  @Post('tournaments/:tournamentId/generate')
+  @ApiOperation({ summary: 'Generate fixtures for a tournament' })
+  async generateFixtures(
+    @Param('tournamentId') tournamentId: string,
+    @Body() generateFixturesDto: GenerateFixturesDto,
+    @Req() req,
+  ) {
+    return this.fixtureGeneratorService.generateFixtures(tournamentId, generateFixturesDto, req.user.sub);
+  }
+
+  // Advance group stage to knockout
+  @Post('tournaments/:tournamentId/groups/advance')
+  @ApiOperation({ summary: 'Advance group stage to knockout stage' })
+  async advanceGroupStage(
+    @Param('tournamentId') tournamentId: string,
+    @Body() dto: AdvanceGroupStageDto,
+    @Req() req,
+  ) {
+    return this.fixtureGeneratorService.advanceGroupStage(tournamentId, req.user.sub, dto);
+  }
 
   // SSE stream for live match updates
   @Public()
