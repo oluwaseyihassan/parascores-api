@@ -52,7 +52,10 @@ export class TournamentsController {
   }
 
 
-
-
+  @Public()
+  @Get(':id/standings')
+  @ApiOperation({ summary: 'Get standings for a tournament' })
+  async getStandings(@Param('id') id: string) {
+    return this.tournamentsService.getStandings(id);
+  }
 }
-
