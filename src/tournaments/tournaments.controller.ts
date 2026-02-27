@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param, Query, Req } from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
+import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -51,11 +52,14 @@ export class TournamentsController {
     return this.tournamentsService.findOne(id);
   }
 
-
-  @Public()
-  @Get(':id/standings')
-  @ApiOperation({ summary: 'Get standings for a tournament' })
-  async getStandings(@Param('id') id: string) {
-    return this.tournamentsService.getStandings(id);
+  @Patch(':id')
+  @ApiOperation({ summary: 'Update a tournament' })
+  async update(
+    @Param('id') id: string,
+    @Body() updateTournamentDto: UpdateTournamentDto,
+    @Req() req,
+  ) {
+    return this.tournamentsService.update(id, req.user.sub, updateTournamentDto);
   }
+
 }
