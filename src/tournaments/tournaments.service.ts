@@ -1,6 +1,7 @@
 import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
+import { UpdateTournamentDto } from './dto/update-tournament.dto';
 
 import { Visibility, FixtureStage } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -29,6 +30,33 @@ export class TournamentsService {
       },
     });
     return ResponseUtil.success(tournament);
+  }
+
+  async update(id: string, userId: string, dto: UpdateTournamentDto) {
+    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (tournament.organizer_id !== userId) throw new ForbiddenException('Not authorized');
+
+    const { start_date, end_date, ...rest } = dto;
+    
+    // Check customName uniqueness if it's being updated
+    if (dto.customName && dto.customName !== tournament.customName) {
+      const existing = await this.db.tournament.findUnique({ where: { customName: dto.customName } });
+      if (existing) {
+        throw new BadRequestException(`The custom name '${dto.customName}' is already taken`);
+      }
+    }
+
+    const updated = await this.db.tournament.update({
+      where: { id },
+      data: {
+        ...rest,
+        ...(start_date && { start_date: new Date(start_date) }),
+        ...(end_date && { end_date: new Date(end_date) }),
+      },
+    });
+
+    return ResponseUtil.success(updated);
   }
 
   async findAllPublic(page: number = 1, limit: number = 10) {
@@ -119,48 +147,4 @@ export class TournamentsService {
 
 
 
-  // Get tournament standings
-  async getStandings(tournamentId: string) {
-    const tournament = await this.db.tournament.findFirst({
-      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
-    });
-
-    if (!tournament) {
-      throw new NotFoundException('Tournament not found');
-    }
-
-    const standings = await this.db.standing.findMany({
-      where: { tournament_id: tournament.id },
-      include: {
-        participant: {
-          include: {
-            team: true,
-            user: true,
-          }
-        }
-      },
-      orderBy: [
-        { group: 'asc' },
-        { points: 'desc' },
-        { goalDiff: 'desc' },
-        { goalsFor: 'desc' },
-        { played: 'asc' },
-      ]
-    });
-
-    return ResponseUtil.success({
-      standings: standings.map(s => ({
-        ...s,
-        participantName: s.participant?.team?.name || s.participant?.customName || s.participant?.user?.name || 'Unknown',
-      }))
-    });
-  }
-
-
-
-
-
-
 }
-
-
