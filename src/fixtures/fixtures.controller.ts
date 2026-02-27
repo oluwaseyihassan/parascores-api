@@ -2,8 +2,6 @@ import { Controller, Get, Post, Patch, Delete, Body, Param, Sse, MessageEvent, R
 import { FixturesService } from './fixtures.service';
 import { FixtureGeneratorService } from './fixture-generator/fixture-generator.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
-import { AddMatchEventDto } from './dto/add-match-event.dto';
-import { UpdateMatchEventDto } from './dto/update-match-event.dto';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
@@ -91,38 +89,5 @@ export class FixturesController {
     return this.fixturesService.update(id, dto);
   }
 
-  // Get events for a fixture
-  @Public()
-  @Get(':id/events')
-  @ApiOperation({ summary: 'Get all events for a fixture' })
-  async getEvents(@Param('id') id: string) {
-    return this.fixturesService.getEvents(id);
-  }
 
-  // Add an event to a fixture
-  @Post(':id/events')
-  @ApiOperation({ summary: 'Add an event to a fixture (goal, card, etc.)' })
-  async addEvent(
-    @Param('id') id: string,
-    @Body() dto: AddMatchEventDto
-  ) {
-    return this.fixturesService.addEvent(id, dto);
-  }
-
-  // Update an event
-  @Patch('events/:eventId')
-  @ApiOperation({ summary: 'Update a match event' })
-  async updateEvent(
-    @Param('eventId') eventId: string,
-    @Body() dto: UpdateMatchEventDto
-  ) {
-    return this.fixturesService.updateEvent(eventId, dto);
-  }
-
-  // Delete an event
-  @Delete('events/:eventId')
-  @ApiOperation({ summary: 'Delete a match event' })
-  async deleteEvent(@Param('eventId') eventId: string) {
-    return this.fixturesService.deleteEvent(eventId);
-  }
 }
