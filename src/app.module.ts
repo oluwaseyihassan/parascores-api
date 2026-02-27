@@ -14,6 +14,9 @@ import { UploadModule } from './upload/upload.module';
 import { SponsorsModule } from './sponsors/sponsors.module';
 import { SocialsModule } from './socials/socials.module';
 import { ParticipantsModule } from './participants/participants.module';
+import { PlayersModule } from './players/players.module';
+import { MatchEventsModule } from './match-events/match-events.module';
+import { StandingsModule } from './standings/standings.module';
 
 @Module({
   imports: [
@@ -34,6 +37,9 @@ import { ParticipantsModule } from './participants/participants.module';
     SponsorsModule,
     SocialsModule,
     ParticipantsModule,
+    PlayersModule,
+    MatchEventsModule,
+    StandingsModule,
   ],
   controllers: [AppController],
   providers: [
