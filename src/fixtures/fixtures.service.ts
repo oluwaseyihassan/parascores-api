@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
-import { AddMatchEventDto } from './dto/add-match-event.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 
@@ -191,6 +190,7 @@ export class FixturesService {
     });
 
     // Handle Match Progression and Standings
+    // Run recalculation if the fixture is transitioning to COMPLETED, or if it was ALREADY COMPLETED and got updated
     if (updatedFixture.status === 'COMPLETED') {
       const tournament = updatedFixture.tournament;
       
@@ -328,127 +328,5 @@ export class FixturesService {
     }
   }
 
-  // Add a match event (goal, card, substitution, etc.)
-  async addEvent(fixtureId: string, dto: AddMatchEventDto) {
-    const fixture = await this.db.fixture.findUnique({
-      where: { id: fixtureId },
-    });
 
-    if (!fixture) {
-      throw new NotFoundException('Fixture not found');
-    }
-
-    const event = await this.db.matchEvent.create({
-      data: {
-        fixture_id: fixtureId,
-        type: dto.type,
-        minute: dto.minute,
-        participant_id: dto.participantId,
-        playerId: dto.playerId,
-        relatedPlayerId: dto.relatedPlayerId,
-        description: dto.description,
-        metadata: dto.metadata,
-      },
-      include: {
-        player: true,
-        relatedPlayer: true,
-        participant: {
-          include: {
-            team: { select: { id: true, name: true } },
-          },
-        },
-      },
-    });
-
-    // Emit live update
-    this.liveFixturesSubject.next({ type: 'event_added', data: event });
-
-    return ResponseUtil.success(event);
-  }
-
-  // Get all events for a fixture
-  async getEvents(fixtureId: string) {
-    const fixture = await this.db.fixture.findUnique({
-      where: { id: fixtureId },
-    });
-
-    if (!fixture) {
-      throw new NotFoundException('Fixture not found');
-    }
-
-    const events = await this.db.matchEvent.findMany({
-      where: { fixture_id: fixtureId },
-      include: {
-        player: true,
-        relatedPlayer: true,
-        participant: {
-          include: {
-            team: { select: { id: true, name: true } },
-          },
-        },
-      },
-      orderBy: { minute: 'asc' },
-    });
-
-    return ResponseUtil.success(events);
-  }
-
-  // Delete a match event
-  async deleteEvent(eventId: string) {
-    const event = await this.db.matchEvent.findUnique({
-      where: { id: eventId },
-    });
-
-    if (!event) {
-      throw new NotFoundException('Event not found');
-    }
-
-    await this.db.matchEvent.delete({
-      where: { id: eventId },
-    });
-
-    // Emit live update
-    this.liveFixturesSubject.next({ type: 'event_deleted', data: { eventId, fixtureId: event.fixture_id } });
-
-    return ResponseUtil.success({ deleted: true });
-  }
-
-  // Update a match event
-  async updateEvent(eventId: string, dto: any) {
-    const event = await this.db.matchEvent.findUnique({
-      where: { id: eventId },
-    });
-
-    if (!event) {
-      throw new NotFoundException('Event not found');
-    }
-
-    const updatedEvent = await this.db.matchEvent.update({
-      where: { id: eventId },
-      data: {
-        ...(dto.type !== undefined && { type: dto.type }),
-        ...(dto.minute !== undefined && { minute: dto.minute }),
-        ...(dto.participantId !== undefined && { participant_id: dto.participantId }),
-        ...(dto.playerId !== undefined && { playerId: dto.playerId }),
-        ...(dto.relatedPlayerId !== undefined && { relatedPlayerId: dto.relatedPlayerId }),
-        ...(dto.description !== undefined && { description: dto.description }),
-        ...(dto.metadata !== undefined && { metadata: dto.metadata }),
-      },
-      include: {
-        player: true,
-        relatedPlayer: true,
-        participant: {
-          include: {
-            team: { select: { id: true, name: true } },
-            user: { select: { id: true, name: true } }
-          },
-        },
-      },
-    });
-
-    // Emit live update
-    this.liveFixturesSubject.next({ type: 'event_updated', data: updatedEvent });
-
-    return ResponseUtil.success(updatedEvent);
-  }
 }
