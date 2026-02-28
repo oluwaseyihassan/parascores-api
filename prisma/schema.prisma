@@ -142,7 +142,7 @@ model Group {
   id   String @id @default(cuid())
   name String
 
-  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
 
   participants Participant[]
@@ -155,7 +155,7 @@ model Group {
 model Participant {
   id String @id @default(cuid())
 
-  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
 
   user    User?   @relation(fields: [user_id], references: [id])
@@ -186,7 +186,7 @@ model Participant {
 model Fixture {
   id String @id @default(cuid())
 
-  tournament    Tournament @relation(fields: [tournament_id], references: [id])
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
 
   group   Group?  @relation(fields: [groupId], references: [id])
