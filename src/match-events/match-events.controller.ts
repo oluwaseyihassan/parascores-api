@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MatchEventsService } from './match-events.service';
 import { CreateMatchEventDto } from './dto/create-match-event.dto';
 import { UpdateMatchEventDto } from './dto/update-match-event.dto';
@@ -13,8 +21,8 @@ export class MatchEventsController {
   @Post('fixture/:fixtureId')
   @ApiOperation({ summary: 'Add a new match event' })
   create(
-    @Param('fixtureId') fixtureId: string, 
-    @Body() createMatchEventDto: CreateMatchEventDto
+    @Param('fixtureId') fixtureId: string,
+    @Body() createMatchEventDto: CreateMatchEventDto,
   ) {
     return this.matchEventsService.create(fixtureId, createMatchEventDto);
   }
@@ -35,7 +43,10 @@ export class MatchEventsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a match event' })
-  update(@Param('id') id: string, @Body() updateMatchEventDto: UpdateMatchEventDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMatchEventDto: UpdateMatchEventDto,
+  ) {
     return this.matchEventsService.update(id, updateMatchEventDto);
   }
 

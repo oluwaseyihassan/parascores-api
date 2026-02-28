@@ -31,7 +31,9 @@ export class MatchEventsService {
         type: createMatchEventDto.type,
         minute: createMatchEventDto.minute,
         description: createMatchEventDto.description,
-        metadata: createMatchEventDto.metadata ? JSON.parse(JSON.stringify(createMatchEventDto.metadata)) : undefined,
+        metadata: createMatchEventDto.metadata
+          ? JSON.parse(JSON.stringify(createMatchEventDto.metadata))
+          : undefined,
       },
       include: {
         player: true,
@@ -41,11 +43,14 @@ export class MatchEventsService {
           },
         },
         relatedPlayer: true,
-      }
+      },
     });
 
     // Emit live update
-    this.fixturesService.liveFixturesSubject.next({ type: 'event_added', data: event });
+    this.fixturesService.liveFixturesSubject.next({
+      type: 'event_added',
+      data: event,
+    });
 
     return ResponseUtil.success(event);
   }
@@ -70,9 +75,9 @@ export class MatchEventsService {
           },
         },
         relatedPlayer: true,
-      }
+      },
     });
-    
+
     return ResponseUtil.success(events);
   }
 
@@ -88,7 +93,7 @@ export class MatchEventsService {
         },
         relatedPlayer: true,
         fixture: true,
-      }
+      },
     });
 
     if (!event) {
@@ -106,19 +111,35 @@ export class MatchEventsService {
 
     let parsedMetadata = undefined;
     if (updateMatchEventDto.metadata !== undefined) {
-      parsedMetadata = updateMatchEventDto.metadata ? JSON.parse(JSON.stringify(updateMatchEventDto.metadata)) : null;
+      parsedMetadata = updateMatchEventDto.metadata
+        ? JSON.parse(JSON.stringify(updateMatchEventDto.metadata))
+        : null;
     }
 
     const updatedEvent = await this.db.matchEvent.update({
       where: { id },
       data: {
-        ...(updateMatchEventDto.participantId !== undefined && { participant_id: updateMatchEventDto.participantId }),
-        ...(updateMatchEventDto.playerId !== undefined && { playerId: updateMatchEventDto.playerId }),
-        ...(updateMatchEventDto.relatedParticipantId !== undefined && { relatedParticipant_id: updateMatchEventDto.relatedParticipantId }),
-        ...(updateMatchEventDto.relatedPlayerId !== undefined && { relatedPlayerId: updateMatchEventDto.relatedPlayerId }),
-        ...(updateMatchEventDto.type !== undefined && { type: updateMatchEventDto.type as any }),
-        ...(updateMatchEventDto.minute !== undefined && { minute: updateMatchEventDto.minute }),
-        ...(updateMatchEventDto.description !== undefined && { description: updateMatchEventDto.description }),
+        ...(updateMatchEventDto.participantId !== undefined && {
+          participant_id: updateMatchEventDto.participantId,
+        }),
+        ...(updateMatchEventDto.playerId !== undefined && {
+          playerId: updateMatchEventDto.playerId,
+        }),
+        ...(updateMatchEventDto.relatedParticipantId !== undefined && {
+          relatedParticipant_id: updateMatchEventDto.relatedParticipantId,
+        }),
+        ...(updateMatchEventDto.relatedPlayerId !== undefined && {
+          relatedPlayerId: updateMatchEventDto.relatedPlayerId,
+        }),
+        ...(updateMatchEventDto.type !== undefined && {
+          type: updateMatchEventDto.type as any,
+        }),
+        ...(updateMatchEventDto.minute !== undefined && {
+          minute: updateMatchEventDto.minute,
+        }),
+        ...(updateMatchEventDto.description !== undefined && {
+          description: updateMatchEventDto.description,
+        }),
         ...(parsedMetadata !== undefined && { metadata: parsedMetadata }),
       },
       include: {
@@ -130,11 +151,14 @@ export class MatchEventsService {
           },
         },
         relatedPlayer: true,
-      }
+      },
     });
 
     // Emit live update
-    this.fixturesService.liveFixturesSubject.next({ type: 'event_updated', data: updatedEvent });
+    this.fixturesService.liveFixturesSubject.next({
+      type: 'event_updated',
+      data: updatedEvent,
+    });
 
     return ResponseUtil.success(updatedEvent);
   }
@@ -146,9 +170,12 @@ export class MatchEventsService {
     }
 
     await this.db.matchEvent.delete({ where: { id } });
-    
+
     // Emit live update
-    this.fixturesService.liveFixturesSubject.next({ type: 'event_deleted', data: { eventId: id, fixtureId: event.fixture_id } });
+    this.fixturesService.liveFixturesSubject.next({
+      type: 'event_deleted',
+      data: { eventId: id, fixtureId: event.fixture_id },
+    });
 
     return ResponseUtil.success({ deleted: true });
   }
