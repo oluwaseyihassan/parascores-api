@@ -20,9 +20,16 @@ export class UploadService {
     }
 
     // Validate file type
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedMimeTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+    ];
     if (!allowedMimeTypes.includes(file.mimetype)) {
-      throw new BadRequestException('Invalid file type. Allowed: jpeg, png, gif, webp');
+      throw new BadRequestException(
+        'Invalid file type. Allowed: jpeg, png, gif, webp',
+      );
     }
 
     // Upload to Cloudinary

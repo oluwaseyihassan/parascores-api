@@ -7,7 +7,13 @@ import {
   Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiConsumes, ApiBody, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiConsumes,
+  ApiBody,
+  ApiQuery,
+} from '@nestjs/swagger';
 import { UploadService } from './upload.service';
 import { Public } from 'src/auth/decorators/public.decorator';
 
@@ -38,7 +44,11 @@ export class UploadController {
       },
     },
   })
-  @ApiQuery({ name: 'folder', required: false, description: 'Folder in Cloudinary (e.g., profiles, tournaments)' })
+  @ApiQuery({
+    name: 'folder',
+    required: false,
+    description: 'Folder in Cloudinary (e.g., profiles, tournaments)',
+  })
   async uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @Query('folder') folder?: string,
@@ -47,8 +57,11 @@ export class UploadController {
       throw new BadRequestException('No file uploaded');
     }
 
-    const result = await this.uploadService.uploadImage(file, folder || 'parascores');
-    
+    const result = await this.uploadService.uploadImage(
+      file,
+      folder || 'parascores',
+    );
+
     return {
       success: true,
       message: 'Image uploaded successfully',
