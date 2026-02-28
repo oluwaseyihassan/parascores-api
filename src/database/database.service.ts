@@ -1,19 +1,19 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from "../../prisma/generated/client";
+import { PrismaClient } from '../../prisma/generated/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import "dotenv/config";
+import 'dotenv/config';
 
 @Injectable()
 export class DatabaseService extends PrismaClient implements OnModuleInit {
-    constructor() {
-        const connectionString = process.env.DATABASE_URL;
-        const pool = new Pool({ connectionString });
-        const adapter = new PrismaPg(pool);
-        super({ adapter });
-    }
+  constructor() {
+    const connectionString = process.env.DATABASE_URL;
+    const pool = new Pool({ connectionString });
+    const adapter = new PrismaPg(pool);
+    super({ adapter });
+  }
 
-    async onModuleInit() {
-        await this.$connect();
-    }
+  async onModuleInit() {
+    await this.$connect();
+  }
 }
