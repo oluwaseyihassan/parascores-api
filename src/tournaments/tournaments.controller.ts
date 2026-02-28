@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Query, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Query,
+  Req,
+} from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
@@ -9,13 +19,23 @@ import { ApiOperation, ApiQuery } from '@nestjs/swagger';
 
 @Controller('tournaments')
 export class TournamentsController {
-  constructor(private readonly tournamentsService: TournamentsService) { }
+  constructor(private readonly tournamentsService: TournamentsService) {}
 
   @Public()
   @Get('public')
   @ApiOperation({ summary: 'Get all public tournaments (paginated)' })
-  @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number' })
-  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Items per page' })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Items per page',
+  })
   async findAll(@Query() paginationQuery: PaginationQueryDto) {
     const { page, limit } = paginationQuery;
     return this.tournamentsService.findAllPublic(page, limit);
@@ -23,8 +43,18 @@ export class TournamentsController {
 
   @Get('mine')
   @ApiOperation({ summary: 'Get my tournaments (paginated)' })
-  @ApiQuery({ name: 'page', required: false, type: Number, description: 'Page number' })
-  @ApiQuery({ name: 'limit', required: false, type: Number, description: 'Items per page' })
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Items per page',
+  })
   async findAllMine(@Req() req, @Query() paginationQuery: PaginationQueryDto) {
     const { page, limit } = paginationQuery;
     return this.tournamentsService.findAllMine(req.user.sub, page, limit);
@@ -59,7 +89,16 @@ export class TournamentsController {
     @Body() updateTournamentDto: UpdateTournamentDto,
     @Req() req,
   ) {
-    return this.tournamentsService.update(id, req.user.sub, updateTournamentDto);
+    return this.tournamentsService.update(
+      id,
+      req.user.sub,
+      updateTournamentDto,
+    );
   }
 
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a tournament' })
+  async remove(@Param('id') id: string, @Req() req) {
+    return this.tournamentsService.remove(id, req.user.sub);
+  }
 }

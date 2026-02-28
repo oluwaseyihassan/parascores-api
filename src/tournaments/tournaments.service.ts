@@ -1,4 +1,9 @@
-import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
@@ -8,16 +13,20 @@ import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
 export class TournamentsService {
-  constructor(private readonly db: DatabaseService) { }
+  constructor(private readonly db: DatabaseService) {}
 
   async create(userId: string, dto: CreateTournamentDto) {
     const { start_date, end_date, ...rest } = dto;
 
     // Check customName uniqueness
     if (dto.customName) {
-      const existing = await this.db.tournament.findUnique({ where: { customName: dto.customName } });
+      const existing = await this.db.tournament.findUnique({
+        where: { customName: dto.customName },
+      });
       if (existing) {
-        throw new BadRequestException(`The custom name '${dto.customName}' is already taken`);
+        throw new BadRequestException(
+          `The custom name '${dto.customName}' is already taken`,
+        );
       }
     }
 
@@ -35,15 +44,20 @@ export class TournamentsService {
   async update(id: string, userId: string, dto: UpdateTournamentDto) {
     const tournament = await this.db.tournament.findUnique({ where: { id } });
     if (!tournament) throw new NotFoundException('Tournament not found');
-    if (tournament.organizer_id !== userId) throw new ForbiddenException('Not authorized');
+    if (tournament.organizer_id !== userId)
+      throw new ForbiddenException('Not authorized');
 
     const { start_date, end_date, ...rest } = dto;
-    
+
     // Check customName uniqueness if it's being updated
     if (dto.customName && dto.customName !== tournament.customName) {
-      const existing = await this.db.tournament.findUnique({ where: { customName: dto.customName } });
+      const existing = await this.db.tournament.findUnique({
+        where: { customName: dto.customName },
+      });
       if (existing) {
-        throw new BadRequestException(`The custom name '${dto.customName}' is already taken`);
+        throw new BadRequestException(
+          `The custom name '${dto.customName}' is already taken`,
+        );
       }
     }
 
@@ -61,7 +75,7 @@ export class TournamentsService {
 
   async findAllPublic(page: number = 1, limit: number = 10) {
     const skip = (page - 1) * limit;
-    
+
     const [tournaments, total] = await Promise.all([
       this.db.tournament.findMany({
         where: {
@@ -121,10 +135,7 @@ export class TournamentsService {
     // Check if it looks like a CUID or a customName (slug)
     const tournament = await this.db.tournament.findFirst({
       where: {
-        OR: [
-          { id: identifier },
-          { customName: identifier },
-        ],
+        OR: [{ id: identifier }, { customName: identifier }],
       },
       include: {
         sponsors: true,
@@ -145,6 +156,15 @@ export class TournamentsService {
     return ResponseUtil.success({ customName, available: !existing });
   }
 
+  // Delete a tournament
+  async remove(id: string, userId: string) {
+    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (tournament.organizer_id !== userId)
+      throw new ForbiddenException('Not authorized');
 
+    await this.db.tournament.delete({ where: { id } });
 
+    return ResponseUtil.success({ message: 'Tournament deleted successfully' });
+  }
 }
