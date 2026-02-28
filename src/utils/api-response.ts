@@ -3,7 +3,7 @@
 export interface ApiResponse<T = any> {
   success: boolean;
   message: string;
-  data?: T;       // The actual payload
+  data?: T; // The actual payload
   error?: string; // If something failed
   timestamp: string;
 }
