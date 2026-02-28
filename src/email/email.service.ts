@@ -14,14 +14,20 @@ export class EmailService {
     this.resend = new Resend(process.env.RESEND_API_KEY);
     this.fromAdminEmail =
       process.env.EMAIL_FROM_ADMIN || 'ParaScores admin <admin@parascores.com>';
-    this.fromOluwaseyiEmail = process.env.EMAIL_FROM_OLUWASEYI || 'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>'
+    this.fromOluwaseyiEmail =
+      process.env.EMAIL_FROM_OLUWASEYI ||
+      'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>';
   }
 
   private async compileTemplate(
     templateName: string,
     context: Record<string, unknown>,
   ): Promise<string> {
-    const templatePath = path.join(__dirname, 'templates', `${templateName}.hbs`);
+    const templatePath = path.join(
+      __dirname,
+      'templates',
+      `${templateName}.hbs`,
+    );
     const templateSource = fs.readFileSync(templatePath, 'utf-8');
     const template = handlebars.compile(templateSource);
     return template(context);
@@ -104,7 +110,10 @@ export class EmailService {
     console.log(`Welcome email sent to ${email}`);
   }
 
-  async sendNewUserAlertEmail(userEmail: string, userName: string): Promise<void> {
+  async sendNewUserAlertEmail(
+    userEmail: string,
+    userName: string,
+  ): Promise<void> {
     const adminEmail = process.env.ADMIN_ALERT_EMAIL || 'admin@parascores.com';
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
@@ -135,7 +144,9 @@ export class EmailService {
       console.error('Failed to send new user alert email:', error);
       // Don't throw - this is a non-critical notification
     } else {
-      console.log(`New user alert email sent to ${adminEmail} for user: ${userEmail}`);
+      console.log(
+        `New user alert email sent to ${adminEmail} for user: ${userEmail}`,
+      );
     }
   }
 }
