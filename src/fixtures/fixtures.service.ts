@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -37,10 +41,10 @@ export class FixturesService {
             participant: {
               include: {
                 team: true,
-                user: true
-              }
-            }
-          }
+                user: true,
+              },
+            },
+          },
         },
         tournament: {
           select: { id: true, name: true, sport: true },
@@ -56,7 +60,11 @@ export class FixturesService {
   }
 
   // Get all fixtures for a specific tournament
-  async getTournamentFixtures(tournamentId: string, round?: number, stage?: any) {
+  async getTournamentFixtures(
+    tournamentId: string,
+    round?: number,
+    stage?: any,
+  ) {
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
@@ -151,9 +159,11 @@ export class FixturesService {
           where: { id: fixture.tournament_id },
           select: { type: true },
         });
-        
+
         if (tournament?.type === 'KNOCKOUT') {
-          throw new BadRequestException('Penalty scores cannot be equal when regular scores are tied in a knockout match');
+          throw new BadRequestException(
+            'Penalty scores cannot be equal when regular scores are tied in a knockout match',
+          );
         }
       }
     }
@@ -164,9 +174,15 @@ export class FixturesService {
         ...(dto.status !== undefined && { status: dto.status }),
         ...(dto.homeScore !== undefined && { homeScore: dto.homeScore }),
         ...(dto.awayScore !== undefined && { awayScore: dto.awayScore }),
-        ...(dto.startTime !== undefined && { startTime: new Date(dto.startTime) }),
-        ...(dto.homePenaltyScore !== undefined && { homePenaltyScore: dto.homePenaltyScore }),
-        ...(dto.awayPenaltyScore !== undefined && { awayPenaltyScore: dto.awayPenaltyScore }),
+        ...(dto.startTime !== undefined && {
+          startTime: new Date(dto.startTime),
+        }),
+        ...(dto.homePenaltyScore !== undefined && {
+          homePenaltyScore: dto.homePenaltyScore,
+        }),
+        ...(dto.awayPenaltyScore !== undefined && {
+          awayPenaltyScore: dto.awayPenaltyScore,
+        }),
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
       },
@@ -193,21 +209,32 @@ export class FixturesService {
     // Run recalculation if the fixture is transitioning to COMPLETED, or if it was ALREADY COMPLETED and got updated
     if (updatedFixture.status === 'COMPLETED') {
       const tournament = updatedFixture.tournament;
-      
+
       if (tournament.type === 'KNOCKOUT') {
         await this.handleKnockoutProgression(updatedFixture);
-      } else if (tournament.type === 'GROUP' || tournament.type === 'ROUND_ROBIN' || tournament.type === 'LEAGUE' || tournament.type === 'HYBRID') {
-         // For HYBRID, handle knockout progression if this is a knockout-stage fixture
-         if (tournament.type === 'HYBRID' && updatedFixture.stage === 'KNOCKOUT') {
-           await this.handleKnockoutProgression(updatedFixture);
-         } else {
-           await this.updateStandings(updatedFixture.tournament_id);
-         }
+      } else if (
+        tournament.type === 'GROUP' ||
+        tournament.type === 'ROUND_ROBIN' ||
+        tournament.type === 'LEAGUE' ||
+        tournament.type === 'HYBRID'
+      ) {
+        // For HYBRID, handle knockout progression if this is a knockout-stage fixture
+        if (
+          tournament.type === 'HYBRID' &&
+          updatedFixture.stage === 'KNOCKOUT'
+        ) {
+          await this.handleKnockoutProgression(updatedFixture);
+        } else {
+          await this.updateStandings(updatedFixture.tournament_id);
+        }
       }
     }
 
     // Emit live update
-    this.liveFixturesSubject.next({ type: 'fixture_updated', data: updatedFixture });
+    this.liveFixturesSubject.next({
+      type: 'fixture_updated',
+      data: updatedFixture,
+    });
 
     return ResponseUtil.success(updatedFixture);
   }
@@ -222,7 +249,7 @@ export class FixturesService {
     const awayPen = fixture.awayPenaltyScore ?? 0;
 
     let winnerId: string | null = null;
-    
+
     // Determine winner
     if (homeScore > awayScore) {
       winnerId = fixture.homeTeamId;
@@ -240,41 +267,59 @@ export class FixturesService {
     }
 
     if (winnerId) {
-       // Determine if this match feeds into Home or Away slot of next match
-       // Match 1 (Odd) -> Home, Match 2 (Even) -> Away
-       const isHomeFeed = fixture.matchNumber % 2 !== 0;
+      // Determine if this match feeds into Home or Away slot of next match
+      // Match 1 (Odd) -> Home, Match 2 (Even) -> Away
+      const isHomeFeed = fixture.matchNumber % 2 !== 0;
 
-       await this.db.fixture.update({
-         where: { id: fixture.nextFixtureId },
-         data: {
-           ...(isHomeFeed ? { homeTeamId: winnerId } : { awayTeamId: winnerId }),
-         },
-       });
+      await this.db.fixture.update({
+        where: { id: fixture.nextFixtureId },
+        data: {
+          ...(isHomeFeed ? { homeTeamId: winnerId } : { awayTeamId: winnerId }),
+        },
+      });
     }
   }
 
   // Update Standings (Recalculate for tournament)
   private async updateStandings(tournamentId: string) {
     // 1. Fetch all participants and completed fixtures
-    const participants = await this.db.participant.findMany({ where: { tournament_id: tournamentId } });
-    const fixtures = await this.db.fixture.findMany({ 
-      where: { tournament_id: tournamentId, status: 'COMPLETED' } 
+    const participants = await this.db.participant.findMany({
+      where: { tournament_id: tournamentId },
+    });
+    const fixtures = await this.db.fixture.findMany({
+      where: { tournament_id: tournamentId, status: 'COMPLETED' },
     });
 
     // 2. Initialize stats map
-    const stats = new Map<string, {
-      played: number; wins: number; draws: number; losses: number;
-      goalsFor: number; goalsAgainst: number; points: number;
-    }>();
+    const stats = new Map<
+      string,
+      {
+        played: number;
+        wins: number;
+        draws: number;
+        losses: number;
+        goalsFor: number;
+        goalsAgainst: number;
+        points: number;
+      }
+    >();
 
     for (const p of participants) {
-      stats.set(p.id, { played: 0, wins: 0, draws: 0, losses: 0, goalsFor: 0, goalsAgainst: 0, points: 0 });
+      stats.set(p.id, {
+        played: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        goalsFor: 0,
+        goalsAgainst: 0,
+        points: 0,
+      });
     }
 
     // 3. Calculate stats
     for (const f of fixtures) {
       if (!f.homeTeamId || !f.awayTeamId) continue;
-      
+
       const home = stats.get(f.homeTeamId);
       const away = stats.get(f.awayTeamId);
       if (!home || !away) continue;
@@ -311,22 +356,20 @@ export class FixturesService {
         where: {
           tournament_id_participant_id: {
             tournament_id: tournamentId,
-            participant_id: pId
-          }
+            participant_id: pId,
+          },
         },
         create: {
           tournament_id: tournamentId,
           participant_id: pId,
           ...s,
-          goalDiff: s.goalsFor - s.goalsAgainst
+          goalDiff: s.goalsFor - s.goalsAgainst,
         },
         update: {
           ...s,
-          goalDiff: s.goalsFor - s.goalsAgainst
-        }
+          goalDiff: s.goalsFor - s.goalsAgainst,
+        },
       });
     }
   }
-
-
 }

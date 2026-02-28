@@ -1,4 +1,10 @@
-import { IsBoolean, IsDateString, IsInt, IsOptional, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsDateString,
+  IsInt,
+  IsOptional,
+  Min,
+} from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class GenerateFixturesDto {
@@ -21,7 +27,8 @@ export class GenerateFixturesDto {
   intervalMinutes?: number;
 
   @ApiPropertyOptional({
-    description: 'Whether to shuffle/randomize participant order before generating',
+    description:
+      'Whether to shuffle/randomize participant order before generating',
     example: false,
     default: false,
   })

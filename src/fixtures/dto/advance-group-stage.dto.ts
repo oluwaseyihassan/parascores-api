@@ -3,7 +3,8 @@ import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export class AdvanceGroupStageDto {
   @ApiProperty({
-    description: 'Array of participant IDs to advance to the knockout stage (optional)',
+    description:
+      'Array of participant IDs to advance to the knockout stage (optional)',
     required: false,
     type: [String],
   })

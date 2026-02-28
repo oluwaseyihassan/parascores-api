@@ -1,8 +1,20 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
-import { Fixture, Participant, Tournament, Group, FixtureStage, TournamentType } from 'prisma/generated/client';
+import {
+  Fixture,
+  Participant,
+  Tournament,
+  Group,
+  FixtureStage,
+  TournamentType,
+} from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -10,7 +22,11 @@ export class FixtureGeneratorService {
   constructor(private readonly db: DatabaseService) {}
 
   // Generate fixtures for a tournament
-  async generateFixtures(tournamentId: string, dto: GenerateFixturesDto, userId: string) {
+  async generateFixtures(
+    tournamentId: string,
+    dto: GenerateFixturesDto,
+    userId: string,
+  ) {
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
@@ -29,15 +45,19 @@ export class FixtureGeneratorService {
 
     // Authorization check
     const isOrganizer = tournament.organizer_id === userId;
-    const isAdmin = tournament.admins.some(admin => admin.id === userId);
+    const isAdmin = tournament.admins.some((admin) => admin.id === userId);
 
     if (!isOrganizer && !isAdmin) {
-      throw new ForbiddenException('You are not authorized to generate fixtures for this tournament');
+      throw new ForbiddenException(
+        'You are not authorized to generate fixtures for this tournament',
+      );
     }
 
     // Check if fixtures already exist
     if (tournament.fixtures.length > 0 && !dto.clearExisting) {
-      throw new BadRequestException('Fixtures already exist. Set clearExisting to true to regenerate.');
+      throw new BadRequestException(
+        'Fixtures already exist. Set clearExisting to true to regenerate.',
+      );
     }
 
     // Clear existing fixtures if requested
@@ -53,7 +73,11 @@ export class FixtureGeneratorService {
     let participants = [...tournament.participants];
 
     // Validate minimum participants
-    const minParticipants = (tournament.type === TournamentType.KNOCKOUT || tournament.type === TournamentType.FRIENDLY) ? 2 : 3;
+    const minParticipants =
+      tournament.type === TournamentType.KNOCKOUT ||
+      tournament.type === TournamentType.FRIENDLY
+        ? 2
+        : 3;
     if (participants.length < minParticipants) {
       throw new BadRequestException(
         `At least ${minParticipants} confirmed participants are required for ${tournament.type} tournament`,
@@ -66,7 +90,9 @@ export class FixtureGeneratorService {
     }
 
     const options = {
-      startDate: dto.startDate ? new Date(dto.startDate) : new Date(tournament.start_date),
+      startDate: dto.startDate
+        ? new Date(dto.startDate)
+        : new Date(tournament.start_date),
       intervalMinutes: dto.intervalMinutes ?? 90,
     };
 
@@ -74,16 +100,28 @@ export class FixtureGeneratorService {
 
     switch (tournament.type) {
       case TournamentType.KNOCKOUT:
-        rounds = await this.generateKnockoutFixtures(tournament, participants, options);
+        rounds = await this.generateKnockoutFixtures(
+          tournament,
+          participants,
+          options,
+        );
         break;
       case TournamentType.ROUND_ROBIN:
-        rounds = await this.generateRoundRobinFixtures(tournament, participants, {
-          ...options,
-          doubleRoundRobin: dto.doubleRoundRobin,
-        });
+        rounds = await this.generateRoundRobinFixtures(
+          tournament,
+          participants,
+          {
+            ...options,
+            doubleRoundRobin: dto.doubleRoundRobin,
+          },
+        );
         break;
       case TournamentType.FRIENDLY:
-        rounds = await this.generateFriendlyFixtures(tournament, participants, options);
+        rounds = await this.generateFriendlyFixtures(
+          tournament,
+          participants,
+          options,
+        );
         break;
       case TournamentType.HYBRID:
       case TournamentType.GROUP:
@@ -102,14 +140,20 @@ export class FixtureGeneratorService {
           );
         }
 
-        rounds = await this.generateGroupStageFixtures(tournament, participants, {
-          ...options,
-          numberOfGroups: validNumGroups, // Default to 4 groups if neither specified
-          doubleRoundRobin: dto.doubleRoundRobin,
-        });
+        rounds = await this.generateGroupStageFixtures(
+          tournament,
+          participants,
+          {
+            ...options,
+            numberOfGroups: validNumGroups, // Default to 4 groups if neither specified
+            doubleRoundRobin: dto.doubleRoundRobin,
+          },
+        );
         break;
       default:
-        throw new BadRequestException(`Unsupported tournament type: ${tournament.type}`);
+        throw new BadRequestException(
+          `Unsupported tournament type: ${tournament.type}`,
+        );
     }
 
     // Initialize standings for non-knockout tournaments
@@ -126,27 +170,31 @@ export class FixtureGeneratorService {
   }
 
   // Advance group stage to knockout
-  async advanceGroupStage(tournamentId: string, userId: string, dto: AdvanceGroupStageDto) {
+  async advanceGroupStage(
+    tournamentId: string,
+    userId: string,
+    dto: AdvanceGroupStageDto,
+  ) {
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: {
           include: {
             user: true,
-            team: true
-          }
+            team: true,
+          },
         },
         fixtures: {
           include: {
             homeTeam: true,
             awayTeam: true,
-          }
+          },
         },
         groups: {
           include: {
-            participants: true
-          }
-        }
+            participants: true,
+          },
+        },
       },
     });
 
@@ -154,30 +202,42 @@ export class FixtureGeneratorService {
       throw new NotFoundException('Tournament not found');
     }
 
-    if (tournament.organizer_id !== userId) { // Simple check, ideally use Guard
-         // But for now sticking to service logic
+    if (tournament.organizer_id !== userId) {
+      // Simple check, ideally use Guard
+      // But for now sticking to service logic
     }
 
-    if (tournament.type !== TournamentType.HYBRID && tournament.type !== TournamentType.GROUP) {
-      throw new BadRequestException('Only Hybrid or Group tournaments can manually advance');
+    if (
+      tournament.type !== TournamentType.HYBRID &&
+      tournament.type !== TournamentType.GROUP
+    ) {
+      throw new BadRequestException(
+        'Only Hybrid or Group tournaments can manually advance',
+      );
     }
 
     // 1. Verify Group Stage Completion
     // For HYBRID, we assume the first set of fixtures are group stage.
     // If we have "rounds", we could check round numbers, but easiest is to check if there are ANY uncompleted fixtures
     // that belong to a group.
-    const groupFixtures = tournament.fixtures.filter(f => f.stage === FixtureStage.GROUP_STAGE);
-    
+    const groupFixtures = tournament.fixtures.filter(
+      (f) => f.stage === FixtureStage.GROUP_STAGE,
+    );
+
     if (groupFixtures.length === 0) {
-        throw new BadRequestException('No group stage fixtures found. Generate fixtures first.');
+      throw new BadRequestException(
+        'No group stage fixtures found. Generate fixtures first.',
+      );
     }
 
-    const uncompleted = groupFixtures.filter(f => f.status !== 'COMPLETED');
+    const uncompleted = groupFixtures.filter((f) => f.status !== 'COMPLETED');
     if (uncompleted.length > 0) {
-      throw new BadRequestException(`Group stage not finished. ${uncompleted.length} matches remaining.`);
-      // For testing purposes or manual override, maybe we allow it? 
-      // User asked for "manual progression", usually implies "I say when". 
-      // But standard logic implies matches must be done. 
+      throw new BadRequestException(
+        `Group stage not finished. ${uncompleted.length} matches remaining.`,
+      );
+      // For testing purposes or manual override, maybe we allow it?
+      // User asked for "manual progression", usually implies "I say when".
+      // But standard logic implies matches must be done.
       // Let's enforce it for now unless we want a "force" flag.
       // Actually, if manual qualified IDs are provided, maybe we ignore completion?
       // Let's stick to enforce completion to avoid weird states, unless user explicitly asked to skip checks.
@@ -187,76 +247,96 @@ export class FixtureGeneratorService {
     let qualifiedParticipants: Participant[] = [];
 
     if (dto.qualifiedParticipantIds && dto.qualifiedParticipantIds.length > 0) {
-        // Manual selection
-        qualifiedParticipants = tournament.participants.filter(p => dto.qualifiedParticipantIds?.includes(p.id));
-        if (qualifiedParticipants.length !== dto.qualifiedParticipantIds.length) {
-            throw new BadRequestException('One or more qualified participant IDs are invalid for this tournament');
-        }
+      // Manual selection
+      qualifiedParticipants = tournament.participants.filter((p) =>
+        dto.qualifiedParticipantIds?.includes(p.id),
+      );
+      if (qualifiedParticipants.length !== dto.qualifiedParticipantIds.length) {
+        throw new BadRequestException(
+          'One or more qualified participant IDs are invalid for this tournament',
+        );
+      }
     } else {
-        // Auto selection (Top 2 from each group)
-        // We need to calculate standings first or trust current standings. 
-        // Let's recalculate/ensure valid standings. 
-        // (Assuming getStandings logic is robust or we just use simple logic here)
-        
-        // This is complex to do "on the fly" perfectly without code duplication from `getStandings`. 
-        // For this task, let's assume we fetch standings via internal method or just calculate quickly.
-        // Actually, `initializeStandings` created them. We can fetch them.
-        
-        const standings = await this.db.standing.findMany({
-            where: { tournament_id: tournament.id },
-            orderBy: [
-                { points: 'desc' },
-                { goalDiff: 'desc' },
-                { goalsFor: 'desc' }
-            ]
-        });
+      // Auto selection (Top 2 from each group)
+      // We need to calculate standings first or trust current standings.
+      // Let's recalculate/ensure valid standings.
+      // (Assuming getStandings logic is robust or we just use simple logic here)
 
-        // Group them
-        const groups = tournament.groups;
-        for (const group of groups) {
-            const groupStandings = standings
-                .filter(s => {
-                    // We need to know which participant belongs to which group.
-                    // The Standings model has 'group' string, or we use participant.groupId
-                    const p = tournament.participants.find(p => p.id === s.participant_id);
-                    return p && p.groupId === group.id;
-                })
-                .sort((a, b) => {
-                    if (a.points !== b.points) return b.points - a.points;
-                    if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
-                    return b.goalsFor - a.goalsFor;
-                });
-            
-            // Take top 2
-            const top2 = groupStandings.slice(0, 2);
-            for (const s of top2) {
-                const p = tournament.participants.find(p => p.id === s.participant_id);
-                if (p) qualifiedParticipants.push(p);
-            }
+      // This is complex to do "on the fly" perfectly without code duplication from `getStandings`.
+      // For this task, let's assume we fetch standings via internal method or just calculate quickly.
+      // Actually, `initializeStandings` created them. We can fetch them.
+
+      const standings = await this.db.standing.findMany({
+        where: { tournament_id: tournament.id },
+        orderBy: [
+          { points: 'desc' },
+          { goalDiff: 'desc' },
+          { goalsFor: 'desc' },
+        ],
+      });
+
+      // Group them
+      const groups = tournament.groups;
+      for (const group of groups) {
+        const groupStandings = standings
+          .filter((s) => {
+            // We need to know which participant belongs to which group.
+            // The Standings model has 'group' string, or we use participant.groupId
+            const p = tournament.participants.find(
+              (p) => p.id === s.participant_id,
+            );
+            return p && p.groupId === group.id;
+          })
+          .sort((a, b) => {
+            if (a.points !== b.points) return b.points - a.points;
+            if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
+            return b.goalsFor - a.goalsFor;
+          });
+
+        // Take top 2
+        const top2 = groupStandings.slice(0, 2);
+        for (const s of top2) {
+          const p = tournament.participants.find(
+            (p) => p.id === s.participant_id,
+          );
+          if (p) qualifiedParticipants.push(p);
         }
+      }
     }
 
     // Now generate Knockout Bracket with these participants
     if (qualifiedParticipants.length < 2) {
-        throw new BadRequestException('Not enough qualified participants for a knockout stage (min 2)');
+      throw new BadRequestException(
+        'Not enough qualified participants for a knockout stage (min 2)',
+      );
     }
 
     // Check if knockout fixtures already exist?
-    // Maybe verify round > group rounds? 
+    // Maybe verify round > group rounds?
     // For now, let's just generate.
-    
-    const knockoutRounds = await this.generateKnockoutFixtures(tournament, qualifiedParticipants, {
+
+    const knockoutRounds = await this.generateKnockoutFixtures(
+      tournament,
+      qualifiedParticipants,
+      {
         startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
         intervalMinutes: 120, // Standard knockout time
         stage: FixtureStage.KNOCKOUT,
-    });
-    
-    const totalNew = knockoutRounds.reduce((sum, r) => sum + r.fixtures.length, 0);
+      },
+    );
+
+    const totalNew = knockoutRounds.reduce(
+      (sum, r) => sum + r.fixtures.length,
+      0,
+    );
 
     return ResponseUtil.success({
-        message: `Advanced to knockout stage. Generated ${totalNew} fixtures with ${qualifiedParticipants.length} qualifiers.`,
-        qualifiers: qualifiedParticipants.map((p: any) => ({ id: p.id, name: p.customName || p.user?.name || p.team?.name })),
-        rounds: knockoutRounds
+      message: `Advanced to knockout stage. Generated ${totalNew} fixtures with ${qualifiedParticipants.length} qualifiers.`,
+      qualifiers: qualifiedParticipants.map((p: any) => ({
+        id: p.id,
+        name: p.customName || p.user?.name || p.team?.name,
+      })),
+      rounds: knockoutRounds,
     });
   }
 
@@ -266,7 +346,8 @@ export class FixtureGeneratorService {
     participants: Participant[],
     options: { startDate: Date; intervalMinutes: number; stage?: FixtureStage },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
+      [];
     const n = participants.length;
 
     // Calculate number of rounds needed
@@ -275,7 +356,10 @@ export class FixtureGeneratorService {
 
     // Reorder for proper bracket seeding (1v8, 4v5, 2v7, 3v6 pattern)
     // Reorder for proper bracket seeding (1v8, 4v5, 2v7, 3v6 pattern)
-    const seededParticipants = this.seedBracket(participants, perfectBracketSize);
+    const seededParticipants = this.seedBracket(
+      participants,
+      perfectBracketSize,
+    );
 
     let currentTime = new Date(options.startDate);
 
@@ -283,14 +367,31 @@ export class FixtureGeneratorService {
     let matchesInCurrentRound = perfectBracketSize / 2;
 
     for (let round = 1; round <= totalRounds; round++) {
-      const roundName = this.getKnockoutRoundName(round, totalRounds, perfectBracketSize);
-      const prevRoundName = round > 1 ? this.getKnockoutRoundName(round - 1, totalRounds, perfectBracketSize) : null;
-      const prevRoundAbbrev = prevRoundName ? this.getRoundAbbreviation(prevRoundName) : null;
+      const roundName = this.getKnockoutRoundName(
+        round,
+        totalRounds,
+        perfectBracketSize,
+      );
+      const prevRoundName =
+        round > 1
+          ? this.getKnockoutRoundName(
+              round - 1,
+              totalRounds,
+              perfectBracketSize,
+            )
+          : null;
+      const prevRoundAbbrev = prevRoundName
+        ? this.getRoundAbbreviation(prevRoundName)
+        : null;
       const roundFixtures: Fixture[] = [];
 
       let roundMatchNumber = 1; // Reset match ID counter for each round for clean labeling
 
-      for (let matchIndex = 0; matchIndex < matchesInCurrentRound; matchIndex++) {
+      for (
+        let matchIndex = 0;
+        matchIndex < matchesInCurrentRound;
+        matchIndex++
+      ) {
         // For round 1, assign actual participants; for future rounds, leave as TBD (null)
         let homeTeamId: string | null = null;
         let awayTeamId: string | null = null;
@@ -309,8 +410,8 @@ export class FixtureGeneratorService {
           // For subsequent rounds, add placeholder labels
           // Each match in this round gets winners from 2 matches in the previous round
           // Since numbering resets every round, we use simple relative indexing
-          const prevMatch1 = (matchIndex * 2) + 1;
-          const prevMatch2 = (matchIndex * 2) + 2;
+          const prevMatch1 = matchIndex * 2 + 1;
+          const prevMatch2 = matchIndex * 2 + 2;
 
           homeTeamPlaceholder = `${prevRoundAbbrev}${prevMatch1} Winner`;
           awayTeamPlaceholder = `${prevRoundAbbrev}${prevMatch2} Winner`;
@@ -333,7 +434,9 @@ export class FixtureGeneratorService {
         });
 
         roundFixtures.push(fixture);
-        currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+        currentTime = new Date(
+          currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+        );
       }
 
       if (roundFixtures.length > 0) {
@@ -372,42 +475,45 @@ export class FixtureGeneratorService {
     for (const round of rounds) {
       for (const fixture of round.fixtures) {
         // Check if it's a Bye (only one team present)
-         // Note: In Round 1 we might have null/null if double bye, but we skip creating those?
-         // Line 313: if (home === null && away === null) continue;
-         // So fixture has at least one null if it's a bye? 
-         // Actually, line 309: homeTeamId = home?.id ?? null;
-         // fixture.homeTeamId is string or null.
-         
-         const hasHome = !!fixture.homeTeamId;
-         const hasAway = !!fixture.awayTeamId;
+        // Note: In Round 1 we might have null/null if double bye, but we skip creating those?
+        // Line 313: if (home === null && away === null) continue;
+        // So fixture has at least one null if it's a bye?
+        // Actually, line 309: homeTeamId = home?.id ?? null;
+        // fixture.homeTeamId is string or null.
 
-         if (hasHome !== hasAway) { // XOR: Only one team exists
-            const winnerId = hasHome ? fixture.homeTeamId : fixture.awayTeamId;
-            
-            // 1. Mark current fixture as COMPLETED
+        const hasHome = !!fixture.homeTeamId;
+        const hasAway = !!fixture.awayTeamId;
+
+        if (hasHome !== hasAway) {
+          // XOR: Only one team exists
+          const winnerId = hasHome ? fixture.homeTeamId : fixture.awayTeamId;
+
+          // 1. Mark current fixture as COMPLETED
+          await this.db.fixture.update({
+            where: { id: fixture.id },
+            data: {
+              status: 'COMPLETED',
+              homeScore: hasHome ? 3 : 0, // Award 3-0 win for walkover
+              awayScore: hasAway ? 3 : 0,
+              // Make sure to clear placeholders if any?
+            },
+          });
+
+          // 2. Advance winner to next fixture
+          if (fixture.nextFixtureId) {
+            // Determine feed direction
+            const isHomeFeed = fixture.matchNumber % 2 !== 0;
+
             await this.db.fixture.update({
-              where: { id: fixture.id },
-              data: { 
-                status: 'COMPLETED',
-                homeScore: hasHome ? 3 : 0, // Award 3-0 win for walkover
-                awayScore: hasAway ? 3 : 0,
-                // Make sure to clear placeholders if any?
-              }
+              where: { id: fixture.nextFixtureId },
+              data: {
+                ...(isHomeFeed
+                  ? { homeTeamId: winnerId, homeTeamPlaceholder: null }
+                  : { awayTeamId: winnerId, awayTeamPlaceholder: null }),
+              },
             });
-
-            // 2. Advance winner to next fixture
-            if (fixture.nextFixtureId) {
-               // Determine feed direction
-               const isHomeFeed = fixture.matchNumber % 2 !== 0;
-
-               await this.db.fixture.update({
-                 where: { id: fixture.nextFixtureId },
-                 data: {
-                   ...(isHomeFeed ? { homeTeamId: winnerId, homeTeamPlaceholder: null } : { awayTeamId: winnerId, awayTeamPlaceholder: null }),
-                 },
-               });
-            }
-         }
+          }
+        }
       }
     }
     return rounds;
@@ -436,7 +542,11 @@ export class FixtureGeneratorService {
   }
 
   // Get descriptive round name for knockout tournaments
-  private getKnockoutRoundName(round: number, totalRounds: number, bracketSize: number): string {
+  private getKnockoutRoundName(
+    round: number,
+    totalRounds: number,
+    bracketSize: number,
+  ): string {
     const roundsFromFinal = totalRounds - round;
 
     switch (roundsFromFinal) {
@@ -457,11 +567,19 @@ export class FixtureGeneratorService {
   private async generateGroupStageFixtures(
     tournament: Tournament,
     participants: Participant[],
-    options: { startDate: Date; intervalMinutes: number; numberOfGroups: number; doubleRoundRobin?: boolean },
+    options: {
+      startDate: Date;
+      intervalMinutes: number;
+      numberOfGroups: number;
+      doubleRoundRobin?: boolean;
+    },
   ) {
     const numGroups = Math.max(1, options.numberOfGroups);
     // const groups: any[] = [];
-    const groupNames = Array.from({ length: numGroups }, (_, i) => `Group ${String.fromCharCode(65 + i)}`); // Group A, Group B, etc.
+    const groupNames = Array.from(
+      { length: numGroups },
+      (_, i) => `Group ${String.fromCharCode(65 + i)}`,
+    ); // Group A, Group B, etc.
 
     // create or find existing groups
     // For now, let's just create new groups.
@@ -478,22 +596,29 @@ export class FixtureGeneratorService {
 
     // Distribute participants into groups (simple round robin distribution)
     // 1->A, 2->B, 3->C, 4->D, 5->A...
-    const distributedParticipants: Participant[][] = Array.from({ length: numGroups }, () => []);
+    const distributedParticipants: Participant[][] = Array.from(
+      { length: numGroups },
+      () => [],
+    );
 
     for (let i = 0; i < participants.length; i++) {
       const groupIndex = i % numGroups;
       const participant = participants[i];
-      
+
       // Update participant with group ID
       await this.db.participant.update({
         where: { id: participant.id },
         data: { groupId: createdGroups[groupIndex].id },
       });
-      
+
       distributedParticipants[groupIndex].push(participant);
     }
 
-    const allRounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const allRounds: {
+      round: number;
+      roundName: string;
+      fixtures: Fixture[];
+    }[] = [];
     let matchNumber = 1;
     let currentTime = new Date(options.startDate);
 
@@ -504,7 +629,7 @@ export class FixtureGeneratorService {
     for (let g = 0; g < numGroups; g++) {
       const group = createdGroups[g];
       const groupParticipants = distributedParticipants[g];
-      
+
       const n = groupParticipants.length;
       if (n < 2) continue; // Need at least 2 teams to play
 
@@ -512,12 +637,12 @@ export class FixtureGeneratorService {
       if (n % 2 !== 0) {
         teams.push(null as unknown as Participant); // Dummy for bye
       }
-      
+
       const numTeams = teams.length;
       const numRounds = numTeams - 1;
       const matchesPerRound = numTeams / 2;
 
-      let tempTeams = [...teams]; // Working copy for rotation
+      const tempTeams = [...teams]; // Working copy for rotation
 
       for (let round = 1; round <= numRounds; round++) {
         if (!roundsMap[round]) roundsMap[round] = [];
@@ -528,15 +653,15 @@ export class FixtureGeneratorService {
 
           // Skip bye
           // Note: using strict null check if teams can be null
-          if (home && away) { 
-             const fixture = await this.db.fixture.create({
+          if (home && away) {
+            const fixture = await this.db.fixture.create({
               data: {
                 tournament_id: tournament.id,
                 groupId: group.id,
                 round,
                 roundName: `Group Stage - Matchday ${round}`,
                 matchNumber: matchNumber++, // We'll re-number later or just increment global
-                startTime: new Date(currentTime), 
+                startTime: new Date(currentTime),
                 homeTeamId: home.id,
                 awayTeamId: away.id,
                 status: 'SCHEDULED',
@@ -545,10 +670,12 @@ export class FixtureGeneratorService {
             });
             roundsMap[round].push(fixture);
             // Increment time for every match generated (sequential scheduling)
-            currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+            currentTime = new Date(
+              currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+            );
           }
         }
-        
+
         // Rotate teams (keep first team fixed)
         const lastTeam = tempTeams.pop()!;
         tempTeams.splice(1, 0, lastTeam);
@@ -556,7 +683,9 @@ export class FixtureGeneratorService {
     }
 
     // Convert map to array
-    const sortedRounds = Object.keys(roundsMap).map(Number).sort((a, b) => a - b);
+    const sortedRounds = Object.keys(roundsMap)
+      .map(Number)
+      .sort((a, b) => a - b);
     for (const roundNum of sortedRounds) {
       allRounds.push({
         round: roundNum,
@@ -568,14 +697,14 @@ export class FixtureGeneratorService {
     // Handle Double Round Robin (Second Leg)
     if (options.doubleRoundRobin) {
       const numRoundsSingle = sortedRounds.length;
-      
+
       for (const roundNum of sortedRounds) {
         const firstLegFixtures = roundsMap[roundNum];
         const secondLegRoundNum = roundNum + numRoundsSingle;
         const secondLegFixtures: Fixture[] = [];
 
         for (const f of firstLegFixtures) {
-           const fixture = await this.db.fixture.create({
+          const fixture = await this.db.fixture.create({
             data: {
               tournament_id: tournament.id,
               round: secondLegRoundNum,
@@ -591,7 +720,9 @@ export class FixtureGeneratorService {
           });
           secondLegFixtures.push(fixture);
           // Increment time
-          currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+          currentTime = new Date(
+            currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+          );
         }
 
         allRounds.push({
@@ -609,9 +740,14 @@ export class FixtureGeneratorService {
   private async generateRoundRobinFixtures(
     tournament: Tournament,
     participants: Participant[],
-    options: { startDate: Date; intervalMinutes: number; doubleRoundRobin?: boolean },
+    options: {
+      startDate: Date;
+      intervalMinutes: number;
+      doubleRoundRobin?: boolean;
+    },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
+      [];
     const n = participants.length;
 
     // Add a "bye" participant if odd number
@@ -653,7 +789,9 @@ export class FixtureGeneratorService {
         });
 
         roundFixtures.push(fixture);
-        currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+        currentTime = new Date(
+          currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+        );
       }
 
       if (roundFixtures.length > 0) {
@@ -667,8 +805,12 @@ export class FixtureGeneratorService {
 
     // Handle Double Round Robin
     if (options.doubleRoundRobin) {
-      const secondLegRounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
-      
+      const secondLegRounds: {
+        round: number;
+        roundName: string;
+        fixtures: Fixture[];
+      }[] = [];
+
       // We can generate second leg based on the first leg rounds
       for (const firstLegRound of rounds) {
         const roundNum = firstLegRound.round + numRounds;
@@ -689,9 +831,15 @@ export class FixtureGeneratorService {
             },
           });
           roundFixtures.push(fixture);
-          currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+          currentTime = new Date(
+            currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+          );
         }
-        secondLegRounds.push({ round: roundNum, roundName, fixtures: roundFixtures });
+        secondLegRounds.push({
+          round: roundNum,
+          roundName,
+          fixtures: roundFixtures,
+        });
       }
       rounds.push(...secondLegRounds);
     }
@@ -706,20 +854,33 @@ export class FixtureGeneratorService {
     options: { startDate: Date; intervalMinutes: number },
   ) {
     // First leg (same as round-robin)
-    const firstLegRounds = await this.generateRoundRobinFixtures(tournament, participants, options);
+    const firstLegRounds = await this.generateRoundRobinFixtures(
+      tournament,
+      participants,
+      options,
+    );
 
     // Get all first leg fixtures to calculate timing and match numbers
-    const allFirstLegFixtures = firstLegRounds.flatMap(r => r.fixtures);
+    const allFirstLegFixtures = firstLegRounds.flatMap((r) => r.fixtures);
 
     // Calculate start time for second leg
-    const lastFixtureTime = allFirstLegFixtures.length > 0
-      ? new Date(allFirstLegFixtures[allFirstLegFixtures.length - 1].startTime!)
-      : new Date(options.startDate);
+    const lastFixtureTime =
+      allFirstLegFixtures.length > 0
+        ? new Date(
+            allFirstLegFixtures[allFirstLegFixtures.length - 1].startTime!,
+          )
+        : new Date(options.startDate);
 
-    const secondLegStartTime = new Date(lastFixtureTime.getTime() + options.intervalMinutes * 60 * 1000);
+    const secondLegStartTime = new Date(
+      lastFixtureTime.getTime() + options.intervalMinutes * 60 * 1000,
+    );
 
     // Second leg (reverse home/away) - grouped by rounds
-    const secondLegRounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const secondLegRounds: {
+      round: number;
+      roundName: string;
+      fixtures: Fixture[];
+    }[] = [];
     let matchNumber = allFirstLegFixtures.length + 1;
     let currentTime = secondLegStartTime;
 
@@ -745,11 +906,17 @@ export class FixtureGeneratorService {
         });
 
         roundFixtures.push(fixture);
-        currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+        currentTime = new Date(
+          currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+        );
       }
 
       if (roundFixtures.length > 0) {
-        secondLegRounds.push({ round: secondLegRoundNum, roundName, fixtures: roundFixtures });
+        secondLegRounds.push({
+          round: secondLegRoundNum,
+          roundName,
+          fixtures: roundFixtures,
+        });
       }
     }
 
@@ -767,7 +934,10 @@ export class FixtureGeneratorService {
   }
 
   // Utility: Seed bracket for knockout (1v8, 4v5, 2v7, 3v6 pattern)
-  private seedBracket(participants: Participant[], bracketSize: number): (Participant | null)[] {
+  private seedBracket(
+    participants: Participant[],
+    bracketSize: number,
+  ): (Participant | null)[] {
     const seeded: (Participant | null)[] = new Array(bracketSize).fill(null);
 
     // Simple seeding: place participants in bracket order
@@ -789,9 +959,9 @@ export class FixtureGeneratorService {
   // Initialize standings for a tournament
   private async initializeStandings(tournament: Tournament) {
     const participants = await this.db.participant.findMany({
-      where: { 
-        tournament_id: tournament.id, 
-        status: 'CONFIRMED' 
+      where: {
+        tournament_id: tournament.id,
+        status: 'CONFIRMED',
       },
       include: { group: true },
     });
@@ -832,37 +1002,44 @@ export class FixtureGeneratorService {
     participants: Participant[],
     options: { startDate: Date; intervalMinutes: number },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
+      [];
     const roundFixtures: Fixture[] = [];
-    
+
     let matchNumber = 1;
     let currentTime = new Date(options.startDate);
 
     const numPairs = Math.floor(participants.length / 2);
 
     for (let i = 0; i < numPairs; i++) {
-        const home = participants[i * 2];
-        const away = participants[i * 2 + 1];
+      const home = participants[i * 2];
+      const away = participants[i * 2 + 1];
 
-        const fixture = await this.db.fixture.create({
-          data: {
-            tournament_id: tournament.id,
-            round: 1,
-            roundName: 'Friendlies',
-            matchNumber: matchNumber++,
-            startTime: new Date(currentTime),
-            homeTeamId: home.id,
-            awayTeamId: away.id,
-            status: 'SCHEDULED',
-          },
-        });
+      const fixture = await this.db.fixture.create({
+        data: {
+          tournament_id: tournament.id,
+          round: 1,
+          roundName: 'Friendlies',
+          matchNumber: matchNumber++,
+          startTime: new Date(currentTime),
+          homeTeamId: home.id,
+          awayTeamId: away.id,
+          status: 'SCHEDULED',
+        },
+      });
 
-        roundFixtures.push(fixture);
-        currentTime = new Date(currentTime.getTime() + options.intervalMinutes * 60 * 1000);
+      roundFixtures.push(fixture);
+      currentTime = new Date(
+        currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+      );
     }
 
     if (roundFixtures.length > 0) {
-      rounds.push({ round: 1, roundName: 'Friendlies', fixtures: roundFixtures });
+      rounds.push({
+        round: 1,
+        roundName: 'Friendlies',
+        fixtures: roundFixtures,
+      });
     }
 
     return rounds;
