@@ -7,12 +7,18 @@ export class AddSponsorDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiPropertyOptional({ description: 'URL to the sponsor logo image', example: 'https://example.com/logo.png' })
+  @ApiPropertyOptional({
+    description: 'URL to the sponsor logo image',
+    example: 'https://example.com/logo.png',
+  })
   @IsString()
   @IsOptional()
   logoUrl?: string;
 
-  @ApiPropertyOptional({ description: 'Website URL of the sponsor', example: 'https://nike.com' })
+  @ApiPropertyOptional({
+    description: 'Website URL of the sponsor',
+    example: 'https://nike.com',
+  })
   @IsString()
   @IsOptional()
   websiteUrl?: string;
@@ -24,12 +30,18 @@ export class UpdateSponsorDto {
   @IsOptional()
   name?: string;
 
-  @ApiPropertyOptional({ description: 'URL to the sponsor logo image', example: 'https://example.com/logo.png' })
+  @ApiPropertyOptional({
+    description: 'URL to the sponsor logo image',
+    example: 'https://example.com/logo.png',
+  })
   @IsString()
   @IsOptional()
   logoUrl?: string;
 
-  @ApiPropertyOptional({ description: 'Website URL of the sponsor', example: 'https://nike.com' })
+  @ApiPropertyOptional({
+    description: 'Website URL of the sponsor',
+    example: 'https://nike.com',
+  })
   @IsString()
   @IsOptional()
   websiteUrl?: string;

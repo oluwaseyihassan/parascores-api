@@ -1,7 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
-import { AddSponsorDto, UpdateSponsorDto } from 'src/sponsors/dto/add-sponsor.dto';
+import {
+  AddSponsorDto,
+  UpdateSponsorDto,
+} from 'src/sponsors/dto/add-sponsor.dto';
 
 @Injectable()
 export class SponsorsService {
