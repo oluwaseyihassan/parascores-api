@@ -22,17 +22,19 @@ export class StandingsService {
     const standing = await this.db.standing.create({
       data: {
         ...createStandingDto,
-        goalDiff: (createStandingDto.goalsFor || 0) - (createStandingDto.goalsAgainst || 0),
+        goalDiff:
+          (createStandingDto.goalsFor || 0) -
+          (createStandingDto.goalsAgainst || 0),
       },
       include: {
         participant: {
           include: {
             team: true,
             user: true,
-          }
+          },
         },
-        tournament: { select: { id: true, name: true } }
-      }
+        tournament: { select: { id: true, name: true } },
+      },
     });
 
     return ResponseUtil.success(standing);
@@ -55,8 +57,8 @@ export class StandingsService {
           include: {
             team: true,
             user: true,
-          }
-        }
+          },
+        },
       },
       orderBy: [
         { group: 'asc' },
@@ -64,14 +66,18 @@ export class StandingsService {
         { goalDiff: 'desc' },
         { goalsFor: 'desc' },
         { played: 'asc' },
-      ]
+      ],
     });
 
     return ResponseUtil.success({
-      standings: standings.map(s => ({
+      standings: standings.map((s) => ({
         ...s,
-        participantName: s.participant?.team?.name || s.participant?.customName || s.participant?.user?.name || 'Unknown',
-      }))
+        participantName:
+          s.participant?.team?.name ||
+          s.participant?.customName ||
+          s.participant?.user?.name ||
+          'Unknown',
+      })),
     });
   }
 
@@ -83,10 +89,10 @@ export class StandingsService {
           include: {
             team: true,
             user: true,
-          }
+          },
         },
-        tournament: true
-      }
+        tournament: true,
+      },
     });
 
     if (!standing) throw new NotFoundException('Standing not found');
@@ -99,7 +105,8 @@ export class StandingsService {
 
     // recalculate goal difference if goals modify
     const goalsFor = updateStandingDto.goalsFor ?? standing.goalsFor;
-    const goalsAgainst = updateStandingDto.goalsAgainst ?? standing.goalsAgainst;
+    const goalsAgainst =
+      updateStandingDto.goalsAgainst ?? standing.goalsAgainst;
 
     const updatedStanding = await this.db.standing.update({
       where: { id },
@@ -112,9 +119,9 @@ export class StandingsService {
           include: {
             team: true,
             user: true,
-          }
+          },
         },
-      }
+      },
     });
 
     return ResponseUtil.success(updatedStanding);

@@ -51,8 +51,10 @@ export class CreateStandingDto {
   @IsString()
   @IsOptional()
   group?: string;
-  
-  @ApiPropertyOptional({ description: 'Explicit position (if enforced manually)' })
+
+  @ApiPropertyOptional({
+    description: 'Explicit position (if enforced manually)',
+  })
   @IsInt()
   @IsOptional()
   position?: number;

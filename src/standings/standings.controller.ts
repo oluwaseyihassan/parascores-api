@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { StandingsService } from './standings.service';
 import { CreateStandingDto } from './dto/create-standing.dto';
 import { UpdateStandingDto } from './dto/update-standing.dto';
@@ -32,7 +40,10 @@ export class StandingsController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a specific standing record' })
-  update(@Param('id') id: string, @Body() updateStandingDto: UpdateStandingDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateStandingDto: UpdateStandingDto,
+  ) {
     return this.standingsService.update(id, updateStandingDto);
   }
 
