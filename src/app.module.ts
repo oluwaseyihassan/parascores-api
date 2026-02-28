@@ -58,4 +58,4 @@ import { StandingsModule } from './standings/standings.module';
     },
   ],
 })
-export class AppModule { }
+export class AppModule {}
