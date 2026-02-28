@@ -12,7 +12,7 @@ export class PlayersService {
     const participant = await this.db.participant.findUnique({
       where: { id: createPlayerDto.participantId },
     });
-    
+
     if (!participant) {
       throw new NotFoundException('Participant not found');
     }
@@ -24,15 +24,15 @@ export class PlayersService {
         number: createPlayerDto.number,
         position: createPlayerDto.position,
       },
-      include: { participant: true }
+      include: { participant: true },
     });
-    
+
     return ResponseUtil.success(player);
   }
 
   async findAll() {
     const players = await this.db.player.findMany({
-      include: { participant: true }
+      include: { participant: true },
     });
     return ResponseUtil.success(players);
   }
@@ -44,11 +44,11 @@ export class PlayersService {
         participant: true,
       },
     });
-    
+
     if (!player) {
       throw new NotFoundException('Player not found');
     }
-    
+
     return ResponseUtil.success(player);
   }
 
@@ -61,9 +61,9 @@ export class PlayersService {
     const updatedPlayer = await this.db.player.update({
       where: { id },
       data: updatePlayerDto,
-      include: { participant: true }
+      include: { participant: true },
     });
-    
+
     return ResponseUtil.success(updatedPlayer);
   }
 
@@ -75,5 +75,22 @@ export class PlayersService {
 
     await this.db.player.delete({ where: { id } });
     return ResponseUtil.success({ message: 'Player deleted successfully' });
+  }
+
+  async findByParticipant(participantId: string) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    const players = await this.db.player.findMany({
+      where: { participantId },
+      orderBy: { number: 'asc' },
+    });
+
+    return ResponseUtil.success(players);
   }
 }

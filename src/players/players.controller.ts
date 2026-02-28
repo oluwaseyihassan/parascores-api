@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PlayersService } from './players.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -40,5 +48,12 @@ export class PlayersController {
   @ApiOperation({ summary: 'Delete a player by ID' })
   remove(@Param('id') id: string) {
     return this.playersService.remove(id);
+  }
+
+  @Public()
+  @Get('participant/:participantId')
+  @ApiOperation({ summary: 'Get players by participant ID' })
+  findByParticipant(@Param('participantId') participantId: string) {
+    return this.playersService.findByParticipant(participantId);
   }
 }

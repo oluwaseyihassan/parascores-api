@@ -17,7 +17,10 @@ export class CreatePlayerDto {
   @IsOptional()
   number?: number;
 
-  @ApiPropertyOptional({ description: 'Position (e.g., GK, DEF, MID, FWD)', example: 'FWD' })
+  @ApiPropertyOptional({
+    description: 'Position (e.g., GK, DEF, MID, FWD)',
+    example: 'FWD',
+  })
   @IsString()
   @IsOptional()
   position?: string;
