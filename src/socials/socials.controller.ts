@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+} from '@nestjs/common';
 import { SocialsService } from './socials.service';
 import { AddSocialDto, UpdateSocialDto } from 'src/socials/dto/add-social.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -13,7 +21,7 @@ export class SocialsController {
   @ApiOperation({ summary: 'Add a social link to a tournament' })
   async addSocial(
     @Param('tournamentId') tournamentId: string,
-    @Body() dto: AddSocialDto
+    @Body() dto: AddSocialDto,
   ) {
     return this.socialsService.addSocial(tournamentId, dto);
   }
@@ -29,16 +37,14 @@ export class SocialsController {
   @ApiOperation({ summary: 'Update a social link' })
   async updateSocial(
     @Param('socialId') socialId: string,
-    @Body() dto: UpdateSocialDto
+    @Body() dto: UpdateSocialDto,
   ) {
     return this.socialsService.updateSocial(socialId, dto);
   }
 
   @Delete(':socialId')
   @ApiOperation({ summary: 'Remove a social link from a tournament' })
-  async removeSocial(
-    @Param('socialId') socialId: string
-  ) {
+  async removeSocial(@Param('socialId') socialId: string) {
     return this.socialsService.removeSocial(socialId);
   }
 }
