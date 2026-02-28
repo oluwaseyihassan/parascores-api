@@ -4,11 +4,10 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { UsersModule } from 'src/users/users.module';
 import { jwtConstants } from './constants';
-import "dotenv/config";
+import 'dotenv/config';
 import { PassportModule } from '@nestjs/passport';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { EmailModule } from 'src/email/email.module';
-
 
 @Module({
   imports: [
@@ -24,4 +23,4 @@ import { EmailModule } from 'src/email/email.module';
   controllers: [AuthController],
   providers: [AuthService, GoogleStrategy],
 })
-export class AuthModule { }
+export class AuthModule {}

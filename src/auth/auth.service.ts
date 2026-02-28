@@ -1,4 +1,12 @@
-import { BadRequestException, ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  HttpStatus,
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UsersService } from 'src/users/users.service';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -17,7 +25,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
-  ) { }
+  ) {}
 
   async signUp(dto: SignUpDto) {
     const existingUser = await this.usersService.findByEmail(dto.email);
@@ -27,7 +35,7 @@ export class AuthService {
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);
-    
+
     // Generate verification token
     const verificationToken = crypto.randomBytes(32).toString('hex');
     const verificationExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
@@ -62,7 +70,10 @@ export class AuthService {
 
     // Remove password from response
     const { password, emailVerificationToken, ...result } = user;
-    return ResponseUtil.success(result, 'User registered successfully. Please check your email to verify your account.');
+    return ResponseUtil.success(
+      result,
+      'User registered successfully. Please check your email to verify your account.',
+    );
   }
 
   async verifyEmail(token: string) {
@@ -75,8 +86,13 @@ export class AuthService {
       throw new BadRequestException('Invalid verification token');
     }
 
-    if (user.emailVerificationExpiry && user.emailVerificationExpiry < new Date()) {
-      throw new BadRequestException('Verification token has expired. Please request a new one.');
+    if (
+      user.emailVerificationExpiry &&
+      user.emailVerificationExpiry < new Date()
+    ) {
+      throw new BadRequestException(
+        'Verification token has expired. Please request a new one.',
+      );
     }
 
     if (user.isEmailVerified) {
@@ -99,7 +115,10 @@ export class AuthService {
       // Don't fail verification if welcome email fails
     }
 
-    return ResponseUtil.success(null, 'Email verified successfully. You can now login.');
+    return ResponseUtil.success(
+      null,
+      'Email verified successfully. You can now login.',
+    );
   }
 
   async resendVerificationEmail(email: string) {
@@ -107,7 +126,10 @@ export class AuthService {
 
     if (!user) {
       // Don't reveal if email exists
-      return ResponseUtil.success({}, 'If an account with this email exists, a verification email will be sent.');
+      return ResponseUtil.success(
+        {},
+        'If an account with this email exists, a verification email will be sent.',
+      );
     }
 
     if (user.isEmailVerified) {
@@ -134,7 +156,9 @@ export class AuthService {
       );
     } catch (error) {
       console.error('Failed to send verification email:', error);
-      throw new InternalServerErrorException('Failed to send verification email. Please try again.');
+      throw new InternalServerErrorException(
+        'Failed to send verification email. Please try again.',
+      );
     }
 
     return ResponseUtil.success({}, 'Verification email sent successfully.');
@@ -145,12 +169,18 @@ export class AuthService {
 
     // Always return success message for security (don't reveal if email exists)
     if (!user) {
-      return ResponseUtil.success({}, 'If an account with this email exists, a password reset link will be sent.');
+      return ResponseUtil.success(
+        {},
+        'If an account with this email exists, a password reset link will be sent.',
+      );
     }
 
     // Only allow password reset for users who have a password (not OAuth-only)
     if (!user.password) {
-      return ResponseUtil.success({}, 'If an account with this email exists, a password reset link will be sent.');
+      return ResponseUtil.success(
+        {},
+        'If an account with this email exists, a password reset link will be sent.',
+      );
     }
 
     // Generate password reset token
@@ -173,10 +203,15 @@ export class AuthService {
       );
     } catch (error) {
       console.error('Failed to send password reset email:', error);
-      throw new InternalServerErrorException('Failed to send password reset email. Please try again.');
+      throw new InternalServerErrorException(
+        'Failed to send password reset email. Please try again.',
+      );
     }
 
-    return ResponseUtil.success({}, 'If an account with this email exists, a password reset link will be sent.');
+    return ResponseUtil.success(
+      {},
+      'If an account with this email exists, a password reset link will be sent.',
+    );
   }
 
   async resetPassword(token: string, newPassword: string) {
@@ -189,7 +224,9 @@ export class AuthService {
     }
 
     if (user.passwordResetExpiry && user.passwordResetExpiry < new Date()) {
-      throw new BadRequestException('Password reset token has expired. Please request a new one.');
+      throw new BadRequestException(
+        'Password reset token has expired. Please request a new one.',
+      );
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -203,24 +240,27 @@ export class AuthService {
       },
     });
 
-    return ResponseUtil.success(null, 'Password reset successfully. You can now login with your new password.');
+    return ResponseUtil.success(
+      null,
+      'Password reset successfully. You can now login with your new password.',
+    );
   }
 
   async validateGoogleUser(details: any) {
-    console.log(details)
-    let user = await this.usersService.findByEmail(details.email);
-    console.log('User found in db?', user)
+    console.log(details);
+    const user = await this.usersService.findByEmail(details.email);
+    console.log('User found in db?', user);
     if (user) {
       if (user.password) {
-        // user already exists with password, we can link or just login. 
+        // user already exists with password, we can link or just login.
         // For now, just login.
         if (!user.picture && details.picture) {
-        await this.usersService.update(user.id, { picture: details.picture });
-      }
+          await this.usersService.update(user.id, { picture: details.picture });
+        }
       }
       return user;
     }
-    console.log('Creating new user from google profile')
+    console.log('Creating new user from google profile');
     const newUser = await this.usersService.create({
       email: details.email,
       name: details.firstName,
@@ -230,17 +270,19 @@ export class AuthService {
       isEmailVerified: true, // Google accounts are pre-verified
     });
     await this.emailService.sendWelcomeEmail(newUser.email, newUser.name);
-    
+
     // Send admin notification about new Google signup
     try {
-      await this.emailService.sendNewUserAlertEmail(newUser.email, newUser.name);
+      await this.emailService.sendNewUserAlertEmail(
+        newUser.email,
+        newUser.name,
+      );
     } catch (error) {
       console.error('Failed to send new user alert:', error);
     }
-    
+
     return newUser;
   }
-
 
   async login(dto: LoginDto, response: Response) {
     const user = await this.usersService.findByEmail(dto.email);
@@ -251,7 +293,10 @@ export class AuthService {
     if (user.password) {
       const isPasswordValid = await bcrypt.compare(dto.password, user.password);
       if (!isPasswordValid) {
-        return ResponseUtil.error('Invalid credentials', HttpStatus.UNAUTHORIZED);
+        return ResponseUtil.error(
+          'Invalid credentials',
+          HttpStatus.UNAUTHORIZED,
+        );
       }
     } else {
       return ResponseUtil.error('Invalid credentials', HttpStatus.UNAUTHORIZED);
@@ -259,18 +304,24 @@ export class AuthService {
 
     // Check if email is verified
     if (!user.isEmailVerified) {
-      return ResponseUtil.error('Please verify your email before logging in. Check your inbox for the verification link.', HttpStatus.FORBIDDEN);
+      return ResponseUtil.error(
+        'Please verify your email before logging in. Check your inbox for the verification link.',
+        HttpStatus.FORBIDDEN,
+      );
     }
 
-    const payload = { email: user.email, sub: user.id, role: user.role, name: user.name };
-    const access_token = await this.generateToken(payload, "7d")
-    const refresh_token = await this.generateToken(payload, "30d")
-
+    const payload = {
+      email: user.email,
+      sub: user.id,
+      role: user.role,
+      name: user.name,
+    };
+    const access_token = await this.generateToken(payload, '7d');
+    const refresh_token = await this.generateToken(payload, '30d');
 
     // set http-only cookies
-    this.setAccessTokenCookie(response, access_token)
-    this.setRefreshTokenCookie(response, refresh_token)
-
+    this.setAccessTokenCookie(response, access_token);
+    this.setRefreshTokenCookie(response, refresh_token);
 
     return ResponseUtil.success(
       { id: user.id, email: user.email, name: user.name, role: user.role },
@@ -292,16 +343,19 @@ export class AuthService {
       }
 
       const newPayload = { email: user.email, sub: user.id, role: user.role };
-      const access_token = await this.generateToken(newPayload, "7d");
-      const refresh_token = await this.generateToken(newPayload, "30d");
+      const access_token = await this.generateToken(newPayload, '7d');
+      const refresh_token = await this.generateToken(newPayload, '30d');
 
       this.setAccessTokenCookie(response, access_token);
       this.setRefreshTokenCookie(response, refresh_token);
 
-      return ResponseUtil.success({ access_token }, 'Tokens refreshed successfully');
+      return ResponseUtil.success(
+        { access_token },
+        'Tokens refreshed successfully',
+      );
     } catch (e) {
       if (e instanceof NotFoundException) {
-          throw new UnauthorizedException('User no longer exists'); 
+        throw new UnauthorizedException('User no longer exists');
       }
       console.log(e.message);
       throw new UnauthorizedException('Invalid Refresh Token');
@@ -317,16 +371,22 @@ export class AuthService {
     return ResponseUtil.success(result, 'User profile retrieved');
   }
 
-  async generateToken(payload: any, expiresIn: string | number): Promise<string> {
-    const token = await this.jwtService.signAsync(payload, { expiresIn: expiresIn as any })
-    return token
+  async generateToken(
+    payload: any,
+    expiresIn: string | number,
+  ): Promise<string> {
+    const token = await this.jwtService.signAsync(payload, {
+      expiresIn: expiresIn as any,
+    });
+    return token;
   }
   async verifyToken(token: string) {
-    return this.jwtService.verifyAsync(token)
+    return this.jwtService.verifyAsync(token);
   }
   setAccessTokenCookie(res: Response, token: string) {
     const isProduction = process.env.NODE_ENV === 'production';
-    const domain = process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+    const domain =
+      process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
     res.cookie('access_token', token, {
       domain: domain,
       path: '/',
@@ -338,7 +398,8 @@ export class AuthService {
   }
   setRefreshTokenCookie(res: Response, token: string) {
     const isProduction = process.env.NODE_ENV === 'production';
-    const domain = process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+    const domain =
+      process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
     res.cookie('refresh_token', token, {
       domain: domain,
       path: '/',
