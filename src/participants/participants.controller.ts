@@ -47,4 +47,11 @@ export class ParticipantsController {
   async getPlayers(@Param('participantId') participantId: string) {
     return this.participantsService.getPlayers(participantId);
   }
+
+  @Public()
+  @Get(':participantId')
+  @ApiOperation({ summary: 'Get a participant by id' })
+  async getParticipantById(@Param('participantId') participantId: string) {
+    return this.participantsService.getParticipantById(participantId);
+  }
 }
