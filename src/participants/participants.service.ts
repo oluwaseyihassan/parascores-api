@@ -129,4 +129,20 @@ export class ParticipantsService {
     });
     return ResponseUtil.success(players);
   }
+
+  // Get participant by id
+  async getParticipantById(participantId: string) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: {
+        players: true,
+        user: true,
+        team: true,
+      },
+    });
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+    return ResponseUtil.success(participant);
+  }
 }
