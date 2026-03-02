@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
-import { AddPlayerDto } from 'src/participants/dto/add-player.dto';
+import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -113,6 +113,37 @@ export class ParticipantsService {
       },
     });
     return ResponseUtil.success(player);
+  }
+
+  // Add players in bulk
+  async addPlayersBulk(participantId: string, dto: BulkAddPlayerDto) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: { tournament: true },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    if (participant.tournament.participantType === 'INDIVIDUAL') {
+      throw new BadRequestException(
+        'Cannot add players to a participant in an INDIVIDUAL tournament.',
+      );
+    }
+
+    const playersData = dto.players.map((p) => ({
+      participantId: participant.id,
+      name: p.name,
+      number: p.number,
+      position: p.position,
+    }));
+
+    await this.db.player.createMany({
+      data: playersData,
+    });
+
+    return this.getPlayers(participant.id);
   }
 
   // Get players of participant
