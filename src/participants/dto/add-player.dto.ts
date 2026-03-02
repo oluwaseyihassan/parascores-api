@@ -1,5 +1,6 @@
-import { IsInt, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsString, IsArray, ValidateNested } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class AddPlayerDto {
   @ApiProperty({ description: 'Name of the player', example: 'Lionel Messi' })
@@ -19,4 +20,12 @@ export class AddPlayerDto {
   @IsString()
   @IsOptional()
   position?: string;
+}
+
+export class BulkAddPlayerDto {
+  @ApiProperty({ type: [AddPlayerDto], description: 'List of players to add' })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => AddPlayerDto)
+  players: AddPlayerDto[];
 }
