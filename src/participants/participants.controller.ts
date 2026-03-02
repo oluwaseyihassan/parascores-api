@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
-import { AddPlayerDto } from 'src/participants/dto/add-player.dto';
+import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 
@@ -39,6 +39,15 @@ export class ParticipantsController {
   ) {
     // Note: The original route included :tournamentId, but it isn't strictly necessary since participantId is globally unique.
     return this.participantsService.addPlayer(participantId, dto);
+  }
+
+  @Post(':participantId/players/bulk')
+  @ApiOperation({ summary: 'Add multiple players to a participant' })
+  async addPlayersBulk(
+    @Param('participantId') participantId: string,
+    @Body() dto: BulkAddPlayerDto,
+  ) {
+    return this.participantsService.addPlayersBulk(participantId, dto);
   }
 
   @Public()
