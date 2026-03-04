@@ -7,6 +7,7 @@ import {
 import { DatabaseService } from 'src/database/database.service';
 import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
 import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
+import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -175,5 +176,48 @@ export class ParticipantsService {
       throw new NotFoundException('Participant not found');
     }
     return ResponseUtil.success(participant);
+  }
+
+  // Update participant
+  async updateParticipant(participantId: string, dto: UpdateParticipantDto) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    const updatedParticipant = await this.db.participant.update({
+      where: { id: participantId },
+      data: {
+        customName: dto.customName !== undefined ? dto.customName : undefined,
+        logoUrl: dto.logoUrl !== undefined ? dto.logoUrl : undefined,
+      },
+      include: {
+        players: true,
+        user: true,
+        team: true,
+      }
+    });
+
+    return ResponseUtil.success(updatedParticipant);
+  }
+
+  // Remove participant
+  async removeParticipant(participantId: string) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    await this.db.participant.delete({
+      where: { id: participantId },
+    });
+
+    return ResponseUtil.success(null, 'Participant removed successfully');
   }
 }
