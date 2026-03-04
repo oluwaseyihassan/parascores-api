@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Param, Req } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Body, Param, Req } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
 import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
 import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
+import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
 
@@ -62,5 +63,20 @@ export class ParticipantsController {
   @ApiOperation({ summary: 'Get a participant by id' })
   async getParticipantById(@Param('participantId') participantId: string) {
     return this.participantsService.getParticipantById(participantId);
+  }
+
+  @Patch(':participantId')
+  @ApiOperation({ summary: 'Update a participant' })
+  async updateParticipant(
+    @Param('participantId') participantId: string,
+    @Body() dto: UpdateParticipantDto,
+  ) {
+    return this.participantsService.updateParticipant(participantId, dto);
+  }
+
+  @Delete(':participantId')
+  @ApiOperation({ summary: 'Remove a participant' })
+  async removeParticipant(@Param('participantId') participantId: string) {
+    return this.participantsService.removeParticipant(participantId);
   }
 }
