@@ -1,4 +1,15 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateParticipantDto } from './create-participant.dto';
+import { IsString, IsOptional, MaxLength } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateParticipantDto extends PartialType(CreateParticipantDto) {}
+export class UpdateParticipantDto {
+  @ApiProperty({ description: 'Custom name for the participant/team', required: false })
+  @IsString()
+  @IsOptional()
+  @MaxLength(100)
+  customName?: string;
+
+  @ApiProperty({ description: 'Logo URL for the participant/team', required: false })
+  @IsString()
+  @IsOptional()
+  logoUrl?: string;
+}
