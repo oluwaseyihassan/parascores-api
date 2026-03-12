@@ -121,6 +121,8 @@ export const TournamentScalarFieldEnum = {
   registrationOpen: 'registrationOpen',
   registrationClose: 'registrationClose',
   autoApprove: 'autoApprove',
+  twoLegsKnockout: 'twoLegsKnockout',
+  thirdPlaceMatch: 'thirdPlaceMatch',
   numberOfGroups: 'numberOfGroups',
   teamsPerGroup: 'teamsPerGroup',
   start_date: 'start_date',
