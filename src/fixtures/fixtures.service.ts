@@ -209,7 +209,8 @@ export class FixturesService {
       if (
         tournament?.twoLegsKnockout &&
         (tournament.type === 'KNOCKOUT' || tournament.type === 'HYBRID') &&
-        fixture.matchNumber % 2 === 0
+        fixture.matchNumber % 2 === 0 &&
+        fixture.roundName?.includes('Leg 2')
       ) {
         const leg1 = await this.db.fixture.findFirst({
           where: {
