@@ -117,6 +117,10 @@ model Tournament {
   registrationClose DateTime?
   autoApprove       Boolean   @default(true)
 
+  // Advanced Knockout Options
+  twoLegsKnockout Boolean @default(false)
+  thirdPlaceMatch Boolean @default(false)
+
   // Group config
   numberOfGroups Int?
   teamsPerGroup  Int?
