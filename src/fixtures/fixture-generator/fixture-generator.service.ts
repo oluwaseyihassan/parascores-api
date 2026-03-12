@@ -346,7 +346,7 @@ export class FixtureGeneratorService {
     participants: Participant[],
     options: { startDate: Date; intervalMinutes: number; stage?: FixtureStage },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
+    const rounds: { round: number; roundName: string; fixtures: Fixture[]; bracketFixtures?: Fixture[] }[] =
       [];
     const n = participants.length;
 
@@ -383,7 +383,8 @@ export class FixtureGeneratorService {
       const prevRoundAbbrev = prevRoundName
         ? this.getRoundAbbreviation(prevRoundName)
         : null;
-      const roundFixtures: Fixture[] = [];
+      const bracketFixtures: Fixture[] = [];
+      const allRoundFixtures: Fixture[] = [];
 
       let roundMatchNumber = 1; // Reset match ID counter for each round for clean labeling
 
@@ -413,15 +414,17 @@ export class FixtureGeneratorService {
           const prevMatch1 = matchIndex * 2 + 1;
           const prevMatch2 = matchIndex * 2 + 2;
 
-          homeTeamPlaceholder = `${prevRoundAbbrev}${prevMatch1} Winner`;
-          awayTeamPlaceholder = `${prevRoundAbbrev}${prevMatch2} Winner`;
+          homeTeamPlaceholder = `${prevRoundAbbrev}(${prevMatch1}) Winner`;
+          awayTeamPlaceholder = `${prevRoundAbbrev}(${prevMatch2}) Winner`;
         }
+
+        const isTwoLegs = tournament.twoLegsKnockout && round < totalRounds;
 
         const fixture = await this.db.fixture.create({
           data: {
             tournament_id: tournament.id,
             round,
-            roundName,
+            roundName: isTwoLegs ? `${roundName} - Leg 1` : roundName,
             matchNumber: roundMatchNumber++,
             startTime: new Date(currentTime),
             homeTeamId,
@@ -433,14 +436,57 @@ export class FixtureGeneratorService {
           },
         });
 
-        roundFixtures.push(fixture);
+        bracketFixtures.push(fixture);
+        allRoundFixtures.push(fixture);
         currentTime = new Date(
           currentTime.getTime() + options.intervalMinutes * 60 * 1000,
         );
+
+        if (isTwoLegs) {
+          const leg2 = await this.db.fixture.create({
+            data: {
+              tournament_id: tournament.id,
+              round,
+              roundName: `${roundName} - Leg 2`,
+              matchNumber: roundMatchNumber++,
+              startTime: new Date(currentTime),
+              homeTeamId: awayTeamId,
+              awayTeamId: homeTeamId,
+              homeTeamPlaceholder: awayTeamPlaceholder,
+              awayTeamPlaceholder: homeTeamPlaceholder,
+              status: 'SCHEDULED',
+              ...(options.stage && { stage: options.stage }),
+            },
+          });
+          allRoundFixtures.push(leg2);
+          currentTime = new Date(
+            currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+          );
+        }
       }
 
-      if (roundFixtures.length > 0) {
-        rounds.push({ round, roundName, fixtures: roundFixtures });
+      if (round === totalRounds && tournament.thirdPlaceMatch) {
+         const thirdPlaceMatch = await this.db.fixture.create({
+            data: {
+              tournament_id: tournament.id,
+              round,
+              roundName: 'Third Place Match',
+              matchNumber: roundMatchNumber++,
+              startTime: new Date(currentTime),
+              homeTeamPlaceholder: 'SF1 Loser',
+              awayTeamPlaceholder: 'SF2 Loser',
+              status: 'SCHEDULED',
+              ...(options.stage && { stage: options.stage }),
+            },
+         });
+         allRoundFixtures.push(thirdPlaceMatch);
+         currentTime = new Date(
+            currentTime.getTime() + options.intervalMinutes * 60 * 1000,
+         );
+      }
+
+      if (allRoundFixtures.length > 0) {
+        rounds.push({ round, roundName, fixtures: allRoundFixtures, bracketFixtures });
       }
 
       // Halve the matches for the next round
@@ -452,34 +498,59 @@ export class FixtureGeneratorService {
       const currentRound = rounds[roundIndex];
       const nextRound = rounds[roundIndex + 1];
 
-      for (let i = 0; i < currentRound.fixtures.length; i++) {
+      if (!currentRound.bracketFixtures || !nextRound.bracketFixtures) continue;
+      const currentBracket = currentRound.bracketFixtures;
+      const nextBracket = nextRound.bracketFixtures;
+
+      for (let i = 0; i < currentBracket.length; i++) {
         // Every 2 fixtures in current round feed into 1 fixture in next round
         const nextFixtureIndex = Math.floor(i / 2);
-        const nextFixture = nextRound.fixtures[nextFixtureIndex];
+        const nextFixture = nextBracket[nextFixtureIndex];
 
         if (nextFixture) {
           await this.db.fixture.update({
-            where: { id: currentRound.fixtures[i].id },
+            where: { id: currentBracket[i].id },
             data: { nextFixtureId: nextFixture.id },
           });
           // Update the fixture object in rounds array for response
-          currentRound.fixtures[i] = {
-            ...currentRound.fixtures[i],
-            nextFixtureId: nextFixture.id,
-          } as Fixture;
+          const fixtureIndex = currentRound.fixtures.findIndex(f => f.id === currentBracket[i].id);
+          if (fixtureIndex !== -1) {
+            currentRound.fixtures[fixtureIndex] = {
+              ...currentRound.fixtures[fixtureIndex],
+              nextFixtureId: nextFixture.id,
+            } as Fixture;
+          }
+
+          // If two-legged, also link the Leg 2 fixture to the same next fixture
+          if (tournament.twoLegsKnockout) {
+            const leg2 = currentRound.fixtures.find(
+              f => f.round === currentBracket[i].round &&
+                   f.matchNumber === currentBracket[i].matchNumber + 1 &&
+                   f.id !== currentBracket[i].id
+            );
+            if (leg2) {
+              await this.db.fixture.update({
+                where: { id: leg2.id },
+                data: { nextFixtureId: nextFixture.id },
+              });
+              const leg2Index = currentRound.fixtures.findIndex(f => f.id === leg2.id);
+              if (leg2Index !== -1) {
+                currentRound.fixtures[leg2Index] = {
+                  ...currentRound.fixtures[leg2Index],
+                  nextFixtureId: nextFixture.id,
+                } as Fixture;
+              }
+            }
+          }
         }
       }
     }
 
     // Handle initial Byes (Auto-progress teams without opponents)
     for (const round of rounds) {
-      for (const fixture of round.fixtures) {
-        // Check if it's a Bye (only one team present)
-        // Note: In Round 1 we might have null/null if double bye, but we skip creating those?
-        // Line 313: if (home === null && away === null) continue;
-        // So fixture has at least one null if it's a bye?
-        // Actually, line 309: homeTeamId = home?.id ?? null;
-        // fixture.homeTeamId is string or null.
+      if (!round.bracketFixtures) continue;
+      for (let i = 0; i < round.bracketFixtures.length; i++) {
+        const fixture = round.bracketFixtures[i];
 
         const hasHome = !!fixture.homeTeamId;
         const hasAway = !!fixture.awayTeamId;
@@ -495,14 +566,13 @@ export class FixtureGeneratorService {
               status: 'COMPLETED',
               homeScore: hasHome ? 3 : 0, // Award 3-0 win for walkover
               awayScore: hasAway ? 3 : 0,
-              // Make sure to clear placeholders if any?
             },
           });
 
           // 2. Advance winner to next fixture
           if (fixture.nextFixtureId) {
-            // Determine feed direction
-            const isHomeFeed = fixture.matchNumber % 2 !== 0;
+            // Determine feed direction correctly using index in bracket layout
+            const isHomeFeed = i % 2 === 0;
 
             await this.db.fixture.update({
               where: { id: fixture.nextFixtureId },
@@ -512,11 +582,43 @@ export class FixtureGeneratorService {
                   : { awayTeamId: winnerId, awayTeamPlaceholder: null }),
               },
             });
+
+            // For two-legged knockouts, also update Leg 2 of the next round (swapped position)
+            // Only if the next fixture is a Leg 1 (not the Final, which is single-leg)
+            if (tournament.twoLegsKnockout) {
+              const nextFixture = await this.db.fixture.findUnique({
+                where: { id: fixture.nextFixtureId },
+              });
+
+              if (nextFixture && nextFixture.roundName?.includes('Leg 1')) {
+                const leg2OfNext = await this.db.fixture.findFirst({
+                  where: {
+                    tournament_id: tournament.id,
+                    round: nextFixture.round,
+                    matchNumber: nextFixture.matchNumber + 1,
+                  },
+                });
+
+                if (leg2OfNext) {
+                  await this.db.fixture.update({
+                    where: { id: leg2OfNext.id },
+                    data: {
+                      ...(isHomeFeed
+                        ? { awayTeamId: winnerId, awayTeamPlaceholder: null }
+                        : { homeTeamId: winnerId, homeTeamPlaceholder: null }),
+                    },
+                  });
+                }
+              }
+            }
           }
         }
       }
     }
-    return rounds;
+
+    // Clean up internal bracketFixtures mapping before returning
+    const finalRounds = rounds.map(({ bracketFixtures, ...rest }) => rest);
+    return finalRounds;
   }
 
   // Get round abbreviation for placeholder labels
