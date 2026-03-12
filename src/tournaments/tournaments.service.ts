@@ -148,6 +148,78 @@ export class TournamentsService {
     return ResponseUtil.success(tournament);
   }
 
+  // fetch full tournament overview data to minimize concurrent API calls
+  async getOverviewData(identifier: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: {
+        OR: [{ id: identifier }, { customName: identifier }],
+      },
+      include: {
+        sponsors: true,
+        socials: true,
+        participants: {
+          include: { players: true }
+        },
+        fixtures: {
+          include: {
+            homeTeam: {
+              include: {
+                user: { select: { id: true, name: true } },
+                team: { select: { id: true, name: true } },
+              },
+            },
+            awayTeam: {
+              include: {
+                user: { select: { id: true, name: true } },
+                team: { select: { id: true, name: true } },
+              },
+            },
+          },
+          orderBy: { matchNumber: 'asc' }
+        },
+        standings: {
+          include: {
+            participant: {
+              include: { team: true, user: true }
+            }
+          },
+          orderBy: [
+            { group: 'asc' },
+            { points: 'desc' },
+            { goalDiff: 'desc' },
+            { goalsFor: 'desc' },
+            { played: 'asc' },
+          ],
+        }
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const { participants, fixtures, standings, sponsors, socials, ...tournamentData } = tournament;
+    
+    // Format standings to match what StandingsService returns
+    const formattedStandings = standings.map((s) => ({
+      ...s,
+      participantName:
+        s.participant?.team?.name ||
+        s.participant?.customName ||
+        s.participant?.user?.name ||
+        'Unknown',
+    }));
+
+    return ResponseUtil.success({
+      tournament: tournamentData,
+      participants,
+      fixtures,
+      standings: formattedStandings,
+      sponsors,
+      socials
+    });
+  }
+
   // Check if a custom name is available
   async checkCustomName(customName: string) {
     const existing = await this.db.tournament.findUnique({
