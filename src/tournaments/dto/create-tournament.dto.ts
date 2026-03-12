@@ -165,6 +165,24 @@ export class CreateTournamentDto {
   autoApprove?: boolean;
 
   @ApiPropertyOptional({
+    description: 'If true, knockout rounds (excluding final) will have two legs',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  twoLegsKnockout?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'If true, a third-place match is generated for tournament losers',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  thirdPlaceMatch?: boolean;
+
+  @ApiPropertyOptional({
     description: 'URL for the tournament logo',
     example: 'https://example.com/logo.png',
   })
