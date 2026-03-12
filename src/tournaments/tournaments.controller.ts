@@ -76,6 +76,13 @@ export class TournamentsController {
   }
 
   @Public()
+  @Get(':id/overview')
+  @ApiOperation({ summary: 'Get full tournament overview data' })
+  async getOverviewData(@Param('id') id: string) {
+    return this.tournamentsService.getOverviewData(id);
+  }
+
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get a tournament by ID' })
   async findOne(@Param('id') id: string) {
