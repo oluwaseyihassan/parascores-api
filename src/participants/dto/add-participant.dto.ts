@@ -5,7 +5,10 @@ import {
   IsOptional,
   IsString,
   ValidateIf,
+  IsArray,
+  ValidateNested
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
 export class AddParticipantDto {
@@ -50,4 +53,11 @@ export class AddParticipantDto {
   @IsString()
   @IsOptional()
   logoUrl?: string;
+}
+
+export class BulkAddParticipantDto {
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => AddParticipantDto)
+  participants: AddParticipantDto[];
 }
