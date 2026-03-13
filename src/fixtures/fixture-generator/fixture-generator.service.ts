@@ -16,6 +16,7 @@ import {
   TournamentType,
 } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class FixtureGeneratorService {
@@ -346,15 +347,13 @@ export class FixtureGeneratorService {
     participants: Participant[],
     options: { startDate: Date; intervalMinutes: number; stage?: FixtureStage },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[]; bracketFixtures?: Fixture[] }[] =
-      [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[]; bracketFixtures?: Fixture[] }[] = [];
     const n = participants.length;
 
     // Calculate number of rounds needed
     const totalRounds = Math.ceil(Math.log2(n));
     const perfectBracketSize = Math.pow(2, totalRounds);
 
-    // Reorder for proper bracket seeding (1v8, 4v5, 2v7, 3v6 pattern)
     // Reorder for proper bracket seeding (1v8, 4v5, 2v7, 3v6 pattern)
     const seededParticipants = this.seedBracket(
       participants,
@@ -365,6 +364,7 @@ export class FixtureGeneratorService {
 
     // Track matches per round to create proper bracket structure
     let matchesInCurrentRound = perfectBracketSize / 2;
+    const fixturesToInsert: any[] = [];
 
     for (let round = 1; round <= totalRounds; round++) {
       const roundName = this.getKnockoutRoundName(
@@ -409,8 +409,6 @@ export class FixtureGeneratorService {
           if (home === null && away === null) continue;
         } else {
           // For subsequent rounds, add placeholder labels
-          // Each match in this round gets winners from 2 matches in the previous round
-          // Since numbering resets every round, we use simple relative indexing
           const prevMatch1 = matchIndex * 2 + 1;
           const prevMatch2 = matchIndex * 2 + 2;
 
@@ -420,45 +418,46 @@ export class FixtureGeneratorService {
 
         const isTwoLegs = tournament.twoLegsKnockout && round < totalRounds;
 
-        const fixture = await this.db.fixture.create({
-          data: {
-            tournament_id: tournament.id,
-            round,
-            roundName: isTwoLegs ? `${roundName} - Leg 1` : roundName,
-            matchNumber: roundMatchNumber++,
-            startTime: new Date(currentTime),
-            homeTeamId,
-            awayTeamId,
-            homeTeamPlaceholder,
-            awayTeamPlaceholder,
-            status: 'SCHEDULED',
-            ...(options.stage && { stage: options.stage }),
-          },
-        });
+        const fixtureData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round,
+          roundName: isTwoLegs ? `${roundName} - Leg 1` : roundName,
+          matchNumber: roundMatchNumber++,
+          startTime: new Date(currentTime),
+          homeTeamId,
+          awayTeamId,
+          homeTeamPlaceholder,
+          awayTeamPlaceholder,
+          status: 'SCHEDULED',
+          ...(options.stage && { stage: options.stage }),
+        };
 
-        bracketFixtures.push(fixture);
-        allRoundFixtures.push(fixture);
+        bracketFixtures.push(fixtureData as unknown as Fixture);
+        allRoundFixtures.push(fixtureData as unknown as Fixture);
+        fixturesToInsert.push(fixtureData);
+
         currentTime = new Date(
           currentTime.getTime() + options.intervalMinutes * 60 * 1000,
         );
 
         if (isTwoLegs) {
-          const leg2 = await this.db.fixture.create({
-            data: {
-              tournament_id: tournament.id,
-              round,
-              roundName: `${roundName} - Leg 2`,
-              matchNumber: roundMatchNumber++,
-              startTime: new Date(currentTime),
-              homeTeamId: awayTeamId,
-              awayTeamId: homeTeamId,
-              homeTeamPlaceholder: awayTeamPlaceholder,
-              awayTeamPlaceholder: homeTeamPlaceholder,
-              status: 'SCHEDULED',
-              ...(options.stage && { stage: options.stage }),
-            },
-          });
-          allRoundFixtures.push(leg2);
+          const leg2Data = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round,
+            roundName: `${roundName} - Leg 2`,
+            matchNumber: roundMatchNumber++,
+            startTime: new Date(currentTime),
+            homeTeamId: awayTeamId,
+            awayTeamId: homeTeamId,
+            homeTeamPlaceholder: awayTeamPlaceholder,
+            awayTeamPlaceholder: homeTeamPlaceholder,
+            status: 'SCHEDULED',
+            ...(options.stage && { stage: options.stage }),
+          };
+          allRoundFixtures.push(leg2Data as unknown as Fixture);
+          fixturesToInsert.push(leg2Data);
           currentTime = new Date(
             currentTime.getTime() + options.intervalMinutes * 60 * 1000,
           );
@@ -466,20 +465,20 @@ export class FixtureGeneratorService {
       }
 
       if (round === totalRounds && tournament.thirdPlaceMatch) {
-         const thirdPlaceMatch = await this.db.fixture.create({
-            data: {
-              tournament_id: tournament.id,
-              round,
-              roundName: 'Third Place Match',
-              matchNumber: roundMatchNumber++,
-              startTime: new Date(currentTime),
-              homeTeamPlaceholder: 'SF1 Loser',
-              awayTeamPlaceholder: 'SF2 Loser',
-              status: 'SCHEDULED',
-              ...(options.stage && { stage: options.stage }),
-            },
-         });
-         allRoundFixtures.push(thirdPlaceMatch);
+         const thirdPlaceData = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round,
+            roundName: 'Third Place Match',
+            matchNumber: roundMatchNumber++,
+            startTime: new Date(currentTime),
+            homeTeamPlaceholder: 'SF1 Loser',
+            awayTeamPlaceholder: 'SF2 Loser',
+            status: 'SCHEDULED',
+            ...(options.stage && { stage: options.stage }),
+         };
+         allRoundFixtures.push(thirdPlaceData as unknown as Fixture);
+         fixturesToInsert.push(thirdPlaceData);
          currentTime = new Date(
             currentTime.getTime() + options.intervalMinutes * 60 * 1000,
          );
@@ -508,19 +507,8 @@ export class FixtureGeneratorService {
         const nextFixture = nextBracket[nextFixtureIndex];
 
         if (nextFixture) {
-          await this.db.fixture.update({
-            where: { id: currentBracket[i].id },
-            data: { nextFixtureId: nextFixture.id },
-          });
-          // Update the fixture object in rounds array for response
-          const fixtureIndex = currentRound.fixtures.findIndex(f => f.id === currentBracket[i].id);
-          if (fixtureIndex !== -1) {
-            currentRound.fixtures[fixtureIndex] = {
-              ...currentRound.fixtures[fixtureIndex],
-              nextFixtureId: nextFixture.id,
-            } as Fixture;
-          }
-
+          currentBracket[i].nextFixtureId = nextFixture.id;
+          
           // If two-legged, also link the Leg 2 fixture to the same next fixture
           if (tournament.twoLegsKnockout) {
             const leg2 = currentRound.fixtures.find(
@@ -529,17 +517,7 @@ export class FixtureGeneratorService {
                    f.id !== currentBracket[i].id
             );
             if (leg2) {
-              await this.db.fixture.update({
-                where: { id: leg2.id },
-                data: { nextFixtureId: nextFixture.id },
-              });
-              const leg2Index = currentRound.fixtures.findIndex(f => f.id === leg2.id);
-              if (leg2Index !== -1) {
-                currentRound.fixtures[leg2Index] = {
-                  ...currentRound.fixtures[leg2Index],
-                  nextFixtureId: nextFixture.id,
-                } as Fixture;
-              }
+              leg2.nextFixtureId = nextFixture.id;
             }
           }
         }
@@ -551,69 +529,59 @@ export class FixtureGeneratorService {
       if (!round.bracketFixtures) continue;
       for (let i = 0; i < round.bracketFixtures.length; i++) {
         const fixture = round.bracketFixtures[i];
+        const targetFixture = fixturesToInsert.find(f => f.id === fixture.id);
 
-        const hasHome = !!fixture.homeTeamId;
-        const hasAway = !!fixture.awayTeamId;
+        const hasHome = !!targetFixture.homeTeamId;
+        const hasAway = !!targetFixture.awayTeamId;
 
         if (hasHome !== hasAway) {
           // XOR: Only one team exists
-          const winnerId = hasHome ? fixture.homeTeamId : fixture.awayTeamId;
+          const winnerId = hasHome ? targetFixture.homeTeamId : targetFixture.awayTeamId;
 
           // 1. Mark current fixture as COMPLETED
-          await this.db.fixture.update({
-            where: { id: fixture.id },
-            data: {
-              status: 'COMPLETED',
-              homeScore: hasHome ? 3 : 0, // Award 3-0 win for walkover
-              awayScore: hasAway ? 3 : 0,
-            },
-          });
+          targetFixture.status = 'COMPLETED';
+          targetFixture.homeScore = hasHome ? 3 : 0; // Award 3-0 win for walkover
+          targetFixture.awayScore = hasAway ? 3 : 0;
 
           // 2. Advance winner to next fixture
-          if (fixture.nextFixtureId) {
+          if (targetFixture.nextFixtureId) {
             // Determine feed direction correctly using index in bracket layout
             const isHomeFeed = i % 2 === 0;
+            const nextTarget = fixturesToInsert.find(f => f.id === targetFixture.nextFixtureId);
+            
+            if (nextTarget) {
+              if (isHomeFeed) {
+                nextTarget.homeTeamId = winnerId;
+                nextTarget.homeTeamPlaceholder = null;
+              } else {
+                nextTarget.awayTeamId = winnerId;
+                nextTarget.awayTeamPlaceholder = null;
+              }
 
-            await this.db.fixture.update({
-              where: { id: fixture.nextFixtureId },
-              data: {
-                ...(isHomeFeed
-                  ? { homeTeamId: winnerId, homeTeamPlaceholder: null }
-                  : { awayTeamId: winnerId, awayTeamPlaceholder: null }),
-              },
-            });
-
-            // For two-legged knockouts, also update Leg 2 of the next round (swapped position)
-            // Only if the next fixture is a Leg 1 (not the Final, which is single-leg)
-            if (tournament.twoLegsKnockout) {
-              const nextFixture = await this.db.fixture.findUnique({
-                where: { id: fixture.nextFixtureId },
-              });
-
-              if (nextFixture && nextFixture.roundName?.includes('Leg 1')) {
-                const leg2OfNext = await this.db.fixture.findFirst({
-                  where: {
-                    tournament_id: tournament.id,
-                    round: nextFixture.round,
-                    matchNumber: nextFixture.matchNumber + 1,
-                  },
-                });
-
-                if (leg2OfNext) {
-                  await this.db.fixture.update({
-                    where: { id: leg2OfNext.id },
-                    data: {
-                      ...(isHomeFeed
-                        ? { awayTeamId: winnerId, awayTeamPlaceholder: null }
-                        : { homeTeamId: winnerId, homeTeamPlaceholder: null }),
-                    },
-                  });
-                }
+              // For two-legged knockouts, also update Leg 2 of the next round (swapped position)
+              if (tournament.twoLegsKnockout && nextTarget.roundName?.includes('Leg 1')) {
+                 const leg2OfNext = fixturesToInsert.find(
+                   f => f.round === nextTarget.round &&
+                        f.matchNumber === nextTarget.matchNumber + 1
+                 );
+                 if (leg2OfNext) {
+                   if (isHomeFeed) {
+                     leg2OfNext.awayTeamId = winnerId;
+                     leg2OfNext.awayTeamPlaceholder = null;
+                   } else {
+                     leg2OfNext.homeTeamId = winnerId;
+                     leg2OfNext.homeTeamPlaceholder = null;
+                   }
+                 }
               }
             }
           }
         }
       }
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
     }
 
     // Clean up internal bracketFixtures mapping before returning
@@ -723,6 +691,7 @@ export class FixtureGeneratorService {
     }[] = [];
     let matchNumber = 1;
     let currentTime = new Date(options.startDate);
+    const fixturesToInsert: any[] = [];
 
     // First, map rounds to a temporary structure to aggregation
     // roundsMap[roundNum] = [fixtures from all groups]
@@ -756,21 +725,23 @@ export class FixtureGeneratorService {
           // Skip bye
           // Note: using strict null check if teams can be null
           if (home && away) {
-            const fixture = await this.db.fixture.create({
-              data: {
-                tournament_id: tournament.id,
-                groupId: group.id,
-                round,
-                roundName: `Group Stage - Matchday ${round}`,
-                matchNumber: matchNumber++, // We'll re-number later or just increment global
-                startTime: new Date(currentTime),
-                homeTeamId: home.id,
-                awayTeamId: away.id,
-                status: 'SCHEDULED',
-                stage: FixtureStage.GROUP_STAGE,
-              },
-            });
-            roundsMap[round].push(fixture);
+            const fixtureData = {
+              id: crypto.randomUUID(),
+              tournament_id: tournament.id,
+              groupId: group.id,
+              round,
+              roundName: `Group Stage - Matchday ${round}`,
+              matchNumber: matchNumber++, // We'll re-number later or just increment global
+              startTime: new Date(currentTime),
+              homeTeamId: home.id,
+              awayTeamId: away.id,
+              status: 'SCHEDULED',
+              stage: FixtureStage.GROUP_STAGE,
+            };
+
+            fixturesToInsert.push(fixtureData);
+            roundsMap[round].push(fixtureData as unknown as Fixture);
+            
             // Increment time for every match generated (sequential scheduling)
             currentTime = new Date(
               currentTime.getTime() + options.intervalMinutes * 60 * 1000,
@@ -806,21 +777,23 @@ export class FixtureGeneratorService {
         const secondLegFixtures: Fixture[] = [];
 
         for (const f of firstLegFixtures) {
-          const fixture = await this.db.fixture.create({
-            data: {
-              tournament_id: tournament.id,
-              round: secondLegRoundNum,
-              roundName: `Group Stage - Matchday ${secondLegRoundNum}`,
-              matchNumber: matchNumber++,
-              startTime: new Date(currentTime),
-              homeTeamId: f.awayTeamId, // Swap home/away
-              awayTeamId: f.homeTeamId,
-              status: 'SCHEDULED',
-              groupId: f.groupId,
-              stage: FixtureStage.GROUP_STAGE,
-            },
-          });
-          secondLegFixtures.push(fixture);
+          const fixtureData = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: secondLegRoundNum,
+            roundName: `Group Stage - Matchday ${secondLegRoundNum}`,
+            matchNumber: matchNumber++,
+            startTime: new Date(currentTime),
+            homeTeamId: f.awayTeamId, // Swap home/away
+            awayTeamId: f.homeTeamId,
+            status: 'SCHEDULED',
+            groupId: f.groupId,
+            stage: FixtureStage.GROUP_STAGE,
+          };
+
+          fixturesToInsert.push(fixtureData);
+          secondLegFixtures.push(fixtureData as unknown as Fixture);
+          
           // Increment time
           currentTime = new Date(
             currentTime.getTime() + options.intervalMinutes * 60 * 1000,
@@ -833,6 +806,10 @@ export class FixtureGeneratorService {
           fixtures: secondLegFixtures,
         });
       }
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
     }
 
     return allRounds;
@@ -848,8 +825,8 @@ export class FixtureGeneratorService {
       doubleRoundRobin?: boolean;
     },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
-      [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
+    const fixturesToInsert: any[] = [];
     const n = participants.length;
 
     // Add a "bye" participant if odd number
@@ -877,20 +854,21 @@ export class FixtureGeneratorService {
         // Skip bye matches
         if (home === null || away === null) continue;
 
-        const fixture = await this.db.fixture.create({
-          data: {
-            tournament_id: tournament.id,
-            round,
-            roundName,
-            matchNumber: matchNumber++,
-            startTime: new Date(currentTime),
-            homeTeamId: home.id,
-            awayTeamId: away.id,
-            status: 'SCHEDULED',
-          },
-        });
+        const fixtureData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round,
+          roundName,
+          matchNumber: matchNumber++,
+          startTime: new Date(currentTime),
+          homeTeamId: home.id,
+          awayTeamId: away.id,
+          status: 'SCHEDULED',
+        };
 
-        roundFixtures.push(fixture);
+        fixturesToInsert.push(fixtureData);
+        roundFixtures.push(fixtureData as unknown as Fixture);
+        
         currentTime = new Date(
           currentTime.getTime() + options.intervalMinutes * 60 * 1000,
         );
@@ -920,19 +898,20 @@ export class FixtureGeneratorService {
         const roundFixtures: Fixture[] = [];
 
         for (const f of firstLegRound.fixtures) {
-          const fixture = await this.db.fixture.create({
-            data: {
-              tournament_id: tournament.id,
-              round: roundNum,
-              roundName,
-              matchNumber: matchNumber++,
-              startTime: new Date(currentTime),
-              homeTeamId: f.awayTeamId, // Swap home/away
-              awayTeamId: f.homeTeamId,
-              status: 'SCHEDULED',
-            },
-          });
-          roundFixtures.push(fixture);
+          const fixtureData = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: roundNum,
+            roundName,
+            matchNumber: matchNumber++,
+            startTime: new Date(currentTime),
+            homeTeamId: f.awayTeamId, // Swap home/away
+            awayTeamId: f.homeTeamId,
+            status: 'SCHEDULED',
+          };
+
+          fixturesToInsert.push(fixtureData);
+          roundFixtures.push(fixtureData as unknown as Fixture);
           currentTime = new Date(
             currentTime.getTime() + options.intervalMinutes * 60 * 1000,
           );
@@ -944,6 +923,10 @@ export class FixtureGeneratorService {
         });
       }
       rounds.push(...secondLegRounds);
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
     }
 
     return rounds;
@@ -985,6 +968,7 @@ export class FixtureGeneratorService {
     }[] = [];
     let matchNumber = allFirstLegFixtures.length + 1;
     let currentTime = secondLegStartTime;
+    const fixturesToInsert: any[] = [];
 
     const numFirstLegRounds = firstLegRounds.length;
 
@@ -994,20 +978,21 @@ export class FixtureGeneratorService {
       const roundFixtures: Fixture[] = [];
 
       for (const firstLegFixture of firstLegRound.fixtures) {
-        const fixture = await this.db.fixture.create({
-          data: {
-            tournament_id: tournament.id,
-            round: secondLegRoundNum,
-            roundName,
-            matchNumber: matchNumber++,
-            startTime: new Date(currentTime),
-            homeTeamId: firstLegFixture.awayTeamId, // Swap home/away
-            awayTeamId: firstLegFixture.homeTeamId,
-            status: 'SCHEDULED',
-          },
-        });
+        const fixtureData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round: secondLegRoundNum,
+          roundName,
+          matchNumber: matchNumber++,
+          startTime: new Date(currentTime),
+          homeTeamId: firstLegFixture.awayTeamId, // Swap home/away
+          awayTeamId: firstLegFixture.homeTeamId,
+          status: 'SCHEDULED',
+        };
 
-        roundFixtures.push(fixture);
+        fixturesToInsert.push(fixtureData);
+        roundFixtures.push(fixtureData as unknown as Fixture);
+        
         currentTime = new Date(
           currentTime.getTime() + options.intervalMinutes * 60 * 1000,
         );
@@ -1020,6 +1005,10 @@ export class FixtureGeneratorService {
           fixtures: roundFixtures,
         });
       }
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
     }
 
     return [...firstLegRounds, ...secondLegRounds];
@@ -1104,9 +1093,9 @@ export class FixtureGeneratorService {
     participants: Participant[],
     options: { startDate: Date; intervalMinutes: number },
   ) {
-    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
-      [];
+    const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
     const roundFixtures: Fixture[] = [];
+    const fixturesToInsert: any[] = [];
 
     let matchNumber = 1;
     let currentTime = new Date(options.startDate);
@@ -1117,23 +1106,28 @@ export class FixtureGeneratorService {
       const home = participants[i * 2];
       const away = participants[i * 2 + 1];
 
-      const fixture = await this.db.fixture.create({
-        data: {
-          tournament_id: tournament.id,
-          round: 1,
-          roundName: 'Friendlies',
-          matchNumber: matchNumber++,
-          startTime: new Date(currentTime),
-          homeTeamId: home.id,
-          awayTeamId: away.id,
-          status: 'SCHEDULED',
-        },
-      });
+      const fixtureData = {
+        id: crypto.randomUUID(),
+        tournament_id: tournament.id,
+        round: 1,
+        roundName: 'Friendlies',
+        matchNumber: matchNumber++,
+        startTime: new Date(currentTime),
+        homeTeamId: home.id,
+        awayTeamId: away.id,
+        status: 'SCHEDULED',
+      };
 
-      roundFixtures.push(fixture);
+      fixturesToInsert.push(fixtureData);
+      roundFixtures.push(fixtureData as unknown as Fixture);
+      
       currentTime = new Date(
         currentTime.getTime() + options.intervalMinutes * 60 * 1000,
       );
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
     }
 
     if (roundFixtures.length > 0) {
