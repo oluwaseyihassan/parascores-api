@@ -5,7 +5,7 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
+import { AddParticipantDto, BulkAddParticipantDto } from 'src/participants/dto/add-participant.dto';
 import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
 import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -66,6 +66,63 @@ export class ParticipantsService {
       },
     });
     return ResponseUtil.success(participant);
+  }
+
+  async addParticipantsBulk(
+    tournamentId: string,
+    dto: BulkAddParticipantDto,
+    userIdRef: string,
+  ) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+      include: {
+        participants: true,
+        admins: true,
+        fixtures: true,
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const isOrganizer = tournament.organizer_id === userIdRef;
+    const isAdmin = tournament.admins.some((admin) => admin.id === userIdRef);
+
+    if (!isOrganizer && !isAdmin) {
+      throw new ForbiddenException(
+        'You are not authorized to add participants to this tournament',
+      );
+    }
+
+    if (
+      tournament.maxParticipants &&
+      (tournament.participants.length + dto.participants.length) > tournament.maxParticipants
+    ) {
+      throw new BadRequestException(`Adding these participants would exceed the maximum limit of ${tournament.maxParticipants}`);
+    }
+
+    if (tournament.fixtures.length > 0) {
+      throw new BadRequestException(
+        'Cannot add participants after fixtures have been generated. Please clear fixtures first.',
+      );
+    }
+
+    const participantsData = dto.participants.map(p => ({
+      tournament_id: tournament.id,
+      user_id: p.userId,
+      customName: p.customName,
+      team_id: p.teamId,
+      seed: p.seed,
+      logoUrl: p.logoUrl,
+      status: 'CONFIRMED' as any, // assuming manual means confirmed
+    }));
+
+    await this.db.participant.createMany({
+      data: participantsData,
+    });
+
+    return this.getParticipants(tournament.id);
   }
 
   // get participants of a tournament
