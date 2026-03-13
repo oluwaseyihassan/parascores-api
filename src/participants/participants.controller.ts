@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param, Req } from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { AddParticipantDto } from 'src/participants/dto/add-participant.dto';
+import { AddParticipantDto, BulkAddParticipantDto } from 'src/participants/dto/add-participant.dto';
 import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
 import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -28,6 +28,20 @@ export class ParticipantsController {
     return this.participantsService.addParticipant(
       tournamentId,
       addParticipantDto,
+      req.user.sub,
+    );
+  }
+
+  @Post('/tournaments/:tournamentId/bulk')
+  @ApiOperation({ summary: 'Add multiple participants to a tournament' })
+  async addParticipantsBulk(
+    @Param('tournamentId') tournamentId: string,
+    @Body() dto: BulkAddParticipantDto,
+    @Req() req,
+  ) {
+    return this.participantsService.addParticipantsBulk(
+      tournamentId,
+      dto,
       req.user.sub,
     );
   }
