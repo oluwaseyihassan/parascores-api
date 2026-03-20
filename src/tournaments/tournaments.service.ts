@@ -8,7 +8,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
 
-import { Visibility, FixtureStage } from 'prisma/generated/client';
+import { Visibility, FixtureStage, MatchEventType } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -218,6 +218,85 @@ export class TournamentsService {
       sponsors,
       socials
     });
+  }
+
+  // Get top players stats
+  async getPlayerStats(tournamentId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+      select: { id: true, participantType: true }
+    });
+    
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    if (tournament.participantType === 'INDIVIDUAL') {
+      return ResponseUtil.success({ topScorers: [], topAssists: [] });
+    }
+
+    const events = await this.db.matchEvent.findMany({
+      where: {
+        fixture: { tournament_id: tournament.id },
+        type: { in: [MatchEventType.GOAL, MatchEventType.PENALTY, MatchEventType.ASSIST] }
+      },
+      include: {
+        player: { include: { participant: { include: { team: true, user: true } } } },
+        relatedPlayer: { include: { participant: { include: { team: true, user: true } } } },
+      }
+    });
+
+    const goalsMap = new Map<string, any>();
+    const assistsMap = new Map<string, any>();
+
+    for (const event of events) {
+      if (event.type === MatchEventType.GOAL || event.type === MatchEventType.PENALTY) {
+        if (event.playerId && event.player) {
+          if (!goalsMap.has(event.playerId)) {
+            const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
+            const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
+            goalsMap.set(event.playerId, {
+              player: { id: event.player.id, name: event.player.name, number: event.player.number },
+              teamName: participantName,
+              teamLogoUrl: participantLogo,
+              count: 0
+            });
+          }
+          goalsMap.get(event.playerId).count += 1;
+        }
+
+        if (event.relatedPlayerId && event.relatedPlayer) {
+          if (!assistsMap.has(event.relatedPlayerId)) {
+            const participantName = event.relatedPlayer.participant?.team?.name || event.relatedPlayer.participant?.customName || event.relatedPlayer.participant?.user?.name || 'Unknown';
+            const participantLogo = event.relatedPlayer.participant?.logoUrl || (event.relatedPlayer.participant?.team as any)?.logoUrl || null;
+            assistsMap.set(event.relatedPlayerId, {
+              player: { id: event.relatedPlayer.id, name: event.relatedPlayer.name, number: event.relatedPlayer.number },
+              teamName: participantName,
+              teamLogoUrl: participantLogo,
+              count: 0
+            });
+          }
+          assistsMap.get(event.relatedPlayerId).count += 1;
+        }
+      } else if (event.type === MatchEventType.ASSIST) {
+        if (event.playerId && event.player) {
+          if (!assistsMap.has(event.playerId)) {
+            const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
+            const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
+            assistsMap.set(event.playerId, {
+              player: { id: event.player.id, name: event.player.name, number: event.player.number },
+              teamName: participantName,
+              teamLogoUrl: participantLogo,
+              count: 0
+            });
+          }
+          assistsMap.get(event.playerId).count += 1;
+        }
+      }
+    }
+
+    const topScorers = Array.from(goalsMap.values()).sort((a, b) => b.count - a.count).slice(0, 10);
+    const topAssists = Array.from(assistsMap.values()).sort((a, b) => b.count - a.count).slice(0, 10);
+
+    return ResponseUtil.success({ topScorers, topAssists });
   }
 
   // Check if a custom name is available
