@@ -149,4 +149,45 @@ export class EmailService {
       );
     }
   }
+
+  async sendContactEmail(
+    name: string,
+    email: string,
+    subject: string,
+    message: string,
+  ): Promise<void> {
+    const adminEmail = process.env.ADMIN_ALERT_EMAIL || 'admin@parascores.com';
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
+        <h2 style="color: #4F46E5;">📬 New Contact Form Submission</h2>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Name:</strong> ${name}</p>
+          <p style="margin: 5px 0;"><strong>Email:</strong> ${email}</p>
+          <p style="margin: 5px 0;"><strong>Subject:</strong> ${subject}</p>
+          <p style="margin: 5px 0;"><strong>Submitted at:</strong> ${timestamp}</p>
+        </div>
+        <p style="margin-top: 20px;"><strong>Message:</strong></p>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 10px 0; white-space: pre-wrap;">${message}</div>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: adminEmail,
+      replyTo: email,
+      subject: `📨 Contact Form: ${subject}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send contact email:', error);
+      throw new Error(`Failed to send contact email: ${error.message}`);
+    }
+    console.log(`Contact email sent from ${email}`);
+  }
 }
