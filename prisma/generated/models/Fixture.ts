@@ -53,6 +53,7 @@ export type FixtureMinAggregateOutputType = {
   roundName: string | null
   matchNumber: number | null
   startTime: Date | null
+  venue: string | null
   homeTeamId: string | null
   homeTeamPlaceholder: string | null
   awayTeamId: string | null
@@ -76,6 +77,7 @@ export type FixtureMaxAggregateOutputType = {
   roundName: string | null
   matchNumber: number | null
   startTime: Date | null
+  venue: string | null
   homeTeamId: string | null
   homeTeamPlaceholder: string | null
   awayTeamId: string | null
@@ -99,6 +101,7 @@ export type FixtureCountAggregateOutputType = {
   roundName: number
   matchNumber: number
   startTime: number
+  venue: number
   homeTeamId: number
   homeTeamPlaceholder: number
   awayTeamId: number
@@ -142,6 +145,7 @@ export type FixtureMinAggregateInputType = {
   roundName?: true
   matchNumber?: true
   startTime?: true
+  venue?: true
   homeTeamId?: true
   homeTeamPlaceholder?: true
   awayTeamId?: true
@@ -165,6 +169,7 @@ export type FixtureMaxAggregateInputType = {
   roundName?: true
   matchNumber?: true
   startTime?: true
+  venue?: true
   homeTeamId?: true
   homeTeamPlaceholder?: true
   awayTeamId?: true
@@ -188,6 +193,7 @@ export type FixtureCountAggregateInputType = {
   roundName?: true
   matchNumber?: true
   startTime?: true
+  venue?: true
   homeTeamId?: true
   homeTeamPlaceholder?: true
   awayTeamId?: true
@@ -298,6 +304,7 @@ export type FixtureGroupByOutputType = {
   roundName: string | null
   matchNumber: number
   startTime: Date | null
+  venue: string | null
   homeTeamId: string | null
   homeTeamPlaceholder: string | null
   awayTeamId: string | null
@@ -344,6 +351,7 @@ export type FixtureWhereInput = {
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
   startTime?: Prisma.DateTimeNullableFilter<"Fixture"> | Date | string | null
+  venue?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamPlaceholder?: Prisma.StringNullableFilter<"Fixture"> | string | null
   awayTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
@@ -374,6 +382,7 @@ export type FixtureOrderByWithRelationInput = {
   roundName?: Prisma.SortOrderInput | Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
   startTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  venue?: Prisma.SortOrderInput | Prisma.SortOrder
   homeTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
   homeTeamPlaceholder?: Prisma.SortOrderInput | Prisma.SortOrder
   awayTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -407,6 +416,7 @@ export type FixtureWhereUniqueInput = Prisma.AtLeast<{
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
   startTime?: Prisma.DateTimeNullableFilter<"Fixture"> | Date | string | null
+  venue?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamPlaceholder?: Prisma.StringNullableFilter<"Fixture"> | string | null
   awayTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
@@ -437,6 +447,7 @@ export type FixtureOrderByWithAggregationInput = {
   roundName?: Prisma.SortOrderInput | Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
   startTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  venue?: Prisma.SortOrderInput | Prisma.SortOrder
   homeTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
   homeTeamPlaceholder?: Prisma.SortOrderInput | Prisma.SortOrder
   awayTeamId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -468,6 +479,7 @@ export type FixtureScalarWhereWithAggregatesInput = {
   roundName?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntWithAggregatesFilter<"Fixture"> | number
   startTime?: Prisma.DateTimeNullableWithAggregatesFilter<"Fixture"> | Date | string | null
+  venue?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   homeTeamId?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   homeTeamPlaceholder?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   awayTeamId?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
@@ -489,6 +501,7 @@ export type FixtureCreateInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -516,6 +529,7 @@ export type FixtureUncheckedCreateInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -539,6 +553,7 @@ export type FixtureUpdateInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -566,6 +581,7 @@ export type FixtureUncheckedUpdateInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -591,6 +607,7 @@ export type FixtureCreateManyInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -612,6 +629,7 @@ export type FixtureUpdateManyMutationInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -632,6 +650,7 @@ export type FixtureUncheckedUpdateManyInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -670,6 +689,7 @@ export type FixtureCountOrderByAggregateInput = {
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   homeTeamId?: Prisma.SortOrder
   homeTeamPlaceholder?: Prisma.SortOrder
   awayTeamId?: Prisma.SortOrder
@@ -702,6 +722,7 @@ export type FixtureMaxOrderByAggregateInput = {
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   homeTeamId?: Prisma.SortOrder
   homeTeamPlaceholder?: Prisma.SortOrder
   awayTeamId?: Prisma.SortOrder
@@ -725,6 +746,7 @@ export type FixtureMinOrderByAggregateInput = {
   roundName?: Prisma.SortOrder
   matchNumber?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
+  venue?: Prisma.SortOrder
   homeTeamId?: Prisma.SortOrder
   homeTeamPlaceholder?: Prisma.SortOrder
   awayTeamId?: Prisma.SortOrder
@@ -1016,6 +1038,7 @@ export type FixtureCreateWithoutTournamentInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1041,6 +1064,7 @@ export type FixtureUncheckedCreateWithoutTournamentInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1095,6 +1119,7 @@ export type FixtureScalarWhereInput = {
   roundName?: Prisma.StringNullableFilter<"Fixture"> | string | null
   matchNumber?: Prisma.IntFilter<"Fixture"> | number
   startTime?: Prisma.DateTimeNullableFilter<"Fixture"> | Date | string | null
+  venue?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   homeTeamPlaceholder?: Prisma.StringNullableFilter<"Fixture"> | string | null
   awayTeamId?: Prisma.StringNullableFilter<"Fixture"> | string | null
@@ -1116,6 +1141,7 @@ export type FixtureCreateWithoutGroupInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1141,6 +1167,7 @@ export type FixtureUncheckedCreateWithoutGroupInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1190,6 +1217,7 @@ export type FixtureCreateWithoutHomeTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1216,6 +1244,7 @@ export type FixtureUncheckedCreateWithoutHomeTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
   awayTeamPlaceholder?: string | null
@@ -1248,6 +1277,7 @@ export type FixtureCreateWithoutAwayTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1274,6 +1304,7 @@ export type FixtureUncheckedCreateWithoutAwayTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
@@ -1338,6 +1369,7 @@ export type FixtureCreateWithoutSourceFixturesInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1364,6 +1396,7 @@ export type FixtureUncheckedCreateWithoutSourceFixturesInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1391,6 +1424,7 @@ export type FixtureCreateWithoutNextFixtureInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1417,6 +1451,7 @@ export type FixtureUncheckedCreateWithoutNextFixtureInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1460,6 +1495,7 @@ export type FixtureUpdateWithoutSourceFixturesInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1486,6 +1522,7 @@ export type FixtureUncheckedUpdateWithoutSourceFixturesInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1524,6 +1561,7 @@ export type FixtureCreateWithoutMatchEventsInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
   homeScore?: number | null
@@ -1550,6 +1588,7 @@ export type FixtureUncheckedCreateWithoutMatchEventsInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1588,6 +1627,7 @@ export type FixtureUpdateWithoutMatchEventsInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1614,6 +1654,7 @@ export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1637,6 +1678,7 @@ export type FixtureCreateManyTournamentInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1658,6 +1700,7 @@ export type FixtureUpdateWithoutTournamentInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1683,6 +1726,7 @@ export type FixtureUncheckedUpdateWithoutTournamentInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1707,6 +1751,7 @@ export type FixtureUncheckedUpdateManyWithoutTournamentInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1729,6 +1774,7 @@ export type FixtureCreateManyGroupInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -1750,6 +1796,7 @@ export type FixtureUpdateWithoutGroupInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1775,6 +1822,7 @@ export type FixtureUncheckedUpdateWithoutGroupInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1799,6 +1847,7 @@ export type FixtureUncheckedUpdateManyWithoutGroupInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1822,6 +1871,7 @@ export type FixtureCreateManyHomeTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
   awayTeamPlaceholder?: string | null
@@ -1844,6 +1894,7 @@ export type FixtureCreateManyAwayTeamInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamPlaceholder?: string | null
@@ -1864,6 +1915,7 @@ export type FixtureUpdateWithoutHomeTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1890,6 +1942,7 @@ export type FixtureUncheckedUpdateWithoutHomeTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1914,6 +1967,7 @@ export type FixtureUncheckedUpdateManyWithoutHomeTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1934,6 +1988,7 @@ export type FixtureUpdateWithoutAwayTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1960,6 +2015,7 @@ export type FixtureUncheckedUpdateWithoutAwayTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1984,6 +2040,7 @@ export type FixtureUncheckedUpdateManyWithoutAwayTeamInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2006,6 +2063,7 @@ export type FixtureCreateManyNextFixtureInput = {
   roundName?: string | null
   matchNumber: number
   startTime?: Date | string | null
+  venue?: string | null
   homeTeamId?: string | null
   homeTeamPlaceholder?: string | null
   awayTeamId?: string | null
@@ -2026,6 +2084,7 @@ export type FixtureUpdateWithoutNextFixtureInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2052,6 +2111,7 @@ export type FixtureUncheckedUpdateWithoutNextFixtureInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2076,6 +2136,7 @@ export type FixtureUncheckedUpdateManyWithoutNextFixtureInput = {
   roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
   startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2138,6 +2199,7 @@ export type FixtureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   roundName?: boolean
   matchNumber?: boolean
   startTime?: boolean
+  venue?: boolean
   homeTeamId?: boolean
   homeTeamPlaceholder?: boolean
   awayTeamId?: boolean
@@ -2169,6 +2231,7 @@ export type FixtureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   roundName?: boolean
   matchNumber?: boolean
   startTime?: boolean
+  venue?: boolean
   homeTeamId?: boolean
   homeTeamPlaceholder?: boolean
   awayTeamId?: boolean
@@ -2197,6 +2260,7 @@ export type FixtureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   roundName?: boolean
   matchNumber?: boolean
   startTime?: boolean
+  venue?: boolean
   homeTeamId?: boolean
   homeTeamPlaceholder?: boolean
   awayTeamId?: boolean
@@ -2225,6 +2289,7 @@ export type FixtureSelectScalar = {
   roundName?: boolean
   matchNumber?: boolean
   startTime?: boolean
+  venue?: boolean
   homeTeamId?: boolean
   homeTeamPlaceholder?: boolean
   awayTeamId?: boolean
@@ -2239,7 +2304,7 @@ export type FixtureSelectScalar = {
   updated_at?: boolean
 }
 
-export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "groupId" | "stage" | "round" | "roundName" | "matchNumber" | "startTime" | "homeTeamId" | "homeTeamPlaceholder" | "awayTeamId" | "awayTeamPlaceholder" | "nextFixtureId" | "homeScore" | "awayScore" | "homePenaltyScore" | "awayPenaltyScore" | "status" | "created_at" | "updated_at", ExtArgs["result"]["fixture"]>
+export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "groupId" | "stage" | "round" | "roundName" | "matchNumber" | "startTime" | "venue" | "homeTeamId" | "homeTeamPlaceholder" | "awayTeamId" | "awayTeamPlaceholder" | "nextFixtureId" | "homeScore" | "awayScore" | "homePenaltyScore" | "awayPenaltyScore" | "status" | "created_at" | "updated_at", ExtArgs["result"]["fixture"]>
 export type FixtureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   group?: boolean | Prisma.Fixture$groupArgs<ExtArgs>
@@ -2285,6 +2350,7 @@ export type $FixturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     roundName: string | null
     matchNumber: number
     startTime: Date | null
+    venue: string | null
     homeTeamId: string | null
     homeTeamPlaceholder: string | null
     awayTeamId: string | null
@@ -2735,6 +2801,7 @@ export interface FixtureFieldRefs {
   readonly roundName: Prisma.FieldRef<"Fixture", 'String'>
   readonly matchNumber: Prisma.FieldRef<"Fixture", 'Int'>
   readonly startTime: Prisma.FieldRef<"Fixture", 'DateTime'>
+  readonly venue: Prisma.FieldRef<"Fixture", 'String'>
   readonly homeTeamId: Prisma.FieldRef<"Fixture", 'String'>
   readonly homeTeamPlaceholder: Prisma.FieldRef<"Fixture", 'String'>
   readonly awayTeamId: Prisma.FieldRef<"Fixture", 'String'>
