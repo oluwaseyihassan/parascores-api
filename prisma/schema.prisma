@@ -116,10 +116,14 @@ model Tournament {
   registrationOpen  DateTime?
   registrationClose DateTime?
   autoApprove       Boolean   @default(true)
+  isPinned          Boolean   @default(false)
 
   // Advanced Knockout Options
   twoLegsKnockout Boolean @default(false)
   thirdPlaceMatch Boolean @default(false)
+
+  // Venues
+  venues String[] @default([])
 
   // Group config
   numberOfGroups Int?
@@ -202,6 +206,7 @@ model Fixture {
   roundName   String? // e.g., "Final", "Semi Final", "Quarter Final", "Round of 16"
   matchNumber Int
   startTime   DateTime?
+  venue       String?
 
   homeTeam            Participant? @relation("HomeTeam", fields: [homeTeamId], references: [id])
   homeTeamId          String?
