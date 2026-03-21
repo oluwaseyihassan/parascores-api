@@ -72,4 +72,12 @@ export class UpdateFixtureDto {
   @IsString()
   @IsOptional()
   awayTeamId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Match venue/location name',
+    example: 'Main Bowl',
+  })
+  @IsString()
+  @IsOptional()
+  venue?: string;
 }
