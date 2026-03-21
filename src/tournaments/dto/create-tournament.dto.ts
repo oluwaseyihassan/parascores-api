@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsBoolean,
   IsDateString,
   IsEnum,
@@ -165,6 +166,15 @@ export class CreateTournamentDto {
   autoApprove?: boolean;
 
   @ApiPropertyOptional({
+    description: 'If true, the tournament is pinned to the top of the dashboard',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isPinned?: boolean;
+
+  @ApiPropertyOptional({
     description: 'If true, knockout rounds (excluding final) will have two legs',
     default: false,
     example: true,
@@ -197,4 +207,13 @@ export class CreateTournamentDto {
   @IsString()
   @IsOptional()
   bannerUrl?: string;
+
+  @ApiPropertyOptional({
+    description: 'List of venue/location names available for matches',
+    example: ['Main Bowl', 'Training Pitch', 'Stadium A'],
+  })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  venues?: string[];
 }
