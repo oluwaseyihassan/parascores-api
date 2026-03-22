@@ -36,6 +36,7 @@ model User {
   organization_name  String?
   organization_logo  String?
   organization_color String?
+  isVerified         Boolean @default(false)
 
   organized_tournaments Tournament[]  @relation("OrganizedTournaments")
   admin_tournaments     Tournament[]  @relation("TournamentAdmins")
