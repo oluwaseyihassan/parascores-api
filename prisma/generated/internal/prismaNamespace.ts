@@ -1283,6 +1283,7 @@ export const UserScalarFieldEnum = {
   organization_name: 'organization_name',
   organization_logo: 'organization_logo',
   organization_color: 'organization_color',
+  isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

@@ -39,6 +39,7 @@ export type UserMinAggregateOutputType = {
   organization_name: string | null
   organization_logo: string | null
   organization_color: string | null
+  isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -58,6 +59,7 @@ export type UserMaxAggregateOutputType = {
   organization_name: string | null
   organization_logo: string | null
   organization_color: string | null
+  isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -78,6 +80,7 @@ export type UserCountAggregateOutputType = {
   organization_name: number
   organization_logo: number
   organization_color: number
+  isVerified: number
   created_at: number
   updated_at: number
   _all: number
@@ -99,6 +102,7 @@ export type UserMinAggregateInputType = {
   organization_name?: true
   organization_logo?: true
   organization_color?: true
+  isVerified?: true
   created_at?: true
   updated_at?: true
 }
@@ -118,6 +122,7 @@ export type UserMaxAggregateInputType = {
   organization_name?: true
   organization_logo?: true
   organization_color?: true
+  isVerified?: true
   created_at?: true
   updated_at?: true
 }
@@ -138,6 +143,7 @@ export type UserCountAggregateInputType = {
   organization_name?: true
   organization_logo?: true
   organization_color?: true
+  isVerified?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -231,6 +237,7 @@ export type UserGroupByOutputType = {
   organization_name: string | null
   organization_logo: string | null
   organization_color: string | null
+  isVerified: boolean
   created_at: Date
   updated_at: Date
   _count: UserCountAggregateOutputType | null
@@ -272,6 +279,7 @@ export type UserWhereInput = {
   organization_name?: Prisma.StringNullableFilter<"User"> | string | null
   organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
   organization_color?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   organized_tournaments?: Prisma.TournamentListRelationFilter
@@ -295,6 +303,7 @@ export type UserOrderByWithRelationInput = {
   organization_name?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_logo?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_color?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   organized_tournaments?: Prisma.TournamentOrderByRelationAggregateInput
@@ -321,6 +330,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   organization_name?: Prisma.StringNullableFilter<"User"> | string | null
   organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
   organization_color?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
   organized_tournaments?: Prisma.TournamentListRelationFilter
@@ -344,6 +354,7 @@ export type UserOrderByWithAggregationInput = {
   organization_name?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_logo?: Prisma.SortOrderInput | Prisma.SortOrder
   organization_color?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -370,6 +381,7 @@ export type UserScalarWhereWithAggregatesInput = {
   organization_name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   organization_logo?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   organization_color?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -390,6 +402,7 @@ export type UserCreateInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
@@ -413,6 +426,7 @@ export type UserUncheckedCreateInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
@@ -436,6 +450,7 @@ export type UserUpdateInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
@@ -459,6 +474,7 @@ export type UserUncheckedUpdateInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -482,6 +498,7 @@ export type UserCreateManyInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -502,6 +519,7 @@ export type UserUpdateManyMutationInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -522,6 +540,7 @@ export type UserUncheckedUpdateManyInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -542,6 +561,7 @@ export type UserCountOrderByAggregateInput = {
   organization_name?: Prisma.SortOrder
   organization_logo?: Prisma.SortOrder
   organization_color?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -561,6 +581,7 @@ export type UserMaxOrderByAggregateInput = {
   organization_name?: Prisma.SortOrder
   organization_logo?: Prisma.SortOrder
   organization_color?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -580,6 +601,7 @@ export type UserMinOrderByAggregateInput = {
   organization_name?: Prisma.SortOrder
   organization_logo?: Prisma.SortOrder
   organization_color?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -709,6 +731,7 @@ export type UserCreateWithoutOrganized_tournamentsInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
@@ -731,6 +754,7 @@ export type UserUncheckedCreateWithoutOrganized_tournamentsInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
@@ -758,6 +782,7 @@ export type UserCreateWithoutAdmin_tournamentsInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
@@ -780,6 +805,7 @@ export type UserUncheckedCreateWithoutAdmin_tournamentsInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
@@ -818,6 +844,7 @@ export type UserUpdateWithoutOrganized_tournamentsInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
@@ -840,6 +867,7 @@ export type UserUncheckedUpdateWithoutOrganized_tournamentsInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
@@ -881,6 +909,7 @@ export type UserScalarWhereInput = {
   organization_name?: Prisma.StringNullableFilter<"User"> | string | null
   organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
   organization_color?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
 }
@@ -901,6 +930,7 @@ export type UserCreateWithoutPlaying_inInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
@@ -923,6 +953,7 @@ export type UserUncheckedCreateWithoutPlaying_inInput = {
   organization_name?: string | null
   organization_logo?: string | null
   organization_color?: string | null
+  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
   organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
@@ -961,6 +992,7 @@ export type UserUpdateWithoutPlaying_inInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
@@ -983,6 +1015,7 @@ export type UserUncheckedUpdateWithoutPlaying_inInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -1005,6 +1038,7 @@ export type UserUpdateWithoutAdmin_tournamentsInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
@@ -1027,6 +1061,7 @@ export type UserUncheckedUpdateWithoutAdmin_tournamentsInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
@@ -1049,6 +1084,7 @@ export type UserUncheckedUpdateManyWithoutAdmin_tournamentsInput = {
   organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1118,6 +1154,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   organization_name?: boolean
   organization_logo?: boolean
   organization_color?: boolean
+  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
   organized_tournaments?: boolean | Prisma.User$organized_tournamentsArgs<ExtArgs>
@@ -1142,6 +1179,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   organization_name?: boolean
   organization_logo?: boolean
   organization_color?: boolean
+  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1162,6 +1200,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   organization_name?: boolean
   organization_logo?: boolean
   organization_color?: boolean
+  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1182,11 +1221,12 @@ export type UserSelectScalar = {
   organization_name?: boolean
   organization_logo?: boolean
   organization_color?: boolean
+  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "picture" | "password" | "role" | "metadata" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "organization_name" | "organization_logo" | "organization_color" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "picture" | "password" | "role" | "metadata" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "organization_name" | "organization_logo" | "organization_color" | "isVerified" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organized_tournaments?: boolean | Prisma.User$organized_tournamentsArgs<ExtArgs>
   admin_tournaments?: boolean | Prisma.User$admin_tournamentsArgs<ExtArgs>
@@ -1219,6 +1259,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     organization_name: string | null
     organization_logo: string | null
     organization_color: string | null
+    isVerified: boolean
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["user"]>
@@ -1662,6 +1703,7 @@ export interface UserFieldRefs {
   readonly organization_name: Prisma.FieldRef<"User", 'String'>
   readonly organization_logo: Prisma.FieldRef<"User", 'String'>
   readonly organization_color: Prisma.FieldRef<"User", 'String'>
+  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
 }
