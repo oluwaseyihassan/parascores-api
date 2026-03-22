@@ -83,7 +83,7 @@ export class TournamentsService {
         },
         include: {
           organizer: {
-            select: { id: true, name: true, email: true },
+            select: { id: true, name: true, email: true, isVerified: true },
           },
           _count: {
             select: { participants: true },
@@ -157,6 +157,9 @@ export class TournamentsService {
       include: {
         sponsors: true,
         socials: true,
+        organizer: {
+          select: { name: true, isVerified: true },
+        },
         participants: {
           include: { players: true }
         },
