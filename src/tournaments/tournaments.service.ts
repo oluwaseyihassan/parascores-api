@@ -177,6 +177,11 @@ export class TournamentsService {
                 team: { select: { id: true, name: true } },
               },
             },
+            matchEvents: {
+              where: {
+                type: { in: ['YELLOW_CARD', 'RED_CARD'] }
+              }
+            }
           },
           orderBy: { matchNumber: 'asc' }
         },
