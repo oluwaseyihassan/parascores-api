@@ -61,7 +61,8 @@ export const ModelName = {
   Standing: 'Standing',
   Player: 'Player',
   Sponsor: 'Sponsor',
-  Social: 'Social'
+  Social: 'Social',
+  Venue: 'Venue'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -125,7 +126,6 @@ export const TournamentScalarFieldEnum = {
   isPinned: 'isPinned',
   twoLegsKnockout: 'twoLegsKnockout',
   thirdPlaceMatch: 'thirdPlaceMatch',
-  venues: 'venues',
   numberOfGroups: 'numberOfGroups',
   teamsPerGroup: 'teamsPerGroup',
   start_date: 'start_date',
@@ -277,6 +277,17 @@ export const SocialScalarFieldEnum = {
 } as const
 
 export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
+
+
+export const VenueScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  tournament_id: 'tournament_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type VenueScalarFieldEnum = (typeof VenueScalarFieldEnum)[keyof typeof VenueScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -72,3 +72,8 @@ export type Sponsor = Prisma.SponsorModel
  * 
  */
 export type Social = Prisma.SocialModel
+/**
+ * Model Venue
+ * 
+ */
+export type Venue = Prisma.VenueModel
