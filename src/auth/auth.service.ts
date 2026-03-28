@@ -177,6 +177,14 @@ export class AuthService {
 
     // Only allow password reset for users who have a password (not OAuth-only)
     if (!user.password) {
+      try {
+        await this.emailService.sendOAuthPasswordResetEmail(
+          user.email,
+          user.name,
+        );
+      } catch (error) {
+        console.error('Failed to send OAuth password reset alert email:', error);
+      }
       return ResponseUtil.success(
         {},
         'If an account with this email exists, a password reset link will be sent.',
@@ -203,9 +211,6 @@ export class AuthService {
       );
     } catch (error) {
       console.error('Failed to send password reset email:', error);
-      throw new InternalServerErrorException(
-        'Failed to send password reset email. Please try again.',
-      );
     }
 
     return ResponseUtil.success(
@@ -244,6 +249,30 @@ export class AuthService {
       null,
       'Password reset successfully. You can now login with your new password.',
     );
+  }
+
+  async changePassword(userId: string, currentPassword: string, newPassword: string) {
+    const user = await this.usersService.findOne(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (!user.password) {
+      throw new BadRequestException('OAuth users cannot change password');
+    }
+
+    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    if (!isPasswordValid) {
+      throw new BadRequestException('Incorrect current password');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await this.db.user.update({
+      where: { id: userId },
+      data: { password: hashedPassword },
+    });
+
+    return ResponseUtil.success(null, 'Password changed successfully');
   }
 
   async validateGoogleUser(details: any) {
@@ -324,7 +353,7 @@ export class AuthService {
     this.setRefreshTokenCookie(response, refresh_token);
 
     return ResponseUtil.success(
-      { id: user.id, email: user.email, name: user.name, role: user.role },
+      { id: user.id, email: user.email, name: user.name, role: user.role, hasPassword: !!user.password },
       'Login successful',
     );
   }
@@ -368,7 +397,7 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
     const { password, ...result } = user;
-    return ResponseUtil.success(result, 'User profile retrieved');
+    return ResponseUtil.success({ ...result, hasPassword: !!password }, 'User profile retrieved');
   }
 
   async generateToken(
