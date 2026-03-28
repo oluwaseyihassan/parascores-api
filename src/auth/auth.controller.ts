@@ -24,11 +24,30 @@ import { AuthGuard } from '@nestjs/passport';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Throttle } from '@nestjs/throttler';
 import { GoogleAuthGuard } from './guards/google-auth.guard';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
+@ApiTags('auth')
+@Controller('auth')
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('change-password')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Change user password' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Password changed' })
+  @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
+  changePassword(
+    @Req() req: any,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    return this.authService.changePassword(
+      req.user.sub,
+      changePasswordDto.currentPassword,
+      changePasswordDto.newPassword,
+    );
+  }
 
   @Public()
   @Throttle({ default: { ttl: 60000, limit: 3 } }) // 3 signups per minute
