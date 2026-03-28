@@ -208,12 +208,4 @@ export class CreateTournamentDto {
   @IsOptional()
   bannerUrl?: string;
 
-  @ApiPropertyOptional({
-    description: 'List of venue/location names available for matches',
-    example: ['Main Bowl', 'Training Pitch', 'Stadium A'],
-  })
-  @IsArray()
-  @IsString({ each: true })
-  @IsOptional()
-  venues?: string[];
 }
