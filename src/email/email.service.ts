@@ -87,6 +87,31 @@ export class EmailService {
     console.log(`Password reset email sent to ${email}`);
   }
 
+  async sendOAuthPasswordResetEmail(
+    email: string,
+    name: string,
+  ): Promise<void> {
+    const html = await this.compileTemplate('oauth-reset', {
+      name,
+    });
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: email,
+      subject: 'Reset your Parascores password',
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send OAuth password reset alert email:', error);
+      throw new Error(
+        `Failed to send OAuth password reset alert email: ${error.message}`,
+      );
+    }
+
+    console.log(`OAuth password reset alert email sent to ${email}`);
+  }
+
   async sendWelcomeEmail(email: string, name: string): Promise<void> {
     const dashboardUrl = `${process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001'}`;
 
