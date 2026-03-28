@@ -124,7 +124,7 @@ model Tournament {
   thirdPlaceMatch Boolean @default(false)
 
   // Venues
-  venues String[] @default([])
+  venues Venue[]
 
   // Group config
   numberOfGroups Int?
@@ -344,6 +344,17 @@ model Social {
   platform String // e.g., "twitter", "instagram", "facebook", "youtube", "tiktok"
   url      String
   handle   String? // e.g., "@tournamentname"
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Venue {
+  id   String @id @default(cuid())
+  name String
 
   tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
