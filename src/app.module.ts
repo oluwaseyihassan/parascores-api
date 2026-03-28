@@ -18,6 +18,7 @@ import { ParticipantsModule } from './participants/participants.module';
 import { PlayersModule } from './players/players.module';
 import { MatchEventsModule } from './match-events/match-events.module';
 import { StandingsModule } from './standings/standings.module';
+import { VenuesModule } from './venues/venues.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { StandingsModule } from './standings/standings.module';
     MatchEventsModule,
     StandingsModule,
     EmailModule,
+    VenuesModule,
   ],
   controllers: [AppController],
   providers: [
