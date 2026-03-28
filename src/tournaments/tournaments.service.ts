@@ -42,7 +42,9 @@ export class TournamentsService {
   }
 
   async update(id: string, userId: string, dto: UpdateTournamentDto) {
-    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id }, { customName: id }] },
+    });
     if (!tournament) throw new NotFoundException('Tournament not found');
     if (tournament.organizer_id !== userId)
       throw new ForbiddenException('Not authorized');
@@ -62,7 +64,7 @@ export class TournamentsService {
     }
 
     const updated = await this.db.tournament.update({
-      where: { id },
+      where: { id: tournament.id },
       data: {
         ...rest,
         ...(start_date && { start_date: new Date(start_date) }),
@@ -83,7 +85,7 @@ export class TournamentsService {
         },
         include: {
           organizer: {
-            select: { id: true, name: true, email: true, isVerified: true },
+            select: { id: true, name: true, email: true, isVerified: true, organization_name: true, organization_logo: true, organization_color: true },
           },
           _count: {
             select: { participants: true },
@@ -140,6 +142,7 @@ export class TournamentsService {
       include: {
         sponsors: true,
         socials: true,
+        venues: true,
       },
     });
     if (!tournament) {
@@ -157,8 +160,9 @@ export class TournamentsService {
       include: {
         sponsors: true,
         socials: true,
+        venues: true,
         organizer: {
-          select: { name: true, isVerified: true },
+          select: { name: true, isVerified: true, organization_name: true, organization_logo: true, organization_color: true },
         },
         participants: {
           include: { players: true }
@@ -206,7 +210,7 @@ export class TournamentsService {
       throw new NotFoundException('Tournament not found');
     }
 
-    const { participants, fixtures, standings, sponsors, socials, ...tournamentData } = tournament;
+    const { participants, fixtures, standings, sponsors, socials, venues, ...tournamentData } = tournament;
     
     // Format standings to match what StandingsService returns
     const formattedStandings = standings.map((s) => ({
@@ -224,7 +228,8 @@ export class TournamentsService {
       fixtures,
       standings: formattedStandings,
       sponsors,
-      socials
+      socials,
+      venues
     });
   }
 
@@ -317,12 +322,14 @@ export class TournamentsService {
 
   // Delete a tournament
   async remove(id: string, userId: string) {
-    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id }, { customName: id }] },
+    });
     if (!tournament) throw new NotFoundException('Tournament not found');
     if (tournament.organizer_id !== userId)
       throw new ForbiddenException('Not authorized');
 
-    await this.db.tournament.delete({ where: { id } });
+    await this.db.tournament.delete({ where: { id: tournament.id } });
 
     return ResponseUtil.success({ message: 'Tournament deleted successfully' });
   }
