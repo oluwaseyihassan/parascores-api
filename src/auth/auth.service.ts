@@ -17,6 +17,8 @@ import { JwtService } from '@nestjs/jwt';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Response } from 'express';
 import { EmailService } from 'src/email/email.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EmailEvents } from 'src/email/email.events';
 
 @Injectable()
 export class AuthService {
@@ -25,6 +27,7 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly emailService: EmailService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async signUp(dto: SignUpDto) {
@@ -48,25 +51,12 @@ export class AuthService {
       emailVerificationExpiry: verificationExpiry,
     });
 
-    // Send verification email
-    try {
-      await this.emailService.sendVerificationEmail(
-        user.email,
-        verificationToken,
-        user.name,
-      );
-    } catch (error) {
-      console.error('Failed to send verification email:', error);
-      // Don't fail signup if email fails, user can resend
-    }
-
-    // Send admin notification about new signup
-    try {
-      await this.emailService.sendNewUserAlertEmail(user.email, user.name);
-    } catch (error) {
-      console.error('Failed to send new user alert:', error);
-      // Don't fail signup if alert fails
-    }
+    // Emit signup event (verification email + admin alert handled by listener)
+    this.eventEmitter.emit(EmailEvents.USER_SIGNUP, {
+      email: user.email,
+      name: user.name,
+      verificationToken,
+    });
 
     // Remove password from response
     const { password, emailVerificationToken, ...result } = user;
@@ -107,13 +97,11 @@ export class AuthService {
       },
     });
 
-    // Send welcome email
-    try {
-      await this.emailService.sendWelcomeEmail(user.email, user.name);
-    } catch (error) {
-      console.error('Failed to send welcome email:', error);
-      // Don't fail verification if welcome email fails
-    }
+    // Emit email verified event (welcome email handled by listener)
+    this.eventEmitter.emit(EmailEvents.USER_EMAIL_VERIFIED, {
+      email: user.email,
+      name: user.name,
+    });
 
     return ResponseUtil.success(
       null,
@@ -177,14 +165,11 @@ export class AuthService {
 
     // Only allow password reset for users who have a password (not OAuth-only)
     if (!user.password) {
-      try {
-        await this.emailService.sendOAuthPasswordResetEmail(
-          user.email,
-          user.name,
-        );
-      } catch (error) {
-        console.error('Failed to send OAuth password reset alert email:', error);
-      }
+      // Emit OAuth password reset event
+      this.eventEmitter.emit(EmailEvents.USER_OAUTH_PASSWORD_RESET, {
+        email: user.email,
+        name: user.name,
+      });
       return ResponseUtil.success(
         {},
         'If an account with this email exists, a password reset link will be sent.',
@@ -203,15 +188,12 @@ export class AuthService {
       },
     });
 
-    try {
-      await this.emailService.sendPasswordResetEmail(
-        user.email,
-        resetToken,
-        user.name,
-      );
-    } catch (error) {
-      console.error('Failed to send password reset email:', error);
-    }
+    // Emit password reset event
+    this.eventEmitter.emit(EmailEvents.USER_PASSWORD_RESET, {
+      email: user.email,
+      name: user.name,
+      resetToken,
+    });
 
     return ResponseUtil.success(
       {},
@@ -275,6 +257,42 @@ export class AuthService {
     return ResponseUtil.success(null, 'Password changed successfully');
   }
 
+  async upgradeToOrganizer(userId: string, dto: any, response: Response) {
+    const user = await this.usersService.findOne(userId);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const updatedUser = await this.db.user.update({
+      where: { id: userId },
+      data: {
+        organization_name: dto.organization_name,
+        phone: dto.phone,
+        organization_logo: dto.organization_logo,
+        role: 'ORGANIZER',
+      },
+    });
+
+    const payload = {
+      email: updatedUser.email,
+      sub: updatedUser.id,
+      role: updatedUser.role,
+      name: updatedUser.name,
+    };
+    
+    const access_token = await this.generateToken(payload, '7d');
+    const refresh_token = await this.generateToken(payload, '30d');
+
+    this.setAccessTokenCookie(response, access_token);
+    this.setRefreshTokenCookie(response, refresh_token);
+
+    const { password, ...result } = updatedUser;
+    return ResponseUtil.success(
+      { ...result, hasPassword: !!password },
+      'Upgraded to organizer successfully',
+    );
+  }
+
   async validateGoogleUser(details: any) {
     console.log(details);
     const user = await this.usersService.findByEmail(details.email);
@@ -298,17 +316,11 @@ export class AuthService {
       picture: details.picture,
       isEmailVerified: true, // Google accounts are pre-verified
     });
-    await this.emailService.sendWelcomeEmail(newUser.email, newUser.name);
-
-    // Send admin notification about new Google signup
-    try {
-      await this.emailService.sendNewUserAlertEmail(
-        newUser.email,
-        newUser.name,
-      );
-    } catch (error) {
-      console.error('Failed to send new user alert:', error);
-    }
+    // Emit Google signup event (welcome email + admin alert handled by listener)
+    this.eventEmitter.emit(EmailEvents.USER_GOOGLE_SIGNUP, {
+      email: newUser.email,
+      name: newUser.name,
+    });
 
     return newUser;
   }
