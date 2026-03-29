@@ -36,11 +36,14 @@ model User {
   organization_name  String?
   organization_logo  String?
   organization_color String?
+  phone              String?
   isVerified         Boolean @default(false)
 
   organized_tournaments Tournament[]  @relation("OrganizedTournaments")
   admin_tournaments     Tournament[]  @relation("TournamentAdmins")
   playing_in            Participant[]
+  player_profiles       Player[]      @relation("UserPlayerProfiles")
+  created_invites       TeamInvite[]  @relation("InviteCreator")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -77,6 +80,12 @@ enum ParticipantStatus {
   CONFIRMED
   DECLINED
   DISQUALIFIED
+}
+
+enum PlayerStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 enum FixtureStatus {
@@ -116,7 +125,7 @@ model Tournament {
   maxParticipants   Int?
   registrationOpen  DateTime?
   registrationClose DateTime?
-  autoApprove       Boolean   @default(true)
+  autoApprove       Boolean   @default(false)
   isPinned          Boolean   @default(false)
 
   // Advanced Knockout Options
@@ -145,6 +154,7 @@ model Tournament {
   groups       Group[]
   sponsors     Sponsor[]
   socials      Social[]
+  team_invites TeamInvite[]
 }
 
 model Group {
@@ -190,6 +200,7 @@ model Participant {
   relatedMatchEvents MatchEvent[] @relation("RelatedParticipant")
   standings          Standing[]
   players            Player[]
+  invites            TeamInvite[]
 }
 
 model Fixture {
@@ -314,9 +325,14 @@ model Player {
   participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
   participantId String
 
-  name     String
-  number   Int?
-  position String? // GK, DEF, MID, FWD
+  user   User?   @relation("UserPlayerProfiles", fields: [userId], references: [id])
+  userId String?
+
+  name      String
+  number    Int?
+  position  String? // GK, DEF, MID, FWD
+  avatarUrl String?
+  status    PlayerStatus @default(APPROVED)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -358,6 +374,28 @@ model Venue {
 
   tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model TeamInvite {
+  id    String @id @default(cuid())
+  token String @unique @default(cuid())
+
+  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
+  participant_id String
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  createdBy   User   @relation("InviteCreator", fields: [createdById], references: [id])
+  createdById String
+
+  maxUses   Int?      // null = unlimited
+  usedCount Int       @default(0)
+  expiresAt DateTime? // null = never expires
+  isActive  Boolean   @default(true)
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
