@@ -9,10 +9,15 @@ import { AddParticipantDto, BulkAddParticipantDto } from 'src/participants/dto/a
 import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
 import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ResponseUtil } from 'src/utils/api-response';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EmailEvents } from 'src/email/email.events';
 
 @Injectable()
 export class ParticipantsService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
   async addParticipant(
     tournamentId: string,
@@ -259,6 +264,90 @@ export class ParticipantsService {
     });
 
     return ResponseUtil.success(updatedParticipant);
+  }
+
+  // Update player status (approve/reject)
+  async updatePlayerStatus(
+    participantId: string,
+    playerId: string,
+    status: string,
+  ) {
+    const player = await this.db.player.findUnique({
+      where: { id: playerId },
+    });
+
+    if (!player || player.participantId !== participantId) {
+      throw new NotFoundException('Player not found in this team');
+    }
+
+    const updatedPlayer = await this.db.player.update({
+      where: { id: playerId },
+      data: { status: status as any },
+    });
+
+    if (status?.toUpperCase() === 'APPROVED' && updatedPlayer.userId) {
+      try {
+        const user = await this.db.user.findUnique({
+          where: { id: updatedPlayer.userId },
+        });
+        const participant = await this.db.participant.findUnique({
+          where: { id: participantId },
+          include: { tournament: true },
+        });
+
+        if (user?.email && participant?.tournament) {
+          this.eventEmitter.emit(EmailEvents.TEAM_JOIN_APPROVAL, {
+            playerEmail: user.email,
+            playerName: user.name,
+            teamName: participant.customName || 'their team',
+            tournamentName: participant.tournament.name,
+            customName: participant.tournament.customName,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to send player approval email:', error);
+      }
+    } else if (status?.toUpperCase() === 'REJECTED' && updatedPlayer.userId) {
+      try {
+        const user = await this.db.user.findUnique({
+          where: { id: updatedPlayer.userId },
+        });
+        const participant = await this.db.participant.findUnique({
+          where: { id: participantId },
+          include: { tournament: true },
+        });
+
+        if (user?.email && participant?.tournament) {
+          this.eventEmitter.emit(EmailEvents.TEAM_JOIN_REJECTION, {
+            playerEmail: user.email,
+            playerName: user.name,
+            teamName: participant.customName || 'their team',
+            tournamentName: participant.tournament.name,
+          });
+        }
+      } catch (error) {
+        console.error('Failed to send player rejection email:', error);
+      }
+    }
+
+    return ResponseUtil.success(updatedPlayer);
+  }
+
+  // Remove player
+  async removePlayer(participantId: string, playerId: string) {
+    const player = await this.db.player.findUnique({
+      where: { id: playerId },
+    });
+
+    if (!player || player.participantId !== participantId) {
+      throw new NotFoundException('Player not found in this team');
+    }
+
+    await this.db.player.delete({
+      where: { id: playerId },
+    });
+
+    return ResponseUtil.success(null, 'Player removed successfully');
   }
 
   // Remove participant
