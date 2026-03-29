@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { EmailModule } from './email/email.module';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AuthGuard } from './auth/auth.guard';
 import { RolesGuard } from './auth/roles.guard';
 import { AppController } from './app.controller';
@@ -19,6 +20,7 @@ import { PlayersModule } from './players/players.module';
 import { MatchEventsModule } from './match-events/match-events.module';
 import { StandingsModule } from './standings/standings.module';
 import { VenuesModule } from './venues/venues.module';
+import { TeamInvitesModule } from './team-invites/team-invites.module';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { VenuesModule } from './venues/venues.module';
         limit: 100,
       },
     ]),
+    EventEmitterModule.forRoot(),
     AuthModule,
     UsersModule,
     DatabaseModule,
@@ -44,6 +47,7 @@ import { VenuesModule } from './venues/venues.module';
     StandingsModule,
     EmailModule,
     VenuesModule,
+    TeamInvitesModule,
   ],
   controllers: [AppController],
   providers: [
