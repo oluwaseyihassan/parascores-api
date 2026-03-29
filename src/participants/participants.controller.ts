@@ -88,6 +88,25 @@ export class ParticipantsController {
     return this.participantsService.updateParticipant(participantId, dto);
   }
 
+  @Patch(':participantId/players/:playerId/status')
+  @ApiOperation({ summary: 'Update player status (approve/reject)' })
+  async updatePlayerStatus(
+    @Param('participantId') participantId: string,
+    @Param('playerId') playerId: string,
+    @Body('status') status: string,
+  ) {
+    return this.participantsService.updatePlayerStatus(participantId, playerId, status);
+  }
+
+  @Delete(':participantId/players/:playerId')
+  @ApiOperation({ summary: 'Remove a player' })
+  async removePlayer(
+    @Param('participantId') participantId: string,
+    @Param('playerId') playerId: string,
+  ) {
+    return this.participantsService.removePlayer(participantId, playerId);
+  }
+
   @Delete(':participantId')
   @ApiOperation({ summary: 'Remove a participant' })
   async removeParticipant(@Param('participantId') participantId: string) {
