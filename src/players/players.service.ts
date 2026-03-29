@@ -23,6 +23,9 @@ export class PlayersService {
         name: createPlayerDto.name,
         number: createPlayerDto.number,
         position: createPlayerDto.position,
+        userId: createPlayerDto.userId,
+        avatarUrl: createPlayerDto.avatarUrl,
+        status: 'APPROVED',
       },
       include: { participant: true },
     });
@@ -41,7 +44,12 @@ export class PlayersService {
     const player = await this.db.player.findUnique({
       where: { id },
       include: {
-        participant: true,
+        participant: {
+          include: {
+            tournament: true,
+          },
+        },
+        matchEvents: true,
       },
     });
 
@@ -92,5 +100,50 @@ export class PlayersService {
     });
 
     return ResponseUtil.success(players);
+  }
+
+  async findByUserId(userId: string) {
+    const players = await this.db.player.findMany({
+      where: { userId },
+      include: {
+        participant: {
+          include: {
+            tournament: {
+              select: {
+                id: true,
+                name: true,
+                logoUrl: true,
+                sport: true,
+                start_date: true,
+                end_date: true,
+              },
+            },
+          },
+        },
+        matchEvents: true,
+      },
+      orderBy: { created_at: 'desc' },
+    });
+
+    return ResponseUtil.success(players);
+  }
+
+  async linkToUser(playerId: string, userId: string) {
+    const player = await this.db.player.findUnique({ where: { id: playerId } });
+    if (!player) {
+      throw new NotFoundException('Player not found');
+    }
+
+    const updatedPlayer = await this.db.player.update({
+      where: { id: playerId },
+      data: { userId },
+      include: {
+        participant: {
+          include: { tournament: true },
+        },
+      },
+    });
+
+    return ResponseUtil.success(updatedPlayer);
   }
 }
