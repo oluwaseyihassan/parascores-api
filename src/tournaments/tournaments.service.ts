@@ -129,7 +129,20 @@ export class TournamentsService {
       }),
     ]);
 
-    return ResponseUtil.paginated(tournaments, page, limit, total);
+    // Add pending player counts
+    const tournamentsWithCounts = await Promise.all(
+      tournaments.map(async (t) => {
+        const pendingRequestsCount = await this.db.player.count({
+          where: {
+            participant: { tournament_id: t.id },
+            status: 'PENDING',
+          },
+        });
+        return { ...t, pendingRequestsCount };
+      }),
+    );
+
+    return ResponseUtil.paginated(tournamentsWithCounts, page, limit, total);
   }
 
   // fetch tournament by id or customName
