@@ -18,6 +18,7 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { UpgradeToOrganizerDto } from './dto/upgrade-to-organizer.dto';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
@@ -47,6 +48,18 @@ export class AuthController {
       changePasswordDto.currentPassword,
       changePasswordDto.newPassword,
     );
+  }
+
+  @Post('upgrade-to-organizer')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Upgrade user to organizer' })
+  @ApiResponse({ status: HttpStatus.OK, description: 'Upgraded successfully' })
+  upgradeToOrganizer(
+    @Req() req: any,
+    @Body() dto: UpgradeToOrganizerDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    return this.authService.upgradeToOrganizer(req.user.sub, dto, response);
   }
 
   @Public()
