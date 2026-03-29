@@ -62,7 +62,8 @@ export const ModelName = {
   Player: 'Player',
   Sponsor: 'Sponsor',
   Social: 'Social',
-  Venue: 'Venue'
+  Venue: 'Venue',
+  TeamInvite: 'TeamInvite'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -97,6 +98,7 @@ export const UserScalarFieldEnum = {
   organization_name: 'organization_name',
   organization_logo: 'organization_logo',
   organization_color: 'organization_color',
+  phone: 'phone',
   isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -243,9 +245,12 @@ export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typ
 export const PlayerScalarFieldEnum = {
   id: 'id',
   participantId: 'participantId',
+  userId: 'userId',
   name: 'name',
   number: 'number',
   position: 'position',
+  avatarUrl: 'avatarUrl',
+  status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -288,6 +293,23 @@ export const VenueScalarFieldEnum = {
 } as const
 
 export type VenueScalarFieldEnum = (typeof VenueScalarFieldEnum)[keyof typeof VenueScalarFieldEnum]
+
+
+export const TeamInviteScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  participant_id: 'participant_id',
+  tournament_id: 'tournament_id',
+  createdById: 'createdById',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TeamInviteScalarFieldEnum = (typeof TeamInviteScalarFieldEnum)[keyof typeof TeamInviteScalarFieldEnum]
 
 
 export const SortOrder = {

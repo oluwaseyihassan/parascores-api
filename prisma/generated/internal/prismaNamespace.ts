@@ -395,7 +395,8 @@ export const ModelName = {
   Player: 'Player',
   Sponsor: 'Sponsor',
   Social: 'Social',
-  Venue: 'Venue'
+  Venue: 'Venue',
+  TeamInvite: 'TeamInvite'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "tournament" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue"
+    modelProps: "user" | "tournament" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1303,6 +1304,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    TeamInvite: {
+      payload: Prisma.$TeamInvitePayload<ExtArgs>
+      fields: Prisma.TeamInviteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TeamInviteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TeamInviteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        findFirst: {
+          args: Prisma.TeamInviteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TeamInviteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        findMany: {
+          args: Prisma.TeamInviteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>[]
+        }
+        create: {
+          args: Prisma.TeamInviteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        createMany: {
+          args: Prisma.TeamInviteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TeamInviteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>[]
+        }
+        delete: {
+          args: Prisma.TeamInviteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        update: {
+          args: Prisma.TeamInviteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        deleteMany: {
+          args: Prisma.TeamInviteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TeamInviteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TeamInviteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>[]
+        }
+        upsert: {
+          args: Prisma.TeamInviteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TeamInvitePayload>
+        }
+        aggregate: {
+          args: Prisma.TeamInviteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTeamInvite>
+        }
+        groupBy: {
+          args: Prisma.TeamInviteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamInviteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TeamInviteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TeamInviteCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1358,6 +1433,7 @@ export const UserScalarFieldEnum = {
   organization_name: 'organization_name',
   organization_logo: 'organization_logo',
   organization_color: 'organization_color',
+  phone: 'phone',
   isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -1504,9 +1580,12 @@ export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typ
 export const PlayerScalarFieldEnum = {
   id: 'id',
   participantId: 'participantId',
+  userId: 'userId',
   name: 'name',
   number: 'number',
   position: 'position',
+  avatarUrl: 'avatarUrl',
+  status: 'status',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
@@ -1549,6 +1628,23 @@ export const VenueScalarFieldEnum = {
 } as const
 
 export type VenueScalarFieldEnum = (typeof VenueScalarFieldEnum)[keyof typeof VenueScalarFieldEnum]
+
+
+export const TeamInviteScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  participant_id: 'participant_id',
+  tournament_id: 'tournament_id',
+  createdById: 'createdById',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type TeamInviteScalarFieldEnum = (typeof TeamInviteScalarFieldEnum)[keyof typeof TeamInviteScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1781,6 +1877,20 @@ export type ListEnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'PlayerStatus'
+ */
+export type EnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PlayerStatus[]'
+ */
+export type ListEnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1900,6 +2010,7 @@ export type GlobalOmitConfig = {
   sponsor?: Prisma.SponsorOmit
   social?: Prisma.SocialOmit
   venue?: Prisma.VenueOmit
+  teamInvite?: Prisma.TeamInviteOmit
 }
 
 /* Types for Logging */

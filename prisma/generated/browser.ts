@@ -77,3 +77,8 @@ export type Social = Prisma.SocialModel
  * 
  */
 export type Venue = Prisma.VenueModel
+/**
+ * Model TeamInvite
+ * 
+ */
+export type TeamInvite = Prisma.TeamInviteModel

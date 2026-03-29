@@ -57,6 +57,15 @@ export const ParticipantStatus = {
 export type ParticipantStatus = (typeof ParticipantStatus)[keyof typeof ParticipantStatus]
 
 
+export const PlayerStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type PlayerStatus = (typeof PlayerStatus)[keyof typeof PlayerStatus]
+
+
 export const FixtureStatus = {
   SCHEDULED: 'SCHEDULED',
   LIVE: 'LIVE',

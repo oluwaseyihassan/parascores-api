@@ -440,6 +440,23 @@ export type EnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
 }
 
+export type EnumPlayerStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerStatus | Prisma.EnumPlayerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel> | $Enums.PlayerStatus
+}
+
+export type EnumPlayerStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerStatus | Prisma.EnumPlayerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -823,6 +840,23 @@ export type NestedEnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumPlayerStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerStatus | Prisma.EnumPlayerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel> | $Enums.PlayerStatus
+}
+
+export type NestedEnumPlayerStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.PlayerStatus | Prisma.EnumPlayerStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.PlayerStatus[] | Prisma.ListEnumPlayerStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumPlayerStatusWithAggregatesFilter<$PrismaModel> | $Enums.PlayerStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
 }
 
 
