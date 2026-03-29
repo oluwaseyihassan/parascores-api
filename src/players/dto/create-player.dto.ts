@@ -24,4 +24,14 @@ export class CreatePlayerDto {
   @IsString()
   @IsOptional()
   position?: string;
+
+  @ApiPropertyOptional({ description: 'User ID to link this player to a user account' })
+  @IsString()
+  @IsOptional()
+  userId?: string;
+
+  @ApiPropertyOptional({ description: 'Avatar URL of the player' })
+  @IsString()
+  @IsOptional()
+  avatarUrl?: string;
 }
