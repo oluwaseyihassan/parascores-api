@@ -36,9 +36,15 @@ export class TournamentsController {
     type: Number,
     description: 'Items per page',
   })
-  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+  @ApiQuery({
+    name: 'organizationSlug',
+    required: false,
+    type: String,
+    description: 'Filter by organization slug',
+  })
+  async findAll(@Query() paginationQuery: PaginationQueryDto, @Query('organizationSlug') organizationSlug?: string) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.findAllPublic(page, limit);
+    return this.tournamentsService.findAllPublic(page, limit, organizationSlug);
   }
 
   @Get('mine')
@@ -55,9 +61,24 @@ export class TournamentsController {
     type: Number,
     description: 'Items per page',
   })
-  async findAllMine(@Req() req, @Query() paginationQuery: PaginationQueryDto) {
+  @ApiQuery({
+    name: 'organizationId',
+    required: false,
+    type: String,
+    description: 'Filter by organization ID',
+  })
+  async findAllMine(
+    @Req() req,
+    @Query() paginationQuery: PaginationQueryDto,
+    @Query('organizationId') organizationId?: string,
+  ) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.findAllMine(req.user.sub, page, limit);
+    return this.tournamentsService.findAllMine(
+      req.user.sub,
+      page,
+      limit,
+      organizationId,
+    );
   }
 
   // create tournament
@@ -65,6 +86,30 @@ export class TournamentsController {
   @ApiOperation({ summary: 'Create a new tournament' })
   async create(@Body() createTournamentDto: CreateTournamentDto, @Req() req) {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
+  }
+
+  @Get('following/mine')
+  @ApiOperation({ summary: 'Get followed tournaments' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  async getFollowedTournaments(
+    @Req() req,
+    @Query() paginationQuery: PaginationQueryDto
+  ) {
+    const { page, limit } = paginationQuery;
+    return this.tournamentsService.getFollowedTournaments(req.user.sub, page, limit);
+  }
+
+  @Post(':id/follow')
+  @ApiOperation({ summary: 'Follow a tournament' })
+  async followTournament(@Param('id') id: string, @Req() req) {
+    return this.tournamentsService.followTournament(req.user.sub, id);
+  }
+
+  @Delete(':id/unfollow')
+  @ApiOperation({ summary: 'Unfollow a tournament' })
+  async unfollowTournament(@Param('id') id: string, @Req() req) {
+    return this.tournamentsService.unfollowTournament(req.user.sub, id);
   }
 
   // Check if a custom name is available
