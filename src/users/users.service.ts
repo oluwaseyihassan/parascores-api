@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UserCreateInput } from 'prisma/generated/models';
+import { Prisma } from 'prisma/generated/client';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -60,9 +60,6 @@ export class UsersService {
           picture: true,
           role: true,
           isEmailVerified: true,
-          organization_name: true,
-          organization_logo: true,
-          organization_color: true,
           created_at: true,
           updated_at: true,
         },
@@ -74,14 +71,50 @@ export class UsersService {
   }
 
   async findOne(id: string) {
-    return this.db.user.findUnique({ where: { id } });
+    return this.db.user.findUnique({
+      where: { id },
+      include: {
+        organizations: {
+          include: {
+            organization: true,
+          },
+        },
+        player_profiles: {
+          include: {
+            participant: {
+              include: {
+                tournament: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async findByEmail(email: string) {
-    return this.db.user.findUnique({ where: { email } });
+    return this.db.user.findUnique({
+      where: { email },
+      include: {
+        organizations: {
+          include: {
+            organization: true,
+          },
+        },
+        player_profiles: {
+          include: {
+            participant: {
+              include: {
+                tournament: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
-  async create(data: UserCreateInput) {
+  async create(data: Prisma.UserCreateInput) {
     return this.db.user.create({ data });
   }
 
