@@ -35,22 +35,35 @@ export class TeamInvitesService {
       );
     }
 
-    // Verify user is the organizer or admin of this tournament
+    // Verify user is a member of the organization that owns this tournament
     const tournament = await this.db.tournament.findUnique({
       where: { id: dto.tournamentId },
-      include: { admins: { select: { id: true } } },
+      include: {
+        organization: {
+          include: {
+            members: {
+              where: { userId },
+              select: { role: true },
+            },
+          },
+        },
+      },
     });
 
     if (!tournament) {
       throw new NotFoundException('Tournament not found');
     }
 
-    const isOrganizer = tournament.organizer_id === userId;
-    const isAdmin = tournament.admins.some((a) => a.id === userId);
+    if (!tournament.organization) {
+      throw new BadRequestException('Tournament is not linked to any organization');
+    }
 
-    if (!isOrganizer && !isAdmin) {
+    const membership = tournament.organization.members[0];
+    const isAuthorized = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
       throw new ForbiddenException(
-        'Only tournament organizers and admins can create invite links',
+        'Only organization owners and admins can create invite links',
       );
     }
 
@@ -81,7 +94,7 @@ export class TeamInvitesService {
             customName: true,
             logoUrl: true,
             players: {
-              select: { id: true, name: true, number: true, position: true, avatarUrl: true },
+              select: { id: true, name: true, number: true, position: true, avatarUrl: true, status: true },
             },
           },
         },
@@ -97,11 +110,11 @@ export class TeamInvitesService {
             end_date: true,
             location: true,
             autoApprove: true,
-            organizer: {
+            organization: {
               select: {
                 name: true,
-                organization_name: true,
-                organization_logo: true,
+                logoUrl: true,
+                isVerified: true,
               },
             },
           },
@@ -132,13 +145,19 @@ export class TeamInvitesService {
       include: {
         participant: {
           include: {
-            players: { select: { userId: true } },
+            players: { select: { userId: true, status: true } },
           },
         },
         tournament: {
           include: {
-            organizer: { select: { id: true, email: true, name: true } },
-            
+            organization: {
+              include: {
+                members: {
+                  where: { role: { in: ['OWNER', 'ADMIN'] } },
+                  include: { user: { select: { id: true, email: true, name: true } } },
+                },
+              },
+            },
           },
         },
       },
@@ -162,12 +181,37 @@ export class TeamInvitesService {
       );
     }
 
-    // Check if user is already on this team
-    const alreadyOnTeam = invite.participant.players.some(
-      (p) => p.userId === userId,
-    );
-    if (alreadyOnTeam) {
-      throw new BadRequestException('You are already a member of this team');
+    // Identify the primary contact for notifications (OWNER or first ADMIN)
+    const organization = invite.tournament.organization;
+    const primaryContact = organization?.members.find(m => m.role === 'OWNER')?.user || 
+                         organization?.members[0]?.user;
+
+    // 1b. Check if user is already registered for ANY team in this same tournament
+    const alreadyInTournament = await this.db.player.findFirst({
+      where: {
+        userId,
+        status: { in: ['APPROVED', 'PENDING'] },
+        participant: {
+          tournament_id: invite.tournament_id,
+        },
+      },
+      include: {
+        participant: { select: { customName: true } },
+      },
+    });
+
+    if (alreadyInTournament) {
+      const teamName =
+        alreadyInTournament.participant?.customName || 'another team';
+      if (alreadyInTournament.status === 'APPROVED') {
+        throw new BadRequestException(
+          `You are already a member of ${teamName} in this tournament.`,
+        );
+      } else {
+        throw new BadRequestException(
+          `You already have a pending request to join ${teamName} in this tournament.`,
+        );
+      }
     }
 
     // 2. Determine initial status based on tournament settings
@@ -198,10 +242,10 @@ export class TeamInvitesService {
     ]);
 
     // 4. Send notification if status is PENDING
-    if (status === 'PENDING' && invite.tournament.organizer) {
+    if (status === 'PENDING' && primaryContact) {
       this.eventEmitter.emit(EmailEvents.TEAM_JOIN_REQUEST, {
-        organizerEmail: invite.tournament.organizer.email,
-        organizerName: invite.tournament.organizer.name,
+        organizerEmail: primaryContact.email,
+        organizerName: primaryContact.name,
         playerName: dto.name,
         teamName: invite.participant.customName || 'the team',
         tournamentName: invite.tournament.name,
@@ -222,9 +266,7 @@ export class TeamInvitesService {
     const invite = await this.db.teamInvite.findUnique({
       where: { id: inviteId },
       include: {
-        tournament: {
-          include: { admins: { select: { id: true } } },
-        },
+        tournament: true,
       },
     });
 
@@ -232,11 +274,22 @@ export class TeamInvitesService {
       throw new NotFoundException('Invite not found');
     }
 
-    const isOrganizer = invite.tournament.organizer_id === userId;
-    const isAdmin = invite.tournament.admins.some((a) => a.id === userId);
+    if (!invite.tournament.organization_id) {
+      throw new BadRequestException('Tournament is not linked to any organization');
+    }
+
+    // Verify user is a member of the organization that owns this tournament
+    const membership = await this.db.organizationMember.findFirst({
+      where: {
+        organizationId: invite.tournament.organization_id,
+        userId: userId,
+      },
+    });
+
+    const isAdmin = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
     const isCreator = invite.createdById === userId;
 
-    if (!isOrganizer && !isAdmin && !isCreator) {
+    if (!isAdmin && !isCreator) {
       throw new ForbiddenException('You do not have permission to revoke this invite');
     }
 
