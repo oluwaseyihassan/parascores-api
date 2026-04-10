@@ -105,6 +105,16 @@ export class FixturesController {
     return this.fixturesService.findLive();
   }
 
+  // Get recent completed fixtures
+  @Public()
+  @Get('recent')
+  @ApiOperation({ summary: 'Get recently completed fixtures' })
+  async findRecent(@Query('limit') limit?: string) {
+    return this.fixturesService.findRecentResults(
+      limit ? parseInt(limit, 10) : 10,
+    );
+  }
+
   // Get a single fixture by ID
   @Public()
   @Get(':id')
@@ -116,7 +126,11 @@ export class FixturesController {
   // Update a fixture
   @Patch(':id')
   @ApiOperation({ summary: 'Update a fixture (status, scores, teams)' })
-  async update(@Param('id') id: string, @Body() dto: UpdateFixtureDto) {
-    return this.fixturesService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateFixtureDto,
+    @Req() req,
+  ) {
+    return this.fixturesService.update(id, req.user.sub, dto);
   }
 }
