@@ -266,9 +266,6 @@ export class AuthService {
     const updatedUser = await this.db.user.update({
       where: { id: userId },
       data: {
-        organization_name: dto.organization_name,
-        phone: dto.phone,
-        organization_logo: dto.organization_logo,
         role: 'ORGANIZER',
       },
     });
