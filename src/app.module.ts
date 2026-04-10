@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { DatabaseModule } from './database/database.module';
 import { TournamentsModule } from './tournaments/tournaments.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 import { FixturesModule } from './fixtures/fixtures.module';
 import { UploadModule } from './upload/upload.module';
 import { SponsorsModule } from './sponsors/sponsors.module';
@@ -37,6 +38,7 @@ import { TeamInvitesModule } from './team-invites/team-invites.module';
     UsersModule,
     DatabaseModule,
     TournamentsModule,
+    OrganizationsModule,
     FixturesModule,
     UploadModule,
     SponsorsModule,
