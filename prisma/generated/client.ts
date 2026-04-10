@@ -43,10 +43,25 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
+ * Model Organization
+ * 
+ */
+export type Organization = Prisma.OrganizationModel
+/**
+ * Model OrganizationMember
+ * 
+ */
+export type OrganizationMember = Prisma.OrganizationMemberModel
+/**
  * Model Tournament
  * 
  */
 export type Tournament = Prisma.TournamentModel
+/**
+ * Model TournamentFollower
+ * 
+ */
+export type TournamentFollower = Prisma.TournamentFollowerModel
 /**
  * Model Group
  * 

@@ -36,11 +36,6 @@ export type UserMinAggregateOutputType = {
   emailVerificationExpiry: Date | null
   passwordResetToken: string | null
   passwordResetExpiry: Date | null
-  organization_name: string | null
-  organization_logo: string | null
-  organization_color: string | null
-  phone: string | null
-  isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -57,11 +52,6 @@ export type UserMaxAggregateOutputType = {
   emailVerificationExpiry: Date | null
   passwordResetToken: string | null
   passwordResetExpiry: Date | null
-  organization_name: string | null
-  organization_logo: string | null
-  organization_color: string | null
-  phone: string | null
-  isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -79,11 +69,6 @@ export type UserCountAggregateOutputType = {
   emailVerificationExpiry: number
   passwordResetToken: number
   passwordResetExpiry: number
-  organization_name: number
-  organization_logo: number
-  organization_color: number
-  phone: number
-  isVerified: number
   created_at: number
   updated_at: number
   _all: number
@@ -102,11 +87,6 @@ export type UserMinAggregateInputType = {
   emailVerificationExpiry?: true
   passwordResetToken?: true
   passwordResetExpiry?: true
-  organization_name?: true
-  organization_logo?: true
-  organization_color?: true
-  phone?: true
-  isVerified?: true
   created_at?: true
   updated_at?: true
 }
@@ -123,11 +103,6 @@ export type UserMaxAggregateInputType = {
   emailVerificationExpiry?: true
   passwordResetToken?: true
   passwordResetExpiry?: true
-  organization_name?: true
-  organization_logo?: true
-  organization_color?: true
-  phone?: true
-  isVerified?: true
   created_at?: true
   updated_at?: true
 }
@@ -145,11 +120,6 @@ export type UserCountAggregateInputType = {
   emailVerificationExpiry?: true
   passwordResetToken?: true
   passwordResetExpiry?: true
-  organization_name?: true
-  organization_logo?: true
-  organization_color?: true
-  phone?: true
-  isVerified?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -240,11 +210,6 @@ export type UserGroupByOutputType = {
   emailVerificationExpiry: Date | null
   passwordResetToken: string | null
   passwordResetExpiry: Date | null
-  organization_name: string | null
-  organization_logo: string | null
-  organization_color: string | null
-  phone: string | null
-  isVerified: boolean
   created_at: Date
   updated_at: Date
   _count: UserCountAggregateOutputType | null
@@ -283,18 +248,13 @@ export type UserWhereInput = {
   emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  organization_name?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_color?: Prisma.StringNullableFilter<"User"> | string | null
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
-  organized_tournaments?: Prisma.TournamentListRelationFilter
-  admin_tournaments?: Prisma.TournamentListRelationFilter
+  organizations?: Prisma.OrganizationMemberListRelationFilter
   playing_in?: Prisma.ParticipantListRelationFilter
   player_profiles?: Prisma.PlayerListRelationFilter
   created_invites?: Prisma.TeamInviteListRelationFilter
+  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -310,18 +270,13 @@ export type UserOrderByWithRelationInput = {
   emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_logo?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_color?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  organized_tournaments?: Prisma.TournamentOrderByRelationAggregateInput
-  admin_tournaments?: Prisma.TournamentOrderByRelationAggregateInput
+  organizations?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   playing_in?: Prisma.ParticipantOrderByRelationAggregateInput
   player_profiles?: Prisma.PlayerOrderByRelationAggregateInput
   created_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
+  followed_tournaments?: Prisma.TournamentFollowerOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -340,18 +295,13 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  organization_name?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_color?: Prisma.StringNullableFilter<"User"> | string | null
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
-  organized_tournaments?: Prisma.TournamentListRelationFilter
-  admin_tournaments?: Prisma.TournamentListRelationFilter
+  organizations?: Prisma.OrganizationMemberListRelationFilter
   playing_in?: Prisma.ParticipantListRelationFilter
   player_profiles?: Prisma.PlayerListRelationFilter
   created_invites?: Prisma.TeamInviteListRelationFilter
+  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -367,11 +317,6 @@ export type UserOrderByWithAggregationInput = {
   emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_name?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_logo?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_color?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -395,11 +340,6 @@ export type UserScalarWhereWithAggregatesInput = {
   emailVerificationExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   passwordResetExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  organization_name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  organization_logo?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  organization_color?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -417,18 +357,13 @@ export type UserCreateInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -444,18 +379,13 @@ export type UserUncheckedCreateInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -471,18 +401,13 @@ export type UserUpdateInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -498,18 +423,13 @@ export type UserUncheckedUpdateInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -525,11 +445,6 @@ export type UserCreateManyInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -547,11 +462,6 @@ export type UserUpdateManyMutationInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -569,11 +479,6 @@ export type UserUncheckedUpdateManyInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -591,11 +496,6 @@ export type UserCountOrderByAggregateInput = {
   emailVerificationExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
   passwordResetExpiry?: Prisma.SortOrder
-  organization_name?: Prisma.SortOrder
-  organization_logo?: Prisma.SortOrder
-  organization_color?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -612,11 +512,6 @@ export type UserMaxOrderByAggregateInput = {
   emailVerificationExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
   passwordResetExpiry?: Prisma.SortOrder
-  organization_name?: Prisma.SortOrder
-  organization_logo?: Prisma.SortOrder
-  organization_color?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -633,33 +528,18 @@ export type UserMinOrderByAggregateInput = {
   emailVerificationExpiry?: Prisma.SortOrder
   passwordResetToken?: Prisma.SortOrder
   passwordResetExpiry?: Prisma.SortOrder
-  organization_name?: Prisma.SortOrder
-  organization_logo?: Prisma.SortOrder
-  organization_color?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
-}
-
-export type UserListRelationFilter = {
-  every?: Prisma.UserWhereInput
-  some?: Prisma.UserWhereInput
-  none?: Prisma.UserWhereInput
-}
-
-export type UserOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -686,58 +566,32 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type UserCreateNestedOneWithoutOrganized_tournamentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedCreateWithoutOrganized_tournamentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganized_tournamentsInput
+export type UserCreateNestedOneWithoutOrganizationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganizationsInput, Prisma.UserUncheckedCreateWithoutOrganizationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganizationsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserCreateNestedManyWithoutAdmin_tournamentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput> | Prisma.UserCreateWithoutAdmin_tournamentsInput[] | Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput | Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUncheckedCreateNestedManyWithoutAdmin_tournamentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput> | Prisma.UserCreateWithoutAdmin_tournamentsInput[] | Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput | Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUpdateOneWithoutOrganized_tournamentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedCreateWithoutOrganized_tournamentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganized_tournamentsInput
-  upsert?: Prisma.UserUpsertWithoutOrganized_tournamentsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserUpdateOneRequiredWithoutOrganizationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOrganizationsInput, Prisma.UserUncheckedCreateWithoutOrganizationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOrganizationsInput
+  upsert?: Prisma.UserUpsertWithoutOrganizationsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrganized_tournamentsInput, Prisma.UserUpdateWithoutOrganized_tournamentsInput>, Prisma.UserUncheckedUpdateWithoutOrganized_tournamentsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrganizationsInput, Prisma.UserUpdateWithoutOrganizationsInput>, Prisma.UserUncheckedUpdateWithoutOrganizationsInput>
 }
 
-export type UserUpdateManyWithoutAdmin_tournamentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput> | Prisma.UserCreateWithoutAdmin_tournamentsInput[] | Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput | Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutAdmin_tournamentsInput | Prisma.UserUpsertWithWhereUniqueWithoutAdmin_tournamentsInput[]
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutAdmin_tournamentsInput | Prisma.UserUpdateWithWhereUniqueWithoutAdmin_tournamentsInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutAdmin_tournamentsInput | Prisma.UserUpdateManyWithWhereWithoutAdmin_tournamentsInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+export type UserCreateNestedOneWithoutFollowed_tournamentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedCreateWithoutFollowed_tournamentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowed_tournamentsInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUncheckedUpdateManyWithoutAdmin_tournamentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput> | Prisma.UserCreateWithoutAdmin_tournamentsInput[] | Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput | Prisma.UserCreateOrConnectWithoutAdmin_tournamentsInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutAdmin_tournamentsInput | Prisma.UserUpsertWithWhereUniqueWithoutAdmin_tournamentsInput[]
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutAdmin_tournamentsInput | Prisma.UserUpdateWithWhereUniqueWithoutAdmin_tournamentsInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutAdmin_tournamentsInput | Prisma.UserUpdateManyWithWhereWithoutAdmin_tournamentsInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+export type UserUpdateOneRequiredWithoutFollowed_tournamentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedCreateWithoutFollowed_tournamentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFollowed_tournamentsInput
+  upsert?: Prisma.UserUpsertWithoutFollowed_tournamentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowed_tournamentsInput, Prisma.UserUpdateWithoutFollowed_tournamentsInput>, Prisma.UserUncheckedUpdateWithoutFollowed_tournamentsInput>
 }
 
 export type UserCreateNestedOneWithoutPlaying_inInput = {
@@ -786,7 +640,7 @@ export type UserUpdateOneRequiredWithoutCreated_invitesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreated_invitesInput, Prisma.UserUpdateWithoutCreated_invitesInput>, Prisma.UserUncheckedUpdateWithoutCreated_invitesInput>
 }
 
-export type UserCreateWithoutOrganized_tournamentsInput = {
+export type UserCreateWithoutOrganizationsInput = {
   id?: string
   email: string
   name: string
@@ -799,20 +653,15 @@ export type UserCreateWithoutOrganized_tournamentsInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutOrganized_tournamentsInput = {
+export type UserUncheckedCreateWithoutOrganizationsInput = {
   id?: string
   email: string
   name: string
@@ -825,93 +674,31 @@ export type UserUncheckedCreateWithoutOrganized_tournamentsInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutOrganized_tournamentsInput = {
+export type UserCreateOrConnectWithoutOrganizationsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedCreateWithoutOrganized_tournamentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOrganizationsInput, Prisma.UserUncheckedCreateWithoutOrganizationsInput>
 }
 
-export type UserCreateWithoutAdmin_tournamentsInput = {
-  id?: string
-  email: string
-  name: string
-  picture?: string | null
-  password?: string | null
-  role?: $Enums.Role
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
-  created_at?: Date | string
-  updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
-  playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
-  player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-}
-
-export type UserUncheckedCreateWithoutAdmin_tournamentsInput = {
-  id?: string
-  email: string
-  name: string
-  picture?: string | null
-  password?: string | null
-  role?: $Enums.Role
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
-  created_at?: Date | string
-  updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
-  playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
-  player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-}
-
-export type UserCreateOrConnectWithoutAdmin_tournamentsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput>
-}
-
-export type UserUpsertWithoutOrganized_tournamentsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedUpdateWithoutOrganized_tournamentsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedCreateWithoutOrganized_tournamentsInput>
+export type UserUpsertWithoutOrganizationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOrganizationsInput, Prisma.UserUncheckedUpdateWithoutOrganizationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOrganizationsInput, Prisma.UserUncheckedCreateWithoutOrganizationsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutOrganized_tournamentsInput = {
+export type UserUpdateToOneWithWhereWithoutOrganizationsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutOrganized_tournamentsInput, Prisma.UserUncheckedUpdateWithoutOrganized_tournamentsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOrganizationsInput, Prisma.UserUncheckedUpdateWithoutOrganizationsInput>
 }
 
-export type UserUpdateWithoutOrganized_tournamentsInput = {
+export type UserUpdateWithoutOrganizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -924,20 +711,115 @@ export type UserUpdateWithoutOrganized_tournamentsInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
+  playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOrganizationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutFollowed_tournamentsInput = {
+  id?: string
+  email: string
+  name: string
+  picture?: string | null
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isEmailVerified?: boolean
+  emailVerificationToken?: string | null
+  emailVerificationExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetExpiry?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutFollowed_tournamentsInput = {
+  id?: string
+  email: string
+  name: string
+  picture?: string | null
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isEmailVerified?: boolean
+  emailVerificationToken?: string | null
+  emailVerificationExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  passwordResetExpiry?: Date | string | null
+  created_at?: Date | string
+  updated_at?: Date | string
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutFollowed_tournamentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedCreateWithoutFollowed_tournamentsInput>
+}
+
+export type UserUpsertWithoutFollowed_tournamentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedUpdateWithoutFollowed_tournamentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedCreateWithoutFollowed_tournamentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFollowed_tournamentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFollowed_tournamentsInput, Prisma.UserUncheckedUpdateWithoutFollowed_tournamentsInput>
+}
+
+export type UserUpdateWithoutFollowed_tournamentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
 }
 
-export type UserUncheckedUpdateWithoutOrganized_tournamentsInput = {
+export type UserUncheckedUpdateWithoutFollowed_tournamentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -950,58 +832,12 @@ export type UserUncheckedUpdateWithoutOrganized_tournamentsInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type UserUpsertWithWhereUniqueWithoutAdmin_tournamentsInput = {
-  where: Prisma.UserWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedUpdateWithoutAdmin_tournamentsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedCreateWithoutAdmin_tournamentsInput>
-}
-
-export type UserUpdateWithWhereUniqueWithoutAdmin_tournamentsInput = {
-  where: Prisma.UserWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAdmin_tournamentsInput, Prisma.UserUncheckedUpdateWithoutAdmin_tournamentsInput>
-}
-
-export type UserUpdateManyWithWhereWithoutAdmin_tournamentsInput = {
-  where: Prisma.UserScalarWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutAdmin_tournamentsInput>
-}
-
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  picture?: Prisma.StringNullableFilter<"User"> | string | null
-  password?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
-  metadata?: Prisma.JsonNullableFilter<"User">
-  isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  organization_name?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_logo?: Prisma.StringNullableFilter<"User"> | string | null
-  organization_color?: Prisma.StringNullableFilter<"User"> | string | null
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
-  created_at?: Prisma.DateTimeFilter<"User"> | Date | string
-  updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
 export type UserCreateWithoutPlaying_inInput = {
@@ -1017,17 +853,12 @@ export type UserCreateWithoutPlaying_inInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlaying_inInput = {
@@ -1043,17 +874,12 @@ export type UserUncheckedCreateWithoutPlaying_inInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlaying_inInput = {
@@ -1085,17 +911,12 @@ export type UserUpdateWithoutPlaying_inInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlaying_inInput = {
@@ -1111,17 +932,12 @@ export type UserUncheckedUpdateWithoutPlaying_inInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlayer_profilesInput = {
@@ -1137,17 +953,12 @@ export type UserCreateWithoutPlayer_profilesInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlayer_profilesInput = {
@@ -1163,17 +974,12 @@ export type UserUncheckedCreateWithoutPlayer_profilesInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlayer_profilesInput = {
@@ -1205,17 +1011,12 @@ export type UserUpdateWithoutPlayer_profilesInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
@@ -1231,17 +1032,12 @@ export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_invitesInput = {
@@ -1257,17 +1053,12 @@ export type UserCreateWithoutCreated_invitesInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_invitesInput = {
@@ -1283,17 +1074,12 @@ export type UserUncheckedCreateWithoutCreated_invitesInput = {
   emailVerificationExpiry?: Date | string | null
   passwordResetToken?: string | null
   passwordResetExpiry?: Date | string | null
-  organization_name?: string | null
-  organization_logo?: string | null
-  organization_color?: string | null
-  phone?: string | null
-  isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizerInput
-  admin_tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutAdminsInput
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_invitesInput = {
@@ -1325,17 +1111,12 @@ export type UserUpdateWithoutCreated_invitesInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_invitesInput = {
@@ -1351,91 +1132,12 @@ export type UserUncheckedUpdateWithoutCreated_invitesInput = {
   emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
-  admin_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutAdminsNestedInput
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserUpdateWithoutAdmin_tournamentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUpdateManyWithoutOrganizerNestedInput
-  playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
-  player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-}
-
-export type UserUncheckedUpdateWithoutAdmin_tournamentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organized_tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizerNestedInput
-  playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
-  player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-}
-
-export type UserUncheckedUpdateManyWithoutAdmin_tournamentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  organization_name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_logo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1444,19 +1146,19 @@ export type UserUncheckedUpdateManyWithoutAdmin_tournamentsInput = {
  */
 
 export type UserCountOutputType = {
-  organized_tournaments: number
-  admin_tournaments: number
+  organizations: number
   playing_in: number
   player_profiles: number
   created_invites: number
+  followed_tournaments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organized_tournaments?: boolean | UserCountOutputTypeCountOrganized_tournamentsArgs
-  admin_tournaments?: boolean | UserCountOutputTypeCountAdmin_tournamentsArgs
+  organizations?: boolean | UserCountOutputTypeCountOrganizationsArgs
   playing_in?: boolean | UserCountOutputTypeCountPlaying_inArgs
   player_profiles?: boolean | UserCountOutputTypeCountPlayer_profilesArgs
   created_invites?: boolean | UserCountOutputTypeCountCreated_invitesArgs
+  followed_tournaments?: boolean | UserCountOutputTypeCountFollowed_tournamentsArgs
 }
 
 /**
@@ -1472,15 +1174,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountOrganized_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TournamentWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountAdmin_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TournamentWhereInput
+export type UserCountOutputTypeCountOrganizationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationMemberWhereInput
 }
 
 /**
@@ -1504,6 +1199,13 @@ export type UserCountOutputTypeCountCreated_invitesArgs<ExtArgs extends runtime.
   where?: Prisma.TeamInviteWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFollowed_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TournamentFollowerWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1518,18 +1220,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   emailVerificationExpiry?: boolean
   passwordResetToken?: boolean
   passwordResetExpiry?: boolean
-  organization_name?: boolean
-  organization_logo?: boolean
-  organization_color?: boolean
-  phone?: boolean
-  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
-  organized_tournaments?: boolean | Prisma.User$organized_tournamentsArgs<ExtArgs>
-  admin_tournaments?: boolean | Prisma.User$admin_tournamentsArgs<ExtArgs>
+  organizations?: boolean | Prisma.User$organizationsArgs<ExtArgs>
   playing_in?: boolean | Prisma.User$playing_inArgs<ExtArgs>
   player_profiles?: boolean | Prisma.User$player_profilesArgs<ExtArgs>
   created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
+  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1546,11 +1243,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerificationExpiry?: boolean
   passwordResetToken?: boolean
   passwordResetExpiry?: boolean
-  organization_name?: boolean
-  organization_logo?: boolean
-  organization_color?: boolean
-  phone?: boolean
-  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1568,11 +1260,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   emailVerificationExpiry?: boolean
   passwordResetToken?: boolean
   passwordResetExpiry?: boolean
-  organization_name?: boolean
-  organization_logo?: boolean
-  organization_color?: boolean
-  phone?: boolean
-  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1590,22 +1277,17 @@ export type UserSelectScalar = {
   emailVerificationExpiry?: boolean
   passwordResetToken?: boolean
   passwordResetExpiry?: boolean
-  organization_name?: boolean
-  organization_logo?: boolean
-  organization_color?: boolean
-  phone?: boolean
-  isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "picture" | "password" | "role" | "metadata" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "organization_name" | "organization_logo" | "organization_color" | "phone" | "isVerified" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "picture" | "password" | "role" | "metadata" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organized_tournaments?: boolean | Prisma.User$organized_tournamentsArgs<ExtArgs>
-  admin_tournaments?: boolean | Prisma.User$admin_tournamentsArgs<ExtArgs>
+  organizations?: boolean | Prisma.User$organizationsArgs<ExtArgs>
   playing_in?: boolean | Prisma.User$playing_inArgs<ExtArgs>
   player_profiles?: boolean | Prisma.User$player_profilesArgs<ExtArgs>
   created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
+  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1614,11 +1296,11 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    organized_tournaments: Prisma.$TournamentPayload<ExtArgs>[]
-    admin_tournaments: Prisma.$TournamentPayload<ExtArgs>[]
+    organizations: Prisma.$OrganizationMemberPayload<ExtArgs>[]
     playing_in: Prisma.$ParticipantPayload<ExtArgs>[]
     player_profiles: Prisma.$PlayerPayload<ExtArgs>[]
     created_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
+    followed_tournaments: Prisma.$TournamentFollowerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1633,11 +1315,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     emailVerificationExpiry: Date | null
     passwordResetToken: string | null
     passwordResetExpiry: Date | null
-    organization_name: string | null
-    organization_logo: string | null
-    organization_color: string | null
-    phone: string | null
-    isVerified: boolean
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["user"]>
@@ -2034,11 +1711,11 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organized_tournaments<T extends Prisma.User$organized_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organized_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  admin_tournaments<T extends Prisma.User$admin_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$admin_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  organizations<T extends Prisma.User$organizationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   playing_in<T extends Prisma.User$playing_inArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$playing_inArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   player_profiles<T extends Prisma.User$player_profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$player_profilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   created_invites<T extends Prisma.User$created_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followed_tournaments<T extends Prisma.User$followed_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followed_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2080,11 +1757,6 @@ export interface UserFieldRefs {
   readonly emailVerificationExpiry: Prisma.FieldRef<"User", 'DateTime'>
   readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
   readonly passwordResetExpiry: Prisma.FieldRef<"User", 'DateTime'>
-  readonly organization_name: Prisma.FieldRef<"User", 'String'>
-  readonly organization_logo: Prisma.FieldRef<"User", 'String'>
-  readonly organization_color: Prisma.FieldRef<"User", 'String'>
-  readonly phone: Prisma.FieldRef<"User", 'String'>
-  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -2475,51 +2147,27 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.organized_tournaments
+ * User.organizations
  */
-export type User$organized_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$organizationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Tournament
+   * Select specific fields to fetch from the OrganizationMember
    */
-  select?: Prisma.TournamentSelect<ExtArgs> | null
+  select?: Prisma.OrganizationMemberSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Tournament
+   * Omit specific fields from the OrganizationMember
    */
-  omit?: Prisma.TournamentOmit<ExtArgs> | null
+  omit?: Prisma.OrganizationMemberOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TournamentInclude<ExtArgs> | null
-  where?: Prisma.TournamentWhereInput
-  orderBy?: Prisma.TournamentOrderByWithRelationInput | Prisma.TournamentOrderByWithRelationInput[]
-  cursor?: Prisma.TournamentWhereUniqueInput
+  include?: Prisma.OrganizationMemberInclude<ExtArgs> | null
+  where?: Prisma.OrganizationMemberWhereInput
+  orderBy?: Prisma.OrganizationMemberOrderByWithRelationInput | Prisma.OrganizationMemberOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationMemberWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TournamentScalarFieldEnum | Prisma.TournamentScalarFieldEnum[]
-}
-
-/**
- * User.admin_tournaments
- */
-export type User$admin_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Tournament
-   */
-  select?: Prisma.TournamentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Tournament
-   */
-  omit?: Prisma.TournamentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TournamentInclude<ExtArgs> | null
-  where?: Prisma.TournamentWhereInput
-  orderBy?: Prisma.TournamentOrderByWithRelationInput | Prisma.TournamentOrderByWithRelationInput[]
-  cursor?: Prisma.TournamentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TournamentScalarFieldEnum | Prisma.TournamentScalarFieldEnum[]
+  distinct?: Prisma.OrganizationMemberScalarFieldEnum | Prisma.OrganizationMemberScalarFieldEnum[]
 }
 
 /**
@@ -2592,6 +2240,30 @@ export type User$created_invitesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.TeamInviteScalarFieldEnum | Prisma.TeamInviteScalarFieldEnum[]
+}
+
+/**
+ * User.followed_tournaments
+ */
+export type User$followed_tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TournamentFollower
+   */
+  select?: Prisma.TournamentFollowerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TournamentFollower
+   */
+  omit?: Prisma.TournamentFollowerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentFollowerInclude<ExtArgs> | null
+  where?: Prisma.TournamentFollowerWhereInput
+  orderBy?: Prisma.TournamentFollowerOrderByWithRelationInput | Prisma.TournamentFollowerOrderByWithRelationInput[]
+  cursor?: Prisma.TournamentFollowerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TournamentFollowerScalarFieldEnum | Prisma.TournamentFollowerScalarFieldEnum[]
 }
 
 /**

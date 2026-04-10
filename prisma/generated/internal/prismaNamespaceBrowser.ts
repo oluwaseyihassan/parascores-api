@@ -52,7 +52,10 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  Organization: 'Organization',
+  OrganizationMember: 'OrganizationMember',
   Tournament: 'Tournament',
+  TournamentFollower: 'TournamentFollower',
   Group: 'Group',
   Participant: 'Participant',
   Fixture: 'Fixture',
@@ -95,16 +98,36 @@ export const UserScalarFieldEnum = {
   emailVerificationExpiry: 'emailVerificationExpiry',
   passwordResetToken: 'passwordResetToken',
   passwordResetExpiry: 'passwordResetExpiry',
-  organization_name: 'organization_name',
-  organization_logo: 'organization_logo',
-  organization_color: 'organization_color',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  logoUrl: 'logoUrl',
+  color: 'color',
   phone: 'phone',
   isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const OrganizationMemberScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  userId: 'userId',
+  role: 'role'
+} as const
+
+export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalarFieldEnum)[keyof typeof OrganizationMemberScalarFieldEnum]
 
 
 export const TournamentScalarFieldEnum = {
@@ -134,10 +157,19 @@ export const TournamentScalarFieldEnum = {
   end_date: 'end_date',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  organizer_id: 'organizer_id'
+  organization_id: 'organization_id'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
+
+
+export const TournamentFollowerScalarFieldEnum = {
+  userId: 'userId',
+  tournamentId: 'tournamentId',
+  createdAt: 'createdAt'
+} as const
+
+export type TournamentFollowerScalarFieldEnum = (typeof TournamentFollowerScalarFieldEnum)[keyof typeof TournamentFollowerScalarFieldEnum]
 
 
 export const GroupScalarFieldEnum = {

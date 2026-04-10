@@ -18,6 +18,15 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const OrganizationRole = {
+  OWNER: 'OWNER',
+  ADMIN: 'ADMIN',
+  MEMBER: 'MEMBER'
+} as const
+
+export type OrganizationRole = (typeof OrganizationRole)[keyof typeof OrganizationRole]
+
+
 export const Visibility = {
   PUBLIC: 'PUBLIC',
   PRIVATE: 'PRIVATE',

@@ -9,7 +9,10 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
+export type * from './models/Organization'
+export type * from './models/OrganizationMember'
 export type * from './models/Tournament'
+export type * from './models/TournamentFollower'
 export type * from './models/Group'
 export type * from './models/Participant'
 export type * from './models/Fixture'
