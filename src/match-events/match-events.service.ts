@@ -4,21 +4,33 @@ import { UpdateMatchEventDto } from './dto/update-match-event.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { FixturesService } from 'src/fixtures/fixtures.service';
 import { ResponseUtil } from 'src/utils/api-response';
+import { OrganizationsService } from 'src/organizations/organizations.service';
 
 @Injectable()
 export class MatchEventsService {
   constructor(
     private readonly db: DatabaseService,
     private readonly fixturesService: FixturesService,
+    private readonly organizationsService: OrganizationsService,
   ) {}
 
-  async create(fixtureId: string, createMatchEventDto: CreateMatchEventDto) {
+  async create(fixtureId: string, userId: string, createMatchEventDto: CreateMatchEventDto) {
     const fixture = await this.db.fixture.findUnique({
       where: { id: fixtureId },
+      include: { tournament: true },
     });
 
     if (!fixture) {
       throw new NotFoundException('Fixture not found');
+    }
+
+    // Role check
+    if (fixture.tournament.organization_id) {
+      await this.organizationsService.validateMemberRole(
+        fixture.tournament.organization_id,
+        userId,
+        ['OWNER', 'ADMIN', 'MEMBER'],
+      );
     }
 
     const event = await this.db.matchEvent.create({
@@ -103,10 +115,22 @@ export class MatchEventsService {
     return ResponseUtil.success(event);
   }
 
-  async update(id: string, updateMatchEventDto: UpdateMatchEventDto) {
-    const event = await this.db.matchEvent.findUnique({ where: { id } });
+  async update(id: string, userId: string, updateMatchEventDto: UpdateMatchEventDto) {
+    const event = await this.db.matchEvent.findUnique({
+      where: { id },
+      include: { fixture: { include: { tournament: true } } },
+    });
     if (!event) {
       throw new NotFoundException('Match event not found');
+    }
+
+    // Role check
+    if (event.fixture.tournament.organization_id) {
+      await this.organizationsService.validateMemberRole(
+        event.fixture.tournament.organization_id,
+        userId,
+        ['OWNER', 'ADMIN', 'MEMBER'],
+      );
     }
 
     let parsedMetadata = undefined;
@@ -163,10 +187,22 @@ export class MatchEventsService {
     return ResponseUtil.success(updatedEvent);
   }
 
-  async remove(id: string) {
-    const event = await this.db.matchEvent.findUnique({ where: { id } });
+  async remove(id: string, userId: string) {
+    const event = await this.db.matchEvent.findUnique({
+      where: { id },
+      include: { fixture: { include: { tournament: true } } },
+    });
     if (!event) {
       throw new NotFoundException('Match event not found');
+    }
+
+    // Role check
+    if (event.fixture.tournament.organization_id) {
+      await this.organizationsService.validateMemberRole(
+        event.fixture.tournament.organization_id,
+        userId,
+        ['OWNER', 'ADMIN', 'MEMBER'],
+      );
     }
 
     await this.db.matchEvent.delete({ where: { id } });
