@@ -28,7 +28,6 @@ export class ParticipantsService {
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: true,
-        admins: true,
         fixtures: true,
       },
     });
@@ -37,10 +36,18 @@ export class ParticipantsService {
       throw new NotFoundException('Tournament not found');
     }
 
-    const isOrganizer = tournament.organizer_id === userIdRef;
-    const isAdmin = tournament.admins.some((admin) => admin.id === userIdRef);
+    if (!tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
 
-    if (!isOrganizer && !isAdmin) {
+    const isMember = await this.db.organizationMember.findFirst({
+      where: {
+        organizationId: tournament.organization_id,
+        userId: userIdRef,
+      },
+    });
+
+    if (!isMember) {
       throw new ForbiddenException(
         'You are not authorized to add participants to this tournament',
       );
@@ -82,7 +89,6 @@ export class ParticipantsService {
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
       include: {
         participants: true,
-        admins: true,
         fixtures: true,
       },
     });
@@ -91,10 +97,18 @@ export class ParticipantsService {
       throw new NotFoundException('Tournament not found');
     }
 
-    const isOrganizer = tournament.organizer_id === userIdRef;
-    const isAdmin = tournament.admins.some((admin) => admin.id === userIdRef);
+    if (!tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
 
-    if (!isOrganizer && !isAdmin) {
+    const isMember = await this.db.organizationMember.findFirst({
+      where: {
+        organizationId: tournament.organization_id,
+        userId: userIdRef,
+      },
+    });
+
+    if (!isMember) {
       throw new ForbiddenException(
         'You are not authorized to add participants to this tournament',
       );
