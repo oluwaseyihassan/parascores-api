@@ -29,8 +29,6 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('auth')
 @Controller('auth')
-@ApiTags('auth')
-@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
