@@ -208,4 +208,10 @@ export class CreateTournamentDto {
   @IsOptional()
   bannerUrl?: string;
 
+  @ApiProperty({
+    description: 'The ID of the organization that owns this tournament',
+  })
+  @IsString()
+  @IsNotEmpty()
+  organization_id: string;
 }
