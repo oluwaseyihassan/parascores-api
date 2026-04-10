@@ -7,13 +7,17 @@ import {
 import { DatabaseService } from 'src/database/database.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { OrganizationsService } from 'src/organizations/organizations.service';
 
 import { Visibility, FixtureStage, MatchEventType } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
 export class TournamentsService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly organizationsService: OrganizationsService,
+  ) {}
 
   async create(userId: string, dto: CreateTournamentDto) {
     const { start_date, end_date, ...rest } = dto;
@@ -35,7 +39,7 @@ export class TournamentsService {
         ...rest,
         start_date: new Date(start_date),
         end_date: new Date(end_date),
-        organizer_id: userId,
+        organization_id: dto.organization_id,
       },
     });
     return ResponseUtil.success(tournament);
@@ -46,8 +50,16 @@ export class TournamentsService {
       where: { OR: [{ id }, { customName: id }] },
     });
     if (!tournament) throw new NotFoundException('Tournament not found');
-    if (tournament.organizer_id !== userId)
-      throw new ForbiddenException('Not authorized');
+
+    if (!tournament.organization_id)
+      throw new ForbiddenException('Tournament has no organization');
+
+    // Check if user has OWNER or ADMIN role in the organization
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
 
     const { start_date, end_date, ...rest } = dto;
 
@@ -75,17 +87,22 @@ export class TournamentsService {
     return ResponseUtil.success(updated);
   }
 
-  async findAllPublic(page: number = 1, limit: number = 10) {
+  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string) {
     const skip = (page - 1) * limit;
+
+    const whereClause: any = {
+      visibility: Visibility.PUBLIC,
+    };
+    if (organizationSlug) {
+      whereClause.organization = { slug: organizationSlug };
+    }
 
     const [tournaments, total] = await Promise.all([
       this.db.tournament.findMany({
-        where: {
-          visibility: Visibility.PUBLIC,
-        },
+        where: whereClause,
         include: {
-          organizer: {
-            select: { id: true, name: true, email: true, isVerified: true, organization_name: true, organization_logo: true, organization_color: true },
+          organization: {
+            select: { id: true, name: true, slug: true, isVerified: true, logoUrl: true, color: true },
           },
           _count: {
             select: { participants: true },
@@ -96,24 +113,33 @@ export class TournamentsService {
         orderBy: { created_at: 'desc' },
       }),
       this.db.tournament.count({
-        where: {
-          visibility: Visibility.PUBLIC,
-        },
+        where: whereClause,
       }),
     ]);
 
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
-  async findAllMine(userId: string, page: number = 1, limit: number = 10) {
+  async findAllMine(userId: string, page: number = 1, limit: number = 10, organizationId?: string) {
     const skip = (page - 1) * limit;
+
+    const where: any = {
+      organization: {
+        members: {
+          some: { userId }
+        }
+      }
+    };
+
+    if (organizationId) {
+      where.organization_id = organizationId;
+    }
 
     const [tournaments, total] = await Promise.all([
       this.db.tournament.findMany({
-        where: {
-          organizer_id: userId,
-        },
+        where,
         include: {
+          organization: true,
           _count: {
             select: { participants: true },
           },
@@ -123,9 +149,7 @@ export class TournamentsService {
         orderBy: { created_at: 'desc' },
       }),
       this.db.tournament.count({
-        where: {
-          organizer_id: userId,
-        },
+        where,
       }),
     ]);
 
@@ -174,8 +198,8 @@ export class TournamentsService {
         sponsors: true,
         socials: true,
         venues: true,
-        organizer: {
-          select: { name: true, isVerified: true, organization_name: true, organization_logo: true, organization_color: true },
+        organization: {
+          select: { id: true, slug: true, name: true, isVerified: true, logoUrl: true, color: true },
         },
         participants: {
           include: { players: true }
@@ -339,11 +363,88 @@ export class TournamentsService {
       where: { OR: [{ id }, { customName: id }] },
     });
     if (!tournament) throw new NotFoundException('Tournament not found');
-    if (tournament.organizer_id !== userId)
-      throw new ForbiddenException('Not authorized');
+
+    if (!tournament.organization_id)
+      throw new ForbiddenException('Tournament has no organization');
+
+    // Check if user has OWNER or ADMIN role in the organization
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
 
     await this.db.tournament.delete({ where: { id: tournament.id } });
 
     return ResponseUtil.success({ message: 'Tournament deleted successfully' });
+  }
+
+  // Follow a tournament
+  async followTournament(userId: string, tournamentId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const existing = await this.db.tournamentFollower.findUnique({
+      where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+    });
+
+    if (!existing) {
+      await this.db.tournamentFollower.create({
+        data: { userId, tournamentId: tournament.id }
+      });
+    } else {
+      throw new BadRequestException('Tournament already followed');
+    }
+
+    return ResponseUtil.success({ message: 'Successfully followed tournament' });
+  }
+
+  // Unfollow a tournament
+  async unfollowTournament(userId: string, tournamentId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const existing = await this.db.tournamentFollower.findUnique({
+      where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+    });
+
+    if (existing) {
+      await this.db.tournamentFollower.delete({
+        where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+      });
+    }
+    return ResponseUtil.success({ message: 'Successfully unfollowed tournament' });
+  }
+
+  // List followed tournaments
+  async getFollowedTournaments(userId: string, page: number = 1, limit: number = 20) {
+    const skip = (page - 1) * limit;
+
+    const [followers, total] = await Promise.all([
+      this.db.tournamentFollower.findMany({
+        where: { userId },
+        include: {
+          tournament: {
+            include: {
+              organization: {
+                select: { id: true, name: true, slug: true, isVerified: true, logoUrl: true, color: true },
+              },
+              _count: { select: { participants: true } }
+            }
+          }
+        },
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' }
+      }),
+      this.db.tournamentFollower.count({ where: { userId } })
+    ]);
+
+    const tournaments = followers.map(f => f.tournament);
+    return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 }
