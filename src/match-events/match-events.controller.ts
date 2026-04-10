@@ -12,6 +12,7 @@ import { CreateMatchEventDto } from './dto/create-match-event.dto';
 import { UpdateMatchEventDto } from './dto/update-match-event.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { Req } from '@nestjs/common';
 
 @ApiTags('match-events')
 @Controller('match-events')
@@ -23,8 +24,9 @@ export class MatchEventsController {
   create(
     @Param('fixtureId') fixtureId: string,
     @Body() createMatchEventDto: CreateMatchEventDto,
+    @Req() req,
   ) {
-    return this.matchEventsService.create(fixtureId, createMatchEventDto);
+    return this.matchEventsService.create(fixtureId, req.user.sub, createMatchEventDto);
   }
 
   @Public()
@@ -46,13 +48,14 @@ export class MatchEventsController {
   update(
     @Param('id') id: string,
     @Body() updateMatchEventDto: UpdateMatchEventDto,
+    @Req() req,
   ) {
-    return this.matchEventsService.update(id, updateMatchEventDto);
+    return this.matchEventsService.update(id, req.user.sub, updateMatchEventDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a match event' })
-  remove(@Param('id') id: string) {
-    return this.matchEventsService.remove(id);
+  remove(@Param('id') id: string, @Req() req) {
+    return this.matchEventsService.remove(id, req.user.sub);
   }
 }
