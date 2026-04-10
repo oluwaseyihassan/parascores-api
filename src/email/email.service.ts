@@ -347,4 +347,148 @@ export class EmailService {
       console.log(`Player rejection email sent to ${playerEmail}`);
     }
   }
+
+  async sendOrganizationMemberAddedEmail(
+    email: string,
+    name: string,
+    organizationName: string,
+    role: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const roleDescription = this.getRoleDescription(role);
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #4F46E5;">🏢 Welcome to ${organizationName}!</h2>
+        <p>Hello ${name},</p>
+        <p>You have been added to the <strong>${organizationName}</strong> organization on ParaScores.</p>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Organization:</strong> ${organizationName}</p>
+          <p style="margin: 5px 0;"><strong>Your Role:</strong> ${role}</p>
+          <p style="margin: 10px 0 5px 0; color: #4B5563; font-size: 14px;"><strong>Authorized Actions:</strong><br/>${roleDescription}</p>
+          <p style="margin: 10px 0 0 0; font-size: 12px; color: #9CA3AF;">Added at: ${timestamp}</p>
+        </div>
+        <p>You can now collaborate within this workspace based on your assigned permissions.</p>
+        <div style="margin-top: 25px;">
+          <a href="${process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001'}/organizations" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Organizations</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: email,
+      subject: `🏢 Welcome to ${organizationName} on ParaScores`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send organization member added email:', error);
+    } else {
+      console.log(`Organization member added email sent to ${email}`);
+    }
+  }
+
+  async sendOrganizationMemberRoleUpdatedEmail(
+    email: string,
+    name: string,
+    organizationName: string,
+    newRole: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const roleDescription = this.getRoleDescription(newRole);
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #4F46E5;">🛡️ Role Updated: ${organizationName}</h2>
+        <p>Hello ${name},</p>
+        <p>Your role in the <strong>${organizationName}</strong> organization has been updated.</p>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Organization:</strong> ${organizationName}</p>
+          <p style="margin: 5px 0;"><strong>New Role:</strong> ${newRole}</p>
+          <p style="margin: 10px 0 5px 0; color: #4B5563; font-size: 14px;"><strong>Your New Permissions:</strong><br/>${roleDescription}</p>
+          <p style="margin: 10px 0 0 0; font-size: 12px; color: #9CA3AF;">Updated at: ${timestamp}</p>
+        </div>
+        <p>This change appropriately adjusts your access within the workspace.</p>
+        <div style="margin-top: 25px;">
+          <a href="${process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001'}/organizations" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Organization</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: email,
+      subject: `🛡️ Role Updated in ${organizationName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send organization role update email:', error);
+    } else {
+      console.log(`Organization role update email sent to ${email}`);
+    }
+  }
+
+  async sendOrganizationMemberRemovedEmail(
+    email: string,
+    name: string,
+    organizationName: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #EF4444;">👋 Organization Membership Update</h2>
+        <p>Hello ${name},</p>
+        <p>We're writing to inform you that you have been removed from the <strong>${organizationName}</strong> organization.</p>
+        <div style="background-color: #FEF2F2; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #FEE2E2;">
+          <p style="margin: 5px 0;"><strong>Organization:</strong> ${organizationName}</p>
+          <p style="margin: 5px 0;"><strong>Status:</strong> Membership Revoked</p>
+          <p style="margin: 5px 0;"><strong>Processed at:</strong> ${timestamp}</p>
+        </div>
+        <p>If you believe this was an error, please contact the organization owner.</p>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: email,
+      subject: `👋 Update: Membership in ${organizationName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send organization removal email:', error);
+    } else {
+      console.log(`Organization removal email sent to ${email}`);
+    }
+  }
+
+  private getRoleDescription(role: string): string {
+    switch (role.toUpperCase()) {
+      case 'OWNER':
+        return 'Full administrative access to the organization, including billing, member management, and all tournaments.';
+      case 'ADMIN':
+        return 'High-level access to manage tournaments, organization branding, and member roles.';
+      case 'MEMBER':
+        return 'Authorized to update match scores and match status only. Structural tournament changes are restricted.';
+      default:
+        return 'Standard access to organization resources.';
+    }
+  }
 }
