@@ -32,27 +32,52 @@ model User {
   passwordResetToken  String?
   passwordResetExpiry DateTime?
 
-  //Branding
-  organization_name  String?
-  organization_logo  String?
-  organization_color String?
-  phone              String?
-  isVerified         Boolean @default(false)
-
-  organized_tournaments Tournament[]  @relation("OrganizedTournaments")
-  admin_tournaments     Tournament[]  @relation("TournamentAdmins")
-  playing_in            Participant[]
-  player_profiles       Player[]      @relation("UserPlayerProfiles")
-  created_invites       TeamInvite[]  @relation("InviteCreator")
+  organizations   OrganizationMember[]
+  playing_in      Participant[]
+  player_profiles Player[]             @relation("UserPlayerProfiles")
+  created_invites TeamInvite[]         @relation("InviteCreator")
+  followed_tournaments TournamentFollower[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+}
+
+model Organization {
+  id         String   @id @default(cuid())
+  name       String
+  slug       String   @unique
+  logoUrl    String?
+  color      String?
+  phone      String?
+  isVerified Boolean  @default(false)
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  members     OrganizationMember[]
+  tournaments Tournament[]
+}
+
+model OrganizationMember {
+  id             String           @id @default(cuid())
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organizationId String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  role           OrganizationRole @default(MEMBER)
+
+  @@unique([organizationId, userId])
 }
 
 enum Role {
   USER
   ORGANIZER
   SUPER_ADMIN
+}
+
+enum OrganizationRole {
+  OWNER
+  ADMIN
+  MEMBER
 }
 
 enum Visibility {
@@ -144,10 +169,9 @@ model Tournament {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  organizer    User?   @relation("OrganizedTournaments", fields: [organizer_id], references: [id])
-  organizer_id String?
+  organization    Organization? @relation(fields: [organization_id], references: [id])
+  organization_id String?
 
-  admins       User[]        @relation("TournamentAdmins")
   participants Participant[]
   fixtures     Fixture[]
   standings    Standing[]
@@ -155,6 +179,18 @@ model Tournament {
   sponsors     Sponsor[]
   socials      Social[]
   team_invites TeamInvite[]
+  followers    TournamentFollower[]
+}
+
+model TournamentFollower {
+  userId        String
+  tournamentId  String
+  createdAt     DateTime @default(now())
+
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tournament    Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tournamentId])
 }
 
 model Group {
@@ -392,7 +428,7 @@ model TeamInvite {
   createdBy   User   @relation("InviteCreator", fields: [createdById], references: [id])
   createdById String
 
-  maxUses   Int?      // null = unlimited
+  maxUses   Int? // null = unlimited
   usedCount Int       @default(0)
   expiresAt DateTime? // null = never expires
   isActive  Boolean   @default(true)
