@@ -50,6 +50,19 @@ export class PlayersService {
           },
         },
         matchEvents: true,
+        user: {
+          include: {
+            player_profiles: {
+              include: {
+                participant: {
+                  include: {
+                    tournament: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
 
