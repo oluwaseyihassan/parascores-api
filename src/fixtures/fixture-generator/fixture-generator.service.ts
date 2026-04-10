@@ -35,7 +35,13 @@ export class FixtureGeneratorService {
           where: { status: 'CONFIRMED' },
           orderBy: { seed: 'asc' },
         },
-        admins: true,
+        organization: {
+          include: {
+            members: {
+              where: { userId },
+            },
+          },
+        },
         fixtures: true,
       },
     });
@@ -45,10 +51,11 @@ export class FixtureGeneratorService {
     }
 
     // Authorization check
-    const isOrganizer = tournament.organizer_id === userId;
-    const isAdmin = tournament.admins.some((admin) => admin.id === userId);
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
 
-    if (!isOrganizer && !isAdmin) {
+    if (!isAuthorized) {
       throw new ForbiddenException(
         'You are not authorized to generate fixtures for this tournament',
       );
@@ -196,6 +203,13 @@ export class FixtureGeneratorService {
             participants: true,
           },
         },
+        organization: {
+          include: {
+            members: {
+              where: { userId },
+            },
+          },
+        },
       },
     });
 
@@ -203,9 +217,15 @@ export class FixtureGeneratorService {
       throw new NotFoundException('Tournament not found');
     }
 
-    if (tournament.organizer_id !== userId) {
-      // Simple check, ideally use Guard
-      // But for now sticking to service logic
+    // Authorization check
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
+      throw new ForbiddenException(
+        'You are not authorized to advance group stage for this tournament',
+      );
     }
 
     if (
