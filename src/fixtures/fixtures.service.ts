@@ -2,17 +2,22 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
+import { OrganizationsService } from 'src/organizations/organizations.service';
 
 @Injectable()
 export class FixturesService {
   public liveFixturesSubject = new Subject<{ type: string; data: any }>();
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly organizationsService: OrganizationsService,
+  ) {}
 
   // Get a single fixture by ID
   async findOne(fixtureId: string) {
@@ -135,14 +140,50 @@ export class FixturesService {
   }
 
   // Update a fixture (status, scores, etc.)
-  async update(fixtureId: string, dto: UpdateFixtureDto) {
-    console.log(dto);
+  async update(fixtureId: string, userId: string, dto: UpdateFixtureDto) {
     const fixture = await this.db.fixture.findUnique({
       where: { id: fixtureId },
+      include: {
+        tournament: true,
+      },
     });
 
     if (!fixture) {
       throw new NotFoundException('Fixture not found');
+    }
+
+    if (!fixture.tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+
+    // Role-based access control
+    const membership = await this.organizationsService.validateMemberRole(
+      fixture.tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN', 'MEMBER'],
+    );
+
+    if (membership.role === 'MEMBER') {
+      // Members can only update scores and status
+      const allowedFields = [
+        'homeScore',
+        'awayScore',
+        'homePenaltyScore',
+        'awayPenaltyScore',
+        'status',
+      ];
+      const attemptedFields = Object.keys(dto).filter(
+        (key) => dto[key] !== undefined,
+      );
+      const invalidFields = attemptedFields.filter(
+        (field) => !allowedFields.includes(field),
+      );
+
+      if (invalidFields.length > 0) {
+        throw new ForbiddenException(
+          `Members are only allowed to update scores and status. Restricted fields: ${invalidFields.join(', ')}`,
+        );
+      }
     }
 
     // Validate penalty scores for knockout matches being completed for the first time
@@ -773,5 +814,41 @@ export class FixturesService {
         },
       });
     }
+  }
+
+  // Get recent completed fixtures (activity stream)
+  async findRecentResults(limit: number = 10) {
+    const fixtures = await this.db.fixture.findMany({
+      where: { status: 'COMPLETED' },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        tournament: {
+          select: {
+            id: true,
+            name: true,
+            customName: true,
+            sport: true,
+            organization: {
+              select: { name: true, slug: true, logoUrl: true },
+            },
+          },
+        },
+      },
+      orderBy: { updated_at: 'desc' },
+      take: limit,
+    });
+
+    return ResponseUtil.success(fixtures);
   }
 }
