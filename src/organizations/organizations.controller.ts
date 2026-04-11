@@ -79,4 +79,18 @@ export class OrganizationsController {
   async update(@Param('id') id: string, @Body() dto: UpdateOrganizationDto) {
     return this.organizationsService.update(id, dto);
   }
+
+  @Post(':id/request-delete')
+  @ApiOperation({ summary: 'Request a deletion verification code for an organization' })
+  @ApiResponse({ status: 200, description: 'Verification code sent to owner email' })
+  async requestDeleteCode(@Param('id') id: string, @Req() req: any) {
+    return this.organizationsService.requestDeleteCode(id, req.user.sub);
+  }
+
+  @Post(':id/confirm-delete')
+  @ApiOperation({ summary: 'Confirm organization deletion with the verification code' })
+  @ApiResponse({ status: 200, description: 'Organization deleted successfully' })
+  async confirmDelete(@Param('id') id: string, @Req() req: any, @Body() body: { code: string }) {
+    return this.organizationsService.confirmDelete(id, req.user.sub, body.code);
+  }
 }
