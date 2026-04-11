@@ -10,6 +10,7 @@ export const EmailEvents = {
   ORGANIZATION_MEMBER_ADDED: 'organization.member-added',
   ORGANIZATION_MEMBER_ROLE_UPDATED: 'organization.member-role-updated',
   ORGANIZATION_MEMBER_REMOVED: 'organization.member-removed',
+  ORGANIZATION_DELETE_CODE: 'organization.delete-code',
 } as const;
 
 export interface UserSignupPayload {
@@ -80,4 +81,12 @@ export interface OrganizationMemberRemovedPayload {
   email: string;
   name: string;
   organizationName: string;
+}
+
+export interface OrganizationDeleteCodePayload {
+  email: string;
+  name: string;
+  organizationName: string;
+  code: string;
+  tournamentCount: number;
 }
