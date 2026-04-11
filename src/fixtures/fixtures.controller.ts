@@ -115,6 +115,16 @@ export class FixturesController {
     );
   }
 
+  // Get upcoming scheduled fixtures
+  @Public()
+  @Get('upcoming')
+  @ApiOperation({ summary: 'Get upcoming scheduled fixtures' })
+  async findUpcoming(@Query('limit') limit?: string) {
+    return this.fixturesService.findUpcoming(
+      limit ? parseInt(limit, 10) : 10,
+    );
+  }
+
   // Get a single fixture by ID
   @Public()
   @Get(':id')
