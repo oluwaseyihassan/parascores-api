@@ -479,6 +479,52 @@ export class EmailService {
     }
   }
 
+
+  async sendOrganizationDeleteCodeEmail(
+    email: string,
+    name: string,
+    organizationName: string,
+    code: string,
+    tournamentCount: number,
+  ): Promise<void> {
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #EF4444;">⚠️ Organization Deletion Request</h2>
+        <p>Hello ${name},</p>
+        <p>You have requested to <strong>permanently delete</strong> the <strong>${organizationName}</strong> organization from ParaScores.</p>
+        <div style="background-color: #FEF2F2; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #FEE2E2;">
+          <p style="margin: 5px 0; color: #991B1B; font-weight: bold;">⚠️ This action is IRREVERSIBLE. The following will be permanently deleted:</p>
+          <ul style="color: #991B1B; margin: 10px 0;">
+            <li>The organization "<strong>${organizationName}</strong>"</li>
+            <li><strong>${tournamentCount}</strong> tournament${tournamentCount !== 1 ? 's' : ''} and all associated data</li>
+            <li>All fixtures, standings, participants, and match events</li>
+            <li>All team invites and player registrations</li>
+          </ul>
+        </div>
+        <p>Enter this verification code to confirm the deletion:</p>
+        <div style="background-color: #F3F4F6; padding: 20px; border-radius: 8px; margin: 20px 0; text-align: center;">
+          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #1F2937; font-family: monospace;">${code}</span>
+        </div>
+        <p style="color: #6B7280; font-size: 13px;">This code expires in <strong>10 minutes</strong>. If you did not request this, please ignore this email — no changes will be made.</p>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: email,
+      subject: `⚠️ Deletion Code for ${organizationName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send organization delete code email:', error);
+      throw new Error(`Failed to send delete code email: ${error.message}`);
+    }
+
+    console.log(`Organization delete code email sent to ${email}`);
+  }
+
   private getRoleDescription(role: string): string {
     switch (role.toUpperCase()) {
       case 'OWNER':
