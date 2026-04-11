@@ -133,4 +133,17 @@ export class FixturesController {
   ) {
     return this.fixturesService.update(id, req.user.sub, dto);
   }
+
+  // Delete all fixtures for a tournament
+  @Delete('tournaments/:tournamentId')
+  @ApiOperation({ summary: 'Delete all fixtures for a specific tournament' })
+  async deleteTournamentFixtures(
+    @Param('tournamentId') tournamentId: string,
+    @Req() req,
+  ) {
+    return this.fixturesService.deleteAllTournamentFixtures(
+      tournamentId,
+      req.user.sub,
+    );
+  }
 }
