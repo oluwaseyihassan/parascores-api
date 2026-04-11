@@ -851,4 +851,38 @@ export class FixturesService {
 
     return ResponseUtil.success(fixtures);
   }
+
+  // Delete all fixtures for a tournament
+  async deleteAllTournamentFixtures(tournamentId: string, userId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    // Role-based access control
+    if (tournament.organization_id) {
+      await this.organizationsService.validateMemberRole(
+        tournament.organization_id,
+        userId,
+        ['OWNER', 'ADMIN'],
+      );
+    }
+
+    // Delete all fixtures (cascades to MatchEvents)
+    await this.db.fixture.deleteMany({
+      where: { tournament_id: tournament.id },
+    });
+
+    // Reset standings
+    await this.db.standing.deleteMany({
+      where: { tournament_id: tournament.id },
+    });
+
+    return ResponseUtil.success({
+      message: 'All fixtures cleared successfully',
+    });
+  }
 }
