@@ -852,6 +852,46 @@ export class FixturesService {
     return ResponseUtil.success(fixtures);
   }
 
+  async findUpcoming(limit: number = 10) {
+    const fixtures = await this.db.fixture.findMany({
+      where: {
+        status: 'SCHEDULED',
+        startTime: {
+          gte: new Date(),
+        },
+      },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        tournament: {
+          select: {
+            id: true,
+            name: true,
+            customName: true,
+            sport: true,
+            organization: {
+              select: { name: true, slug: true, logoUrl: true },
+            },
+          },
+        },
+      },
+      orderBy: { startTime: 'asc' },
+      take: limit,
+    });
+
+    return ResponseUtil.success(fixtures);
+  }
+
   // Delete all fixtures for a tournament
   async deleteAllTournamentFixtures(tournamentId: string, userId: string) {
     const tournament = await this.db.tournament.findFirst({
