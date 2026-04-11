@@ -1,10 +1,13 @@
-import { Injectable, ConflictException, NotFoundException, ForbiddenException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { OrganizationRole } from 'prisma/generated/client';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EmailEvents, OrganizationMemberAddedPayload, OrganizationMemberRoleUpdatedPayload, OrganizationMemberRemovedPayload } from 'src/email/email.events';
+import { EmailEvents, OrganizationMemberAddedPayload, OrganizationMemberRoleUpdatedPayload, OrganizationMemberRemovedPayload, OrganizationDeleteCodePayload } from 'src/email/email.events';
+
+// In-memory store for deletion codes (orgId -> { code, expiresAt, userId })
+const deletionCodes = new Map<string, { code: string; expiresAt: Date; userId: string }>();
 
 @Injectable()
 export class OrganizationsService {
@@ -316,6 +319,113 @@ export class OrganizationsService {
     }
 
     return ResponseUtil.success(organization, 'Organization public profile retrieved successfully');
+  }
+
+  async requestDeleteCode(orgId: string, userId: string) {
+    const org = await this.db.organization.findUnique({ where: { id: orgId } });
+    if (!org) throw new NotFoundException('Organization not found');
+
+    // Only OWNER can delete
+    await this.validateMemberRole(orgId, userId, ['OWNER']);
+
+    // Get user info for the email
+    const user = await this.db.user.findUnique({ where: { id: userId } });
+    if (!user) throw new NotFoundException('User not found');
+
+    // Count tournaments that will be deleted
+    const tournamentCount = await this.db.tournament.count({ where: { organization_id: orgId } });
+
+    // Generate 6-digit code
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    // Store with 10-minute TTL
+    deletionCodes.set(orgId, {
+      code,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000),
+      userId,
+    });
+
+    // Auto-cleanup after 10 minutes
+    setTimeout(() => {
+      deletionCodes.delete(orgId);
+    }, 10 * 60 * 1000);
+
+    // Emit email event
+    this.eventEmitter.emit(EmailEvents.ORGANIZATION_DELETE_CODE, {
+      email: user.email,
+      name: user.name,
+      organizationName: org.name,
+      code,
+      tournamentCount,
+    } as OrganizationDeleteCodePayload);
+
+    return ResponseUtil.success(
+      { tournamentCount, memberCount: await this.db.organizationMember.count({ where: { organizationId: orgId } }) },
+      'Verification code sent to your email',
+    );
+  }
+
+  async confirmDelete(orgId: string, userId: string, code: string) {
+    const org = await this.db.organization.findUnique({ where: { id: orgId } });
+    if (!org) throw new NotFoundException('Organization not found');
+
+    // Only OWNER can delete
+    await this.validateMemberRole(orgId, userId, ['OWNER']);
+
+    // Validate code
+    const stored = deletionCodes.get(orgId);
+    if (!stored) {
+      throw new BadRequestException('No deletion code found. Please request a new code.');
+    }
+
+    if (stored.userId !== userId) {
+      throw new ForbiddenException('This deletion code was not issued to you.');
+    }
+
+    if (new Date() > stored.expiresAt) {
+      deletionCodes.delete(orgId);
+      throw new BadRequestException('Verification code has expired. Please request a new one.');
+    }
+
+    if (stored.code !== code) {
+      throw new BadRequestException('Invalid verification code.');
+    }
+
+    // Code is valid — delete everything in a transaction
+    await this.db.$transaction(async (tx) => {
+      // Get all tournament IDs under this org
+      const tournaments = await tx.tournament.findMany({
+        where: { organization_id: orgId },
+        select: { id: true },
+      });
+
+      const tournamentIds = tournaments.map(t => t.id);
+
+      if (tournamentIds.length > 0) {
+        // Delete all tournament-related data
+        await tx.matchEvent.deleteMany({ where: { fixture: { tournament_id: { in: tournamentIds } } } });
+        await tx.fixture.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.standing.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.player.deleteMany({ where: { participant: { tournament_id: { in: tournamentIds } } } });
+        await tx.teamInvite.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.participant.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.group.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.sponsor.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.social.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.venue.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
+        await tx.tournamentFollower.deleteMany({ where: { tournamentId: { in: tournamentIds } } });
+        await tx.tournament.deleteMany({ where: { organization_id: orgId } });
+      }
+
+      // Delete org members and the org itself
+      await tx.organizationMember.deleteMany({ where: { organizationId: orgId } });
+      await tx.organization.delete({ where: { id: orgId } });
+    });
+
+    // Clean up the code
+    deletionCodes.delete(orgId);
+
+    return ResponseUtil.success(null, 'Organization deleted successfully');
   }
 
   private generateSlug(name: string): string {
