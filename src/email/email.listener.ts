@@ -14,6 +14,7 @@ import {
   OrganizationMemberAddedPayload,
   OrganizationMemberRoleUpdatedPayload,
   OrganizationMemberRemovedPayload,
+  OrganizationDeleteCodePayload,
 } from './email.events';
 
 @Injectable()
@@ -183,6 +184,21 @@ export class EmailListener {
       );
     } catch (error) {
       console.error('Failed to send organization member removed email:', error);
+    }
+  }
+
+  @OnEvent(EmailEvents.ORGANIZATION_DELETE_CODE, { async: true })
+  async handleOrganizationDeleteCode(payload: OrganizationDeleteCodePayload) {
+    try {
+      await this.emailService.sendOrganizationDeleteCodeEmail(
+        payload.email,
+        payload.name,
+        payload.organizationName,
+        payload.code,
+        payload.tournamentCount,
+      );
+    } catch (error) {
+      console.error('Failed to send organization delete code email:', error);
     }
   }
 }
