@@ -1714,7 +1714,9 @@ export const TournamentScalarFieldEnum = {
   end_date: 'end_date',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  organization_id: 'organization_id'
+  organization_id: 'organization_id',
+  seasonName: 'seasonName',
+  parent_id: 'parent_id'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
