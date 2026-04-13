@@ -180,6 +180,12 @@ model Tournament {
   socials      Social[]
   team_invites TeamInvite[]
   followers    TournamentFollower[]
+
+  // Seasons
+  seasonName String?
+  parent_id  String?
+  parent     Tournament?  @relation("TournamentSeasons", fields: [parent_id], references: [id])
+  seasons    Tournament[] @relation("TournamentSeasons")
 }
 
 model TournamentFollower {
