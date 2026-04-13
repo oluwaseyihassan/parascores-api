@@ -7,6 +7,7 @@ import {
 import { DatabaseService } from 'src/database/database.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { StartSeasonDto } from './dto/start-season.dto';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 
 import { Visibility, FixtureStage, MatchEventType } from 'prisma/generated/client';
@@ -87,7 +88,57 @@ export class TournamentsService {
     return ResponseUtil.success(updated);
   }
 
-  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string) {
+  async startSeason(id: string, userId: string, dto: StartSeasonDto) {
+    const parentTournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id }, { customName: id }] },
+    });
+    if (!parentTournament) throw new NotFoundException('Tournament not found');
+
+    if (!parentTournament.organization_id)
+      throw new ForbiddenException('Tournament has no organization');
+
+    // Check if user has permission
+    await this.organizationsService.validateMemberRole(
+      parentTournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    // Create the new tournament using settings from parent
+    const season = await this.db.tournament.create({
+      data: {
+        name: parentTournament.name,
+        seasonName: dto.seasonName,
+        start_date: new Date(dto.start_date),
+        end_date: new Date(dto.end_date),
+        organization_id: parentTournament.organization_id,
+        parent_id: parentTournament.parent_id || parentTournament.id,
+        
+        sport: parentTournament.sport,
+        type: parentTournament.type,
+        participantType: parentTournament.participantType,
+        scoringRules: parentTournament.scoringRules || {},
+        visibility: parentTournament.visibility || Visibility.PUBLIC,
+        
+        logoUrl: parentTournament.logoUrl,
+        bannerUrl: parentTournament.bannerUrl,
+        location: parentTournament.location,
+        timezone: parentTournament.timezone,
+        
+        maxParticipants: parentTournament.maxParticipants,
+        autoApprove: parentTournament.autoApprove,
+        twoLegsKnockout: parentTournament.twoLegsKnockout,
+        thirdPlaceMatch: parentTournament.thirdPlaceMatch,
+        numberOfGroups: parentTournament.numberOfGroups,
+        teamsPerGroup: parentTournament.teamsPerGroup,
+        isPinned: false
+      },
+    });
+
+    return ResponseUtil.success(season);
+  }
+
+  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string, search?: string, type?: string) {
     const skip = (page - 1) * limit;
 
     const whereClause: any = {
@@ -95,6 +146,17 @@ export class TournamentsService {
     };
     if (organizationSlug) {
       whereClause.organization = { slug: organizationSlug };
+    }
+    if (type) {
+      whereClause.type = type;
+    }
+    if (search) {
+      whereClause.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+        { sport: { contains: search, mode: 'insensitive' } },
+        { location: { contains: search, mode: 'insensitive' } },
+      ];
     }
 
     const [tournaments, total] = await Promise.all([
