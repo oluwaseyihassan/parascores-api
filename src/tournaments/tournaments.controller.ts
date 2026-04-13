@@ -12,6 +12,7 @@ import {
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
 import { UpdateTournamentDto } from './dto/update-tournament.dto';
+import { StartSeasonDto } from './dto/start-season.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -42,9 +43,26 @@ export class TournamentsController {
     type: String,
     description: 'Filter by organization slug',
   })
-  async findAll(@Query() paginationQuery: PaginationQueryDto, @Query('organizationSlug') organizationSlug?: string) {
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    type: String,
+    description: 'Search by name, description, sport, or location',
+  })
+  @ApiQuery({
+    name: 'type',
+    required: false,
+    type: String,
+    description: 'Filter by tournament type',
+  })
+  async findAll(
+    @Query() paginationQuery: PaginationQueryDto,
+    @Query('organizationSlug') organizationSlug?: string,
+    @Query('search') search?: string,
+    @Query('type') type?: string,
+  ) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.findAllPublic(page, limit, organizationSlug);
+    return this.tournamentsService.findAllPublic(page, limit, organizationSlug, search, type);
   }
 
   @Get('mine')
@@ -86,6 +104,16 @@ export class TournamentsController {
   @ApiOperation({ summary: 'Create a new tournament' })
   async create(@Body() createTournamentDto: CreateTournamentDto, @Req() req) {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
+  }
+
+  @Post(':id/season')
+  @ApiOperation({ summary: 'Start a new season from an existing tournament' })
+  async startSeason(
+    @Param('id') id: string,
+    @Body() dto: StartSeasonDto,
+    @Req() req
+  ) {
+    return this.tournamentsService.startSeason(id, req.user.sub, dto);
   }
 
   @Get('following/mine')
