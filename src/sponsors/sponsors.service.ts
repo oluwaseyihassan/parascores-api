@@ -23,6 +23,7 @@ export class SponsorsService {
     const sponsor = await this.db.sponsor.create({
       data: {
         name: dto.name,
+        description: dto.description,
         logoUrl: dto.logoUrl,
         websiteUrl: dto.websiteUrl,
         tournament_id: tournament.id,
@@ -64,6 +65,7 @@ export class SponsorsService {
       where: { id: sponsorId },
       data: {
         ...(dto.name && { name: dto.name }),
+        ...(dto.description !== undefined && { description: dto.description }),
         ...(dto.logoUrl !== undefined && { logoUrl: dto.logoUrl }),
         ...(dto.websiteUrl !== undefined && { websiteUrl: dto.websiteUrl }),
       },
