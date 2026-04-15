@@ -10,6 +10,8 @@ export class EmailService {
   private readonly fromOluwaseyiEmail: string;
   private readonly fromAdminEmail: string;
 
+  private readonly logoUrl: string;
+
   constructor() {
     this.resend = new Resend(process.env.RESEND_API_KEY);
     this.fromAdminEmail =
@@ -17,6 +19,7 @@ export class EmailService {
     this.fromOluwaseyiEmail =
       process.env.EMAIL_FROM_OLUWASEYI ||
       'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>';
+    this.logoUrl = 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png';
   }
 
   private async compileTemplate(
@@ -43,6 +46,7 @@ export class EmailService {
     const html = await this.compileTemplate('verification', {
       name,
       verificationUrl,
+      logoUrl: this.logoUrl,
     });
 
     const { error } = await this.resend.emails.send({
@@ -70,6 +74,7 @@ export class EmailService {
     const html = await this.compileTemplate('password-reset', {
       name,
       resetUrl,
+      logoUrl: this.logoUrl,
     });
 
     const { error } = await this.resend.emails.send({
@@ -93,6 +98,7 @@ export class EmailService {
   ): Promise<void> {
     const html = await this.compileTemplate('oauth-reset', {
       name,
+      logoUrl: this.logoUrl,
     });
 
     const { error } = await this.resend.emails.send({
@@ -118,6 +124,7 @@ export class EmailService {
     const html = await this.compileTemplate('welcome', {
       name,
       dashboardUrl,
+      logoUrl: this.logoUrl,
     });
 
     const { error } = await this.resend.emails.send({
