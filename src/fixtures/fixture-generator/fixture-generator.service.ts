@@ -444,7 +444,7 @@ export class FixtureGeneratorService {
           round,
           roundName: isTwoLegs ? `${roundName} - Leg 1` : roundName,
           matchNumber: roundMatchNumber++,
-          startTime: new Date(currentTime),
+          startTime: null,
           homeTeamId,
           awayTeamId,
           homeTeamPlaceholder,
@@ -468,7 +468,7 @@ export class FixtureGeneratorService {
             round,
             roundName: `${roundName} - Leg 2`,
             matchNumber: roundMatchNumber++,
-            startTime: new Date(currentTime),
+            startTime: null,
             homeTeamId: awayTeamId,
             awayTeamId: homeTeamId,
             homeTeamPlaceholder: awayTeamPlaceholder,
@@ -491,7 +491,7 @@ export class FixtureGeneratorService {
             round,
             roundName: 'Third Place Match',
             matchNumber: roundMatchNumber++,
-            startTime: new Date(currentTime),
+            startTime: null,
             homeTeamPlaceholder: 'SF1 Loser',
             awayTeamPlaceholder: 'SF2 Loser',
             status: 'SCHEDULED',
@@ -753,7 +753,7 @@ export class FixtureGeneratorService {
               round,
               roundName: `Group Stage - Matchday ${round}`,
               matchNumber: matchNumber++, // We'll re-number later or just increment global
-              startTime: new Date(currentTime),
+              startTime: null,
               homeTeamId: home.id,
               awayTeamId: away.id,
               status: 'SCHEDULED',
@@ -804,7 +804,7 @@ export class FixtureGeneratorService {
             round: secondLegRoundNum,
             roundName: `Group Stage - Matchday ${secondLegRoundNum}`,
             matchNumber: matchNumber++,
-            startTime: new Date(currentTime),
+            startTime: null,
             homeTeamId: f.awayTeamId, // Swap home/away
             awayTeamId: f.homeTeamId,
             status: 'SCHEDULED',
@@ -881,7 +881,7 @@ export class FixtureGeneratorService {
           round,
           roundName,
           matchNumber: matchNumber++,
-          startTime: new Date(currentTime),
+          startTime: null,
           homeTeamId: home.id,
           awayTeamId: away.id,
           status: 'SCHEDULED',
@@ -925,7 +925,7 @@ export class FixtureGeneratorService {
             round: roundNum,
             roundName,
             matchNumber: matchNumber++,
-            startTime: new Date(currentTime),
+            startTime: null,
             homeTeamId: f.awayTeamId, // Swap home/away
             awayTeamId: f.homeTeamId,
             status: 'SCHEDULED',
@@ -969,18 +969,6 @@ export class FixtureGeneratorService {
     // Get all first leg fixtures to calculate timing and match numbers
     const allFirstLegFixtures = firstLegRounds.flatMap((r) => r.fixtures);
 
-    // Calculate start time for second leg
-    const lastFixtureTime =
-      allFirstLegFixtures.length > 0
-        ? new Date(
-            allFirstLegFixtures[allFirstLegFixtures.length - 1].startTime!,
-          )
-        : new Date(options.startDate);
-
-    const secondLegStartTime = new Date(
-      lastFixtureTime.getTime() + options.intervalMinutes * 60 * 1000,
-    );
-
     // Second leg (reverse home/away) - grouped by rounds
     const secondLegRounds: {
       round: number;
@@ -988,7 +976,6 @@ export class FixtureGeneratorService {
       fixtures: Fixture[];
     }[] = [];
     let matchNumber = allFirstLegFixtures.length + 1;
-    let currentTime = secondLegStartTime;
     const fixturesToInsert: any[] = [];
 
     const numFirstLegRounds = firstLegRounds.length;
@@ -1005,7 +992,7 @@ export class FixtureGeneratorService {
           round: secondLegRoundNum,
           roundName,
           matchNumber: matchNumber++,
-          startTime: new Date(currentTime),
+          startTime: null,
           homeTeamId: firstLegFixture.awayTeamId, // Swap home/away
           awayTeamId: firstLegFixture.homeTeamId,
           status: 'SCHEDULED',
@@ -1013,10 +1000,6 @@ export class FixtureGeneratorService {
 
         fixturesToInsert.push(fixtureData);
         roundFixtures.push(fixtureData as unknown as Fixture);
-        
-        currentTime = new Date(
-          currentTime.getTime() + options.intervalMinutes * 60 * 1000,
-        );
       }
 
       if (roundFixtures.length > 0) {
@@ -1112,14 +1095,13 @@ export class FixtureGeneratorService {
   private async generateFriendlyFixtures(
     tournament: Tournament,
     participants: Participant[],
-    options: { startDate: Date; intervalMinutes: number },
+    _options: { startDate: Date; intervalMinutes: number },
   ) {
     const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
     const roundFixtures: Fixture[] = [];
     const fixturesToInsert: any[] = [];
 
     let matchNumber = 1;
-    let currentTime = new Date(options.startDate);
 
     const numPairs = Math.floor(participants.length / 2);
 
@@ -1133,7 +1115,7 @@ export class FixtureGeneratorService {
         round: 1,
         roundName: 'Friendlies',
         matchNumber: matchNumber++,
-        startTime: new Date(currentTime),
+        startTime: null,
         homeTeamId: home.id,
         awayTeamId: away.id,
         status: 'SCHEDULED',
@@ -1141,10 +1123,6 @@ export class FixtureGeneratorService {
 
       fixturesToInsert.push(fixtureData);
       roundFixtures.push(fixtureData as unknown as Fixture);
-      
-      currentTime = new Date(
-        currentTime.getTime() + options.intervalMinutes * 60 * 1000,
-      );
     }
 
     if (fixturesToInsert.length > 0) {
