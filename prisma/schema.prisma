@@ -387,8 +387,9 @@ model Sponsor {
   id   String @id @default(cuid())
   name String
 
-  logoUrl    String?
-  websiteUrl String?
+  description String?
+  logoUrl     String?
+  websiteUrl  String?
 
   tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   tournament_id String
