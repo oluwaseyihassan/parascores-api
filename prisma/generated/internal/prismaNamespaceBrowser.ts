@@ -295,6 +295,7 @@ export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof 
 export const SponsorScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  description: 'description',
   logoUrl: 'logoUrl',
   websiteUrl: 'websiteUrl',
   tournament_id: 'tournament_id',
