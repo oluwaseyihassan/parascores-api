@@ -86,7 +86,7 @@ export class TournamentsController {
     description: 'Filter by organization ID',
   })
   async findAllMine(
-    @Req() req,
+    @Req() req: any,
     @Query() paginationQuery: PaginationQueryDto,
     @Query('organizationId') organizationId?: string,
   ) {
@@ -102,7 +102,7 @@ export class TournamentsController {
   // create tournament
   @Post()
   @ApiOperation({ summary: 'Create a new tournament' })
-  async create(@Body() createTournamentDto: CreateTournamentDto, @Req() req) {
+  async create(@Body() createTournamentDto: CreateTournamentDto, @Req() req: any) {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
   }
 
@@ -111,7 +111,7 @@ export class TournamentsController {
   async startSeason(
     @Param('id') id: string,
     @Body() dto: StartSeasonDto,
-    @Req() req
+    @Req() req: any,
   ) {
     return this.tournamentsService.startSeason(id, req.user.sub, dto);
   }
@@ -121,8 +121,8 @@ export class TournamentsController {
   @ApiQuery({ name: 'page', required: false, type: Number })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   async getFollowedTournaments(
-    @Req() req,
-    @Query() paginationQuery: PaginationQueryDto
+    @Req() req: any,
+    @Query() paginationQuery: PaginationQueryDto,
   ) {
     const { page, limit } = paginationQuery;
     return this.tournamentsService.getFollowedTournaments(req.user.sub, page, limit);
@@ -130,13 +130,13 @@ export class TournamentsController {
 
   @Post(':id/follow')
   @ApiOperation({ summary: 'Follow a tournament' })
-  async followTournament(@Param('id') id: string, @Req() req) {
+  async followTournament(@Param('id') id: string, @Req() req: any) {
     return this.tournamentsService.followTournament(req.user.sub, id);
   }
 
   @Delete(':id/unfollow')
   @ApiOperation({ summary: 'Unfollow a tournament' })
-  async unfollowTournament(@Param('id') id: string, @Req() req) {
+  async unfollowTournament(@Param('id') id: string, @Req() req: any) {
     return this.tournamentsService.unfollowTournament(req.user.sub, id);
   }
 
@@ -174,7 +174,7 @@ export class TournamentsController {
   async update(
     @Param('id') id: string,
     @Body() updateTournamentDto: UpdateTournamentDto,
-    @Req() req,
+    @Req() req: any,
   ) {
     return this.tournamentsService.update(
       id,
@@ -185,7 +185,7 @@ export class TournamentsController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a tournament' })
-  async remove(@Param('id') id: string, @Req() req) {
+  async remove(@Param('id') id: string, @Req() req: any) {
     return this.tournamentsService.remove(id, req.user.sub);
   }
 }
