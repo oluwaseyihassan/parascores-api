@@ -8,6 +8,14 @@ export class AddSponsorDto {
   name: string;
 
   @ApiPropertyOptional({
+    description: 'Short description of the sponsor',
+    example: 'Official kit sponsor',
+  })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @ApiPropertyOptional({
     description: 'URL to the sponsor logo image',
     example: 'https://example.com/logo.png',
   })
@@ -29,6 +37,14 @@ export class UpdateSponsorDto {
   @IsString()
   @IsOptional()
   name?: string;
+
+  @ApiPropertyOptional({
+    description: 'Short description of the sponsor',
+    example: 'Official kit sponsor',
+  })
+  @IsString()
+  @IsOptional()
+  description?: string;
 
   @ApiPropertyOptional({
     description: 'URL to the sponsor logo image',
