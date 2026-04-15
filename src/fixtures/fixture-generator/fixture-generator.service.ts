@@ -547,6 +547,7 @@ export class FixtureGeneratorService {
     // Handle initial Byes (Auto-progress teams without opponents)
     for (const round of rounds) {
       if (!round.bracketFixtures) continue;
+      if (round.round !== 1) continue; // Only process initial byes in Round 1
       for (let i = 0; i < round.bracketFixtures.length; i++) {
         const fixture = round.bracketFixtures[i];
         const targetFixture = fixturesToInsert.find(f => f.id === fixture.id);
