@@ -22,9 +22,12 @@ import { MatchEventsModule } from './match-events/match-events.module';
 import { StandingsModule } from './standings/standings.module';
 import { VenuesModule } from './venues/venues.module';
 import { TeamInvitesModule } from './team-invites/team-invites.module';
-
+import { SentryModule } from '@sentry/nestjs/setup';
+import { SentryGlobalFilter } from '@sentry/nestjs/setup';
+import { APP_FILTER } from '@nestjs/core';
 @Module({
   imports: [
+    SentryModule.forRoot(),
     // Rate limiting - default: 100 requests per 60 seconds
     ThrottlerModule.forRoot([
       {
@@ -54,6 +57,10 @@ import { TeamInvitesModule } from './team-invites/team-invites.module';
   controllers: [AppController],
   providers: [
     AppService,
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
