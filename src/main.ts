@@ -40,29 +40,31 @@ async function bootstrap() {
   );
 
   // SWAGGER SETUP
-  const config = new DocumentBuilder()
-    .setTitle('ParaScores API')
-    .setDescription('ParaScores API documentation')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document, {
-    customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png',
-    customSiteTitle: 'ParaScores API',
-    customCss: `
-      .swagger-ui .topbar { background-color: #16a34a; }
-      .swagger-ui .topbar-wrapper a span { display: none; }
-      .swagger-ui .topbar-wrapper a::before {
-        content: '';
-        display: inline-block;
-        background-image: url('https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        width: 40px;
-        height: 40px;
-      }
-    `,
-  });
+  if (process.env.NODE_ENV !== 'production') {
+    const config = new DocumentBuilder()
+      .setTitle('ParaScores API')
+      .setDescription('ParaScores API documentation')
+      .setVersion('1.0')
+      .build();
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document, {
+      customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png',
+      customSiteTitle: 'ParaScores API',
+      customCss: `
+        .swagger-ui .topbar { background-color: #16a34a; }
+        .swagger-ui .topbar-wrapper a span { display: none; }
+        .swagger-ui .topbar-wrapper a::before {
+          content: '';
+          display: inline-block;
+          background-image: url('https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+          width: 40px;
+          height: 40px;
+        }
+      `,
+    });
+  }
 
   await app.listen(process.env.PORT ?? 3000);
 }
