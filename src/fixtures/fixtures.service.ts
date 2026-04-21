@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
+import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
@@ -18,6 +19,84 @@ export class FixturesService {
     private readonly db: DatabaseService,
     private readonly organizationsService: OrganizationsService,
   ) {}
+
+  // Create a single fixture manually
+  async create(dto: CreateFixtureDto, userId: string) {
+    // Validate tournament exists
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: dto.tournament_id }, { customName: dto.tournament_id }] },
+      include: {
+        organization: {
+          include: {
+            members: { where: { userId } },
+          },
+        },
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    // Authorization check
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
+      throw new ForbiddenException(
+        'You are not authorized to create fixtures for this tournament',
+      );
+    }
+
+    // Validate that home and away are different
+    if (dto.homeTeamId === dto.awayTeamId) {
+      throw new BadRequestException('Home and Away teams must be different');
+    }
+
+    // Auto-calculate match number if not provided
+    let matchNumber = dto.matchNumber;
+    if (!matchNumber) {
+      const lastFixture = await this.db.fixture.findFirst({
+        where: { tournament_id: tournament.id },
+        orderBy: { matchNumber: 'desc' },
+      });
+      matchNumber = (lastFixture?.matchNumber ?? 0) + 1;
+    }
+
+    const fixture = await this.db.fixture.create({
+      data: {
+        tournament_id: tournament.id,
+        homeTeamId: dto.homeTeamId,
+        awayTeamId: dto.awayTeamId,
+        round: dto.round,
+        roundName: dto.roundName || `Matchday ${dto.round}`,
+        matchNumber,
+        startTime: dto.startTime ? new Date(dto.startTime) : null,
+        venue: dto.venue || null,
+        groupId: dto.groupId || null,
+        stage: dto.stage || null,
+        status: 'SCHEDULED',
+      },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        group: true,
+      },
+    });
+
+    return ResponseUtil.success(fixture);
+  }
 
   // Get a single fixture by ID
   async findOne(fixtureId: string) {
@@ -728,6 +807,7 @@ export class FixturesService {
     // 1. Fetch all participants and completed fixtures
     const participants = await this.db.participant.findMany({
       where: { tournament_id: tournamentId },
+      include: { group: true },
     });
     const fixtures = await this.db.fixture.findMany({
       where: { tournament_id: tournamentId, status: 'COMPLETED' },
@@ -795,6 +875,7 @@ export class FixturesService {
 
     // 4. Update DB
     for (const [pId, s] of stats.entries()) {
+      const p = participants.find(part => part.id === pId);
       await this.db.standing.upsert({
         where: {
           tournament_id_participant_id: {
@@ -805,10 +886,12 @@ export class FixturesService {
         create: {
           tournament_id: tournamentId,
           participant_id: pId,
+          group: p?.group?.name || null,
           ...s,
           goalDiff: s.goalsFor - s.goalsAgainst,
         },
         update: {
+          group: p?.group?.name || null,
           ...s,
           goalDiff: s.goalsFor - s.goalsAgainst,
         },

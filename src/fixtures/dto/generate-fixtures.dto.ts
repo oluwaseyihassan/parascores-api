@@ -4,6 +4,7 @@ import {
   IsInt,
   IsOptional,
   Min,
+  IsObject,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -68,4 +69,23 @@ export class GenerateFixturesDto {
   @IsBoolean()
   @IsOptional()
   doubleRoundRobin?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Manual group assignments. Keys are group labels (e.g. "Group A"), values are arrays of participant IDs.',
+    example: { 'Group A': ['id1', 'id2'], 'Group B': ['id3', 'id4'] },
+  })
+  @IsObject()
+  @IsOptional()
+  groupAssignments?: Record<string, string[]>;
+
+  @ApiPropertyOptional({
+    description:
+      'If true, use the existing groups and their participant assignments already set in the database.',
+    example: true,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  useExistingGroups?: boolean;
 }

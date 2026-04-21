@@ -114,6 +114,7 @@ export class FixtureGeneratorService {
           options,
         );
         break;
+      case TournamentType.LEAGUE:
       case TournamentType.ROUND_ROBIN:
         rounds = await this.generateRoundRobinFixtures(
           tournament,
@@ -140,9 +141,15 @@ export class FixtureGeneratorService {
           numGroups = Math.ceil(participants.length / teamsPerGroup);
         }
 
+        // If manual group assignments are provided, derive numGroups from keys
+        if (dto.groupAssignments && Object.keys(dto.groupAssignments).length > 0) {
+          numGroups = Object.keys(dto.groupAssignments).length;
+        }
+
         const validNumGroups = numGroups ?? 4;
 
-        if (participants.length % validNumGroups !== 0) {
+        // Only enforce even distribution if NOT using manual assignments
+        if (!dto.groupAssignments && participants.length % validNumGroups !== 0) {
           throw new BadRequestException(
             `Cannot evenly distribute ${participants.length} teams into ${validNumGroups} groups. Please adjust the number of groups or teams.`,
           );
@@ -153,8 +160,10 @@ export class FixtureGeneratorService {
           participants,
           {
             ...options,
-            numberOfGroups: validNumGroups, // Default to 4 groups if neither specified
+            numberOfGroups: validNumGroups,
             doubleRoundRobin: dto.doubleRoundRobin,
+            groupAssignments: dto.groupAssignments,
+            useExistingGroups: dto.useExistingGroups,
           },
         );
         break;
@@ -663,46 +672,134 @@ export class FixtureGeneratorService {
       intervalMinutes: number;
       numberOfGroups: number;
       doubleRoundRobin?: boolean;
+      groupAssignments?: Record<string, string[]>;
+      useExistingGroups?: boolean;
     },
   ) {
     const numGroups = Math.max(1, options.numberOfGroups);
-    // const groups: any[] = [];
-    const groupNames = Array.from(
-      { length: numGroups },
-      (_, i) => `Group ${String.fromCharCode(65 + i)}`,
-    ); // Group A, Group B, etc.
+    let createdGroups: Group[] = [];
 
-    // create or find existing groups
-    // For now, let's just create new groups.
-    const createdGroups: Group[] = [];
-    for (const name of groupNames) {
-      const group = await this.db.group.create({
-        data: {
-          name,
-          tournament_id: tournament.id,
-        },
+    if (options.useExistingGroups) {
+      // Find existing groups for this tournament
+      const existingGroups = await this.db.group.findMany({
+        where: { tournament_id: tournament.id },
+        include: { participants: true },
+        orderBy: { created_at: 'asc' },
       });
-      createdGroups.push(group);
+
+      if (existingGroups.length === 0) {
+        throw new BadRequestException(
+          'No existing groups found for this tournament. Please create groups first or disable "Use Existing Groups".',
+        );
+      }
+      createdGroups = existingGroups;
+    } else {
+      const groupNames = Array.from(
+        { length: numGroups },
+        (_, i) => `Group ${String.fromCharCode(65 + i)}`,
+      ); // Group A, Group B, etc.
+
+      // create or find existing groups
+      for (const name of groupNames) {
+        const group = await this.db.group.create({
+          data: {
+            name,
+            tournament_id: tournament.id,
+          },
+        });
+        createdGroups.push(group);
+      }
     }
 
-    // Distribute participants into groups (simple round robin distribution)
-    // 1->A, 2->B, 3->C, 4->D, 5->A...
+    const actualNumGroups = createdGroups.length;
+
+    // Distribute participants into groups
     const distributedParticipants: Participant[][] = Array.from(
-      { length: numGroups },
+      { length: actualNumGroups },
       () => [],
     );
 
-    for (let i = 0; i < participants.length; i++) {
-      const groupIndex = i % numGroups;
-      const participant = participants[i];
+    if (options.useExistingGroups) {
+      // Use existing assignments
+      for (let g = 0; g < actualNumGroups; g++) {
+        const group = createdGroups[g];
+        // Participants already assigned to this group in the database
+        const existingParticipantIds = group['participants'].map((p) => p.id);
+        
+        for (const pid of existingParticipantIds) {
+          const participant = participants.find((p) => p.id === pid);
+          if (participant) {
+            distributedParticipants[g].push(participant);
+          }
+        }
+      }
 
-      // Update participant with group ID
-      await this.db.participant.update({
-        where: { id: participant.id },
-        data: { groupId: createdGroups[groupIndex].id },
-      });
+      // Handle unassigned participants by distributing them among existing groups
+      const assignedIds = new Set(distributedParticipants.flat().map((p) => p.id));
+      const unassigned = participants.filter((p) => !assignedIds.has(p.id));
+      
+      for (let i = 0; i < unassigned.length; i++) {
+        const groupIndex = i % actualNumGroups;
+        const participant = unassigned[i];
 
-      distributedParticipants[groupIndex].push(participant);
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdGroups[groupIndex].id },
+        });
+        distributedParticipants[groupIndex].push(participant);
+      }
+    } else if (
+      options.groupAssignments &&
+      Object.keys(options.groupAssignments).length > 0
+    ) {
+      // Manual group assignment mode
+      const groupNames = createdGroups.map(g => g.name);
+      for (let g = 0; g < actualNumGroups; g++) {
+        const groupLabel = groupNames[g];
+        const assignedIds = options.groupAssignments[groupLabel] || [];
+
+        for (const pid of assignedIds) {
+          const participant = participants.find((p) => p.id === pid);
+          if (participant) {
+            // Update participant with group ID
+            await this.db.participant.update({
+              where: { id: participant.id },
+              data: { groupId: createdGroups[g].id },
+            });
+            distributedParticipants[g].push(participant);
+          }
+        }
+      }
+
+      // Also assign any unassigned participants to groups using round-robin
+      const assignedIds = new Set(
+        Object.values(options.groupAssignments).flat(),
+      );
+      const unassigned = participants.filter((p) => !assignedIds.has(p.id));
+      for (let i = 0; i < unassigned.length; i++) {
+        const groupIndex = i % actualNumGroups;
+        const participant = unassigned[i];
+
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdGroups[groupIndex].id },
+        });
+        distributedParticipants[groupIndex].push(participant);
+      }
+    } else {
+      // Automatic round-robin distribution: 1->A, 2->B, 3->C, 4->D, 5->A...
+      for (let i = 0; i < participants.length; i++) {
+        const groupIndex = i % actualNumGroups;
+        const participant = participants[i];
+
+        // Update participant with group ID
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdGroups[groupIndex].id },
+        });
+
+        distributedParticipants[groupIndex].push(participant);
+      }
     }
 
     const allRounds: {
@@ -718,7 +815,7 @@ export class FixtureGeneratorService {
     // roundsMap[roundNum] = [fixtures from all groups]
     const roundsMap: Record<number, Fixture[]> = {};
 
-    for (let g = 0; g < numGroups; g++) {
+    for (let g = 0; g < actualNumGroups; g++) {
       const group = createdGroups[g];
       const groupParticipants = distributedParticipants[g];
 

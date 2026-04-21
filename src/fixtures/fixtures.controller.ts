@@ -14,6 +14,7 @@ import {
 import { FixturesService } from './fixtures.service';
 import { FixtureGeneratorService } from './fixture-generator/fixture-generator.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
+import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
@@ -55,6 +56,16 @@ export class FixturesController {
       round ? parseInt(round, 10) : undefined,
       stage,
     );
+  }
+
+  // Create a single fixture manually
+  @Post()
+  @ApiOperation({ summary: 'Create a single fixture manually' })
+  async create(
+    @Body() createFixtureDto: CreateFixtureDto,
+    @Req() req,
+  ) {
+    return this.fixturesService.create(createFixtureDto, req.user.sub);
   }
 
   // Generate fixtures for a tournament
