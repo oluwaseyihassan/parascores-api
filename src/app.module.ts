@@ -22,6 +22,7 @@ import { MatchEventsModule } from './match-events/match-events.module';
 import { StandingsModule } from './standings/standings.module';
 import { VenuesModule } from './venues/venues.module';
 import { TeamInvitesModule } from './team-invites/team-invites.module';
+import { GroupsModule } from './groups/groups.module';
 import { SentryModule } from '@sentry/nestjs/setup';
 import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
@@ -53,6 +54,7 @@ import { APP_FILTER } from '@nestjs/core';
     EmailModule,
     VenuesModule,
     TeamInvitesModule,
+    GroupsModule,
   ],
   controllers: [AppController],
   providers: [
