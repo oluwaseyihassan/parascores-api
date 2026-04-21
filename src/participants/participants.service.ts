@@ -269,15 +269,56 @@ export class ParticipantsService {
       data: {
         customName: dto.customName !== undefined ? dto.customName : undefined,
         logoUrl: dto.logoUrl !== undefined ? dto.logoUrl : undefined,
+        groupId: dto.groupId !== undefined ? dto.groupId : undefined,
       },
       include: {
         players: true,
         user: true,
         team: true,
+        group: true,
       }
     });
 
+    // Sync standing if groupId was changed
+    if (dto.groupId !== undefined) {
+      await this.syncParticipantStanding(participantId, dto.groupId);
+    }
+
     return ResponseUtil.success(updatedParticipant);
+  }
+
+  private async syncParticipantStanding(participantId: string, groupId: string | null) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: { group: true },
+    });
+
+    if (!participant) return;
+
+    await this.db.standing.upsert({
+      where: {
+        tournament_id_participant_id: {
+          tournament_id: participant.tournament_id,
+          participant_id: participant.id,
+        },
+      },
+      create: {
+        tournament_id: participant.tournament_id,
+        participant_id: participant.id,
+        group: participant.group?.name || null,
+        played: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        goalsFor: 0,
+        goalsAgainst: 0,
+        goalDiff: 0,
+        points: 0,
+      },
+      update: {
+        group: participant.group?.name || null,
+      },
+    });
   }
 
   // Update player status (approve/reject)
