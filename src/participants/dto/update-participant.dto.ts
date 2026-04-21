@@ -12,4 +12,9 @@ export class UpdateParticipantDto {
   @IsString()
   @IsOptional()
   logoUrl?: string;
+
+  @ApiProperty({ description: 'Group ID for assignment', required: false })
+  @IsString()
+  @IsOptional()
+  groupId?: string | null;
 }
