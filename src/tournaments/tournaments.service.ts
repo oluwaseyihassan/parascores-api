@@ -131,6 +131,7 @@ export class TournamentsService {
         thirdPlaceMatch: parentTournament.thirdPlaceMatch,
         numberOfGroups: parentTournament.numberOfGroups,
         teamsPerGroup: parentTournament.teamsPerGroup,
+        doubleRoundRobin: (parentTournament as any).doubleRoundRobin,
         isPinned: false
       },
     });
