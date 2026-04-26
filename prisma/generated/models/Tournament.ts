@@ -57,6 +57,7 @@ export type TournamentMinAggregateOutputType = {
   autoApprove: boolean | null
   isPinned: boolean | null
   twoLegsKnockout: boolean | null
+  doubleRoundRobin: boolean | null
   thirdPlaceMatch: boolean | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
@@ -88,6 +89,7 @@ export type TournamentMaxAggregateOutputType = {
   autoApprove: boolean | null
   isPinned: boolean | null
   twoLegsKnockout: boolean | null
+  doubleRoundRobin: boolean | null
   thirdPlaceMatch: boolean | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
@@ -120,6 +122,7 @@ export type TournamentCountAggregateOutputType = {
   autoApprove: number
   isPinned: number
   twoLegsKnockout: number
+  doubleRoundRobin: number
   thirdPlaceMatch: number
   numberOfGroups: number
   teamsPerGroup: number
@@ -165,6 +168,7 @@ export type TournamentMinAggregateInputType = {
   autoApprove?: true
   isPinned?: true
   twoLegsKnockout?: true
+  doubleRoundRobin?: true
   thirdPlaceMatch?: true
   numberOfGroups?: true
   teamsPerGroup?: true
@@ -196,6 +200,7 @@ export type TournamentMaxAggregateInputType = {
   autoApprove?: true
   isPinned?: true
   twoLegsKnockout?: true
+  doubleRoundRobin?: true
   thirdPlaceMatch?: true
   numberOfGroups?: true
   teamsPerGroup?: true
@@ -228,6 +233,7 @@ export type TournamentCountAggregateInputType = {
   autoApprove?: true
   isPinned?: true
   twoLegsKnockout?: true
+  doubleRoundRobin?: true
   thirdPlaceMatch?: true
   numberOfGroups?: true
   teamsPerGroup?: true
@@ -347,6 +353,7 @@ export type TournamentGroupByOutputType = {
   autoApprove: boolean
   isPinned: boolean
   twoLegsKnockout: boolean
+  doubleRoundRobin: boolean
   thirdPlaceMatch: boolean
   numberOfGroups: number | null
   teamsPerGroup: number | null
@@ -402,6 +409,7 @@ export type TournamentWhereInput = {
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
   numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
   teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
@@ -446,6 +454,7 @@ export type TournamentOrderByWithRelationInput = {
   autoApprove?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
   twoLegsKnockout?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
   thirdPlaceMatch?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -493,6 +502,7 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
   numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
   teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
@@ -537,6 +547,7 @@ export type TournamentOrderByWithAggregationInput = {
   autoApprove?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
   twoLegsKnockout?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
   thirdPlaceMatch?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -577,6 +588,7 @@ export type TournamentScalarWhereWithAggregatesInput = {
   autoApprove?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   isPinned?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   twoLegsKnockout?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  doubleRoundRobin?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   thirdPlaceMatch?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   numberOfGroups?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
   teamsPerGroup?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
@@ -609,6 +621,7 @@ export type TournamentCreateInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -651,6 +664,7 @@ export type TournamentUncheckedCreateInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -693,6 +707,7 @@ export type TournamentUpdateInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -735,6 +750,7 @@ export type TournamentUncheckedUpdateInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -777,6 +793,7 @@ export type TournamentCreateManyInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -809,6 +826,7 @@ export type TournamentUpdateManyMutationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -839,6 +857,7 @@ export type TournamentUncheckedUpdateManyInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -886,6 +905,7 @@ export type TournamentCountOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
   twoLegsKnockout?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
   thirdPlaceMatch?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
@@ -923,6 +943,7 @@ export type TournamentMaxOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
   twoLegsKnockout?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
   thirdPlaceMatch?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
@@ -954,6 +975,7 @@ export type TournamentMinOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   isPinned?: Prisma.SortOrder
   twoLegsKnockout?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
   thirdPlaceMatch?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
@@ -1243,6 +1265,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1284,6 +1307,7 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1354,6 +1378,7 @@ export type TournamentScalarWhereInput = {
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
   numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
   teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
@@ -1386,6 +1411,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1427,6 +1453,7 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1473,6 +1500,7 @@ export type TournamentCreateWithoutParentInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1514,6 +1542,7 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1576,6 +1605,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1617,6 +1647,7 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1674,6 +1705,7 @@ export type TournamentCreateWithoutFollowersInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1715,6 +1747,7 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1772,6 +1805,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1813,6 +1847,7 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1854,6 +1889,7 @@ export type TournamentCreateWithoutGroupsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1895,6 +1931,7 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -1952,6 +1989,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -1993,6 +2031,7 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2034,6 +2073,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2075,6 +2115,7 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2132,6 +2173,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2173,6 +2215,7 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2214,6 +2257,7 @@ export type TournamentCreateWithoutFixturesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2255,6 +2299,7 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2312,6 +2357,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2353,6 +2399,7 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2394,6 +2441,7 @@ export type TournamentCreateWithoutStandingsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2435,6 +2483,7 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2492,6 +2541,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2533,6 +2583,7 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2574,6 +2625,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2615,6 +2667,7 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2672,6 +2725,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2713,6 +2767,7 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2754,6 +2809,7 @@ export type TournamentCreateWithoutSocialsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2795,6 +2851,7 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2852,6 +2909,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2893,6 +2951,7 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -2934,6 +2993,7 @@ export type TournamentCreateWithoutVenuesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -2975,6 +3035,7 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -3032,6 +3093,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3073,6 +3135,7 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3114,6 +3177,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -3155,6 +3219,7 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -3212,6 +3277,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3253,6 +3319,7 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3294,6 +3361,7 @@ export type TournamentCreateManyOrganizationInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -3325,6 +3393,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3366,6 +3435,7 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3407,6 +3477,7 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3438,6 +3509,7 @@ export type TournamentCreateManyParentInput = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: number | null
   teamsPerGroup?: number | null
@@ -3469,6 +3541,7 @@ export type TournamentUpdateWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3510,6 +3583,7 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3551,6 +3625,7 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
   numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
@@ -3694,6 +3769,7 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: boolean
   teamsPerGroup?: boolean
@@ -3739,6 +3815,7 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: boolean
   teamsPerGroup?: boolean
@@ -3773,6 +3850,7 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: boolean
   teamsPerGroup?: boolean
@@ -3807,6 +3885,7 @@ export type TournamentSelectScalar = {
   autoApprove?: boolean
   isPinned?: boolean
   twoLegsKnockout?: boolean
+  doubleRoundRobin?: boolean
   thirdPlaceMatch?: boolean
   numberOfGroups?: boolean
   teamsPerGroup?: boolean
@@ -3819,7 +3898,7 @@ export type TournamentSelectScalar = {
   parent_id?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "customName" | "description" | "logoUrl" | "bannerUrl" | "location" | "timezone" | "visibility" | "sport" | "type" | "participantType" | "scoringRules" | "maxParticipants" | "registrationOpen" | "registrationClose" | "autoApprove" | "isPinned" | "twoLegsKnockout" | "thirdPlaceMatch" | "numberOfGroups" | "teamsPerGroup" | "start_date" | "end_date" | "created_at" | "updated_at" | "organization_id" | "seasonName" | "parent_id", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "customName" | "description" | "logoUrl" | "bannerUrl" | "location" | "timezone" | "visibility" | "sport" | "type" | "participantType" | "scoringRules" | "maxParticipants" | "registrationOpen" | "registrationClose" | "autoApprove" | "isPinned" | "twoLegsKnockout" | "doubleRoundRobin" | "thirdPlaceMatch" | "numberOfGroups" | "teamsPerGroup" | "start_date" | "end_date" | "created_at" | "updated_at" | "organization_id" | "seasonName" | "parent_id", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
@@ -3880,6 +3959,7 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     autoApprove: boolean
     isPinned: boolean
     twoLegsKnockout: boolean
+    doubleRoundRobin: boolean
     thirdPlaceMatch: boolean
     numberOfGroups: number | null
     teamsPerGroup: number | null
@@ -4344,6 +4424,7 @@ export interface TournamentFieldRefs {
   readonly autoApprove: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly isPinned: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly twoLegsKnockout: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly doubleRoundRobin: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly thirdPlaceMatch: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly numberOfGroups: Prisma.FieldRef<"Tournament", 'Int'>
   readonly teamsPerGroup: Prisma.FieldRef<"Tournament", 'Int'>

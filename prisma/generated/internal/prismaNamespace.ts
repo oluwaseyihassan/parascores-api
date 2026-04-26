@@ -1707,6 +1707,7 @@ export const TournamentScalarFieldEnum = {
   autoApprove: 'autoApprove',
   isPinned: 'isPinned',
   twoLegsKnockout: 'twoLegsKnockout',
+  doubleRoundRobin: 'doubleRoundRobin',
   thirdPlaceMatch: 'thirdPlaceMatch',
   numberOfGroups: 'numberOfGroups',
   teamsPerGroup: 'teamsPerGroup',
