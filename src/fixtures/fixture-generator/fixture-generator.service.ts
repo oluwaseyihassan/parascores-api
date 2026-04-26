@@ -43,6 +43,7 @@ export class FixtureGeneratorService {
           },
         },
         fixtures: true,
+        groups: true,
       },
     });
 
@@ -69,13 +70,18 @@ export class FixtureGeneratorService {
     }
 
     // Clear existing fixtures if requested
-    if (dto.clearExisting && tournament.fixtures.length > 0) {
+    if (dto.clearExisting && (tournament.fixtures.length > 0 || tournament.groups.length > 0)) {
       await this.db.fixture.deleteMany({
         where: { tournament_id: tournament.id },
       });
       await this.db.standing.deleteMany({
         where: { tournament_id: tournament.id },
       });
+      if (!dto.useExistingGroups) {
+        await this.db.group.deleteMany({
+          where: { tournament_id: tournament.id },
+        });
+      }
     }
 
     let participants = [...tournament.participants];
@@ -108,9 +114,20 @@ export class FixtureGeneratorService {
 
     switch (tournament.type) {
       case TournamentType.KNOCKOUT:
+        // Check for manual knockout assignments
+        let seededKnockoutParticipants: (Participant | null)[] | null = null;
+        if (dto.groupAssignments?.knockout) {
+          const orderedIds = dto.groupAssignments.knockout;
+          // Map provided IDs back to participant objects, preserving nulls/empty strings as Byes
+          seededKnockoutParticipants = orderedIds.map(id => {
+            if (!id) return null;
+            return participants.find(p => p.id === id) || null;
+          });
+        }
+
         rounds = await this.generateKnockoutFixtures(
           tournament,
-          participants,
+          seededKnockoutParticipants || participants,
           options,
         );
         break;
@@ -120,8 +137,7 @@ export class FixtureGeneratorService {
           tournament,
           participants,
           {
-            ...options,
-            doubleRoundRobin: dto.doubleRoundRobin,
+            ...options
           },
         );
         break;
@@ -148,8 +164,12 @@ export class FixtureGeneratorService {
 
         const validNumGroups = numGroups ?? 4;
 
-        // Only enforce even distribution if NOT using manual assignments
-        if (!dto.groupAssignments && participants.length % validNumGroups !== 0) {
+        // Only enforce even distribution if NOT using manual assignments or existing groups
+        if (
+          !dto.groupAssignments &&
+          !dto.useExistingGroups &&
+          participants.length % validNumGroups !== 0
+        ) {
           throw new BadRequestException(
             `Cannot evenly distribute ${participants.length} teams into ${validNumGroups} groups. Please adjust the number of groups or teams.`,
           );
@@ -161,7 +181,6 @@ export class FixtureGeneratorService {
           {
             ...options,
             numberOfGroups: validNumGroups,
-            doubleRoundRobin: dto.doubleRoundRobin,
             groupAssignments: dto.groupAssignments,
             useExistingGroups: dto.useExistingGroups,
           },
@@ -180,9 +199,52 @@ export class FixtureGeneratorService {
 
     const totalFixtures = rounds.reduce((sum, r) => sum + r.fixtures.length, 0);
 
+    // Re-fetch everything with full relations to ensure frontend get all info (teams, groups, etc)
+    const freshFixturesResponse = await this.db.fixture.findMany({
+      where: { tournament_id: tournament.id },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        group: true,
+      },
+      orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
+    });
+
+    // Rebuild rounds structure with fresh data
+    const freshRounds: { round: number; roundName: string; fixtures: any[] }[] = [];
+    const groupedByRound: Record<number, any[]> = {};
+    const roundNamesMap: Record<number, string> = {};
+
+    freshFixturesResponse.forEach((f: any) => {
+      if (!groupedByRound[f.round]) groupedByRound[f.round] = [];
+      groupedByRound[f.round].push(f);
+      if (!roundNamesMap[f.round]) {
+        roundNamesMap[f.round] = f.roundName || `Round ${f.round}`;
+      }
+    });
+
+    Object.keys(groupedByRound).sort((a, b) => Number(a) - Number(b)).forEach(rNum => {
+      const n = Number(rNum);
+      freshRounds.push({
+        round: n,
+        roundName: roundNamesMap[n],
+        fixtures: groupedByRound[n]
+      });
+    });
+
     return ResponseUtil.success({
       message: `Generated ${totalFixtures} fixtures for ${tournament.type} tournament`,
-      rounds,
+      rounds: freshRounds,
     });
   }
 
@@ -248,8 +310,6 @@ export class FixtureGeneratorService {
 
     // 1. Verify Group Stage Completion
     // For HYBRID, we assume the first set of fixtures are group stage.
-    // If we have "rounds", we could check round numbers, but easiest is to check if there are ANY uncompleted fixtures
-    // that belong to a group.
     const groupFixtures = tournament.fixtures.filter(
       (f) => f.stage === FixtureStage.GROUP_STAGE,
     );
@@ -260,18 +320,27 @@ export class FixtureGeneratorService {
       );
     }
 
+    // Calculate expected minimum matches (Single Round Robin)
+    let expectedMinMatches = 0;
+    for (const group of tournament.groups) {
+      const n = group.participants.length;
+      if (n >= 2) {
+        expectedMinMatches += (n * (n - 1)) / 2;
+      }
+    }
+
+    if (groupFixtures.length < expectedMinMatches) {
+      throw new BadRequestException(
+        `Group stage is incomplete. Expected at least ${expectedMinMatches} matches (Single Round Robin), but found ${groupFixtures.length}.`,
+      );
+    }
+
     const uncompleted = groupFixtures.filter((f) => f.status !== 'COMPLETED');
     if (uncompleted.length > 0) {
       throw new BadRequestException(
         `Group stage not finished. ${uncompleted.length} matches remaining.`,
       );
       // For testing purposes or manual override, maybe we allow it?
-      // User asked for "manual progression", usually implies "I say when".
-      // But standard logic implies matches must be done.
-      // Let's enforce it for now unless we want a "force" flag.
-      // Actually, if manual qualified IDs are provided, maybe we ignore completion?
-      // Let's stick to enforce completion to avoid weird states, unless user explicitly asked to skip checks.
-      // "I want option for the progression logic to be manual" -> implies the *trigger* is manual, and *who* qualifies can be manual.
     }
 
     let qualifiedParticipants: Participant[] = [];
@@ -341,13 +410,17 @@ export class FixtureGeneratorService {
       );
     }
 
-    // Check if knockout fixtures already exist?
-    // Maybe verify round > group rounds?
-    // For now, let's just generate.
+    let knockoutParticipants: (Participant | null)[] = qualifiedParticipants;
+    if (dto.manualSeeding && dto.manualSeeding.length > 0) {
+      knockoutParticipants = dto.manualSeeding.map(id => {
+        if (!id) return null;
+        return tournament.participants.find(p => p.id === id) || null;
+      });
+    }
 
-    const knockoutRounds = await this.generateKnockoutFixtures(
+    await this.generateKnockoutFixtures(
       tournament,
-      qualifiedParticipants,
+      knockoutParticipants,
       {
         startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
         intervalMinutes: 120, // Standard knockout time
@@ -355,39 +428,85 @@ export class FixtureGeneratorService {
       },
     );
 
-    const totalNew = knockoutRounds.reduce(
-      (sum, r) => sum + r.fixtures.length,
-      0,
-    );
+    // Re-fetch everything with full relations to ensure frontend get all info (teams, groups, etc)
+    const freshFixturesResponse = await this.db.fixture.findMany({
+      where: { tournament_id: tournament.id },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        group: true,
+      },
+      orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
+    });
+
+    // Rebuild rounds structure with fresh data
+    const freshRounds: { round: number; roundName: string; fixtures: any[] }[] = [];
+    const groupedByRound: Record<number, any[]> = {};
+    const roundNamesMap: Record<number, string> = {};
+
+    freshFixturesResponse.forEach((f: any) => {
+      if (!groupedByRound[f.round]) groupedByRound[f.round] = [];
+      groupedByRound[f.round].push(f);
+      if (!roundNamesMap[f.round]) {
+        roundNamesMap[f.round] = f.roundName || `Round ${f.round}`;
+      }
+    });
+
+    Object.keys(groupedByRound).sort((a, b) => Number(a) - Number(b)).forEach(rNum => {
+      const n = Number(rNum);
+      freshRounds.push({
+        round: n,
+        roundName: roundNamesMap[n],
+        fixtures: groupedByRound[n]
+      });
+    });
 
     return ResponseUtil.success({
-      message: `Advanced to knockout stage. Generated ${totalNew} fixtures with ${qualifiedParticipants.length} qualifiers.`,
+      message: `Advanced to knockout stage. Generated ${freshFixturesResponse.length} fixtures total with ${qualifiedParticipants.length} qualifiers.`,
       qualifiers: qualifiedParticipants.map((p: any) => ({
         id: p.id,
         name: p.customName || p.user?.name || p.team?.name,
       })),
-      rounds: knockoutRounds,
+      rounds: freshRounds,
     });
   }
 
   // Knockout bracket generation - returns fixtures grouped by rounds
   private async generateKnockoutFixtures(
     tournament: Tournament,
-    participants: Participant[],
+    participants: (Participant | null)[],
     options: { startDate: Date; intervalMinutes: number; stage?: FixtureStage },
   ) {
     const rounds: { round: number; roundName: string; fixtures: Fixture[]; bracketFixtures?: Fixture[] }[] = [];
+    
+    // Calculate number of rounds needed based on actual participant count or provided seeds
     const n = participants.length;
-
-    // Calculate number of rounds needed
     const totalRounds = Math.ceil(Math.log2(n));
     const perfectBracketSize = Math.pow(2, totalRounds);
 
-    // Reorder for proper bracket seeding (1v8, 4v5, 2v7, 3v6 pattern)
-    const seededParticipants = this.seedBracket(
-      participants,
-      perfectBracketSize,
-    );
+    // If participants are already seeded (fixed length power of 2), use them directly
+    // Otherwise, apply standard bracket seeding (1v8, 4v5 pattern)
+    let seededParticipants: (Participant | null)[] = [];
+    if (participants.length === perfectBracketSize) {
+      seededParticipants = participants;
+    } else {
+      // Need to filter out any nulls before seeding to avoid duplicates
+      const cleanParticipants = participants.filter(p => !!p) as Participant[];
+      seededParticipants = this.seedBracket(
+        cleanParticipants,
+        perfectBracketSize,
+      );
+    }
 
     let currentTime = new Date(options.startDate);
 
@@ -671,7 +790,6 @@ export class FixtureGeneratorService {
       startDate: Date;
       intervalMinutes: number;
       numberOfGroups: number;
-      doubleRoundRobin?: boolean;
       groupAssignments?: Record<string, string[]>;
       useExistingGroups?: boolean;
     },
@@ -886,7 +1004,7 @@ export class FixtureGeneratorService {
     }
 
     // Handle Double Round Robin (Second Leg)
-    if (options.doubleRoundRobin) {
+    if ((tournament as any).doubleRoundRobin) {
       const numRoundsSingle = sortedRounds.length;
 
       for (const roundNum of sortedRounds) {
@@ -940,7 +1058,6 @@ export class FixtureGeneratorService {
     options: {
       startDate: Date;
       intervalMinutes: number;
-      doubleRoundRobin?: boolean;
     },
   ) {
     const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] = [];
@@ -1002,7 +1119,7 @@ export class FixtureGeneratorService {
     }
 
     // Handle Double Round Robin
-    if (options.doubleRoundRobin) {
+    if ((tournament as any).doubleRoundRobin) {
       const secondLegRounds: {
         round: number;
         roundName: string;
