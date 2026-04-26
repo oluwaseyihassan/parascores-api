@@ -153,9 +153,10 @@ model Tournament {
   autoApprove       Boolean   @default(false)
   isPinned          Boolean   @default(false)
 
-  // Advanced Knockout Options
+  // Advanced Options
   twoLegsKnockout Boolean @default(false)
-  thirdPlaceMatch Boolean @default(false)
+  doubleRoundRobin Boolean @default(false)
+  thirdPlaceMatch  Boolean @default(false)
 
   // Venues
   venues Venue[]
