@@ -155,16 +155,26 @@ export class FixturesController {
     return this.fixturesService.update(id, req.user.sub, dto);
   }
 
+  // Delete a single fixture
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete a single fixture' })
+  async delete(@Param('id') id: string, @Req() req) {
+    return this.fixturesService.delete(id, req.user.sub);
+  }
+
   // Delete all fixtures for a tournament
   @Delete('tournaments/:tournamentId')
   @ApiOperation({ summary: 'Delete all fixtures for a specific tournament' })
+  @ApiQuery({ name: 'stage', required: false, type: String, description: 'Filter by stage (GROUP_STAGE or KNOCKOUT)' })
   async deleteTournamentFixtures(
     @Param('tournamentId') tournamentId: string,
     @Req() req,
+    @Query('stage') stage?: string,
   ) {
     return this.fixturesService.deleteAllTournamentFixtures(
       tournamentId,
       req.user.sub,
+      stage,
     );
   }
 }
