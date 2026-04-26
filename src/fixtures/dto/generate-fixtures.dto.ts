@@ -62,13 +62,6 @@ export class GenerateFixturesDto {
   @IsOptional()
   teamsPerGroup?: number;
 
-  @ApiPropertyOptional({
-    description: 'If true, play double round robin (home and away)',
-    example: true,
-  })
-  @IsBoolean()
-  @IsOptional()
-  doubleRoundRobin?: boolean;
 
   @ApiPropertyOptional({
     description:
