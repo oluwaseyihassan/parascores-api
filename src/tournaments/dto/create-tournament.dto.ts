@@ -193,6 +193,15 @@ export class CreateTournamentDto {
   thirdPlaceMatch?: boolean;
 
   @ApiPropertyOptional({
+    description: 'If true, teams play each other twice in round-robin or group stages',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  doubleRoundRobin?: boolean;
+
+  @ApiPropertyOptional({
     description: 'URL for the tournament logo',
     example: 'https://example.com/logo.png',
   })
