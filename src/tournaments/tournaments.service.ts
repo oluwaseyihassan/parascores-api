@@ -55,12 +55,21 @@ export class TournamentsService {
     if (!tournament.organization_id)
       throw new ForbiddenException('Tournament has no organization');
 
-    // Check if user has OWNER or ADMIN role in the organization
+    // Check if user has OWNER or ADMIN role in the current organization
     await this.organizationsService.validateMemberRole(
       tournament.organization_id,
       userId,
       ['OWNER', 'ADMIN'],
     );
+
+    // Check if user has OWNER or ADMIN role in the target organization
+    if (dto.organization_id && dto.organization_id !== tournament.organization_id) {
+      await this.organizationsService.validateMemberRole(
+        dto.organization_id,
+        userId,
+        ['OWNER', 'ADMIN'],
+      );
+    }
 
     const { start_date, end_date, ...rest } = dto;
 
