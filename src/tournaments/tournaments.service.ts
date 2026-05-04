@@ -148,7 +148,7 @@ export class TournamentsService {
     return ResponseUtil.success(season);
   }
 
-  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string, search?: string, type?: string) {
+  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string, search?: string, type?: string, status?: string) {
     const skip = (page - 1) * limit;
 
     const whereClause: any = {
@@ -168,6 +168,19 @@ export class TournamentsService {
         { location: { contains: search, mode: 'insensitive' } },
       ];
     }
+    if (status) {
+      const now = new Date();
+      if (status === 'ongoing') {
+        whereClause.start_date = { lte: now };
+        whereClause.end_date = { gte: now };
+      } else if (status === 'past') {
+        whereClause.end_date = { lt: now };
+      } else if (status === 'upcoming') {
+        whereClause.start_date = { gt: now };
+      }
+    }
+
+    console.log('[DEBUG findAllPublic] status:', status, 'whereClause:', JSON.stringify(whereClause));
 
     const [tournaments, total] = await Promise.all([
       this.db.tournament.findMany({
