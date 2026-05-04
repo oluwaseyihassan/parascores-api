@@ -55,14 +55,21 @@ export class TournamentsController {
     type: String,
     description: 'Filter by tournament type',
   })
+  @ApiQuery({
+    name: 'status',
+    required: false,
+    type: String,
+    description: 'Filter by status (ongoing, past, upcoming)',
+  })
   async findAll(
     @Query() paginationQuery: PaginationQueryDto,
     @Query('organizationSlug') organizationSlug?: string,
     @Query('search') search?: string,
     @Query('type') type?: string,
+    @Query('status') status?: string,
   ) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.findAllPublic(page, limit, organizationSlug, search, type);
+    return this.tournamentsService.findAllPublic(page, limit, organizationSlug, search, type, status);
   }
 
   @Get('mine')
