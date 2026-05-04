@@ -12,6 +12,11 @@ export class CreateOrganizationDto {
   @IsUrl()
   logoUrl?: string;
 
+  @ApiPropertyOptional({ description: 'Optional bio or description for the organization' })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
   @ApiPropertyOptional({ description: 'Optional branding color in Hex' })
   @IsOptional()
   @IsHexColor()

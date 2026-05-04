@@ -7,6 +7,11 @@ export class UpdateOrganizationDto {
   @IsOptional()
   name?: string;
 
+  @ApiProperty({ description: 'The bio or description of the organization', required: false })
+  @IsString()
+  @IsOptional()
+  description?: string;
+
   @ApiProperty({ description: 'The logo URL of the organization', required: false })
   @IsUrl()
   @IsOptional()
