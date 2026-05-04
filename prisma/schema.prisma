@@ -46,6 +46,7 @@ model Organization {
   id         String   @id @default(cuid())
   name       String
   slug       String   @unique
+  description String?
   logoUrl    String?
   color      String?
   phone      String?
@@ -55,6 +56,7 @@ model Organization {
 
   members     OrganizationMember[]
   tournaments Tournament[]
+  socials     Social[]
 }
 
 model OrganizationMember {
@@ -406,8 +408,11 @@ model Social {
   url      String
   handle   String? // e.g., "@tournamentname"
 
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
+  tournament    Tournament? @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String?
+
+  organization    Organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  organization_id String?
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
