@@ -1666,6 +1666,7 @@ export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  description: 'description',
   logoUrl: 'logoUrl',
   color: 'color',
   phone: 'phone',
@@ -1870,6 +1871,7 @@ export const SocialScalarFieldEnum = {
   url: 'url',
   handle: 'handle',
   tournament_id: 'tournament_id',
+  organization_id: 'organization_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
 } as const

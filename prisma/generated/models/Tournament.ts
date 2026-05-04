@@ -1209,10 +1209,12 @@ export type TournamentCreateNestedOneWithoutSocialsInput = {
   connect?: Prisma.TournamentWhereUniqueInput
 }
 
-export type TournamentUpdateOneRequiredWithoutSocialsNestedInput = {
+export type TournamentUpdateOneWithoutSocialsNestedInput = {
   create?: Prisma.XOR<Prisma.TournamentCreateWithoutSocialsInput, Prisma.TournamentUncheckedCreateWithoutSocialsInput>
   connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutSocialsInput
   upsert?: Prisma.TournamentUpsertWithoutSocialsInput
+  disconnect?: Prisma.TournamentWhereInput | boolean
+  delete?: Prisma.TournamentWhereInput | boolean
   connect?: Prisma.TournamentWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutSocialsInput, Prisma.TournamentUpdateWithoutSocialsInput>, Prisma.TournamentUncheckedUpdateWithoutSocialsInput>
 }
