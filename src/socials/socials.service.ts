@@ -47,6 +47,46 @@ export class SocialsService {
     return ResponseUtil.success(socials);
   }
 
+  // Add a social link to an organization
+  async addOrganizationSocial(organizationId: string, dto: AddSocialDto) {
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+    });
+
+    if (!organization) {
+      throw new NotFoundException('Organization not found');
+    }
+
+    const social = await this.db.social.create({
+      data: {
+        platform: dto.platform,
+        url: dto.url,
+        handle: dto.handle,
+        organization_id: organization.id,
+      },
+    });
+
+    return ResponseUtil.success(social);
+  }
+
+  // Get all socials for an organization
+  async getOrganizationSocials(organizationId: string) {
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+    });
+
+    if (!organization) {
+      throw new NotFoundException('Organization not found');
+    }
+
+    const socials = await this.db.social.findMany({
+      where: { organization_id: organization.id },
+      orderBy: { created_at: 'asc' },
+    });
+
+    return ResponseUtil.success(socials);
+  }
+
   // Update a social
   async updateSocial(socialId: string, dto: UpdateSocialDto) {
     const social = await this.db.social.findUnique({
