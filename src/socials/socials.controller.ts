@@ -33,6 +33,22 @@ export class SocialsController {
     return this.socialsService.getSocials(tournamentId);
   }
 
+  @Post('/organizations/:organizationId')
+  @ApiOperation({ summary: 'Add a social link to an organization' })
+  async addOrganizationSocial(
+    @Param('organizationId') organizationId: string,
+    @Body() dto: AddSocialDto,
+  ) {
+    return this.socialsService.addOrganizationSocial(organizationId, dto);
+  }
+
+  @Public()
+  @Get('/organizations/:organizationId')
+  @ApiOperation({ summary: 'Get social links of an organization' })
+  async getOrganizationSocials(@Param('organizationId') organizationId: string) {
+    return this.socialsService.getOrganizationSocials(organizationId);
+  }
+
   @Patch(':socialId')
   @ApiOperation({ summary: 'Update a social link' })
   async updateSocial(
