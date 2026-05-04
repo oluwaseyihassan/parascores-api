@@ -307,10 +307,20 @@ export class OrganizationsService {
         id: true,
         name: true,
         slug: true,
+        description: true,
         logoUrl: true,
         color: true,
         isVerified: true,
         created_at: true,
+        socials: {
+          select: {
+            id: true,
+            platform: true,
+            url: true,
+            handle: true,
+          },
+          orderBy: { created_at: 'asc' },
+        },
       },
     });
 
@@ -417,7 +427,8 @@ export class OrganizationsService {
         await tx.tournament.deleteMany({ where: { organization_id: orgId } });
       }
 
-      // Delete org members and the org itself
+      // Delete org-level socials and members, then the org itself
+      await tx.social.deleteMany({ where: { organization_id: orgId } });
       await tx.organizationMember.deleteMany({ where: { organizationId: orgId } });
       await tx.organization.delete({ where: { id: orgId } });
     });
