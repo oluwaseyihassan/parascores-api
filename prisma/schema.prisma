@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "./generated"
@@ -14,62 +8,315 @@ datasource db {
 }
 
 model User {
-  id      String  @id @default(cuid())
-  email   String  @unique
-  name    String
-  picture String?
-
-  password String? // hashed
-  role     Role    @default(USER)
-  metadata Json?   @default("{}")
-
-  // Email Verification
-  isEmailVerified         Boolean   @default(false)
-  emailVerificationToken  String?
-  emailVerificationExpiry DateTime?
-
-  // Password Reset
-  passwordResetToken  String?
-  passwordResetExpiry DateTime?
-
-  organizations   OrganizationMember[]
-  playing_in      Participant[]
-  player_profiles Player[]             @relation("UserPlayerProfiles")
-  created_invites TeamInvite[]         @relation("InviteCreator")
-  created_tournament_invites TournamentInvite[] @relation("TournamentInviteCreator")
-  followed_tournaments TournamentFollower[]
-  teams           Team[]               @relation("UserTeams")
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id                         String               @id @default(cuid())
+  email                      String               @unique
+  name                       String
+  password                   String?
+  role                       Role                 @default(USER)
+  metadata                   Json?                @default("{}")
+  created_at                 DateTime             @default(now())
+  updated_at                 DateTime             @updatedAt
+  picture                    String?
+  emailVerificationExpiry    DateTime?
+  emailVerificationToken     String?
+  isEmailVerified            Boolean              @default(false)
+  passwordResetExpiry        DateTime?
+  passwordResetToken         String?
+  organizations              OrganizationMember[]
+  playing_in                 Participant[]
+  player_profiles            Player[]             @relation("UserPlayerProfiles")
+  teams                      Team[]               @relation("UserTeams")
+  created_invites            TeamInvite[]         @relation("InviteCreator")
+  followed_tournaments       TournamentFollower[]
+  created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
 }
 
 model Organization {
-  id         String   @id @default(cuid())
-  name       String
-  slug       String   @unique
+  id          String               @id @default(cuid())
+  name        String
+  slug        String               @unique
+  logoUrl     String?
+  color       String?
+  phone       String?
+  isVerified  Boolean              @default(false)
+  created_at  DateTime             @default(now())
+  updated_at  DateTime             @updatedAt
   description String?
-  logoUrl    String?
-  color      String?
-  phone      String?
-  isVerified Boolean  @default(false)
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
   members     OrganizationMember[]
-  tournaments Tournament[]
   socials     Social[]
+  tournaments Tournament[]
 }
 
 model OrganizationMember {
   id             String           @id @default(cuid())
-  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   organizationId String
-  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId         String
   role           OrganizationRole @default(MEMBER)
+  organization   Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([organizationId, userId])
+}
+
+model Tournament {
+  id                 String               @id @default(cuid())
+  name               String
+  description        String?
+  start_date         DateTime
+  end_date           DateTime
+  created_at         DateTime             @default(now())
+  updated_at         DateTime             @updatedAt
+  autoApprove        Boolean              @default(false)
+  bannerUrl          String?
+  location           String?
+  logoUrl            String?
+  maxParticipants    Int?
+  participantType    ParticipantType
+  registrationClose  DateTime?
+  registrationOpen   DateTime?
+  scoringRules       Json
+  sport              String
+  timezone           String               @default("UTC")
+  type               TournamentType
+  visibility         Visibility           @default(PUBLIC)
+  numberOfGroups     Int?
+  teamsPerGroup      Int?
+  customName         String?              @unique
+  thirdPlaceMatch    Boolean              @default(false)
+  twoLegsKnockout    Boolean              @default(false)
+  isPinned           Boolean              @default(false)
+  organization_id    String?
+  parent_id          String?
+  seasonName         String?
+  doubleRoundRobin   Boolean              @default(false)
+  fixtures           Fixture[]
+  groups             Group[]
+  participants       Participant[]
+  socials            Social[]
+  sponsors           Sponsor[]
+  standings          Standing[]
+  team_invites       TeamInvite[]
+  organization       Organization?        @relation(fields: [organization_id], references: [id])
+  parent             Tournament?          @relation("TournamentSeasons", fields: [parent_id], references: [id])
+  seasons            Tournament[]         @relation("TournamentSeasons")
+  followers          TournamentFollower[]
+  tournament_invites TournamentInvite[]
+  venues             Venue[]
+}
+
+model TournamentFollower {
+  userId       String
+  tournamentId String
+  createdAt    DateTime   @default(now())
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, tournamentId])
+}
+
+model Group {
+  id            String        @id @default(cuid())
+  name          String
+  tournament_id String
+  created_at    DateTime      @default(now())
+  updated_at    DateTime      @updatedAt
+  fixtures      Fixture[]
+  tournament    Tournament    @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  participants  Participant[]
+}
+
+model Participant {
+  id                 String            @id @default(cuid())
+  tournament_id      String
+  user_id            String?
+  team_id            String?
+  customName         String?
+  seed               Int?
+  status             ParticipantStatus @default(PENDING)
+  created_at         DateTime          @default(now())
+  updated_at         DateTime          @updatedAt
+  groupId            String?
+  logoUrl            String?
+  linkCode           String?           @unique
+  linkCodeExpires    DateTime?
+  away_fixtures      Fixture[]         @relation("AwayTeam")
+  home_fixtures      Fixture[]         @relation("HomeTeam")
+  matchEvents        MatchEvent[]
+  relatedMatchEvents MatchEvent[]      @relation("RelatedParticipant")
+  group              Group?            @relation(fields: [groupId], references: [id])
+  team               Team?             @relation(fields: [team_id], references: [id])
+  tournament         Tournament        @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  user               User?             @relation(fields: [user_id], references: [id])
+  players            Player[]
+  standings          Standing[]
+  invites            TeamInvite[]
+}
+
+model Fixture {
+  id                  String        @id @default(cuid())
+  tournament_id       String
+  round               Int
+  matchNumber         Int
+  startTime           DateTime?
+  homeTeamId          String?
+  awayTeamId          String?
+  homeScore           Int?
+  awayScore           Int?
+  status              FixtureStatus @default(SCHEDULED)
+  created_at          DateTime      @default(now())
+  updated_at          DateTime      @updatedAt
+  awayPenaltyScore    Int?
+  awayTeamPlaceholder String?
+  groupId             String?
+  homePenaltyScore    Int?
+  homeTeamPlaceholder String?
+  nextFixtureId       String?
+  roundName           String?
+  stage               FixtureStage?
+  venue               String?
+  awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  group               Group?        @relation(fields: [groupId], references: [id])
+  homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  nextFixture         Fixture?      @relation("BracketProgression", fields: [nextFixtureId], references: [id])
+  sourceFixtures      Fixture[]     @relation("BracketProgression")
+  tournament          Tournament    @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  matchEvents         MatchEvent[]
+}
+
+model Team {
+  id           String        @id @default(cuid())
+  name         String
+  created_at   DateTime      @default(now())
+  logoUrl      String?
+  ownerId      String?
+  updated_at   DateTime      @default(now()) @updatedAt
+  participants Participant[]
+  owner        User?         @relation("UserTeams", fields: [ownerId], references: [id])
+}
+
+model MatchEvent {
+  id                    String         @id @default(cuid())
+  fixture_id            String
+  participant_id        String?
+  relatedParticipant_id String?
+  type                  MatchEventType
+  minute                Int?
+  description           String?
+  metadata              Json?
+  created_at            DateTime       @default(now())
+  updated_at            DateTime       @updatedAt
+  playerId              String?
+  relatedPlayerId       String?
+  fixture               Fixture        @relation(fields: [fixture_id], references: [id], onDelete: Cascade)
+  participant           Participant?   @relation(fields: [participant_id], references: [id])
+  player                Player?        @relation(fields: [playerId], references: [id])
+  relatedParticipant    Participant?   @relation("RelatedParticipant", fields: [relatedParticipant_id], references: [id])
+  relatedPlayer         Player?        @relation("RelatedPlayer", fields: [relatedPlayerId], references: [id])
+}
+
+model Standing {
+  id             String      @id @default(cuid())
+  tournament_id  String
+  participant_id String
+  played         Int         @default(0)
+  wins           Int         @default(0)
+  draws          Int         @default(0)
+  losses         Int         @default(0)
+  goalsFor       Int         @default(0)
+  goalsAgainst   Int         @default(0)
+  goalDiff       Int         @default(0)
+  points         Int         @default(0)
+  position       Int?
+  group          String?
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
+  tournament     Tournament  @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+
+  @@unique([tournament_id, participant_id])
+}
+
+model Player {
+  id                 String       @id @default(cuid())
+  participantId      String
+  name               String
+  number             Int?
+  position           String?
+  created_at         DateTime     @default(now())
+  updated_at         DateTime     @updatedAt
+  avatarUrl          String?
+  userId             String?
+  status             PlayerStatus @default(APPROVED)
+  matchEvents        MatchEvent[]
+  relatedMatchEvents MatchEvent[] @relation("RelatedPlayer")
+  participant        Participant  @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  user               User?        @relation("UserPlayerProfiles", fields: [userId], references: [id])
+}
+
+model Sponsor {
+  id            String     @id @default(cuid())
+  name          String
+  logoUrl       String?
+  websiteUrl    String?
+  tournament_id String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  description   String?
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+}
+
+model Social {
+  id              String        @id @default(cuid())
+  platform        String
+  url             String
+  handle          String?
+  tournament_id   String?
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+  organization_id String?
+  organization    Organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  tournament      Tournament?   @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+}
+
+model Venue {
+  id            String     @id @default(cuid())
+  name          String
+  tournament_id String
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+}
+
+model TeamInvite {
+  id             String      @id @default(cuid())
+  token          String      @unique @default(cuid())
+  participant_id String
+  tournament_id  String
+  createdById    String
+  maxUses        Int?
+  usedCount      Int         @default(0)
+  expiresAt      DateTime?
+  isActive       Boolean     @default(true)
+  created_at     DateTime    @default(now())
+  updated_at     DateTime    @updatedAt
+  createdBy      User        @relation("InviteCreator", fields: [createdById], references: [id])
+  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
+  tournament     Tournament  @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+}
+
+model TournamentInvite {
+  id            String     @id @default(cuid())
+  token         String     @unique @default(cuid())
+  tournament_id String
+  createdById   String
+  maxUses       Int?
+  usedCount     Int        @default(0)
+  expiresAt     DateTime?
+  isActive      Boolean    @default(true)
+  created_at    DateTime   @default(now())
+  updated_at    DateTime   @updatedAt
+  createdBy     User       @relation("TournamentInviteCreator", fields: [createdById], references: [id])
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
 }
 
 enum Role {
@@ -129,354 +376,13 @@ enum FixtureStage {
   KNOCKOUT
 }
 
-model Tournament {
-  id          String  @id @default(cuid())
-  name        String
-  customName  String? @unique
-  description String?
-
-  // Branding
-  logoUrl   String?
-  bannerUrl String?
-
-  // Logistics
-  location   String?
-  timezone   String     @default("UTC")
-  visibility Visibility @default(PUBLIC)
-
-  // Rules & Config
-  sport           String
-  type            TournamentType
-  participantType ParticipantType
-  scoringRules    Json
-
-  // Registration
-  maxParticipants   Int?
-  registrationOpen  DateTime?
-  registrationClose DateTime?
-  autoApprove       Boolean   @default(false)
-  isPinned          Boolean   @default(false)
-
-  // Advanced Options
-  twoLegsKnockout Boolean @default(false)
-  doubleRoundRobin Boolean @default(false)
-  thirdPlaceMatch  Boolean @default(false)
-
-  // Venues
-  venues Venue[]
-
-  // Group config
-  numberOfGroups Int?
-  teamsPerGroup  Int?
-
-  start_date DateTime
-  end_date   DateTime
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  organization    Organization? @relation(fields: [organization_id], references: [id])
-  organization_id String?
-
-  participants Participant[]
-  fixtures     Fixture[]
-  standings    Standing[]
-  groups       Group[]
-  sponsors     Sponsor[]
-  socials      Social[]
-  team_invites TeamInvite[]
-  tournament_invites TournamentInvite[]
-  followers    TournamentFollower[]
-
-  // Seasons
-  seasonName String?
-  parent_id  String?
-  parent     Tournament?  @relation("TournamentSeasons", fields: [parent_id], references: [id])
-  seasons    Tournament[] @relation("TournamentSeasons")
-}
-
-model TournamentFollower {
-  userId        String
-  tournamentId  String
-  createdAt     DateTime @default(now())
-
-  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tournament    Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
-
-  @@id([userId, tournamentId])
-}
-
-model Group {
-  id   String @id @default(cuid())
-  name String
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  participants Participant[]
-  fixtures     Fixture[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Participant {
-  id String @id @default(cuid())
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  user    User?   @relation(fields: [user_id], references: [id])
-  user_id String?
-
-  team    Team?   @relation(fields: [team_id], references: [id])
-  team_id String?
-
-  customName String?
-  seed       Int?
-  logoUrl    String?
-  status     ParticipantStatus @default(PENDING)
-
-  group   Group?  @relation(fields: [groupId], references: [id])
-  groupId String?
-
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
-  home_fixtures Fixture[] @relation("HomeTeam")
-  away_fixtures Fixture[] @relation("AwayTeam")
-
-  matchEvents        MatchEvent[]
-  relatedMatchEvents MatchEvent[] @relation("RelatedParticipant")
-  standings          Standing[]
-  players            Player[]
-  invites            TeamInvite[]
-}
-
-model Fixture {
-  id String @id @default(cuid())
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  group   Group?  @relation(fields: [groupId], references: [id])
-  groupId String?
-
-  stage FixtureStage?
-
-  round       Int
-  roundName   String? // e.g., "Final", "Semi Final", "Quarter Final", "Round of 16"
-  matchNumber Int
-  startTime   DateTime?
-  venue       String?
-
-  homeTeam            Participant? @relation("HomeTeam", fields: [homeTeamId], references: [id])
-  homeTeamId          String?
-  homeTeamPlaceholder String? // e.g., "QF1 Winner" - shown when homeTeamId is null
-  awayTeam            Participant? @relation("AwayTeam", fields: [awayTeamId], references: [id])
-  awayTeamId          String?
-  awayTeamPlaceholder String? // e.g., "QF2 Winner" - shown when awayTeamId is null
-
-  // Bracket relationships (for knockout tournaments)
-  nextFixture    Fixture?  @relation("BracketProgression", fields: [nextFixtureId], references: [id])
-  nextFixtureId  String?
-  sourceFixtures Fixture[] @relation("BracketProgression") // The two matches that feed into this fixture
-
-  homeScore        Int?
-  awayScore        Int?
-  homePenaltyScore Int?
-  awayPenaltyScore Int?
-  status           FixtureStatus @default(SCHEDULED)
-
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
-  matchEvents MatchEvent[]
-}
-
-model Team {
-  id           String        @id @default(cuid())
-  name         String
-  logoUrl      String?
-  
-  owner        User?         @relation("UserTeams", fields: [ownerId], references: [id])
-  ownerId      String?
-
-  participants Participant[]
-  
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
 enum MatchEventType {
   GOAL
   OWN_GOAL
   PENALTY
-  MISSED_PENALTY
   YELLOW_CARD
   RED_CARD
   SUBSTITUTION
   ASSIST
-}
-
-model MatchEvent {
-  id String @id @default(cuid())
-
-  fixture    Fixture @relation(fields: [fixture_id], references: [id], onDelete: Cascade)
-  fixture_id String
-
-  // The participant (player/team) involved in the event
-  participant    Participant? @relation(fields: [participant_id], references: [id])
-  participant_id String?
-
-  // For substitutions: the player coming off
-  relatedParticipant    Participant? @relation("RelatedParticipant", fields: [relatedParticipant_id], references: [id])
-  relatedParticipant_id String?
-
-  type        MatchEventType
-  minute      Int? // Match minute when event occurred
-  description String?
-  metadata    Json? // Additional event-specific data
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  player   Player? @relation(fields: [playerId], references: [id])
-  playerId String?
-
-  relatedPlayer   Player? @relation("RelatedPlayer", fields: [relatedPlayerId], references: [id])
-  relatedPlayerId String?
-}
-
-model Standing {
-  id String @id @default(cuid())
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
-  participant_id String
-
-  // Stats
-  played       Int @default(0)
-  wins         Int @default(0)
-  draws        Int @default(0)
-  losses       Int @default(0)
-  goalsFor     Int @default(0)
-  goalsAgainst Int @default(0)
-  goalDiff     Int @default(0)
-  points       Int @default(0)
-
-  // Position in standings
-  position Int?
-
-  // For group stages
-  group String?
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  @@unique([tournament_id, participant_id])
-}
-
-model Player {
-  id String @id @default(cuid())
-
-  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
-  participantId String
-
-  user   User?   @relation("UserPlayerProfiles", fields: [userId], references: [id])
-  userId String?
-
-  name      String
-  number    Int?
-  position  String? // GK, DEF, MID, FWD
-  avatarUrl String?
-  status    PlayerStatus @default(APPROVED)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  matchEvents        MatchEvent[]
-  relatedMatchEvents MatchEvent[] @relation("RelatedPlayer")
-}
-
-model Sponsor {
-  id   String @id @default(cuid())
-  name String
-
-  description String?
-  logoUrl     String?
-  websiteUrl  String?
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Social {
-  id       String  @id @default(cuid())
-  platform String // e.g., "twitter", "instagram", "facebook", "youtube", "tiktok"
-  url      String
-  handle   String? // e.g., "@tournamentname"
-
-  tournament    Tournament? @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String?
-
-  organization    Organization? @relation(fields: [organization_id], references: [id], onDelete: Cascade)
-  organization_id String?
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model Venue {
-  id   String @id @default(cuid())
-  name String
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model TeamInvite {
-  id    String @id @default(cuid())
-  token String @unique @default(cuid())
-
-  participant    Participant @relation(fields: [participant_id], references: [id], onDelete: Cascade)
-  participant_id String
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  createdBy   User   @relation("InviteCreator", fields: [createdById], references: [id])
-  createdById String
-
-  maxUses   Int? // null = unlimited
-  usedCount Int       @default(0)
-  expiresAt DateTime? // null = never expires
-  isActive  Boolean   @default(true)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-}
-
-model TournamentInvite {
-  id    String @id @default(cuid())
-  token String @unique @default(cuid())
-
-  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
-  tournament_id String
-
-  createdBy   User   @relation("TournamentInviteCreator", fields: [createdById], references: [id])
-  createdById String
-
-  maxUses   Int? // null = unlimited
-  usedCount Int       @default(0)
-  expiresAt DateTime? // null = never expires
-  isActive  Boolean   @default(true)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  MISSED_PENALTY
 }
