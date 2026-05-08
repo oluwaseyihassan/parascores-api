@@ -15,6 +15,9 @@ import {
   OrganizationMemberRoleUpdatedPayload,
   OrganizationMemberRemovedPayload,
   OrganizationDeleteCodePayload,
+  TournamentJoinRequestPayload,
+  TournamentJoinApprovalPayload,
+  TournamentJoinRejectionPayload,
 } from './email.events';
 
 @Injectable()
@@ -199,6 +202,49 @@ export class EmailListener {
       );
     } catch (error) {
       console.error('Failed to send organization delete code email:', error);
+    }
+  }
+  @OnEvent(EmailEvents.TOURNAMENT_JOIN_REQUEST, { async: true })
+  async handleTournamentJoinRequest(payload: TournamentJoinRequestPayload) {
+    try {
+      await this.emailService.sendTournamentJoinRequestAlert(
+        payload.organizerEmail,
+        payload.organizerName,
+        payload.teamName,
+        payload.tournamentName,
+        payload.dashboardUrl,
+      );
+    } catch (error) {
+      console.error('Failed to send tournament join request email:', error);
+    }
+  }
+
+  @OnEvent(EmailEvents.TOURNAMENT_JOIN_APPROVAL, { async: true })
+  async handleTournamentJoinApproval(payload: TournamentJoinApprovalPayload) {
+    try {
+      await this.emailService.sendTournamentJoinApprovalAlert(
+        payload.userEmail,
+        payload.userName,
+        payload.teamName,
+        payload.tournamentName,
+        payload.tournamentUrl,
+      );
+    } catch (error) {
+      console.error('Failed to send tournament join approval email:', error);
+    }
+  }
+
+  @OnEvent(EmailEvents.TOURNAMENT_JOIN_REJECTION, { async: true })
+  async handleTournamentJoinRejection(payload: TournamentJoinRejectionPayload) {
+    try {
+      await this.emailService.sendTournamentJoinRejectionAlert(
+        payload.userEmail,
+        payload.userName,
+        payload.teamName,
+        payload.tournamentName,
+      );
+    } catch (error) {
+      console.error('Failed to send tournament join rejection email:', error);
     }
   }
 }
