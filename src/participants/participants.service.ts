@@ -405,6 +405,82 @@ export class ParticipantsService {
     return ResponseUtil.success(null, 'Player removed successfully');
   }
 
+  // Update participant status (approve/reject)
+  async updateParticipantStatus(
+    participantId: string,
+    status: string,
+    userIdRef: string,
+  ) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: { 
+        tournament: true,
+        user: true,
+        team: true
+      },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    if (!participant.tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+
+    // Verify authorized member
+    const isMember = await this.db.organizationMember.findFirst({
+      where: {
+        organizationId: participant.tournament.organization_id,
+        userId: userIdRef,
+      },
+    });
+
+    const isAuthorized = isMember && (isMember.role === 'OWNER' || isMember.role === 'ADMIN');
+    if (!isAuthorized) {
+      throw new ForbiddenException('You are not authorized to update participant status');
+    }
+
+    const updatedParticipant = await this.db.participant.update({
+      where: { id: participantId },
+      data: { status: status as any },
+      include: {
+        players: true,
+        user: true,
+        team: true,
+        group: true,
+      }
+    });
+
+    // Notify user
+    if (updatedParticipant.user?.email) {
+      if (status.toUpperCase() === 'CONFIRMED') {
+        const tournamentUrl = `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/t/${participant.tournament.customName || participant.tournament.id}`;
+        this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_APPROVAL, {
+          userEmail: updatedParticipant.user.email,
+          userName: updatedParticipant.user.name,
+          teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
+          tournamentName: participant.tournament.name,
+          tournamentUrl,
+        });
+      } else if (status.toUpperCase() === 'DECLINED') {
+        this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_REJECTION, {
+          userEmail: updatedParticipant.user.email,
+          userName: updatedParticipant.user.name,
+          teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
+          tournamentName: participant.tournament.name,
+        });
+      }
+    }
+
+    // Sync standing if confirmed
+    if (status.toUpperCase() === 'CONFIRMED' && updatedParticipant.groupId) {
+      await this.syncParticipantStanding(participantId, updatedParticipant.groupId);
+    }
+
+    return ResponseUtil.success(updatedParticipant);
+  }
+
   // Remove participant
   async removeParticipant(participantId: string) {
     const participant = await this.db.participant.findUnique({
