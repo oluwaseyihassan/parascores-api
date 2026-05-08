@@ -88,6 +88,20 @@ export class ParticipantsController {
     return this.participantsService.updateParticipant(participantId, dto);
   }
 
+  @Patch(':participantId/status')
+  @ApiOperation({ summary: 'Update participant status (approve/reject)' })
+  async updateParticipantStatus(
+    @Param('participantId') participantId: string,
+    @Body('status') status: string,
+    @Req() req,
+  ) {
+    return this.participantsService.updateParticipantStatus(
+      participantId,
+      status,
+      req.user.sub,
+    );
+  }
+
   @Patch(':participantId/players/:playerId/status')
   @ApiOperation({ summary: 'Update player status (approve/reject)' })
   async updatePlayerStatus(
