@@ -17,4 +17,9 @@ export class UpdateParticipantDto {
   @IsString()
   @IsOptional()
   groupId?: string | null;
+
+  @ApiProperty({ description: 'Team ID for profile linking', required: false })
+  @IsString()
+  @IsOptional()
+  teamId?: string | null;
 }
