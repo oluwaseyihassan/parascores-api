@@ -117,3 +117,8 @@ export type Venue = Prisma.VenueModel
  * 
  */
 export type TeamInvite = Prisma.TeamInviteModel
+/**
+ * Model TournamentInvite
+ * 
+ */
+export type TournamentInvite = Prisma.TournamentInviteModel
