@@ -11,6 +11,9 @@ export const EmailEvents = {
   ORGANIZATION_MEMBER_ROLE_UPDATED: 'organization.member-role-updated',
   ORGANIZATION_MEMBER_REMOVED: 'organization.member-removed',
   ORGANIZATION_DELETE_CODE: 'organization.delete-code',
+  TOURNAMENT_JOIN_REQUEST: 'tournament.join-request',
+  TOURNAMENT_JOIN_APPROVAL: 'tournament.join-approval',
+  TOURNAMENT_JOIN_REJECTION: 'tournament.join-rejection',
 } as const;
 
 export interface UserSignupPayload {
@@ -89,4 +92,27 @@ export interface OrganizationDeleteCodePayload {
   organizationName: string;
   code: string;
   tournamentCount: number;
+}
+
+export interface TournamentJoinRequestPayload {
+  organizerEmail: string;
+  organizerName: string;
+  teamName: string;
+  tournamentName: string;
+  dashboardUrl: string;
+}
+
+export interface TournamentJoinApprovalPayload {
+  userEmail: string;
+  userName: string;
+  teamName: string;
+  tournamentName: string;
+  tournamentUrl: string;
+}
+
+export interface TournamentJoinRejectionPayload {
+  userEmail: string;
+  userName: string;
+  teamName: string;
+  tournamentName: string;
 }
