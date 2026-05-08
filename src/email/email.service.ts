@@ -532,6 +532,137 @@ export class EmailService {
     console.log(`Organization delete code email sent to ${email}`);
   }
 
+  async sendTournamentJoinRequestAlert(
+    organizerEmail: string,
+    organizerName: string,
+    teamName: string,
+    tournamentName: string,
+    dashboardUrl: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #4F46E5;">📋 New Team Join Request</h2>
+        <p>Hello ${organizerName},</p>
+        <p>A new team has requested to join <strong>${tournamentName}</strong>.</p>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Team Name:</strong> ${teamName}</p>
+          <p style="margin: 5px 0;"><strong>Tournament:</strong> ${tournamentName}</p>
+          <p style="margin: 5px 0;"><strong>Received at:</strong> ${timestamp}</p>
+        </div>
+        <p>Please log in to your dashboard to approve or reject this request.</p>
+        <div style="margin-top: 25px;">
+          <a href="${dashboardUrl}" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Go to Dashboard</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: organizerEmail,
+      subject: `📋 New Join Request: ${teamName} for ${tournamentName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send tournament join alert email:', error);
+    } else {
+      console.log(`Tournament join alert email sent to ${organizerEmail}`);
+    }
+  }
+
+  async sendTournamentJoinApprovalAlert(
+    userEmail: string,
+    userName: string,
+    teamName: string,
+    tournamentName: string,
+    tournamentUrl: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #10B981;">🎉 Welcome to the Tournament!</h2>
+        <p>Hello ${userName},</p>
+        <p>Great news! Your team <strong>${teamName}</strong> has been <strong>APPROVED</strong> to participate in <strong>${tournamentName}</strong>.</p>
+        <div style="background-color: #F0FDF4; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #DCFCE7;">
+          <p style="margin: 5px 0;"><strong>Team:</strong> ${teamName}</p>
+          <p style="margin: 5px 0;"><strong>Tournament:</strong> ${tournamentName}</p>
+          <p style="margin: 5px 0;"><strong>Approved at:</strong> ${timestamp}</p>
+        </div>
+        <p>You can now view your team and matches on the tournament page!</p>
+        <div style="margin-top: 25px;">
+          <a href="${tournamentUrl}" style="background-color: #10B981; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Tournament</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: userEmail,
+      subject: `✅ Approved: ${teamName} joined ${tournamentName}!`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send tournament approval email:', error);
+    } else {
+      console.log(`Tournament approval email sent to ${userEmail}`);
+    }
+  }
+
+  async sendTournamentJoinRejectionAlert(
+    userEmail: string,
+    userName: string,
+    teamName: string,
+    tournamentName: string,
+  ): Promise<void> {
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        <h2 style="color: #EF4444;">📋 Tournament Registration Update</h2>
+        <p>Hello ${userName},</p>
+        <p>We're writing to inform you that your request for <strong>${teamName}</strong> to join <strong>${tournamentName}</strong> has been <strong>DECLINED</strong> by the tournament organizer.</p>
+        <div style="background-color: #FEF2F2; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #FEE2E2;">
+          <p style="margin: 5px 0;"><strong>Team:</strong> ${teamName}</p>
+          <p style="margin: 5px 0;"><strong>Tournament:</strong> ${tournamentName}</p>
+          <p style="margin: 5px 0;"><strong>Processed at:</strong> ${timestamp}</p>
+        </div>
+        <p>You can still explore other upcoming tournaments on our platform.</p>
+        <div style="margin-top: 25px;">
+          <a href="${process.env.CLIENT_URL || 'http://lvh.me:3001'}" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Explore More</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: userEmail,
+      subject: `📋 Update: Registration for ${tournamentName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send tournament rejection email:', error);
+    } else {
+      console.log(`Tournament rejection email sent to ${userEmail}`);
+    }
+  }
+
   private getRoleDescription(role: string): string {
     switch (role.toUpperCase()) {
       case 'OWNER':
