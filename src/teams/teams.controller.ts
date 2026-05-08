@@ -22,6 +22,14 @@ export class TeamsController {
     return { status: 'ok' };
   }
 
+  @Public()
+  @Get()
+  @ApiOperation({ summary: 'Search all persistent team profiles' })
+  search(@Req() req: any) {
+    const query = req.query?.q as string;
+    return this.teamsService.searchTeams(query);
+  }
+
   @Get('mine')
   @ApiOperation({ summary: 'Get all team profiles owned by the current user' })
   getMyTeams(@Req() req: any) {
@@ -47,6 +55,16 @@ export class TeamsController {
   @ApiOperation({ summary: 'Update a team profile' })
   update(@Param('id') id: string, @Body() dto: UpdateTeamDto, @Req() req: any) {
     return this.teamsService.updateTeam(id, dto, req.user.sub);
+  }
+
+  @Post(':id/claim-participant')
+  @ApiOperation({ summary: 'Claim a tournament participant using a link code' })
+  claimParticipant(
+    @Param('id') id: string,
+    @Body('code') code: string,
+    @Req() req: any
+  ) {
+    return this.teamsService.claimParticipant(id, code, req.user.sub);
   }
 
   @Delete(':id')
