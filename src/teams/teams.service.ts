@@ -27,6 +27,17 @@ export class TeamsService {
     return ResponseUtil.success(teams);
   }
 
+  async searchTeams(query?: string) {
+    const teams = await this.db.team.findMany({
+      where: query ? {
+        name: { contains: query, mode: 'insensitive' }
+      } : {},
+      orderBy: { name: 'asc' },
+      take: 20
+    });
+    return ResponseUtil.success(teams);
+  }
+
   async getTeamById(id: string, userId: string) {
     const team = await this.db.team.findUnique({
       where: { id },
@@ -100,6 +111,41 @@ export class TeamsService {
     }
 
     return ResponseUtil.success(updated);
+  }
+
+  async claimParticipant(teamId: string, code: string, userId: string) {
+    const team = await this.db.team.findUnique({ where: { id: teamId } });
+    if (!team) throw new NotFoundException('Team profile not found');
+    if (team.ownerId !== userId) throw new ForbiddenException('You are not the owner of this team profile');
+
+    const participant = await this.db.participant.findUnique({
+      where: { linkCode: code.toUpperCase() },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Invalid claim code');
+    }
+
+    if (participant.linkCodeExpires && participant.linkCodeExpires < new Date()) {
+      throw new ForbiddenException('Claim code has expired');
+    }
+
+    if (participant.team_id) {
+      throw new ForbiddenException('This participant is already linked to a team profile');
+    }
+
+    const updatedParticipant = await this.db.participant.update({
+      where: { id: participant.id },
+      data: {
+        team_id: team.id,
+        linkCode: null,
+        linkCodeExpires: null,
+        customName: team.name,
+        logoUrl: team.logoUrl
+      }
+    });
+
+    return ResponseUtil.success(updatedParticipant, 'Team profile linked successfully');
   }
 
   async deleteTeam(id: string, userId: string) {
