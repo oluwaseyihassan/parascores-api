@@ -270,6 +270,7 @@ export class ParticipantsService {
         customName: dto.customName !== undefined ? dto.customName : undefined,
         logoUrl: dto.logoUrl !== undefined ? dto.logoUrl : undefined,
         groupId: dto.groupId !== undefined ? dto.groupId : undefined,
+        team_id: dto.teamId !== undefined ? dto.teamId : undefined,
       },
       include: {
         players: true,
@@ -285,6 +286,33 @@ export class ParticipantsService {
     }
 
     return ResponseUtil.success(updatedParticipant);
+  }
+
+  async generateLinkCode(participantId: string) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 48);
+
+    const updated = await this.db.participant.update({
+      where: { id: participantId },
+      data: {
+        linkCode: code,
+        linkCodeExpires: expiresAt,
+      },
+    });
+
+    return ResponseUtil.success({
+      code: updated.linkCode,
+      expiresAt: updated.linkCodeExpires,
+    });
   }
 
   private async syncParticipantStanding(participantId: string, groupId: string | null) {
