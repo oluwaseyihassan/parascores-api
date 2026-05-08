@@ -36,7 +36,9 @@ model User {
   playing_in      Participant[]
   player_profiles Player[]             @relation("UserPlayerProfiles")
   created_invites TeamInvite[]         @relation("InviteCreator")
+  created_tournament_invites TournamentInvite[] @relation("TournamentInviteCreator")
   followed_tournaments TournamentFollower[]
+  teams           Team[]               @relation("UserTeams")
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -182,6 +184,7 @@ model Tournament {
   sponsors     Sponsor[]
   socials      Social[]
   team_invites TeamInvite[]
+  tournament_invites TournamentInvite[]
   followers    TournamentFollower[]
 
   // Seasons
@@ -291,7 +294,15 @@ model Fixture {
 model Team {
   id           String        @id @default(cuid())
   name         String
+  logoUrl      String?
+  
+  owner        User?         @relation("UserTeams", fields: [ownerId], references: [id])
+  ownerId      String?
+
   participants Participant[]
+  
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 enum MatchEventType {
@@ -440,6 +451,25 @@ model TeamInvite {
   tournament_id String
 
   createdBy   User   @relation("InviteCreator", fields: [createdById], references: [id])
+  createdById String
+
+  maxUses   Int? // null = unlimited
+  usedCount Int       @default(0)
+  expiresAt DateTime? // null = never expires
+  isActive  Boolean   @default(true)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model TournamentInvite {
+  id    String @id @default(cuid())
+  token String @unique @default(cuid())
+
+  tournament    Tournament @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  tournament_id String
+
+  createdBy   User   @relation("TournamentInviteCreator", fields: [createdById], references: [id])
   createdById String
 
   maxUses   Int? // null = unlimited
