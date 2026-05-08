@@ -44,6 +44,8 @@ export type ParticipantMinAggregateOutputType = {
   logoUrl: string | null
   status: $Enums.ParticipantStatus | null
   groupId: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -58,6 +60,8 @@ export type ParticipantMaxAggregateOutputType = {
   logoUrl: string | null
   status: $Enums.ParticipantStatus | null
   groupId: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
   created_at: Date | null
   updated_at: Date | null
 }
@@ -72,6 +76,8 @@ export type ParticipantCountAggregateOutputType = {
   logoUrl: number
   status: number
   groupId: number
+  linkCode: number
+  linkCodeExpires: number
   created_at: number
   updated_at: number
   _all: number
@@ -96,6 +102,8 @@ export type ParticipantMinAggregateInputType = {
   logoUrl?: true
   status?: true
   groupId?: true
+  linkCode?: true
+  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
 }
@@ -110,6 +118,8 @@ export type ParticipantMaxAggregateInputType = {
   logoUrl?: true
   status?: true
   groupId?: true
+  linkCode?: true
+  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
 }
@@ -124,6 +134,8 @@ export type ParticipantCountAggregateInputType = {
   logoUrl?: true
   status?: true
   groupId?: true
+  linkCode?: true
+  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
   _all?: true
@@ -225,6 +237,8 @@ export type ParticipantGroupByOutputType = {
   logoUrl: string | null
   status: $Enums.ParticipantStatus
   groupId: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
   created_at: Date
   updated_at: Date
   _count: ParticipantCountAggregateOutputType | null
@@ -262,6 +276,8 @@ export type ParticipantWhereInput = {
   logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
@@ -287,6 +303,8 @@ export type ParticipantOrderByWithRelationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   tournament?: Prisma.TournamentOrderByWithRelationInput
@@ -304,6 +322,7 @@ export type ParticipantOrderByWithRelationInput = {
 
 export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  linkCode?: string
   AND?: Prisma.ParticipantWhereInput | Prisma.ParticipantWhereInput[]
   OR?: Prisma.ParticipantWhereInput[]
   NOT?: Prisma.ParticipantWhereInput | Prisma.ParticipantWhereInput[]
@@ -315,6 +334,7 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
@@ -328,7 +348,7 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   standings?: Prisma.StandingListRelationFilter
   players?: Prisma.PlayerListRelationFilter
   invites?: Prisma.TeamInviteListRelationFilter
-}, "id">
+}, "id" | "linkCode">
 
 export type ParticipantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -340,6 +360,8 @@ export type ParticipantOrderByWithAggregationInput = {
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   _count?: Prisma.ParticipantCountOrderByAggregateInput
@@ -362,6 +384,8 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusWithAggregatesFilter<"Participant"> | $Enums.ParticipantStatus
   groupId?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
 }
@@ -372,6 +396,8 @@ export type ParticipantCreateInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -397,6 +423,8 @@ export type ParticipantUncheckedCreateInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -414,6 +442,8 @@ export type ParticipantUpdateInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -439,6 +469,8 @@ export type ParticipantUncheckedUpdateInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -460,6 +492,8 @@ export type ParticipantCreateManyInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -470,6 +504,8 @@ export type ParticipantUpdateManyMutationInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -484,6 +520,8 @@ export type ParticipantUncheckedUpdateManyInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -508,6 +546,8 @@ export type ParticipantCountOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -526,6 +566,8 @@ export type ParticipantMaxOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -540,6 +582,8 @@ export type ParticipantMinOrderByAggregateInput = {
   logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
   groupId?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
 }
@@ -842,6 +886,8 @@ export type ParticipantCreateWithoutUserInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -865,6 +911,8 @@ export type ParticipantUncheckedCreateWithoutUserInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -915,6 +963,8 @@ export type ParticipantScalarWhereInput = {
   logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
 }
@@ -925,6 +975,8 @@ export type ParticipantCreateWithoutTournamentInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
@@ -948,6 +1000,8 @@ export type ParticipantUncheckedCreateWithoutTournamentInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -991,6 +1045,8 @@ export type ParticipantCreateWithoutGroupInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1014,6 +1070,8 @@ export type ParticipantUncheckedCreateWithoutGroupInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1057,6 +1115,8 @@ export type ParticipantCreateWithoutHome_fixturesInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1081,6 +1141,8 @@ export type ParticipantUncheckedCreateWithoutHome_fixturesInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
@@ -1102,6 +1164,8 @@ export type ParticipantCreateWithoutAway_fixturesInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1126,6 +1190,8 @@ export type ParticipantUncheckedCreateWithoutAway_fixturesInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1158,6 +1224,8 @@ export type ParticipantUpdateWithoutHome_fixturesInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1182,6 +1250,8 @@ export type ParticipantUncheckedUpdateWithoutHome_fixturesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
@@ -1209,6 +1279,8 @@ export type ParticipantUpdateWithoutAway_fixturesInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1233,6 +1305,8 @@ export type ParticipantUncheckedUpdateWithoutAway_fixturesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1249,6 +1323,8 @@ export type ParticipantCreateWithoutTeamInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1272,6 +1348,8 @@ export type ParticipantUncheckedCreateWithoutTeamInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1315,6 +1393,8 @@ export type ParticipantCreateWithoutMatchEventsInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1339,6 +1419,8 @@ export type ParticipantUncheckedCreateWithoutMatchEventsInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1360,6 +1442,8 @@ export type ParticipantCreateWithoutRelatedMatchEventsInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1384,6 +1468,8 @@ export type ParticipantUncheckedCreateWithoutRelatedMatchEventsInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1416,6 +1502,8 @@ export type ParticipantUpdateWithoutMatchEventsInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1440,6 +1528,8 @@ export type ParticipantUncheckedUpdateWithoutMatchEventsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1467,6 +1557,8 @@ export type ParticipantUpdateWithoutRelatedMatchEventsInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1491,6 +1583,8 @@ export type ParticipantUncheckedUpdateWithoutRelatedMatchEventsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1507,6 +1601,8 @@ export type ParticipantCreateWithoutStandingsInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1531,6 +1627,8 @@ export type ParticipantUncheckedCreateWithoutStandingsInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1563,6 +1661,8 @@ export type ParticipantUpdateWithoutStandingsInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1587,6 +1687,8 @@ export type ParticipantUncheckedUpdateWithoutStandingsInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1603,6 +1705,8 @@ export type ParticipantCreateWithoutPlayersInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1627,6 +1731,8 @@ export type ParticipantUncheckedCreateWithoutPlayersInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1659,6 +1765,8 @@ export type ParticipantUpdateWithoutPlayersInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1683,6 +1791,8 @@ export type ParticipantUncheckedUpdateWithoutPlayersInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1699,6 +1809,8 @@ export type ParticipantCreateWithoutInvitesInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
@@ -1723,6 +1835,8 @@ export type ParticipantUncheckedCreateWithoutInvitesInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
@@ -1755,6 +1869,8 @@ export type ParticipantUpdateWithoutInvitesInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1779,6 +1895,8 @@ export type ParticipantUncheckedUpdateWithoutInvitesInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1798,6 +1916,8 @@ export type ParticipantCreateManyUserInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -1808,6 +1928,8 @@ export type ParticipantUpdateWithoutUserInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1831,6 +1953,8 @@ export type ParticipantUncheckedUpdateWithoutUserInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1851,6 +1975,8 @@ export type ParticipantUncheckedUpdateManyWithoutUserInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1864,6 +1990,8 @@ export type ParticipantCreateManyTournamentInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -1874,6 +2002,8 @@ export type ParticipantUpdateWithoutTournamentInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
@@ -1897,6 +2027,8 @@ export type ParticipantUncheckedUpdateWithoutTournamentInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1917,6 +2049,8 @@ export type ParticipantUncheckedUpdateManyWithoutTournamentInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1930,6 +2064,8 @@ export type ParticipantCreateManyGroupInput = {
   seed?: number | null
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -1940,6 +2076,8 @@ export type ParticipantUpdateWithoutGroupInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -1963,6 +2101,8 @@ export type ParticipantUncheckedUpdateWithoutGroupInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -1983,6 +2123,8 @@ export type ParticipantUncheckedUpdateManyWithoutGroupInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1996,6 +2138,8 @@ export type ParticipantCreateManyTeamInput = {
   logoUrl?: string | null
   status?: $Enums.ParticipantStatus
   groupId?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
 }
@@ -2006,6 +2150,8 @@ export type ParticipantUpdateWithoutTeamInput = {
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
@@ -2029,6 +2175,8 @@ export type ParticipantUncheckedUpdateWithoutTeamInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
@@ -2049,6 +2197,8 @@ export type ParticipantUncheckedUpdateManyWithoutTeamInput = {
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -2148,6 +2298,8 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   logoUrl?: boolean
   status?: boolean
   groupId?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
@@ -2174,6 +2326,8 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   logoUrl?: boolean
   status?: boolean
   groupId?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
@@ -2192,6 +2346,8 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   logoUrl?: boolean
   status?: boolean
   groupId?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
@@ -2210,11 +2366,13 @@ export type ParticipantSelectScalar = {
   logoUrl?: boolean
   status?: boolean
   groupId?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "seed" | "logoUrl" | "status" | "groupId" | "created_at" | "updated_at", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "seed" | "logoUrl" | "status" | "groupId" | "linkCode" | "linkCodeExpires" | "created_at" | "updated_at", ExtArgs["result"]["participant"]>
 export type ParticipantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Participant$userArgs<ExtArgs>
@@ -2267,6 +2425,8 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     logoUrl: string | null
     status: $Enums.ParticipantStatus
     groupId: string | null
+    linkCode: string | null
+    linkCodeExpires: Date | null
     created_at: Date
     updated_at: Date
   }, ExtArgs["result"]["participant"]>
@@ -2712,6 +2872,8 @@ export interface ParticipantFieldRefs {
   readonly logoUrl: Prisma.FieldRef<"Participant", 'String'>
   readonly status: Prisma.FieldRef<"Participant", 'ParticipantStatus'>
   readonly groupId: Prisma.FieldRef<"Participant", 'String'>
+  readonly linkCode: Prisma.FieldRef<"Participant", 'String'>
+  readonly linkCodeExpires: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Participant", 'DateTime'>
 }
