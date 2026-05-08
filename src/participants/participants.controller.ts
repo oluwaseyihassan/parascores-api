@@ -121,6 +121,12 @@ export class ParticipantsController {
     return this.participantsService.removePlayer(participantId, playerId);
   }
 
+  @Post(':participantId/generate-link-code')
+  @ApiOperation({ summary: 'Generate a claim code for a participant' })
+  async generateLinkCode(@Param('participantId') participantId: string) {
+    return this.participantsService.generateLinkCode(participantId);
+  }
+
   @Delete(':participantId')
   @ApiOperation({ summary: 'Remove a participant' })
   async removeParticipant(@Param('participantId') participantId: string) {
