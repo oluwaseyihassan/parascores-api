@@ -28,39 +28,39 @@ export type OrganizationMinAggregateOutputType = {
   id: string | null
   name: string | null
   slug: string | null
-  description: string | null
   logoUrl: string | null
   color: string | null
   phone: string | null
   isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  description: string | null
 }
 
 export type OrganizationMaxAggregateOutputType = {
   id: string | null
   name: string | null
   slug: string | null
-  description: string | null
   logoUrl: string | null
   color: string | null
   phone: string | null
   isVerified: boolean | null
   created_at: Date | null
   updated_at: Date | null
+  description: string | null
 }
 
 export type OrganizationCountAggregateOutputType = {
   id: number
   name: number
   slug: number
-  description: number
   logoUrl: number
   color: number
   phone: number
   isVerified: number
   created_at: number
   updated_at: number
+  description: number
   _all: number
 }
 
@@ -69,39 +69,39 @@ export type OrganizationMinAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  description?: true
   logoUrl?: true
   color?: true
   phone?: true
   isVerified?: true
   created_at?: true
   updated_at?: true
+  description?: true
 }
 
 export type OrganizationMaxAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  description?: true
   logoUrl?: true
   color?: true
   phone?: true
   isVerified?: true
   created_at?: true
   updated_at?: true
+  description?: true
 }
 
 export type OrganizationCountAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  description?: true
   logoUrl?: true
   color?: true
   phone?: true
   isVerified?: true
   created_at?: true
   updated_at?: true
+  description?: true
   _all?: true
 }
 
@@ -181,13 +181,13 @@ export type OrganizationGroupByOutputType = {
   id: string
   name: string
   slug: string
-  description: string | null
   logoUrl: string | null
   color: string | null
   phone: string | null
   isVerified: boolean
   created_at: Date
   updated_at: Date
+  description: string | null
   _count: OrganizationCountAggregateOutputType | null
   _min: OrganizationMinAggregateOutputType | null
   _max: OrganizationMaxAggregateOutputType | null
@@ -215,32 +215,36 @@ export type OrganizationWhereInput = {
   id?: Prisma.StringFilter<"Organization"> | string
   name?: Prisma.StringFilter<"Organization"> | string
   slug?: Prisma.StringFilter<"Organization"> | string
-  description?: Prisma.StringNullableFilter<"Organization"> | string | null
   logoUrl?: Prisma.StringNullableFilter<"Organization"> | string | null
   color?: Prisma.StringNullableFilter<"Organization"> | string | null
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   isVerified?: Prisma.BoolFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  description?: Prisma.StringNullableFilter<"Organization"> | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
-  tournaments?: Prisma.TournamentListRelationFilter
   socials?: Prisma.SocialListRelationFilter
+  tournaments?: Prisma.TournamentListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   members?: Prisma.OrganizationMemberOrderByRelationAggregateInput
-  tournaments?: Prisma.TournamentOrderByRelationAggregateInput
   socials?: Prisma.SocialOrderByRelationAggregateInput
+  tournaments?: Prisma.TournamentOrderByRelationAggregateInput
+  subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -250,29 +254,31 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.OrganizationWhereInput[]
   NOT?: Prisma.OrganizationWhereInput | Prisma.OrganizationWhereInput[]
   name?: Prisma.StringFilter<"Organization"> | string
-  description?: Prisma.StringNullableFilter<"Organization"> | string | null
   logoUrl?: Prisma.StringNullableFilter<"Organization"> | string | null
   color?: Prisma.StringNullableFilter<"Organization"> | string | null
   phone?: Prisma.StringNullableFilter<"Organization"> | string | null
   isVerified?: Prisma.BoolFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
+  description?: Prisma.StringNullableFilter<"Organization"> | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
-  tournaments?: Prisma.TournamentListRelationFilter
   socials?: Prisma.SocialListRelationFilter
+  tournaments?: Prisma.TournamentListRelationFilter
+  subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "slug">
 
 export type OrganizationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  description?: Prisma.SortOrderInput | Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   color?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
   _max?: Prisma.OrganizationMaxOrderByAggregateInput
   _min?: Prisma.OrganizationMinOrderByAggregateInput
@@ -285,155 +291,163 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   name?: Prisma.StringWithAggregatesFilter<"Organization"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Organization"> | string
-  description?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   color?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
   isVerified?: Prisma.BoolWithAggregatesFilter<"Organization"> | boolean
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
 }
 
 export type OrganizationCreateInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
-  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
-  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
-  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
-  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
 }
 
 export type OrganizationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrganizationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type OrganizationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   color?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type OrganizationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   color?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type OrganizationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  description?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   color?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  description?: Prisma.SortOrder
 }
 
 export type OrganizationScalarRelationFilter = {
@@ -492,34 +506,66 @@ export type OrganizationUpdateOneWithoutSocialsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutSocialsInput, Prisma.OrganizationUpdateWithoutSocialsInput>, Prisma.OrganizationUncheckedUpdateWithoutSocialsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutSubscriptionInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSubscriptionInput, Prisma.OrganizationUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSubscriptionInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutSubscriptionNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSubscriptionInput, Prisma.OrganizationUncheckedCreateWithoutSubscriptionInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSubscriptionInput
+  upsert?: Prisma.OrganizationUpsertWithoutSubscriptionInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.OrganizationUpdateWithoutSubscriptionInput>, Prisma.OrganizationUncheckedUpdateWithoutSubscriptionInput>
+}
+
+export type OrganizationCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPaymentsInput, Prisma.OrganizationUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPaymentsInput, Prisma.OrganizationUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPaymentsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPaymentsInput, Prisma.OrganizationUpdateWithoutPaymentsInput>, Prisma.OrganizationUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type OrganizationCreateWithoutMembersInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  description?: string | null
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  description?: string | null
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -542,60 +588,68 @@ export type OrganizationUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTournamentsInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTournamentsInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTournamentsInput = {
@@ -618,60 +672,68 @@ export type OrganizationUpdateWithoutTournamentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTournamentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSocialsInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSocialsInput = {
   id?: string
   name: string
   slug: string
-  description?: string | null
   logoUrl?: string | null
   color?: string | null
   phone?: string | null
   isVerified?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  description?: string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSocialsInput = {
@@ -694,30 +756,202 @@ export type OrganizationUpdateWithoutSocialsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSocialsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutSubscriptionInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutSubscriptionInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutSubscriptionInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSubscriptionInput, Prisma.OrganizationUncheckedCreateWithoutSubscriptionInput>
+}
+
+export type OrganizationUpsertWithoutSubscriptionInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutSubscriptionInput, Prisma.OrganizationUncheckedUpdateWithoutSubscriptionInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutSubscriptionInput, Prisma.OrganizationUncheckedCreateWithoutSubscriptionInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutSubscriptionInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutSubscriptionInput, Prisma.OrganizationUncheckedUpdateWithoutSubscriptionInput>
+}
+
+export type OrganizationUpdateWithoutSubscriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutSubscriptionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPaymentsInput, Prisma.OrganizationUncheckedCreateWithoutPaymentsInput>
+}
+
+export type OrganizationUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPaymentsInput, Prisma.OrganizationUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPaymentsInput, Prisma.OrganizationUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPaymentsInput, Prisma.OrganizationUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type OrganizationUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
 }
 
 
@@ -727,14 +961,16 @@ export type OrganizationUncheckedUpdateWithoutSocialsInput = {
 
 export type OrganizationCountOutputType = {
   members: number
-  tournaments: number
   socials: number
+  tournaments: number
+  payments: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | OrganizationCountOutputTypeCountMembersArgs
-  tournaments?: boolean | OrganizationCountOutputTypeCountTournamentsArgs
   socials?: boolean | OrganizationCountOutputTypeCountSocialsArgs
+  tournaments?: boolean | OrganizationCountOutputTypeCountTournamentsArgs
+  payments?: boolean | OrganizationCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -757,6 +993,13 @@ export type OrganizationCountOutputTypeCountMembersArgs<ExtArgs extends runtime.
 /**
  * OrganizationCountOutputType without action
  */
+export type OrganizationCountOutputTypeCountSocialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SocialWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
 export type OrganizationCountOutputTypeCountTournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TournamentWhereInput
 }
@@ -764,8 +1007,8 @@ export type OrganizationCountOutputTypeCountTournamentsArgs<ExtArgs extends runt
 /**
  * OrganizationCountOutputType without action
  */
-export type OrganizationCountOutputTypeCountSocialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SocialWhereInput
+export type OrganizationCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
 }
 
 
@@ -773,16 +1016,18 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   id?: boolean
   name?: boolean
   slug?: boolean
-  description?: boolean
   logoUrl?: boolean
   color?: boolean
   phone?: boolean
   isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
+  description?: boolean
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
-  tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
+  tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
+  subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
+  payments?: boolean | Prisma.Organization$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -790,46 +1035,48 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   id?: boolean
   name?: boolean
   slug?: boolean
-  description?: boolean
   logoUrl?: boolean
   color?: boolean
   phone?: boolean
   isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
+  description?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   slug?: boolean
-  description?: boolean
   logoUrl?: boolean
   color?: boolean
   phone?: boolean
   isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
+  description?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectScalar = {
   id?: boolean
   name?: boolean
   slug?: boolean
-  description?: boolean
   logoUrl?: boolean
   color?: boolean
   phone?: boolean
   isVerified?: boolean
   created_at?: boolean
   updated_at?: boolean
+  description?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "logoUrl" | "color" | "phone" | "isVerified" | "created_at" | "updated_at", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "color" | "phone" | "isVerified" | "created_at" | "updated_at" | "description", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
-  tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
+  tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
+  subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
+  payments?: boolean | Prisma.Organization$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -839,20 +1086,22 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "Organization"
   objects: {
     members: Prisma.$OrganizationMemberPayload<ExtArgs>[]
-    tournaments: Prisma.$TournamentPayload<ExtArgs>[]
     socials: Prisma.$SocialPayload<ExtArgs>[]
+    tournaments: Prisma.$TournamentPayload<ExtArgs>[]
+    subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     slug: string
-    description: string | null
     logoUrl: string | null
     color: string | null
     phone: string | null
     isVerified: boolean
     created_at: Date
     updated_at: Date
+    description: string | null
   }, ExtArgs["result"]["organization"]>
   composites: {}
 }
@@ -1248,8 +1497,10 @@ readonly fields: OrganizationFieldRefs;
 export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   members<T extends Prisma.Organization$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tournaments<T extends Prisma.Organization$tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   socials<T extends Prisma.Organization$socialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$socialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tournaments<T extends Prisma.Organization$tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subscription<T extends Prisma.Organization$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payments<T extends Prisma.Organization$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1282,13 +1533,13 @@ export interface OrganizationFieldRefs {
   readonly id: Prisma.FieldRef<"Organization", 'String'>
   readonly name: Prisma.FieldRef<"Organization", 'String'>
   readonly slug: Prisma.FieldRef<"Organization", 'String'>
-  readonly description: Prisma.FieldRef<"Organization", 'String'>
   readonly logoUrl: Prisma.FieldRef<"Organization", 'String'>
   readonly color: Prisma.FieldRef<"Organization", 'String'>
   readonly phone: Prisma.FieldRef<"Organization", 'String'>
   readonly isVerified: Prisma.FieldRef<"Organization", 'Boolean'>
   readonly created_at: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Organization", 'DateTime'>
+  readonly description: Prisma.FieldRef<"Organization", 'String'>
 }
     
 
@@ -1701,6 +1952,30 @@ export type Organization$membersArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * Organization.socials
+ */
+export type Organization$socialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Social
+   */
+  select?: Prisma.SocialSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Social
+   */
+  omit?: Prisma.SocialOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SocialInclude<ExtArgs> | null
+  where?: Prisma.SocialWhereInput
+  orderBy?: Prisma.SocialOrderByWithRelationInput | Prisma.SocialOrderByWithRelationInput[]
+  cursor?: Prisma.SocialWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SocialScalarFieldEnum | Prisma.SocialScalarFieldEnum[]
+}
+
+/**
  * Organization.tournaments
  */
 export type Organization$tournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1725,27 +2000,46 @@ export type Organization$tournamentsArgs<ExtArgs extends runtime.Types.Extension
 }
 
 /**
- * Organization.socials
+ * Organization.subscription
  */
-export type Organization$socialsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Organization$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Social
+   * Select specific fields to fetch from the Subscription
    */
-  select?: Prisma.SocialSelect<ExtArgs> | null
+  select?: Prisma.SubscriptionSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Social
+   * Omit specific fields from the Subscription
    */
-  omit?: Prisma.SocialOmit<ExtArgs> | null
+  omit?: Prisma.SubscriptionOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SocialInclude<ExtArgs> | null
-  where?: Prisma.SocialWhereInput
-  orderBy?: Prisma.SocialOrderByWithRelationInput | Prisma.SocialOrderByWithRelationInput[]
-  cursor?: Prisma.SocialWhereUniqueInput
+  include?: Prisma.SubscriptionInclude<ExtArgs> | null
+  where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * Organization.payments
+ */
+export type Organization$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SocialScalarFieldEnum | Prisma.SocialScalarFieldEnum[]
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

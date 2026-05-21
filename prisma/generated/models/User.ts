@@ -28,49 +28,49 @@ export type UserMinAggregateOutputType = {
   id: string | null
   email: string | null
   name: string | null
-  picture: string | null
   password: string | null
   role: $Enums.Role | null
-  isEmailVerified: boolean | null
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
   created_at: Date | null
   updated_at: Date | null
+  picture: string | null
+  emailVerificationExpiry: Date | null
+  emailVerificationToken: string | null
+  isEmailVerified: boolean | null
+  passwordResetExpiry: Date | null
+  passwordResetToken: string | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
   email: string | null
   name: string | null
-  picture: string | null
   password: string | null
   role: $Enums.Role | null
-  isEmailVerified: boolean | null
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
   created_at: Date | null
   updated_at: Date | null
+  picture: string | null
+  emailVerificationExpiry: Date | null
+  emailVerificationToken: string | null
+  isEmailVerified: boolean | null
+  passwordResetExpiry: Date | null
+  passwordResetToken: string | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
   email: number
   name: number
-  picture: number
   password: number
   role: number
   metadata: number
-  isEmailVerified: number
-  emailVerificationToken: number
-  emailVerificationExpiry: number
-  passwordResetToken: number
-  passwordResetExpiry: number
   created_at: number
   updated_at: number
+  picture: number
+  emailVerificationExpiry: number
+  emailVerificationToken: number
+  isEmailVerified: number
+  passwordResetExpiry: number
+  passwordResetToken: number
   _all: number
 }
 
@@ -79,49 +79,49 @@ export type UserMinAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  picture?: true
   password?: true
   role?: true
-  isEmailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
   created_at?: true
   updated_at?: true
+  picture?: true
+  emailVerificationExpiry?: true
+  emailVerificationToken?: true
+  isEmailVerified?: true
+  passwordResetExpiry?: true
+  passwordResetToken?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  picture?: true
   password?: true
   role?: true
-  isEmailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
   created_at?: true
   updated_at?: true
+  picture?: true
+  emailVerificationExpiry?: true
+  emailVerificationToken?: true
+  isEmailVerified?: true
+  passwordResetExpiry?: true
+  passwordResetToken?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
   email?: true
   name?: true
-  picture?: true
   password?: true
   role?: true
   metadata?: true
-  isEmailVerified?: true
-  emailVerificationToken?: true
-  emailVerificationExpiry?: true
-  passwordResetToken?: true
-  passwordResetExpiry?: true
   created_at?: true
   updated_at?: true
+  picture?: true
+  emailVerificationExpiry?: true
+  emailVerificationToken?: true
+  isEmailVerified?: true
+  passwordResetExpiry?: true
+  passwordResetToken?: true
   _all?: true
 }
 
@@ -201,17 +201,17 @@ export type UserGroupByOutputType = {
   id: string
   email: string
   name: string
-  picture: string | null
   password: string | null
   role: $Enums.Role
   metadata: runtime.JsonValue | null
-  isEmailVerified: boolean
-  emailVerificationToken: string | null
-  emailVerificationExpiry: Date | null
-  passwordResetToken: string | null
-  passwordResetExpiry: Date | null
   created_at: Date
   updated_at: Date
+  picture: string | null
+  emailVerificationExpiry: Date | null
+  emailVerificationToken: string | null
+  isEmailVerified: boolean
+  passwordResetExpiry: Date | null
+  passwordResetToken: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -239,48 +239,50 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
-  picture?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   metadata?: Prisma.JsonNullableFilter<"User">
-  isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
+  picture?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
+  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   organizations?: Prisma.OrganizationMemberListRelationFilter
   playing_in?: Prisma.ParticipantListRelationFilter
   player_profiles?: Prisma.PlayerListRelationFilter
-  created_invites?: Prisma.TeamInviteListRelationFilter
-  created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
-  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
   teams?: Prisma.TeamListRelationFilter
+  created_invites?: Prisma.TeamInviteListRelationFilter
+  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
+  created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  picture?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
-  isEmailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   organizations?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   playing_in?: Prisma.ParticipantOrderByRelationAggregateInput
   player_profiles?: Prisma.PlayerOrderByRelationAggregateInput
-  created_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
-  created_tournament_invites?: Prisma.TournamentInviteOrderByRelationAggregateInput
-  followed_tournaments?: Prisma.TournamentFollowerOrderByRelationAggregateInput
   teams?: Prisma.TeamOrderByRelationAggregateInput
+  created_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
+  followed_tournaments?: Prisma.TournamentFollowerOrderByRelationAggregateInput
+  created_tournament_invites?: Prisma.TournamentInviteOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -290,41 +292,42 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
-  picture?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
   metadata?: Prisma.JsonNullableFilter<"User">
-  isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"User"> | Date | string
+  picture?: Prisma.StringNullableFilter<"User"> | string | null
+  emailVerificationExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableFilter<"User"> | string | null
+  isEmailVerified?: Prisma.BoolFilter<"User"> | boolean
+  passwordResetExpiry?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
+  passwordResetToken?: Prisma.StringNullableFilter<"User"> | string | null
   organizations?: Prisma.OrganizationMemberListRelationFilter
   playing_in?: Prisma.ParticipantListRelationFilter
   player_profiles?: Prisma.PlayerListRelationFilter
-  created_invites?: Prisma.TeamInviteListRelationFilter
-  created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
-  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
   teams?: Prisma.TeamListRelationFilter
+  created_invites?: Prisma.TeamInviteListRelationFilter
+  followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
+  created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  picture?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
-  isEmailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  picture?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrderInput | Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  passwordResetExpiry?: Prisma.SortOrderInput | Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -337,213 +340,217 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  picture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"User">
-  isEmailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  emailVerificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  emailVerificationExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  passwordResetExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  picture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  emailVerificationExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  emailVerificationToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isEmailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  passwordResetExpiry?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+  passwordResetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
-  isEmailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  picture?: Prisma.SortOrder
+  emailVerificationExpiry?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  passwordResetExpiry?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  isEmailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  picture?: Prisma.SortOrder
+  emailVerificationExpiry?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  passwordResetExpiry?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  picture?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  isEmailVerified?: Prisma.SortOrder
-  emailVerificationToken?: Prisma.SortOrder
-  emailVerificationExpiry?: Prisma.SortOrder
-  passwordResetToken?: Prisma.SortOrder
-  passwordResetExpiry?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  picture?: Prisma.SortOrder
+  emailVerificationExpiry?: Prisma.SortOrder
+  emailVerificationToken?: Prisma.SortOrder
+  isEmailVerified?: Prisma.SortOrder
+  passwordResetExpiry?: Prisma.SortOrder
+  passwordResetToken?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -568,16 +575,16 @@ export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type UserCreateNestedOneWithoutOrganizationsInput = {
@@ -684,50 +691,68 @@ export type UserUpdateOneRequiredWithoutCreated_tournament_invitesNestedInput = 
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCreated_tournament_invitesInput, Prisma.UserUpdateWithoutCreated_tournament_invitesInput>, Prisma.UserUncheckedUpdateWithoutCreated_tournament_invitesInput>
 }
 
+export type UserCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.UserUpsertWithoutPaymentsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationsInput = {
@@ -750,92 +775,96 @@ export type UserUpdateWithoutOrganizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFollowed_tournamentsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowed_tournamentsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowed_tournamentsInput = {
@@ -858,92 +887,96 @@ export type UserUpdateWithoutFollowed_tournamentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowed_tournamentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlaying_inInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlaying_inInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlaying_inInput = {
@@ -966,92 +999,96 @@ export type UserUpdateWithoutPlaying_inInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlaying_inInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamsInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamsInput = {
@@ -1074,92 +1111,96 @@ export type UserUpdateWithoutTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlayer_profilesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlayer_profilesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
-  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlayer_profilesInput = {
@@ -1182,92 +1223,96 @@ export type UserUpdateWithoutPlayer_profilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
-  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_invitesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
-  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_invitesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_invitesInput = {
@@ -1290,92 +1335,96 @@ export type UserUpdateWithoutCreated_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
-  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
-  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_tournament_invitesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
-  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_tournament_invitesInput = {
   id?: string
   email: string
   name: string
-  picture?: string | null
   password?: string | null
   role?: $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: boolean
-  emailVerificationToken?: string | null
-  emailVerificationExpiry?: Date | string | null
-  passwordResetToken?: string | null
-  passwordResetExpiry?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
   organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
   playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
-  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_tournament_invitesInput = {
@@ -1398,46 +1447,160 @@ export type UserUpdateWithoutCreated_tournament_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
-  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_tournament_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
-  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
   playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+}
+
+export type UserUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPaymentsInput, Prisma.UserUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPaymentsInput, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type UserUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -1449,20 +1612,22 @@ export type UserCountOutputType = {
   organizations: number
   playing_in: number
   player_profiles: number
-  created_invites: number
-  created_tournament_invites: number
-  followed_tournaments: number
   teams: number
+  created_invites: number
+  followed_tournaments: number
+  created_tournament_invites: number
+  payments: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organizations?: boolean | UserCountOutputTypeCountOrganizationsArgs
   playing_in?: boolean | UserCountOutputTypeCountPlaying_inArgs
   player_profiles?: boolean | UserCountOutputTypeCountPlayer_profilesArgs
-  created_invites?: boolean | UserCountOutputTypeCountCreated_invitesArgs
-  created_tournament_invites?: boolean | UserCountOutputTypeCountCreated_tournament_invitesArgs
-  followed_tournaments?: boolean | UserCountOutputTypeCountFollowed_tournamentsArgs
   teams?: boolean | UserCountOutputTypeCountTeamsArgs
+  created_invites?: boolean | UserCountOutputTypeCountCreated_invitesArgs
+  followed_tournaments?: boolean | UserCountOutputTypeCountFollowed_tournamentsArgs
+  created_tournament_invites?: boolean | UserCountOutputTypeCountCreated_tournament_invitesArgs
+  payments?: boolean | UserCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -1499,15 +1664,15 @@ export type UserCountOutputTypeCountPlayer_profilesArgs<ExtArgs extends runtime.
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountCreated_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeamInviteWhereInput
+export type UserCountOutputTypeCountTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountCreated_tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TournamentInviteWhereInput
+export type UserCountOutputTypeCountCreated_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamInviteWhereInput
 }
 
 /**
@@ -1520,8 +1685,15 @@ export type UserCountOutputTypeCountFollowed_tournamentsArgs<ExtArgs extends run
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TeamWhereInput
+export type UserCountOutputTypeCountCreated_tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TournamentInviteWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
 }
 
 
@@ -1529,24 +1701,25 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   email?: boolean
   name?: boolean
-  picture?: boolean
   password?: boolean
   role?: boolean
   metadata?: boolean
-  isEmailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
   created_at?: boolean
   updated_at?: boolean
+  picture?: boolean
+  emailVerificationExpiry?: boolean
+  emailVerificationToken?: boolean
+  isEmailVerified?: boolean
+  passwordResetExpiry?: boolean
+  passwordResetToken?: boolean
   organizations?: boolean | Prisma.User$organizationsArgs<ExtArgs>
   playing_in?: boolean | Prisma.User$playing_inArgs<ExtArgs>
   player_profiles?: boolean | Prisma.User$player_profilesArgs<ExtArgs>
-  created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
-  created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
-  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
   teams?: boolean | Prisma.User$teamsArgs<ExtArgs>
+  created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
+  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
+  created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1554,62 +1727,63 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   email?: boolean
   name?: boolean
-  picture?: boolean
   password?: boolean
   role?: boolean
   metadata?: boolean
-  isEmailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
   created_at?: boolean
   updated_at?: boolean
+  picture?: boolean
+  emailVerificationExpiry?: boolean
+  emailVerificationToken?: boolean
+  isEmailVerified?: boolean
+  passwordResetExpiry?: boolean
+  passwordResetToken?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   email?: boolean
   name?: boolean
-  picture?: boolean
   password?: boolean
   role?: boolean
   metadata?: boolean
-  isEmailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
   created_at?: boolean
   updated_at?: boolean
+  picture?: boolean
+  emailVerificationExpiry?: boolean
+  emailVerificationToken?: boolean
+  isEmailVerified?: boolean
+  passwordResetExpiry?: boolean
+  passwordResetToken?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   email?: boolean
   name?: boolean
-  picture?: boolean
   password?: boolean
   role?: boolean
   metadata?: boolean
-  isEmailVerified?: boolean
-  emailVerificationToken?: boolean
-  emailVerificationExpiry?: boolean
-  passwordResetToken?: boolean
-  passwordResetExpiry?: boolean
   created_at?: boolean
   updated_at?: boolean
+  picture?: boolean
+  emailVerificationExpiry?: boolean
+  emailVerificationToken?: boolean
+  isEmailVerified?: boolean
+  passwordResetExpiry?: boolean
+  passwordResetToken?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "picture" | "password" | "role" | "metadata" | "isEmailVerified" | "emailVerificationToken" | "emailVerificationExpiry" | "passwordResetToken" | "passwordResetExpiry" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "role" | "metadata" | "created_at" | "updated_at" | "picture" | "emailVerificationExpiry" | "emailVerificationToken" | "isEmailVerified" | "passwordResetExpiry" | "passwordResetToken", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organizations?: boolean | Prisma.User$organizationsArgs<ExtArgs>
   playing_in?: boolean | Prisma.User$playing_inArgs<ExtArgs>
   player_profiles?: boolean | Prisma.User$player_profilesArgs<ExtArgs>
-  created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
-  created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
-  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
   teams?: boolean | Prisma.User$teamsArgs<ExtArgs>
+  created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
+  followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
+  created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
+  payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1621,26 +1795,27 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     organizations: Prisma.$OrganizationMemberPayload<ExtArgs>[]
     playing_in: Prisma.$ParticipantPayload<ExtArgs>[]
     player_profiles: Prisma.$PlayerPayload<ExtArgs>[]
-    created_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
-    created_tournament_invites: Prisma.$TournamentInvitePayload<ExtArgs>[]
-    followed_tournaments: Prisma.$TournamentFollowerPayload<ExtArgs>[]
     teams: Prisma.$TeamPayload<ExtArgs>[]
+    created_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
+    followed_tournaments: Prisma.$TournamentFollowerPayload<ExtArgs>[]
+    created_tournament_invites: Prisma.$TournamentInvitePayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
     name: string
-    picture: string | null
     password: string | null
     role: $Enums.Role
     metadata: runtime.JsonValue | null
-    isEmailVerified: boolean
-    emailVerificationToken: string | null
-    emailVerificationExpiry: Date | null
-    passwordResetToken: string | null
-    passwordResetExpiry: Date | null
     created_at: Date
     updated_at: Date
+    picture: string | null
+    emailVerificationExpiry: Date | null
+    emailVerificationToken: string | null
+    isEmailVerified: boolean
+    passwordResetExpiry: Date | null
+    passwordResetToken: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -2038,10 +2213,11 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   organizations<T extends Prisma.User$organizationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   playing_in<T extends Prisma.User$playing_inArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$playing_inArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   player_profiles<T extends Prisma.User$player_profilesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$player_profilesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  created_invites<T extends Prisma.User$created_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  created_tournament_invites<T extends Prisma.User$created_tournament_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_tournament_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  followed_tournaments<T extends Prisma.User$followed_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followed_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   teams<T extends Prisma.User$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  created_invites<T extends Prisma.User$created_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followed_tournaments<T extends Prisma.User$followed_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followed_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  created_tournament_invites<T extends Prisma.User$created_tournament_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_tournament_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2074,17 +2250,17 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly picture: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
   readonly metadata: Prisma.FieldRef<"User", 'Json'>
-  readonly isEmailVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly emailVerificationToken: Prisma.FieldRef<"User", 'String'>
-  readonly emailVerificationExpiry: Prisma.FieldRef<"User", 'DateTime'>
-  readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
-  readonly passwordResetExpiry: Prisma.FieldRef<"User", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"User", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"User", 'DateTime'>
+  readonly picture: Prisma.FieldRef<"User", 'String'>
+  readonly emailVerificationExpiry: Prisma.FieldRef<"User", 'DateTime'>
+  readonly emailVerificationToken: Prisma.FieldRef<"User", 'String'>
+  readonly isEmailVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly passwordResetExpiry: Prisma.FieldRef<"User", 'DateTime'>
+  readonly passwordResetToken: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -2545,6 +2721,30 @@ export type User$player_profilesArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
+ * User.teams
+ */
+export type User$teamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Team
+   */
+  select?: Prisma.TeamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Team
+   */
+  omit?: Prisma.TeamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamInclude<ExtArgs> | null
+  where?: Prisma.TeamWhereInput
+  orderBy?: Prisma.TeamOrderByWithRelationInput | Prisma.TeamOrderByWithRelationInput[]
+  cursor?: Prisma.TeamWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
+}
+
+/**
  * User.created_invites
  */
 export type User$created_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2566,30 +2766,6 @@ export type User$created_invitesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.TeamInviteScalarFieldEnum | Prisma.TeamInviteScalarFieldEnum[]
-}
-
-/**
- * User.created_tournament_invites
- */
-export type User$created_tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TournamentInvite
-   */
-  select?: Prisma.TournamentInviteSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TournamentInvite
-   */
-  omit?: Prisma.TournamentInviteOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TournamentInviteInclude<ExtArgs> | null
-  where?: Prisma.TournamentInviteWhereInput
-  orderBy?: Prisma.TournamentInviteOrderByWithRelationInput | Prisma.TournamentInviteOrderByWithRelationInput[]
-  cursor?: Prisma.TournamentInviteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TournamentInviteScalarFieldEnum | Prisma.TournamentInviteScalarFieldEnum[]
 }
 
 /**
@@ -2617,27 +2793,51 @@ export type User$followed_tournamentsArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * User.teams
+ * User.created_tournament_invites
  */
-export type User$teamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$created_tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Team
+   * Select specific fields to fetch from the TournamentInvite
    */
-  select?: Prisma.TeamSelect<ExtArgs> | null
+  select?: Prisma.TournamentInviteSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Team
+   * Omit specific fields from the TournamentInvite
    */
-  omit?: Prisma.TeamOmit<ExtArgs> | null
+  omit?: Prisma.TournamentInviteOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TeamInclude<ExtArgs> | null
-  where?: Prisma.TeamWhereInput
-  orderBy?: Prisma.TeamOrderByWithRelationInput | Prisma.TeamOrderByWithRelationInput[]
-  cursor?: Prisma.TeamWhereUniqueInput
+  include?: Prisma.TournamentInviteInclude<ExtArgs> | null
+  where?: Prisma.TournamentInviteWhereInput
+  orderBy?: Prisma.TournamentInviteOrderByWithRelationInput | Prisma.TournamentInviteOrderByWithRelationInput[]
+  cursor?: Prisma.TournamentInviteWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
+  distinct?: Prisma.TournamentInviteScalarFieldEnum | Prisma.TournamentInviteScalarFieldEnum[]
+}
+
+/**
+ * User.payments
+ */
+export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

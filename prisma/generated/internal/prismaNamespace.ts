@@ -400,7 +400,9 @@ export const ModelName = {
   Social: 'Social',
   Venue: 'Venue',
   TeamInvite: 'TeamInvite',
-  TournamentInvite: 'TournamentInvite'
+  TournamentInvite: 'TournamentInvite',
+  Subscription: 'Subscription',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -416,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite"
+    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "subscription" | "payment"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1678,6 +1680,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Subscription: {
+      payload: Prisma.$SubscriptionPayload<ExtArgs>
+      fields: Prisma.SubscriptionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SubscriptionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SubscriptionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        findFirst: {
+          args: Prisma.SubscriptionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SubscriptionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        findMany: {
+          args: Prisma.SubscriptionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        create: {
+          args: Prisma.SubscriptionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        createMany: {
+          args: Prisma.SubscriptionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SubscriptionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        delete: {
+          args: Prisma.SubscriptionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        update: {
+          args: Prisma.SubscriptionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SubscriptionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SubscriptionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SubscriptionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SubscriptionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SubscriptionPayload>
+        }
+        aggregate: {
+          args: Prisma.SubscriptionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSubscription>
+        }
+        groupBy: {
+          args: Prisma.SubscriptionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SubscriptionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SubscriptionCountAggregateOutputType> | number
+        }
+      }
+    }
+    Payment: {
+      payload: Prisma.$PaymentPayload<ExtArgs>
+      fields: Prisma.PaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.PaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findMany: {
+          args: Prisma.PaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        create: {
+          args: Prisma.PaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        createMany: {
+          args: Prisma.PaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.PaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        update: {
+          args: Prisma.PaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayment>
+        }
+        groupBy: {
+          args: Prisma.PaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1721,17 +1871,17 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  picture: 'picture',
   password: 'password',
   role: 'role',
   metadata: 'metadata',
-  isEmailVerified: 'isEmailVerified',
-  emailVerificationToken: 'emailVerificationToken',
-  emailVerificationExpiry: 'emailVerificationExpiry',
-  passwordResetToken: 'passwordResetToken',
-  passwordResetExpiry: 'passwordResetExpiry',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  picture: 'picture',
+  emailVerificationExpiry: 'emailVerificationExpiry',
+  emailVerificationToken: 'emailVerificationToken',
+  isEmailVerified: 'isEmailVerified',
+  passwordResetExpiry: 'passwordResetExpiry',
+  passwordResetToken: 'passwordResetToken'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -1741,13 +1891,13 @@ export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  description: 'description',
   logoUrl: 'logoUrl',
   color: 'color',
   phone: 'phone',
   isVerified: 'isVerified',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  description: 'description'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -1766,34 +1916,37 @@ export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalar
 export const TournamentScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  customName: 'customName',
   description: 'description',
-  logoUrl: 'logoUrl',
-  bannerUrl: 'bannerUrl',
-  location: 'location',
-  timezone: 'timezone',
-  visibility: 'visibility',
-  sport: 'sport',
-  type: 'type',
-  participantType: 'participantType',
-  scoringRules: 'scoringRules',
-  maxParticipants: 'maxParticipants',
-  registrationOpen: 'registrationOpen',
-  registrationClose: 'registrationClose',
-  autoApprove: 'autoApprove',
-  isPinned: 'isPinned',
-  twoLegsKnockout: 'twoLegsKnockout',
-  doubleRoundRobin: 'doubleRoundRobin',
-  thirdPlaceMatch: 'thirdPlaceMatch',
-  numberOfGroups: 'numberOfGroups',
-  teamsPerGroup: 'teamsPerGroup',
   start_date: 'start_date',
   end_date: 'end_date',
   created_at: 'created_at',
   updated_at: 'updated_at',
+  autoApprove: 'autoApprove',
+  bannerUrl: 'bannerUrl',
+  location: 'location',
+  logoUrl: 'logoUrl',
+  maxParticipants: 'maxParticipants',
+  participantType: 'participantType',
+  registrationClose: 'registrationClose',
+  registrationOpen: 'registrationOpen',
+  scoringRules: 'scoringRules',
+  sport: 'sport',
+  timezone: 'timezone',
+  type: 'type',
+  visibility: 'visibility',
+  numberOfGroups: 'numberOfGroups',
+  teamsPerGroup: 'teamsPerGroup',
+  customName: 'customName',
+  thirdPlaceMatch: 'thirdPlaceMatch',
+  twoLegsKnockout: 'twoLegsKnockout',
+  isPinned: 'isPinned',
   organization_id: 'organization_id',
+  parent_id: 'parent_id',
   seasonName: 'seasonName',
-  parent_id: 'parent_id'
+  doubleRoundRobin: 'doubleRoundRobin',
+  isPremium: 'isPremium',
+  isPaidRegistration: 'isPaidRegistration',
+  registrationFee: 'registrationFee'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
@@ -1826,13 +1979,13 @@ export const ParticipantScalarFieldEnum = {
   team_id: 'team_id',
   customName: 'customName',
   seed: 'seed',
-  logoUrl: 'logoUrl',
   status: 'status',
-  groupId: 'groupId',
-  linkCode: 'linkCode',
-  linkCodeExpires: 'linkCodeExpires',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  groupId: 'groupId',
+  logoUrl: 'logoUrl',
+  linkCode: 'linkCode',
+  linkCodeExpires: 'linkCodeExpires'
 } as const
 
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
@@ -1841,25 +1994,25 @@ export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[key
 export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
-  groupId: 'groupId',
-  stage: 'stage',
   round: 'round',
-  roundName: 'roundName',
   matchNumber: 'matchNumber',
   startTime: 'startTime',
-  venue: 'venue',
   homeTeamId: 'homeTeamId',
-  homeTeamPlaceholder: 'homeTeamPlaceholder',
   awayTeamId: 'awayTeamId',
-  awayTeamPlaceholder: 'awayTeamPlaceholder',
-  nextFixtureId: 'nextFixtureId',
   homeScore: 'homeScore',
   awayScore: 'awayScore',
-  homePenaltyScore: 'homePenaltyScore',
-  awayPenaltyScore: 'awayPenaltyScore',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  awayPenaltyScore: 'awayPenaltyScore',
+  awayTeamPlaceholder: 'awayTeamPlaceholder',
+  groupId: 'groupId',
+  homePenaltyScore: 'homePenaltyScore',
+  homeTeamPlaceholder: 'homeTeamPlaceholder',
+  nextFixtureId: 'nextFixtureId',
+  roundName: 'roundName',
+  stage: 'stage',
+  venue: 'venue'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
@@ -1868,9 +2021,9 @@ export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeo
 export const TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  created_at: 'created_at',
   logoUrl: 'logoUrl',
   ownerId: 'ownerId',
-  created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
@@ -1919,14 +2072,14 @@ export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typ
 export const PlayerScalarFieldEnum = {
   id: 'id',
   participantId: 'participantId',
-  userId: 'userId',
   name: 'name',
   number: 'number',
   position: 'position',
-  avatarUrl: 'avatarUrl',
-  status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  avatarUrl: 'avatarUrl',
+  userId: 'userId',
+  status: 'status'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
@@ -1935,12 +2088,12 @@ export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof 
 export const SponsorScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   logoUrl: 'logoUrl',
   websiteUrl: 'websiteUrl',
   tournament_id: 'tournament_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  description: 'description'
 } as const
 
 export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
@@ -1952,9 +2105,9 @@ export const SocialScalarFieldEnum = {
   url: 'url',
   handle: 'handle',
   tournament_id: 'tournament_id',
-  organization_id: 'organization_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  organization_id: 'organization_id'
 } as const
 
 export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
@@ -2002,6 +2155,45 @@ export const TournamentInviteScalarFieldEnum = {
 } as const
 
 export type TournamentInviteScalarFieldEnum = (typeof TournamentInviteScalarFieldEnum)[keyof typeof TournamentInviteScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  plan: 'plan',
+  status: 'status',
+  paystackCustomerCode: 'paystackCustomerCode',
+  paystackSubscriptionCode: 'paystackSubscriptionCode',
+  paystackPlanCode: 'paystackPlanCode',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  cancelledAt: 'cancelledAt',
+  trialEnd: 'trialEnd',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  tournamentId: 'tournamentId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paystackReference: 'paystackReference',
+  paystackTransactionId: 'paystackTransactionId',
+  plan: 'plan',
+  metadata: 'metadata',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  userId: 'userId',
+  type: 'type'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2101,13 +2293,6 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2118,6 +2303,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2136,30 +2328,16 @@ export type ListEnumOrganizationRoleFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
- * Reference to a field of type 'Visibility'
+ * Reference to a field of type 'Int'
  */
-export type EnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility'>
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
 /**
- * Reference to a field of type 'Visibility[]'
+ * Reference to a field of type 'Int[]'
  */
-export type ListEnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility[]'>
-    
-
-
-/**
- * Reference to a field of type 'TournamentType'
- */
-export type EnumTournamentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TournamentType'>
-    
-
-
-/**
- * Reference to a field of type 'TournamentType[]'
- */
-export type ListEnumTournamentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TournamentType[]'>
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -2178,16 +2356,30 @@ export type ListEnumParticipantTypeFieldRefInput<$PrismaModel> = FieldRefInputTy
 
 
 /**
- * Reference to a field of type 'Int'
+ * Reference to a field of type 'TournamentType'
  */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+export type EnumTournamentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TournamentType'>
     
 
 
 /**
- * Reference to a field of type 'Int[]'
+ * Reference to a field of type 'TournamentType[]'
  */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+export type ListEnumTournamentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TournamentType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Visibility'
+ */
+export type EnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility'>
+    
+
+
+/**
+ * Reference to a field of type 'Visibility[]'
+ */
+export type ListEnumVisibilityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Visibility[]'>
     
 
 
@@ -2206,20 +2398,6 @@ export type ListEnumParticipantStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
- * Reference to a field of type 'FixtureStage'
- */
-export type EnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage'>
-    
-
-
-/**
- * Reference to a field of type 'FixtureStage[]'
- */
-export type ListEnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage[]'>
-    
-
-
-/**
  * Reference to a field of type 'FixtureStatus'
  */
 export type EnumFixtureStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStatus'>
@@ -2230,6 +2408,20 @@ export type EnumFixtureStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
  * Reference to a field of type 'FixtureStatus[]'
  */
 export type ListEnumFixtureStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FixtureStage'
+ */
+export type EnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage'>
+    
+
+
+/**
+ * Reference to a field of type 'FixtureStage[]'
+ */
+export type ListEnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FixtureStage[]'>
     
 
 
@@ -2258,6 +2450,48 @@ export type EnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'PlayerStatus[]'
  */
 export type ListEnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionPlan'
+ */
+export type EnumSubscriptionPlanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPlan'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionPlan[]'
+ */
+export type ListEnumSubscriptionPlanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionPlan[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionStatus'
+ */
+export type EnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'SubscriptionStatus[]'
+ */
+export type ListEnumSubscriptionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SubscriptionStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus'
+ */
+export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus[]'
+ */
+export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
     
 
 
@@ -2386,6 +2620,8 @@ export type GlobalOmitConfig = {
   venue?: Prisma.VenueOmit
   teamInvite?: Prisma.TeamInviteOmit
   tournamentInvite?: Prisma.TournamentInviteOmit
+  subscription?: Prisma.SubscriptionOmit
+  payment?: Prisma.PaymentOmit
 }
 
 /* Types for Logging */

@@ -41,13 +41,13 @@ export type ParticipantMinAggregateOutputType = {
   team_id: string | null
   customName: string | null
   seed: number | null
-  logoUrl: string | null
   status: $Enums.ParticipantStatus | null
-  groupId: string | null
-  linkCode: string | null
-  linkCodeExpires: Date | null
   created_at: Date | null
   updated_at: Date | null
+  groupId: string | null
+  logoUrl: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
 }
 
 export type ParticipantMaxAggregateOutputType = {
@@ -57,13 +57,13 @@ export type ParticipantMaxAggregateOutputType = {
   team_id: string | null
   customName: string | null
   seed: number | null
-  logoUrl: string | null
   status: $Enums.ParticipantStatus | null
-  groupId: string | null
-  linkCode: string | null
-  linkCodeExpires: Date | null
   created_at: Date | null
   updated_at: Date | null
+  groupId: string | null
+  logoUrl: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
 }
 
 export type ParticipantCountAggregateOutputType = {
@@ -73,13 +73,13 @@ export type ParticipantCountAggregateOutputType = {
   team_id: number
   customName: number
   seed: number
-  logoUrl: number
   status: number
-  groupId: number
-  linkCode: number
-  linkCodeExpires: number
   created_at: number
   updated_at: number
+  groupId: number
+  logoUrl: number
+  linkCode: number
+  linkCodeExpires: number
   _all: number
 }
 
@@ -99,13 +99,13 @@ export type ParticipantMinAggregateInputType = {
   team_id?: true
   customName?: true
   seed?: true
-  logoUrl?: true
   status?: true
-  groupId?: true
-  linkCode?: true
-  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
+  groupId?: true
+  logoUrl?: true
+  linkCode?: true
+  linkCodeExpires?: true
 }
 
 export type ParticipantMaxAggregateInputType = {
@@ -115,13 +115,13 @@ export type ParticipantMaxAggregateInputType = {
   team_id?: true
   customName?: true
   seed?: true
-  logoUrl?: true
   status?: true
-  groupId?: true
-  linkCode?: true
-  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
+  groupId?: true
+  logoUrl?: true
+  linkCode?: true
+  linkCodeExpires?: true
 }
 
 export type ParticipantCountAggregateInputType = {
@@ -131,13 +131,13 @@ export type ParticipantCountAggregateInputType = {
   team_id?: true
   customName?: true
   seed?: true
-  logoUrl?: true
   status?: true
-  groupId?: true
-  linkCode?: true
-  linkCodeExpires?: true
   created_at?: true
   updated_at?: true
+  groupId?: true
+  logoUrl?: true
+  linkCode?: true
+  linkCodeExpires?: true
   _all?: true
 }
 
@@ -234,13 +234,13 @@ export type ParticipantGroupByOutputType = {
   team_id: string | null
   customName: string | null
   seed: number | null
-  logoUrl: string | null
   status: $Enums.ParticipantStatus
-  groupId: string | null
-  linkCode: string | null
-  linkCodeExpires: Date | null
   created_at: Date
   updated_at: Date
+  groupId: string | null
+  logoUrl: string | null
+  linkCode: string | null
+  linkCodeExpires: Date | null
   _count: ParticipantCountAggregateOutputType | null
   _avg: ParticipantAvgAggregateOutputType | null
   _sum: ParticipantSumAggregateOutputType | null
@@ -273,23 +273,23 @@ export type ParticipantWhereInput = {
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
-  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
-  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
-  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
-  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
-  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
-  home_fixtures?: Prisma.FixtureListRelationFilter
+  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   away_fixtures?: Prisma.FixtureListRelationFilter
+  home_fixtures?: Prisma.FixtureListRelationFilter
   matchEvents?: Prisma.MatchEventListRelationFilter
   relatedMatchEvents?: Prisma.MatchEventListRelationFilter
-  standings?: Prisma.StandingListRelationFilter
+  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
+  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   players?: Prisma.PlayerListRelationFilter
+  standings?: Prisma.StandingListRelationFilter
   invites?: Prisma.TeamInviteListRelationFilter
 }
 
@@ -300,23 +300,23 @@ export type ParticipantOrderByWithRelationInput = {
   team_id?: Prisma.SortOrderInput | Prisma.SortOrder
   customName?: Prisma.SortOrderInput | Prisma.SortOrder
   seed?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
-  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  tournament?: Prisma.TournamentOrderByWithRelationInput
-  user?: Prisma.UserOrderByWithRelationInput
-  team?: Prisma.TeamOrderByWithRelationInput
-  group?: Prisma.GroupOrderByWithRelationInput
-  home_fixtures?: Prisma.FixtureOrderByRelationAggregateInput
+  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   away_fixtures?: Prisma.FixtureOrderByRelationAggregateInput
+  home_fixtures?: Prisma.FixtureOrderByRelationAggregateInput
   matchEvents?: Prisma.MatchEventOrderByRelationAggregateInput
   relatedMatchEvents?: Prisma.MatchEventOrderByRelationAggregateInput
-  standings?: Prisma.StandingOrderByRelationAggregateInput
+  group?: Prisma.GroupOrderByWithRelationInput
+  team?: Prisma.TeamOrderByWithRelationInput
+  tournament?: Prisma.TournamentOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
   players?: Prisma.PlayerOrderByRelationAggregateInput
+  standings?: Prisma.StandingOrderByRelationAggregateInput
   invites?: Prisma.TeamInviteOrderByRelationAggregateInput
 }
 
@@ -331,22 +331,22 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
-  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
-  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
-  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
-  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
-  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
-  home_fixtures?: Prisma.FixtureListRelationFilter
+  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   away_fixtures?: Prisma.FixtureListRelationFilter
+  home_fixtures?: Prisma.FixtureListRelationFilter
   matchEvents?: Prisma.MatchEventListRelationFilter
   relatedMatchEvents?: Prisma.MatchEventListRelationFilter
-  standings?: Prisma.StandingListRelationFilter
+  group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
+  team?: Prisma.XOR<Prisma.TeamNullableScalarRelationFilter, Prisma.TeamWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   players?: Prisma.PlayerListRelationFilter
+  standings?: Prisma.StandingListRelationFilter
   invites?: Prisma.TeamInviteListRelationFilter
 }, "id" | "linkCode">
 
@@ -357,13 +357,13 @@ export type ParticipantOrderByWithAggregationInput = {
   team_id?: Prisma.SortOrderInput | Prisma.SortOrder
   customName?: Prisma.SortOrderInput | Prisma.SortOrder
   seed?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
-  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
-  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
-  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  groupId?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.ParticipantCountOrderByAggregateInput
   _avg?: Prisma.ParticipantAvgOrderByAggregateInput
   _max?: Prisma.ParticipantMaxOrderByAggregateInput
@@ -381,35 +381,35 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   team_id?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableWithAggregatesFilter<"Participant"> | number | null
-  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusWithAggregatesFilter<"Participant"> | $Enums.ParticipantStatus
-  groupId?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
-  linkCode?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
-  linkCodeExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
+  groupId?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"Participant"> | Date | string | null
 }
 
 export type ParticipantCreateInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -420,19 +420,19 @@ export type ParticipantUncheckedCreateInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -440,22 +440,22 @@ export type ParticipantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -466,19 +466,19 @@ export type ParticipantUncheckedUpdateInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -489,25 +489,25 @@ export type ParticipantCreateManyInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
 }
 
 export type ParticipantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ParticipantUncheckedUpdateManyInput = {
@@ -517,13 +517,13 @@ export type ParticipantUncheckedUpdateManyInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ParticipantListRelationFilter = {
@@ -543,13 +543,13 @@ export type ParticipantCountOrderByAggregateInput = {
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  groupId?: Prisma.SortOrder
-  linkCode?: Prisma.SortOrder
-  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
 }
 
 export type ParticipantAvgOrderByAggregateInput = {
@@ -563,13 +563,13 @@ export type ParticipantMaxOrderByAggregateInput = {
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  groupId?: Prisma.SortOrder
-  linkCode?: Prisma.SortOrder
-  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
 }
 
 export type ParticipantMinOrderByAggregateInput = {
@@ -579,13 +579,13 @@ export type ParticipantMinOrderByAggregateInput = {
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  groupId?: Prisma.SortOrder
-  linkCode?: Prisma.SortOrder
-  linkCodeExpires?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  groupId?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  linkCode?: Prisma.SortOrder
+  linkCodeExpires?: Prisma.SortOrder
 }
 
 export type ParticipantSumOrderByAggregateInput = {
@@ -732,26 +732,16 @@ export type EnumParticipantStatusFieldUpdateOperationsInput = {
   set?: $Enums.ParticipantStatus
 }
 
-export type ParticipantCreateNestedOneWithoutHome_fixturesInput = {
-  create?: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
-  connectOrCreate?: Prisma.ParticipantCreateOrConnectWithoutHome_fixturesInput
-  connect?: Prisma.ParticipantWhereUniqueInput
-}
-
 export type ParticipantCreateNestedOneWithoutAway_fixturesInput = {
   create?: Prisma.XOR<Prisma.ParticipantCreateWithoutAway_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutAway_fixturesInput>
   connectOrCreate?: Prisma.ParticipantCreateOrConnectWithoutAway_fixturesInput
   connect?: Prisma.ParticipantWhereUniqueInput
 }
 
-export type ParticipantUpdateOneWithoutHome_fixturesNestedInput = {
+export type ParticipantCreateNestedOneWithoutHome_fixturesInput = {
   create?: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
   connectOrCreate?: Prisma.ParticipantCreateOrConnectWithoutHome_fixturesInput
-  upsert?: Prisma.ParticipantUpsertWithoutHome_fixturesInput
-  disconnect?: Prisma.ParticipantWhereInput | boolean
-  delete?: Prisma.ParticipantWhereInput | boolean
   connect?: Prisma.ParticipantWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.ParticipantUpdateToOneWithWhereWithoutHome_fixturesInput, Prisma.ParticipantUpdateWithoutHome_fixturesInput>, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
 }
 
 export type ParticipantUpdateOneWithoutAway_fixturesNestedInput = {
@@ -762,6 +752,16 @@ export type ParticipantUpdateOneWithoutAway_fixturesNestedInput = {
   delete?: Prisma.ParticipantWhereInput | boolean
   connect?: Prisma.ParticipantWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ParticipantUpdateToOneWithWhereWithoutAway_fixturesInput, Prisma.ParticipantUpdateWithoutAway_fixturesInput>, Prisma.ParticipantUncheckedUpdateWithoutAway_fixturesInput>
+}
+
+export type ParticipantUpdateOneWithoutHome_fixturesNestedInput = {
+  create?: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
+  connectOrCreate?: Prisma.ParticipantCreateOrConnectWithoutHome_fixturesInput
+  upsert?: Prisma.ParticipantUpsertWithoutHome_fixturesInput
+  disconnect?: Prisma.ParticipantWhereInput | boolean
+  delete?: Prisma.ParticipantWhereInput | boolean
+  connect?: Prisma.ParticipantWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ParticipantUpdateToOneWithWhereWithoutHome_fixturesInput, Prisma.ParticipantUpdateWithoutHome_fixturesInput>, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
 }
 
 export type ParticipantCreateNestedManyWithoutTeamInput = {
@@ -884,21 +884,21 @@ export type ParticipantCreateWithoutUserInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -908,19 +908,19 @@ export type ParticipantUncheckedCreateWithoutUserInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -960,34 +960,34 @@ export type ParticipantScalarWhereInput = {
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
-  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
-  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
-  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
-  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
+  groupId?: Prisma.StringNullableFilter<"Participant"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCode?: Prisma.StringNullableFilter<"Participant"> | string | null
+  linkCodeExpires?: Prisma.DateTimeNullableFilter<"Participant"> | Date | string | null
 }
 
 export type ParticipantCreateWithoutTournamentInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -997,19 +997,19 @@ export type ParticipantUncheckedCreateWithoutTournamentInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1043,21 +1043,21 @@ export type ParticipantCreateWithoutGroupInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -1068,18 +1068,18 @@ export type ParticipantUncheckedCreateWithoutGroupInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1109,74 +1109,25 @@ export type ParticipantUpdateManyWithWhereWithoutGroupInput = {
   data: Prisma.XOR<Prisma.ParticipantUpdateManyMutationInput, Prisma.ParticipantUncheckedUpdateManyWithoutGroupInput>
 }
 
-export type ParticipantCreateWithoutHome_fixturesInput = {
-  id?: string
-  customName?: string | null
-  seed?: number | null
-  logoUrl?: string | null
-  status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
-  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
-  relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
-  players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
-  invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
-}
-
-export type ParticipantUncheckedCreateWithoutHome_fixturesInput = {
-  id?: string
-  tournament_id: string
-  user_id?: string | null
-  team_id?: string | null
-  customName?: string | null
-  seed?: number | null
-  logoUrl?: string | null
-  status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
-  created_at?: Date | string
-  updated_at?: Date | string
-  away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
-  matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
-  relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
-  players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
-  invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
-}
-
-export type ParticipantCreateOrConnectWithoutHome_fixturesInput = {
-  where: Prisma.ParticipantWhereUniqueInput
-  create: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
-}
-
 export type ParticipantCreateWithoutAway_fixturesInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -1187,18 +1138,18 @@ export type ParticipantUncheckedCreateWithoutAway_fixturesInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1207,59 +1158,53 @@ export type ParticipantCreateOrConnectWithoutAway_fixturesInput = {
   create: Prisma.XOR<Prisma.ParticipantCreateWithoutAway_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutAway_fixturesInput>
 }
 
-export type ParticipantUpsertWithoutHome_fixturesInput = {
-  update: Prisma.XOR<Prisma.ParticipantUpdateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
+export type ParticipantCreateWithoutHome_fixturesInput = {
+  id?: string
+  customName?: string | null
+  seed?: number | null
+  status?: $Enums.ParticipantStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
+  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
+  relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
+  players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
+}
+
+export type ParticipantUncheckedCreateWithoutHome_fixturesInput = {
+  id?: string
+  tournament_id: string
+  user_id?: string | null
+  team_id?: string | null
+  customName?: string | null
+  seed?: number | null
+  status?: $Enums.ParticipantStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
+  away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
+  relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
+  players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
+  invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
+}
+
+export type ParticipantCreateOrConnectWithoutHome_fixturesInput = {
+  where: Prisma.ParticipantWhereUniqueInput
   create: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
-  where?: Prisma.ParticipantWhereInput
-}
-
-export type ParticipantUpdateToOneWithWhereWithoutHome_fixturesInput = {
-  where?: Prisma.ParticipantWhereInput
-  data: Prisma.XOR<Prisma.ParticipantUpdateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
-}
-
-export type ParticipantUpdateWithoutHome_fixturesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
-  matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
-  relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
-  players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
-  invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
-}
-
-export type ParticipantUncheckedUpdateWithoutHome_fixturesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
-  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
-  matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
-  relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
-  players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
-  invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
 export type ParticipantUpsertWithoutAway_fixturesInput = {
@@ -1277,21 +1222,21 @@ export type ParticipantUpdateWithoutAway_fixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1302,18 +1247,73 @@ export type ParticipantUncheckedUpdateWithoutAway_fixturesInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
+  invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
+}
+
+export type ParticipantUpsertWithoutHome_fixturesInput = {
+  update: Prisma.XOR<Prisma.ParticipantUpdateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
+  create: Prisma.XOR<Prisma.ParticipantCreateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedCreateWithoutHome_fixturesInput>
+  where?: Prisma.ParticipantWhereInput
+}
+
+export type ParticipantUpdateToOneWithWhereWithoutHome_fixturesInput = {
+  where?: Prisma.ParticipantWhereInput
+  data: Prisma.XOR<Prisma.ParticipantUpdateWithoutHome_fixturesInput, Prisma.ParticipantUncheckedUpdateWithoutHome_fixturesInput>
+}
+
+export type ParticipantUpdateWithoutHome_fixturesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
+  relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
+  players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
+}
+
+export type ParticipantUncheckedUpdateWithoutHome_fixturesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
+  user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
+  relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
+  players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1321,21 +1321,21 @@ export type ParticipantCreateWithoutTeamInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -1345,19 +1345,19 @@ export type ParticipantUncheckedCreateWithoutTeamInput = {
   user_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1391,21 +1391,21 @@ export type ParticipantCreateWithoutMatchEventsInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
+  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
   user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
-  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
-  relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -1416,18 +1416,18 @@ export type ParticipantUncheckedCreateWithoutMatchEventsInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1440,21 +1440,21 @@ export type ParticipantCreateWithoutRelatedMatchEventsInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
+  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
   tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
   user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
-  away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
-  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
 
@@ -1465,18 +1465,18 @@ export type ParticipantUncheckedCreateWithoutRelatedMatchEventsInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutParticipantInput
 }
 
@@ -1500,21 +1500,21 @@ export type ParticipantUpdateWithoutMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
   user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
-  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
-  relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1525,18 +1525,18 @@ export type ParticipantUncheckedUpdateWithoutMatchEventsInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1555,21 +1555,21 @@ export type ParticipantUpdateWithoutRelatedMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
   user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
-  away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
-  matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1580,18 +1580,18 @@ export type ParticipantUncheckedUpdateWithoutRelatedMatchEventsInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1599,20 +1599,20 @@ export type ParticipantCreateWithoutStandingsInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
@@ -1624,15 +1624,15 @@ export type ParticipantUncheckedCreateWithoutStandingsInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
@@ -1659,20 +1659,20 @@ export type ParticipantUpdateWithoutStandingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
@@ -1684,15 +1684,15 @@ export type ParticipantUncheckedUpdateWithoutStandingsInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
@@ -1703,20 +1703,20 @@ export type ParticipantCreateWithoutPlayersInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
   invites?: Prisma.TeamInviteCreateNestedManyWithoutParticipantInput
 }
@@ -1728,15 +1728,15 @@ export type ParticipantUncheckedCreateWithoutPlayersInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
   standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
@@ -1763,20 +1763,20 @@ export type ParticipantUpdateWithoutPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
@@ -1788,15 +1788,15 @@ export type ParticipantUncheckedUpdateWithoutPlayersInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
   standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
@@ -1807,22 +1807,22 @@ export type ParticipantCreateWithoutInvitesInput = {
   id?: string
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
-  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
-  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
-  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
-  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
+  group?: Prisma.GroupCreateNestedOneWithoutParticipantsInput
+  team?: Prisma.TeamCreateNestedOneWithoutParticipantsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutParticipantsInput
+  user?: Prisma.UserCreateNestedOneWithoutPlaying_inInput
   players?: Prisma.PlayerCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingCreateNestedManyWithoutParticipantInput
 }
 
 export type ParticipantUncheckedCreateWithoutInvitesInput = {
@@ -1832,19 +1832,19 @@ export type ParticipantUncheckedCreateWithoutInvitesInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
-  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutAwayTeamInput
+  home_fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutHomeTeamInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutParticipantInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutRelatedParticipantInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
   players?: Prisma.PlayerUncheckedCreateNestedManyWithoutParticipantInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutParticipantInput
 }
 
 export type ParticipantCreateOrConnectWithoutInvitesInput = {
@@ -1867,22 +1867,22 @@ export type ParticipantUpdateWithoutInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
 }
 
 export type ParticipantUncheckedUpdateWithoutInvitesInput = {
@@ -1892,19 +1892,19 @@ export type ParticipantUncheckedUpdateWithoutInvitesInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
 export type ParticipantCreateManyUserInput = {
@@ -1913,34 +1913,34 @@ export type ParticipantCreateManyUserInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
 }
 
 export type ParticipantUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1950,19 +1950,19 @@ export type ParticipantUncheckedUpdateWithoutUserInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -1972,13 +1972,13 @@ export type ParticipantUncheckedUpdateManyWithoutUserInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ParticipantCreateManyTournamentInput = {
@@ -1987,34 +1987,34 @@ export type ParticipantCreateManyTournamentInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
 }
 
 export type ParticipantUpdateWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2024,19 +2024,19 @@ export type ParticipantUncheckedUpdateWithoutTournamentInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2046,13 +2046,13 @@ export type ParticipantUncheckedUpdateManyWithoutTournamentInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ParticipantCreateManyGroupInput = {
@@ -2062,33 +2062,33 @@ export type ParticipantCreateManyGroupInput = {
   team_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
 }
 
 export type ParticipantUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  team?: Prisma.TeamUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2099,18 +2099,18 @@ export type ParticipantUncheckedUpdateWithoutGroupInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2121,12 +2121,12 @@ export type ParticipantUncheckedUpdateManyWithoutGroupInput = {
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type ParticipantCreateManyTeamInput = {
@@ -2135,34 +2135,34 @@ export type ParticipantCreateManyTeamInput = {
   user_id?: string | null
   customName?: string | null
   seed?: number | null
-  logoUrl?: string | null
   status?: $Enums.ParticipantStatus
-  groupId?: string | null
-  linkCode?: string | null
-  linkCodeExpires?: Date | string | null
   created_at?: Date | string
   updated_at?: Date | string
+  groupId?: string | null
+  logoUrl?: string | null
+  linkCode?: string | null
+  linkCodeExpires?: Date | string | null
 }
 
 export type ParticipantUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
-  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
-  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
-  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
+  group?: Prisma.GroupUpdateOneWithoutParticipantsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutParticipantsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPlaying_inNestedInput
   players?: Prisma.PlayerUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2172,19 +2172,19 @@ export type ParticipantUncheckedUpdateWithoutTeamInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   away_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutAwayTeamNestedInput
+  home_fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutHomeTeamNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutParticipantNestedInput
   relatedMatchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutRelatedParticipantNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   players?: Prisma.PlayerUncheckedUpdateManyWithoutParticipantNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutParticipantNestedInput
   invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutParticipantNestedInput
 }
 
@@ -2194,13 +2194,13 @@ export type ParticipantUncheckedUpdateManyWithoutTeamInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
-  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkCodeExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -2209,22 +2209,22 @@ export type ParticipantUncheckedUpdateManyWithoutTeamInput = {
  */
 
 export type ParticipantCountOutputType = {
-  home_fixtures: number
   away_fixtures: number
+  home_fixtures: number
   matchEvents: number
   relatedMatchEvents: number
-  standings: number
   players: number
+  standings: number
   invites: number
 }
 
 export type ParticipantCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  home_fixtures?: boolean | ParticipantCountOutputTypeCountHome_fixturesArgs
   away_fixtures?: boolean | ParticipantCountOutputTypeCountAway_fixturesArgs
+  home_fixtures?: boolean | ParticipantCountOutputTypeCountHome_fixturesArgs
   matchEvents?: boolean | ParticipantCountOutputTypeCountMatchEventsArgs
   relatedMatchEvents?: boolean | ParticipantCountOutputTypeCountRelatedMatchEventsArgs
-  standings?: boolean | ParticipantCountOutputTypeCountStandingsArgs
   players?: boolean | ParticipantCountOutputTypeCountPlayersArgs
+  standings?: boolean | ParticipantCountOutputTypeCountStandingsArgs
   invites?: boolean | ParticipantCountOutputTypeCountInvitesArgs
 }
 
@@ -2241,14 +2241,14 @@ export type ParticipantCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.
 /**
  * ParticipantCountOutputType without action
  */
-export type ParticipantCountOutputTypeCountHome_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ParticipantCountOutputTypeCountAway_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FixtureWhereInput
 }
 
 /**
  * ParticipantCountOutputType without action
  */
-export type ParticipantCountOutputTypeCountAway_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type ParticipantCountOutputTypeCountHome_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FixtureWhereInput
 }
 
@@ -2269,15 +2269,15 @@ export type ParticipantCountOutputTypeCountRelatedMatchEventsArgs<ExtArgs extend
 /**
  * ParticipantCountOutputType without action
  */
-export type ParticipantCountOutputTypeCountStandingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StandingWhereInput
+export type ParticipantCountOutputTypeCountPlayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PlayerWhereInput
 }
 
 /**
  * ParticipantCountOutputType without action
  */
-export type ParticipantCountOutputTypeCountPlayersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PlayerWhereInput
+export type ParticipantCountOutputTypeCountStandingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StandingWhereInput
 }
 
 /**
@@ -2295,23 +2295,23 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   team_id?: boolean
   customName?: boolean
   seed?: boolean
-  logoUrl?: boolean
   status?: boolean
-  groupId?: boolean
-  linkCode?: boolean
-  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
-  home_fixtures?: boolean | Prisma.Participant$home_fixturesArgs<ExtArgs>
+  groupId?: boolean
+  logoUrl?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
   away_fixtures?: boolean | Prisma.Participant$away_fixturesArgs<ExtArgs>
+  home_fixtures?: boolean | Prisma.Participant$home_fixturesArgs<ExtArgs>
   matchEvents?: boolean | Prisma.Participant$matchEventsArgs<ExtArgs>
   relatedMatchEvents?: boolean | Prisma.Participant$relatedMatchEventsArgs<ExtArgs>
-  standings?: boolean | Prisma.Participant$standingsArgs<ExtArgs>
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Participant$userArgs<ExtArgs>
   players?: boolean | Prisma.Participant$playersArgs<ExtArgs>
+  standings?: boolean | Prisma.Participant$standingsArgs<ExtArgs>
   invites?: boolean | Prisma.Participant$invitesArgs<ExtArgs>
   _count?: boolean | Prisma.ParticipantCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
@@ -2323,17 +2323,17 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   team_id?: boolean
   customName?: boolean
   seed?: boolean
-  logoUrl?: boolean
   status?: boolean
-  groupId?: boolean
-  linkCode?: boolean
-  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
+  groupId?: boolean
+  logoUrl?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
 
 export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -2343,17 +2343,17 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   team_id?: boolean
   customName?: boolean
   seed?: boolean
-  logoUrl?: boolean
   status?: boolean
-  groupId?: boolean
-  linkCode?: boolean
-  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
+  groupId?: boolean
+  logoUrl?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
 }, ExtArgs["result"]["participant"]>
 
 export type ParticipantSelectScalar = {
@@ -2363,56 +2363,56 @@ export type ParticipantSelectScalar = {
   team_id?: boolean
   customName?: boolean
   seed?: boolean
-  logoUrl?: boolean
   status?: boolean
-  groupId?: boolean
-  linkCode?: boolean
-  linkCodeExpires?: boolean
   created_at?: boolean
   updated_at?: boolean
+  groupId?: boolean
+  logoUrl?: boolean
+  linkCode?: boolean
+  linkCodeExpires?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "seed" | "logoUrl" | "status" | "groupId" | "linkCode" | "linkCodeExpires" | "created_at" | "updated_at", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "seed" | "status" | "created_at" | "updated_at" | "groupId" | "logoUrl" | "linkCode" | "linkCodeExpires", ExtArgs["result"]["participant"]>
 export type ParticipantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
-  home_fixtures?: boolean | Prisma.Participant$home_fixturesArgs<ExtArgs>
   away_fixtures?: boolean | Prisma.Participant$away_fixturesArgs<ExtArgs>
+  home_fixtures?: boolean | Prisma.Participant$home_fixturesArgs<ExtArgs>
   matchEvents?: boolean | Prisma.Participant$matchEventsArgs<ExtArgs>
   relatedMatchEvents?: boolean | Prisma.Participant$relatedMatchEventsArgs<ExtArgs>
-  standings?: boolean | Prisma.Participant$standingsArgs<ExtArgs>
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.Participant$userArgs<ExtArgs>
   players?: boolean | Prisma.Participant$playersArgs<ExtArgs>
+  standings?: boolean | Prisma.Participant$standingsArgs<ExtArgs>
   invites?: boolean | Prisma.Participant$invitesArgs<ExtArgs>
   _count?: boolean | Prisma.ParticipantCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ParticipantIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
 }
 export type ParticipantIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
+  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   user?: boolean | Prisma.Participant$userArgs<ExtArgs>
-  team?: boolean | Prisma.Participant$teamArgs<ExtArgs>
-  group?: boolean | Prisma.Participant$groupArgs<ExtArgs>
 }
 
 export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Participant"
   objects: {
-    tournament: Prisma.$TournamentPayload<ExtArgs>
-    user: Prisma.$UserPayload<ExtArgs> | null
-    team: Prisma.$TeamPayload<ExtArgs> | null
-    group: Prisma.$GroupPayload<ExtArgs> | null
-    home_fixtures: Prisma.$FixturePayload<ExtArgs>[]
     away_fixtures: Prisma.$FixturePayload<ExtArgs>[]
+    home_fixtures: Prisma.$FixturePayload<ExtArgs>[]
     matchEvents: Prisma.$MatchEventPayload<ExtArgs>[]
     relatedMatchEvents: Prisma.$MatchEventPayload<ExtArgs>[]
-    standings: Prisma.$StandingPayload<ExtArgs>[]
+    group: Prisma.$GroupPayload<ExtArgs> | null
+    team: Prisma.$TeamPayload<ExtArgs> | null
+    tournament: Prisma.$TournamentPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs> | null
     players: Prisma.$PlayerPayload<ExtArgs>[]
+    standings: Prisma.$StandingPayload<ExtArgs>[]
     invites: Prisma.$TeamInvitePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -2422,13 +2422,13 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     team_id: string | null
     customName: string | null
     seed: number | null
-    logoUrl: string | null
     status: $Enums.ParticipantStatus
-    groupId: string | null
-    linkCode: string | null
-    linkCodeExpires: Date | null
     created_at: Date
     updated_at: Date
+    groupId: string | null
+    logoUrl: string | null
+    linkCode: string | null
+    linkCodeExpires: Date | null
   }, ExtArgs["result"]["participant"]>
   composites: {}
 }
@@ -2823,16 +2823,16 @@ readonly fields: ParticipantFieldRefs;
  */
 export interface Prisma__ParticipantClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  user<T extends Prisma.Participant$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  team<T extends Prisma.Participant$teamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$teamArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  group<T extends Prisma.Participant$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  home_fixtures<T extends Prisma.Participant$home_fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$home_fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   away_fixtures<T extends Prisma.Participant$away_fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$away_fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  home_fixtures<T extends Prisma.Participant$home_fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$home_fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   matchEvents<T extends Prisma.Participant$matchEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$matchEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   relatedMatchEvents<T extends Prisma.Participant$relatedMatchEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$relatedMatchEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MatchEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  standings<T extends Prisma.Participant$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  group<T extends Prisma.Participant$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  team<T extends Prisma.Participant$teamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$teamArgs<ExtArgs>>): Prisma.Prisma__TeamClient<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.Participant$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   players<T extends Prisma.Participant$playersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$playersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  standings<T extends Prisma.Participant$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   invites<T extends Prisma.Participant$invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Participant$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2869,13 +2869,13 @@ export interface ParticipantFieldRefs {
   readonly team_id: Prisma.FieldRef<"Participant", 'String'>
   readonly customName: Prisma.FieldRef<"Participant", 'String'>
   readonly seed: Prisma.FieldRef<"Participant", 'Int'>
-  readonly logoUrl: Prisma.FieldRef<"Participant", 'String'>
   readonly status: Prisma.FieldRef<"Participant", 'ParticipantStatus'>
-  readonly groupId: Prisma.FieldRef<"Participant", 'String'>
-  readonly linkCode: Prisma.FieldRef<"Participant", 'String'>
-  readonly linkCodeExpires: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Participant", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Participant", 'DateTime'>
+  readonly groupId: Prisma.FieldRef<"Participant", 'String'>
+  readonly logoUrl: Prisma.FieldRef<"Participant", 'String'>
+  readonly linkCode: Prisma.FieldRef<"Participant", 'String'>
+  readonly linkCodeExpires: Prisma.FieldRef<"Participant", 'DateTime'>
 }
     
 
@@ -3272,66 +3272,9 @@ export type ParticipantDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
 }
 
 /**
- * Participant.user
+ * Participant.away_fixtures
  */
-export type Participant$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
- * Participant.team
- */
-export type Participant$teamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Team
-   */
-  select?: Prisma.TeamSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Team
-   */
-  omit?: Prisma.TeamOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TeamInclude<ExtArgs> | null
-  where?: Prisma.TeamWhereInput
-}
-
-/**
- * Participant.group
- */
-export type Participant$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Group
-   */
-  select?: Prisma.GroupSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Group
-   */
-  omit?: Prisma.GroupOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.GroupInclude<ExtArgs> | null
-  where?: Prisma.GroupWhereInput
-}
-
-/**
- * Participant.home_fixtures
- */
-export type Participant$home_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Participant$away_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Fixture
    */
@@ -3353,9 +3296,9 @@ export type Participant$home_fixturesArgs<ExtArgs extends runtime.Types.Extensio
 }
 
 /**
- * Participant.away_fixtures
+ * Participant.home_fixtures
  */
-export type Participant$away_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Participant$home_fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Fixture
    */
@@ -3425,27 +3368,60 @@ export type Participant$relatedMatchEventsArgs<ExtArgs extends runtime.Types.Ext
 }
 
 /**
- * Participant.standings
+ * Participant.group
  */
-export type Participant$standingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Participant$groupArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Standing
+   * Select specific fields to fetch from the Group
    */
-  select?: Prisma.StandingSelect<ExtArgs> | null
+  select?: Prisma.GroupSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Standing
+   * Omit specific fields from the Group
    */
-  omit?: Prisma.StandingOmit<ExtArgs> | null
+  omit?: Prisma.GroupOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.StandingInclude<ExtArgs> | null
-  where?: Prisma.StandingWhereInput
-  orderBy?: Prisma.StandingOrderByWithRelationInput | Prisma.StandingOrderByWithRelationInput[]
-  cursor?: Prisma.StandingWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StandingScalarFieldEnum | Prisma.StandingScalarFieldEnum[]
+  include?: Prisma.GroupInclude<ExtArgs> | null
+  where?: Prisma.GroupWhereInput
+}
+
+/**
+ * Participant.team
+ */
+export type Participant$teamArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Team
+   */
+  select?: Prisma.TeamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Team
+   */
+  omit?: Prisma.TeamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamInclude<ExtArgs> | null
+  where?: Prisma.TeamWhereInput
+}
+
+/**
+ * Participant.user
+ */
+export type Participant$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**
@@ -3470,6 +3446,30 @@ export type Participant$playersArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.PlayerScalarFieldEnum | Prisma.PlayerScalarFieldEnum[]
+}
+
+/**
+ * Participant.standings
+ */
+export type Participant$standingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Standing
+   */
+  select?: Prisma.StandingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Standing
+   */
+  omit?: Prisma.StandingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StandingInclude<ExtArgs> | null
+  where?: Prisma.StandingWhereInput
+  orderBy?: Prisma.StandingOrderByWithRelationInput | Prisma.StandingOrderByWithRelationInput[]
+  cursor?: Prisma.StandingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StandingScalarFieldEnum | Prisma.StandingScalarFieldEnum[]
 }
 
 /**

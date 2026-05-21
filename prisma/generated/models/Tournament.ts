@@ -30,109 +30,120 @@ export type TournamentAvgAggregateOutputType = {
   maxParticipants: number | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
+  registrationFee: number | null
 }
 
 export type TournamentSumAggregateOutputType = {
   maxParticipants: number | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
+  registrationFee: number | null
 }
 
 export type TournamentMinAggregateOutputType = {
   id: string | null
   name: string | null
-  customName: string | null
   description: string | null
-  logoUrl: string | null
-  bannerUrl: string | null
-  location: string | null
-  timezone: string | null
-  visibility: $Enums.Visibility | null
-  sport: string | null
-  type: $Enums.TournamentType | null
-  participantType: $Enums.ParticipantType | null
-  maxParticipants: number | null
-  registrationOpen: Date | null
-  registrationClose: Date | null
-  autoApprove: boolean | null
-  isPinned: boolean | null
-  twoLegsKnockout: boolean | null
-  doubleRoundRobin: boolean | null
-  thirdPlaceMatch: boolean | null
-  numberOfGroups: number | null
-  teamsPerGroup: number | null
   start_date: Date | null
   end_date: Date | null
   created_at: Date | null
   updated_at: Date | null
+  autoApprove: boolean | null
+  bannerUrl: string | null
+  location: string | null
+  logoUrl: string | null
+  maxParticipants: number | null
+  participantType: $Enums.ParticipantType | null
+  registrationClose: Date | null
+  registrationOpen: Date | null
+  sport: string | null
+  timezone: string | null
+  type: $Enums.TournamentType | null
+  visibility: $Enums.Visibility | null
+  numberOfGroups: number | null
+  teamsPerGroup: number | null
+  customName: string | null
+  thirdPlaceMatch: boolean | null
+  twoLegsKnockout: boolean | null
+  isPinned: boolean | null
   organization_id: string | null
-  seasonName: string | null
   parent_id: string | null
+  seasonName: string | null
+  doubleRoundRobin: boolean | null
+  isPremium: boolean | null
+  isPaidRegistration: boolean | null
+  registrationFee: number | null
 }
 
 export type TournamentMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  customName: string | null
   description: string | null
-  logoUrl: string | null
-  bannerUrl: string | null
-  location: string | null
-  timezone: string | null
-  visibility: $Enums.Visibility | null
-  sport: string | null
-  type: $Enums.TournamentType | null
-  participantType: $Enums.ParticipantType | null
-  maxParticipants: number | null
-  registrationOpen: Date | null
-  registrationClose: Date | null
-  autoApprove: boolean | null
-  isPinned: boolean | null
-  twoLegsKnockout: boolean | null
-  doubleRoundRobin: boolean | null
-  thirdPlaceMatch: boolean | null
-  numberOfGroups: number | null
-  teamsPerGroup: number | null
   start_date: Date | null
   end_date: Date | null
   created_at: Date | null
   updated_at: Date | null
+  autoApprove: boolean | null
+  bannerUrl: string | null
+  location: string | null
+  logoUrl: string | null
+  maxParticipants: number | null
+  participantType: $Enums.ParticipantType | null
+  registrationClose: Date | null
+  registrationOpen: Date | null
+  sport: string | null
+  timezone: string | null
+  type: $Enums.TournamentType | null
+  visibility: $Enums.Visibility | null
+  numberOfGroups: number | null
+  teamsPerGroup: number | null
+  customName: string | null
+  thirdPlaceMatch: boolean | null
+  twoLegsKnockout: boolean | null
+  isPinned: boolean | null
   organization_id: string | null
-  seasonName: string | null
   parent_id: string | null
+  seasonName: string | null
+  doubleRoundRobin: boolean | null
+  isPremium: boolean | null
+  isPaidRegistration: boolean | null
+  registrationFee: number | null
 }
 
 export type TournamentCountAggregateOutputType = {
   id: number
   name: number
-  customName: number
   description: number
-  logoUrl: number
-  bannerUrl: number
-  location: number
-  timezone: number
-  visibility: number
-  sport: number
-  type: number
-  participantType: number
-  scoringRules: number
-  maxParticipants: number
-  registrationOpen: number
-  registrationClose: number
-  autoApprove: number
-  isPinned: number
-  twoLegsKnockout: number
-  doubleRoundRobin: number
-  thirdPlaceMatch: number
-  numberOfGroups: number
-  teamsPerGroup: number
   start_date: number
   end_date: number
   created_at: number
   updated_at: number
+  autoApprove: number
+  bannerUrl: number
+  location: number
+  logoUrl: number
+  maxParticipants: number
+  participantType: number
+  registrationClose: number
+  registrationOpen: number
+  scoringRules: number
+  sport: number
+  timezone: number
+  type: number
+  visibility: number
+  numberOfGroups: number
+  teamsPerGroup: number
+  customName: number
+  thirdPlaceMatch: number
+  twoLegsKnockout: number
+  isPinned: number
   organization_id: number
-  seasonName: number
   parent_id: number
+  seasonName: number
+  doubleRoundRobin: number
+  isPremium: number
+  isPaidRegistration: number
+  registrationFee: number
   _all: number
 }
 
@@ -141,109 +152,120 @@ export type TournamentAvgAggregateInputType = {
   maxParticipants?: true
   numberOfGroups?: true
   teamsPerGroup?: true
+  registrationFee?: true
 }
 
 export type TournamentSumAggregateInputType = {
   maxParticipants?: true
   numberOfGroups?: true
   teamsPerGroup?: true
+  registrationFee?: true
 }
 
 export type TournamentMinAggregateInputType = {
   id?: true
   name?: true
-  customName?: true
   description?: true
-  logoUrl?: true
-  bannerUrl?: true
-  location?: true
-  timezone?: true
-  visibility?: true
-  sport?: true
-  type?: true
-  participantType?: true
-  maxParticipants?: true
-  registrationOpen?: true
-  registrationClose?: true
-  autoApprove?: true
-  isPinned?: true
-  twoLegsKnockout?: true
-  doubleRoundRobin?: true
-  thirdPlaceMatch?: true
-  numberOfGroups?: true
-  teamsPerGroup?: true
   start_date?: true
   end_date?: true
   created_at?: true
   updated_at?: true
+  autoApprove?: true
+  bannerUrl?: true
+  location?: true
+  logoUrl?: true
+  maxParticipants?: true
+  participantType?: true
+  registrationClose?: true
+  registrationOpen?: true
+  sport?: true
+  timezone?: true
+  type?: true
+  visibility?: true
+  numberOfGroups?: true
+  teamsPerGroup?: true
+  customName?: true
+  thirdPlaceMatch?: true
+  twoLegsKnockout?: true
+  isPinned?: true
   organization_id?: true
-  seasonName?: true
   parent_id?: true
+  seasonName?: true
+  doubleRoundRobin?: true
+  isPremium?: true
+  isPaidRegistration?: true
+  registrationFee?: true
 }
 
 export type TournamentMaxAggregateInputType = {
   id?: true
   name?: true
-  customName?: true
   description?: true
-  logoUrl?: true
-  bannerUrl?: true
-  location?: true
-  timezone?: true
-  visibility?: true
-  sport?: true
-  type?: true
-  participantType?: true
-  maxParticipants?: true
-  registrationOpen?: true
-  registrationClose?: true
-  autoApprove?: true
-  isPinned?: true
-  twoLegsKnockout?: true
-  doubleRoundRobin?: true
-  thirdPlaceMatch?: true
-  numberOfGroups?: true
-  teamsPerGroup?: true
   start_date?: true
   end_date?: true
   created_at?: true
   updated_at?: true
+  autoApprove?: true
+  bannerUrl?: true
+  location?: true
+  logoUrl?: true
+  maxParticipants?: true
+  participantType?: true
+  registrationClose?: true
+  registrationOpen?: true
+  sport?: true
+  timezone?: true
+  type?: true
+  visibility?: true
+  numberOfGroups?: true
+  teamsPerGroup?: true
+  customName?: true
+  thirdPlaceMatch?: true
+  twoLegsKnockout?: true
+  isPinned?: true
   organization_id?: true
-  seasonName?: true
   parent_id?: true
+  seasonName?: true
+  doubleRoundRobin?: true
+  isPremium?: true
+  isPaidRegistration?: true
+  registrationFee?: true
 }
 
 export type TournamentCountAggregateInputType = {
   id?: true
   name?: true
-  customName?: true
   description?: true
-  logoUrl?: true
-  bannerUrl?: true
-  location?: true
-  timezone?: true
-  visibility?: true
-  sport?: true
-  type?: true
-  participantType?: true
-  scoringRules?: true
-  maxParticipants?: true
-  registrationOpen?: true
-  registrationClose?: true
-  autoApprove?: true
-  isPinned?: true
-  twoLegsKnockout?: true
-  doubleRoundRobin?: true
-  thirdPlaceMatch?: true
-  numberOfGroups?: true
-  teamsPerGroup?: true
   start_date?: true
   end_date?: true
   created_at?: true
   updated_at?: true
+  autoApprove?: true
+  bannerUrl?: true
+  location?: true
+  logoUrl?: true
+  maxParticipants?: true
+  participantType?: true
+  registrationClose?: true
+  registrationOpen?: true
+  scoringRules?: true
+  sport?: true
+  timezone?: true
+  type?: true
+  visibility?: true
+  numberOfGroups?: true
+  teamsPerGroup?: true
+  customName?: true
+  thirdPlaceMatch?: true
+  twoLegsKnockout?: true
+  isPinned?: true
   organization_id?: true
-  seasonName?: true
   parent_id?: true
+  seasonName?: true
+  doubleRoundRobin?: true
+  isPremium?: true
+  isPaidRegistration?: true
+  registrationFee?: true
   _all?: true
 }
 
@@ -336,34 +358,37 @@ export type TournamentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type TournamentGroupByOutputType = {
   id: string
   name: string
-  customName: string | null
   description: string | null
-  logoUrl: string | null
-  bannerUrl: string | null
-  location: string | null
-  timezone: string
-  visibility: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: runtime.JsonValue
-  maxParticipants: number | null
-  registrationOpen: Date | null
-  registrationClose: Date | null
-  autoApprove: boolean
-  isPinned: boolean
-  twoLegsKnockout: boolean
-  doubleRoundRobin: boolean
-  thirdPlaceMatch: boolean
-  numberOfGroups: number | null
-  teamsPerGroup: number | null
   start_date: Date
   end_date: Date
   created_at: Date
   updated_at: Date
+  autoApprove: boolean
+  bannerUrl: string | null
+  location: string | null
+  logoUrl: string | null
+  maxParticipants: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose: Date | null
+  registrationOpen: Date | null
+  scoringRules: runtime.JsonValue
+  sport: string
+  timezone: string
+  type: $Enums.TournamentType
+  visibility: $Enums.Visibility
+  numberOfGroups: number | null
+  teamsPerGroup: number | null
+  customName: string | null
+  thirdPlaceMatch: boolean
+  twoLegsKnockout: boolean
+  isPinned: boolean
   organization_id: string | null
-  seasonName: string | null
   parent_id: string | null
+  seasonName: string | null
+  doubleRoundRobin: boolean
+  isPremium: boolean
+  isPaidRegistration: boolean
+  registrationFee: number
   _count: TournamentCountAggregateOutputType | null
   _avg: TournamentAvgAggregateOutputType | null
   _sum: TournamentSumAggregateOutputType | null
@@ -392,93 +417,101 @@ export type TournamentWhereInput = {
   NOT?: Prisma.TournamentWhereInput | Prisma.TournamentWhereInput[]
   id?: Prisma.StringFilter<"Tournament"> | string
   name?: Prisma.StringFilter<"Tournament"> | string
-  customName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   description?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  timezone?: Prisma.StringFilter<"Tournament"> | string
-  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
-  sport?: Prisma.StringFilter<"Tournament"> | string
-  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonFilter<"Tournament">
-  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
-  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
-  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
-  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
-  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
-  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
   start_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
+  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
+  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
+  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  scoringRules?: Prisma.JsonFilter<"Tournament">
+  sport?: Prisma.StringFilter<"Tournament"> | string
+  timezone?: Prisma.StringFilter<"Tournament"> | string
+  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
+  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  customName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
+  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  venues?: Prisma.VenueListRelationFilter
-  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
-  participants?: Prisma.ParticipantListRelationFilter
+  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
+  registrationFee?: Prisma.IntFilter<"Tournament"> | number
   fixtures?: Prisma.FixtureListRelationFilter
-  standings?: Prisma.StandingListRelationFilter
   groups?: Prisma.GroupListRelationFilter
-  sponsors?: Prisma.SponsorListRelationFilter
+  participants?: Prisma.ParticipantListRelationFilter
   socials?: Prisma.SocialListRelationFilter
+  sponsors?: Prisma.SponsorListRelationFilter
+  standings?: Prisma.StandingListRelationFilter
   team_invites?: Prisma.TeamInviteListRelationFilter
-  tournament_invites?: Prisma.TournamentInviteListRelationFilter
-  followers?: Prisma.TournamentFollowerListRelationFilter
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   parent?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   seasons?: Prisma.TournamentListRelationFilter
+  followers?: Prisma.TournamentFollowerListRelationFilter
+  tournament_invites?: Prisma.TournamentInviteListRelationFilter
+  venues?: Prisma.VenueListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type TournamentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  customName?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  timezone?: Prisma.SortOrder
-  visibility?: Prisma.SortOrder
-  sport?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  participantType?: Prisma.SortOrder
-  scoringRules?: Prisma.SortOrder
-  maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
-  registrationOpen?: Prisma.SortOrderInput | Prisma.SortOrder
-  registrationClose?: Prisma.SortOrderInput | Prisma.SortOrder
-  autoApprove?: Prisma.SortOrder
-  isPinned?: Prisma.SortOrder
-  twoLegsKnockout?: Prisma.SortOrder
-  doubleRoundRobin?: Prisma.SortOrder
-  thirdPlaceMatch?: Prisma.SortOrder
-  numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  autoApprove?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
+  participantType?: Prisma.SortOrder
+  registrationClose?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationOpen?: Prisma.SortOrderInput | Prisma.SortOrder
+  scoringRules?: Prisma.SortOrder
+  sport?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  customName?: Prisma.SortOrderInput | Prisma.SortOrder
+  thirdPlaceMatch?: Prisma.SortOrder
+  twoLegsKnockout?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  venues?: Prisma.VenueOrderByRelationAggregateInput
-  organization?: Prisma.OrganizationOrderByWithRelationInput
-  participants?: Prisma.ParticipantOrderByRelationAggregateInput
+  seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
+  isPaidRegistration?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
   fixtures?: Prisma.FixtureOrderByRelationAggregateInput
-  standings?: Prisma.StandingOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
-  sponsors?: Prisma.SponsorOrderByRelationAggregateInput
+  participants?: Prisma.ParticipantOrderByRelationAggregateInput
   socials?: Prisma.SocialOrderByRelationAggregateInput
+  sponsors?: Prisma.SponsorOrderByRelationAggregateInput
+  standings?: Prisma.StandingOrderByRelationAggregateInput
   team_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
-  tournament_invites?: Prisma.TournamentInviteOrderByRelationAggregateInput
-  followers?: Prisma.TournamentFollowerOrderByRelationAggregateInput
+  organization?: Prisma.OrganizationOrderByWithRelationInput
   parent?: Prisma.TournamentOrderByWithRelationInput
   seasons?: Prisma.TournamentOrderByRelationAggregateInput
+  followers?: Prisma.TournamentFollowerOrderByRelationAggregateInput
+  tournament_invites?: Prisma.TournamentInviteOrderByRelationAggregateInput
+  venues?: Prisma.VenueOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type TournamentWhereUniqueInput = Prisma.AtLeast<{
@@ -489,78 +522,85 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.TournamentWhereInput | Prisma.TournamentWhereInput[]
   name?: Prisma.StringFilter<"Tournament"> | string
   description?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  timezone?: Prisma.StringFilter<"Tournament"> | string
-  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
-  sport?: Prisma.StringFilter<"Tournament"> | string
-  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonFilter<"Tournament">
-  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
-  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
-  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
-  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
-  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
-  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
   start_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
+  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
+  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
+  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  scoringRules?: Prisma.JsonFilter<"Tournament">
+  sport?: Prisma.StringFilter<"Tournament"> | string
+  timezone?: Prisma.StringFilter<"Tournament"> | string
+  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
+  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
+  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  venues?: Prisma.VenueListRelationFilter
-  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
-  participants?: Prisma.ParticipantListRelationFilter
+  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
+  registrationFee?: Prisma.IntFilter<"Tournament"> | number
   fixtures?: Prisma.FixtureListRelationFilter
-  standings?: Prisma.StandingListRelationFilter
   groups?: Prisma.GroupListRelationFilter
-  sponsors?: Prisma.SponsorListRelationFilter
+  participants?: Prisma.ParticipantListRelationFilter
   socials?: Prisma.SocialListRelationFilter
+  sponsors?: Prisma.SponsorListRelationFilter
+  standings?: Prisma.StandingListRelationFilter
   team_invites?: Prisma.TeamInviteListRelationFilter
-  tournament_invites?: Prisma.TournamentInviteListRelationFilter
-  followers?: Prisma.TournamentFollowerListRelationFilter
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   parent?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   seasons?: Prisma.TournamentListRelationFilter
+  followers?: Prisma.TournamentFollowerListRelationFilter
+  tournament_invites?: Prisma.TournamentInviteListRelationFilter
+  venues?: Prisma.VenueListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id" | "customName">
 
 export type TournamentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  customName?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
-  location?: Prisma.SortOrderInput | Prisma.SortOrder
-  timezone?: Prisma.SortOrder
-  visibility?: Prisma.SortOrder
-  sport?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  participantType?: Prisma.SortOrder
-  scoringRules?: Prisma.SortOrder
-  maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
-  registrationOpen?: Prisma.SortOrderInput | Prisma.SortOrder
-  registrationClose?: Prisma.SortOrderInput | Prisma.SortOrder
-  autoApprove?: Prisma.SortOrder
-  isPinned?: Prisma.SortOrder
-  twoLegsKnockout?: Prisma.SortOrder
-  doubleRoundRobin?: Prisma.SortOrder
-  thirdPlaceMatch?: Prisma.SortOrder
-  numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
-  teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  autoApprove?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
+  participantType?: Prisma.SortOrder
+  registrationClose?: Prisma.SortOrderInput | Prisma.SortOrder
+  registrationOpen?: Prisma.SortOrderInput | Prisma.SortOrder
+  scoringRules?: Prisma.SortOrder
+  sport?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  numberOfGroups?: Prisma.SortOrderInput | Prisma.SortOrder
+  teamsPerGroup?: Prisma.SortOrderInput | Prisma.SortOrder
+  customName?: Prisma.SortOrderInput | Prisma.SortOrder
+  thirdPlaceMatch?: Prisma.SortOrder
+  twoLegsKnockout?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
+  isPaidRegistration?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
   _count?: Prisma.TournamentCountOrderByAggregateInput
   _avg?: Prisma.TournamentAvgOrderByAggregateInput
   _max?: Prisma.TournamentMaxOrderByAggregateInput
@@ -574,307 +614,335 @@ export type TournamentScalarWhereWithAggregatesInput = {
   NOT?: Prisma.TournamentScalarWhereWithAggregatesInput | Prisma.TournamentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
   name?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
-  customName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
-  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
-  bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
-  location?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
-  timezone?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
-  visibility?: Prisma.EnumVisibilityWithAggregatesFilter<"Tournament"> | $Enums.Visibility
-  sport?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
-  type?: Prisma.EnumTournamentTypeWithAggregatesFilter<"Tournament"> | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeWithAggregatesFilter<"Tournament"> | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonWithAggregatesFilter<"Tournament">
-  maxParticipants?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
-  registrationOpen?: Prisma.DateTimeNullableWithAggregatesFilter<"Tournament"> | Date | string | null
-  registrationClose?: Prisma.DateTimeNullableWithAggregatesFilter<"Tournament"> | Date | string | null
-  autoApprove?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
-  isPinned?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
-  twoLegsKnockout?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
-  doubleRoundRobin?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
-  thirdPlaceMatch?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
-  numberOfGroups?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
-  teamsPerGroup?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
   start_date?: Prisma.DateTimeWithAggregatesFilter<"Tournament"> | Date | string
   end_date?: Prisma.DateTimeWithAggregatesFilter<"Tournament"> | Date | string
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Tournament"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Tournament"> | Date | string
+  autoApprove?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  location?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  maxParticipants?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
+  participantType?: Prisma.EnumParticipantTypeWithAggregatesFilter<"Tournament"> | $Enums.ParticipantType
+  registrationClose?: Prisma.DateTimeNullableWithAggregatesFilter<"Tournament"> | Date | string | null
+  registrationOpen?: Prisma.DateTimeNullableWithAggregatesFilter<"Tournament"> | Date | string | null
+  scoringRules?: Prisma.JsonWithAggregatesFilter<"Tournament">
+  sport?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
+  timezone?: Prisma.StringWithAggregatesFilter<"Tournament"> | string
+  type?: Prisma.EnumTournamentTypeWithAggregatesFilter<"Tournament"> | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityWithAggregatesFilter<"Tournament"> | $Enums.Visibility
+  numberOfGroups?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
+  teamsPerGroup?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
+  customName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  thirdPlaceMatch?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  twoLegsKnockout?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  isPinned?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   organization_id?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
-  seasonName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  seasonName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  doubleRoundRobin?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  isPremium?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  isPaidRegistration?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  registrationFee?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
 }
 
 export type TournamentCreateInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateManyInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
 }
 
 export type TournamentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentListRelationFilter = {
@@ -895,110 +963,121 @@ export type TournamentNullableScalarRelationFilter = {
 export type TournamentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  customName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  bannerUrl?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
-  visibility?: Prisma.SortOrder
-  sport?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  participantType?: Prisma.SortOrder
-  scoringRules?: Prisma.SortOrder
-  maxParticipants?: Prisma.SortOrder
-  registrationOpen?: Prisma.SortOrder
-  registrationClose?: Prisma.SortOrder
-  autoApprove?: Prisma.SortOrder
-  isPinned?: Prisma.SortOrder
-  twoLegsKnockout?: Prisma.SortOrder
-  doubleRoundRobin?: Prisma.SortOrder
-  thirdPlaceMatch?: Prisma.SortOrder
-  numberOfGroups?: Prisma.SortOrder
-  teamsPerGroup?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  autoApprove?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  maxParticipants?: Prisma.SortOrder
+  participantType?: Prisma.SortOrder
+  registrationClose?: Prisma.SortOrder
+  registrationOpen?: Prisma.SortOrder
+  scoringRules?: Prisma.SortOrder
+  sport?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  numberOfGroups?: Prisma.SortOrder
+  teamsPerGroup?: Prisma.SortOrder
+  customName?: Prisma.SortOrder
+  thirdPlaceMatch?: Prisma.SortOrder
+  twoLegsKnockout?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
-  seasonName?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
+  seasonName?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
+  isPaidRegistration?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
 }
 
 export type TournamentAvgOrderByAggregateInput = {
   maxParticipants?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
 }
 
 export type TournamentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  customName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  bannerUrl?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
-  visibility?: Prisma.SortOrder
-  sport?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  participantType?: Prisma.SortOrder
-  maxParticipants?: Prisma.SortOrder
-  registrationOpen?: Prisma.SortOrder
-  registrationClose?: Prisma.SortOrder
-  autoApprove?: Prisma.SortOrder
-  isPinned?: Prisma.SortOrder
-  twoLegsKnockout?: Prisma.SortOrder
-  doubleRoundRobin?: Prisma.SortOrder
-  thirdPlaceMatch?: Prisma.SortOrder
-  numberOfGroups?: Prisma.SortOrder
-  teamsPerGroup?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  autoApprove?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  maxParticipants?: Prisma.SortOrder
+  participantType?: Prisma.SortOrder
+  registrationClose?: Prisma.SortOrder
+  registrationOpen?: Prisma.SortOrder
+  sport?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  numberOfGroups?: Prisma.SortOrder
+  teamsPerGroup?: Prisma.SortOrder
+  customName?: Prisma.SortOrder
+  thirdPlaceMatch?: Prisma.SortOrder
+  twoLegsKnockout?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
-  seasonName?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
+  seasonName?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
+  isPaidRegistration?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
 }
 
 export type TournamentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  customName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  logoUrl?: Prisma.SortOrder
-  bannerUrl?: Prisma.SortOrder
-  location?: Prisma.SortOrder
-  timezone?: Prisma.SortOrder
-  visibility?: Prisma.SortOrder
-  sport?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  participantType?: Prisma.SortOrder
-  maxParticipants?: Prisma.SortOrder
-  registrationOpen?: Prisma.SortOrder
-  registrationClose?: Prisma.SortOrder
-  autoApprove?: Prisma.SortOrder
-  isPinned?: Prisma.SortOrder
-  twoLegsKnockout?: Prisma.SortOrder
-  doubleRoundRobin?: Prisma.SortOrder
-  thirdPlaceMatch?: Prisma.SortOrder
-  numberOfGroups?: Prisma.SortOrder
-  teamsPerGroup?: Prisma.SortOrder
   start_date?: Prisma.SortOrder
   end_date?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  autoApprove?: Prisma.SortOrder
+  bannerUrl?: Prisma.SortOrder
+  location?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  maxParticipants?: Prisma.SortOrder
+  participantType?: Prisma.SortOrder
+  registrationClose?: Prisma.SortOrder
+  registrationOpen?: Prisma.SortOrder
+  sport?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  visibility?: Prisma.SortOrder
+  numberOfGroups?: Prisma.SortOrder
+  teamsPerGroup?: Prisma.SortOrder
+  customName?: Prisma.SortOrder
+  thirdPlaceMatch?: Prisma.SortOrder
+  twoLegsKnockout?: Prisma.SortOrder
+  isPinned?: Prisma.SortOrder
   organization_id?: Prisma.SortOrder
-  seasonName?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
+  seasonName?: Prisma.SortOrder
+  doubleRoundRobin?: Prisma.SortOrder
+  isPremium?: Prisma.SortOrder
+  isPaidRegistration?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
 }
 
 export type TournamentSumOrderByAggregateInput = {
   maxParticipants?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
+  registrationFee?: Prisma.SortOrder
 }
 
 export type TournamentScalarRelationFilter = {
@@ -1068,20 +1147,28 @@ export type TournamentUncheckedCreateNestedManyWithoutParentInput = {
   connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
 }
 
-export type EnumVisibilityFieldUpdateOperationsInput = {
-  set?: $Enums.Visibility
-}
-
-export type EnumTournamentTypeFieldUpdateOperationsInput = {
-  set?: $Enums.TournamentType
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type EnumParticipantTypeFieldUpdateOperationsInput = {
   set?: $Enums.ParticipantType
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
+export type EnumTournamentTypeFieldUpdateOperationsInput = {
+  set?: $Enums.TournamentType
+}
+
+export type EnumVisibilityFieldUpdateOperationsInput = {
+  set?: $Enums.Visibility
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
   increment?: number
   decrement?: number
   multiply?: number
@@ -1268,90 +1355,114 @@ export type TournamentUpdateOneRequiredWithoutTournament_invitesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutTournament_invitesInput, Prisma.TournamentUpdateWithoutTournament_invitesInput>, Prisma.TournamentUncheckedUpdateWithoutTournament_invitesInput>
 }
 
+export type TournamentCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutPaymentsInput, Prisma.TournamentUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.TournamentWhereUniqueInput
+}
+
+export type TournamentUpdateOneWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutPaymentsInput, Prisma.TournamentUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.TournamentUpsertWithoutPaymentsInput
+  disconnect?: Prisma.TournamentWhereInput | boolean
+  delete?: Prisma.TournamentWhereInput | boolean
+  connect?: Prisma.TournamentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutPaymentsInput, Prisma.TournamentUpdateWithoutPaymentsInput>, Prisma.TournamentUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type TournamentCreateWithoutOrganizationInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutOrganizationInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
-  seasonName?: string | null
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutOrganizationInput = {
@@ -1386,120 +1497,131 @@ export type TournamentScalarWhereInput = {
   NOT?: Prisma.TournamentScalarWhereInput | Prisma.TournamentScalarWhereInput[]
   id?: Prisma.StringFilter<"Tournament"> | string
   name?: Prisma.StringFilter<"Tournament"> | string
-  customName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   description?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  timezone?: Prisma.StringFilter<"Tournament"> | string
-  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
-  sport?: Prisma.StringFilter<"Tournament"> | string
-  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonFilter<"Tournament">
-  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
-  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
-  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
-  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
-  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
-  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
-  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
-  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
   start_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   end_date?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   created_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
+  autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
+  bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
+  registrationClose?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  registrationOpen?: Prisma.DateTimeNullableFilter<"Tournament"> | Date | string | null
+  scoringRules?: Prisma.JsonFilter<"Tournament">
+  sport?: Prisma.StringFilter<"Tournament"> | string
+  timezone?: Prisma.StringFilter<"Tournament"> | string
+  type?: Prisma.EnumTournamentTypeFilter<"Tournament"> | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFilter<"Tournament"> | $Enums.Visibility
+  numberOfGroups?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  teamsPerGroup?: Prisma.IntNullableFilter<"Tournament"> | number | null
+  customName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  thirdPlaceMatch?: Prisma.BoolFilter<"Tournament"> | boolean
+  twoLegsKnockout?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPinned?: Prisma.BoolFilter<"Tournament"> | boolean
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
-  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
+  isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
+  registrationFee?: Prisma.IntFilter<"Tournament"> | number
 }
 
 export type TournamentCreateWithoutSeasonsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSeasonsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
   followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSeasonsInput = {
@@ -1510,87 +1632,95 @@ export type TournamentCreateOrConnectWithoutSeasonsInput = {
 export type TournamentCreateWithoutParentInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutParentInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
   seasonName?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutParentInput = {
@@ -1617,87 +1747,95 @@ export type TournamentUpdateToOneWithWhereWithoutSeasonsInput = {
 export type TournamentUpdateWithoutSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
   followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUpsertWithWhereUniqueWithoutParentInput = {
@@ -1719,87 +1857,95 @@ export type TournamentUpdateManyWithWhereWithoutParentInput = {
 export type TournamentCreateWithoutFollowersInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutFollowersInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutFollowersInput = {
@@ -1821,173 +1967,189 @@ export type TournamentUpdateToOneWithWhereWithoutFollowersInput = {
 export type TournamentUpdateWithoutFollowersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutFollowersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutGroupsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutGroupsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutGroupsInput = {
@@ -2009,173 +2171,189 @@ export type TournamentUpdateToOneWithWhereWithoutGroupsInput = {
 export type TournamentUpdateWithoutGroupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutGroupsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutParticipantsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutParticipantsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutParticipantsInput = {
@@ -2197,173 +2375,189 @@ export type TournamentUpdateToOneWithWhereWithoutParticipantsInput = {
 export type TournamentUpdateWithoutParticipantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutFixturesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutFixturesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutFixturesInput = {
@@ -2385,173 +2579,189 @@ export type TournamentUpdateToOneWithWhereWithoutFixturesInput = {
 export type TournamentUpdateWithoutFixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutFixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutStandingsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutStandingsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutStandingsInput = {
@@ -2573,173 +2783,189 @@ export type TournamentUpdateToOneWithWhereWithoutStandingsInput = {
 export type TournamentUpdateWithoutStandingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutStandingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutSponsorsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSponsorsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSponsorsInput = {
@@ -2761,173 +2987,189 @@ export type TournamentUpdateToOneWithWhereWithoutSponsorsInput = {
 export type TournamentUpdateWithoutSponsorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutSocialsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSocialsInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSocialsInput = {
@@ -2949,173 +3191,189 @@ export type TournamentUpdateToOneWithWhereWithoutSocialsInput = {
 export type TournamentUpdateWithoutSocialsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSocialsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutVenuesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutVenuesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutVenuesInput = {
@@ -3137,173 +3395,189 @@ export type TournamentUpdateToOneWithWhereWithoutVenuesInput = {
 export type TournamentUpdateWithoutVenuesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutVenuesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutTeam_invitesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutTeam_invitesInput = {
@@ -3325,173 +3599,189 @@ export type TournamentUpdateToOneWithWhereWithoutTeam_invitesInput = {
 export type TournamentUpdateWithoutTeam_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutTournament_invitesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   seasonName?: string | null
-  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
-  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
-  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
-  seasonName?: string | null
   parent_id?: string | null
-  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
-  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
-  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
-  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
   seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutTournament_invitesInput = {
@@ -3513,387 +3803,627 @@ export type TournamentUpdateToOneWithWhereWithoutTournament_invitesInput = {
 export type TournamentUpdateWithoutTournament_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
+  seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  organization_id?: string | null
+  parent_id?: string | null
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
+  seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.TournamentWhereUniqueInput
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutPaymentsInput, Prisma.TournamentUncheckedCreateWithoutPaymentsInput>
+}
+
+export type TournamentUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.TournamentUpdateWithoutPaymentsInput, Prisma.TournamentUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutPaymentsInput, Prisma.TournamentUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.TournamentWhereInput
+}
+
+export type TournamentUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.TournamentWhereInput
+  data: Prisma.XOR<Prisma.TournamentUpdateWithoutPaymentsInput, Prisma.TournamentUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type TournamentUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
+  seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateManyOrganizationInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
-  seasonName?: string | null
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   parent_id?: string | null
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
 }
 
 export type TournamentUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentCreateManyParentInput = {
   id?: string
   name: string
-  customName?: string | null
   description?: string | null
-  logoUrl?: string | null
-  bannerUrl?: string | null
-  location?: string | null
-  timezone?: string
-  visibility?: $Enums.Visibility
-  sport: string
-  type: $Enums.TournamentType
-  participantType: $Enums.ParticipantType
-  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: number | null
-  registrationOpen?: Date | string | null
-  registrationClose?: Date | string | null
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: number | null
-  teamsPerGroup?: number | null
   start_date: Date | string
   end_date: Date | string
   created_at?: Date | string
   updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  location?: string | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: string | null
   seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
 }
 
 export type TournamentUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
-  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
-  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
-  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
-  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
-  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateManyWithoutParentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  timezone?: Prisma.StringFieldUpdateOperationsInput | string
-  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
-  sport?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
-  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
-  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -3902,31 +4432,33 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
  */
 
 export type TournamentCountOutputType = {
-  venues: number
-  participants: number
   fixtures: number
-  standings: number
   groups: number
-  sponsors: number
+  participants: number
   socials: number
+  sponsors: number
+  standings: number
   team_invites: number
-  tournament_invites: number
-  followers: number
   seasons: number
+  followers: number
+  tournament_invites: number
+  venues: number
+  payments: number
 }
 
 export type TournamentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  venues?: boolean | TournamentCountOutputTypeCountVenuesArgs
-  participants?: boolean | TournamentCountOutputTypeCountParticipantsArgs
   fixtures?: boolean | TournamentCountOutputTypeCountFixturesArgs
-  standings?: boolean | TournamentCountOutputTypeCountStandingsArgs
   groups?: boolean | TournamentCountOutputTypeCountGroupsArgs
-  sponsors?: boolean | TournamentCountOutputTypeCountSponsorsArgs
+  participants?: boolean | TournamentCountOutputTypeCountParticipantsArgs
   socials?: boolean | TournamentCountOutputTypeCountSocialsArgs
+  sponsors?: boolean | TournamentCountOutputTypeCountSponsorsArgs
+  standings?: boolean | TournamentCountOutputTypeCountStandingsArgs
   team_invites?: boolean | TournamentCountOutputTypeCountTeam_invitesArgs
-  tournament_invites?: boolean | TournamentCountOutputTypeCountTournament_invitesArgs
-  followers?: boolean | TournamentCountOutputTypeCountFollowersArgs
   seasons?: boolean | TournamentCountOutputTypeCountSeasonsArgs
+  followers?: boolean | TournamentCountOutputTypeCountFollowersArgs
+  tournament_invites?: boolean | TournamentCountOutputTypeCountTournament_invitesArgs
+  venues?: boolean | TournamentCountOutputTypeCountVenuesArgs
+  payments?: boolean | TournamentCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -3942,29 +4474,8 @@ export type TournamentCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.E
 /**
  * TournamentCountOutputType without action
  */
-export type TournamentCountOutputTypeCountVenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.VenueWhereInput
-}
-
-/**
- * TournamentCountOutputType without action
- */
-export type TournamentCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ParticipantWhereInput
-}
-
-/**
- * TournamentCountOutputType without action
- */
 export type TournamentCountOutputTypeCountFixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.FixtureWhereInput
-}
-
-/**
- * TournamentCountOutputType without action
- */
-export type TournamentCountOutputTypeCountStandingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StandingWhereInput
 }
 
 /**
@@ -3977,8 +4488,8 @@ export type TournamentCountOutputTypeCountGroupsArgs<ExtArgs extends runtime.Typ
 /**
  * TournamentCountOutputType without action
  */
-export type TournamentCountOutputTypeCountSponsorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.SponsorWhereInput
+export type TournamentCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParticipantWhereInput
 }
 
 /**
@@ -3991,6 +4502,20 @@ export type TournamentCountOutputTypeCountSocialsArgs<ExtArgs extends runtime.Ty
 /**
  * TournamentCountOutputType without action
  */
+export type TournamentCountOutputTypeCountSponsorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SponsorWhereInput
+}
+
+/**
+ * TournamentCountOutputType without action
+ */
+export type TournamentCountOutputTypeCountStandingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StandingWhereInput
+}
+
+/**
+ * TournamentCountOutputType without action
+ */
 export type TournamentCountOutputTypeCountTeam_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TeamInviteWhereInput
 }
@@ -3998,8 +4523,8 @@ export type TournamentCountOutputTypeCountTeam_invitesArgs<ExtArgs extends runti
 /**
  * TournamentCountOutputType without action
  */
-export type TournamentCountOutputTypeCountTournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TournamentInviteWhereInput
+export type TournamentCountOutputTypeCountSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TournamentWhereInput
 }
 
 /**
@@ -4012,89 +4537,110 @@ export type TournamentCountOutputTypeCountFollowersArgs<ExtArgs extends runtime.
 /**
  * TournamentCountOutputType without action
  */
-export type TournamentCountOutputTypeCountSeasonsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TournamentWhereInput
+export type TournamentCountOutputTypeCountTournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TournamentInviteWhereInput
+}
+
+/**
+ * TournamentCountOutputType without action
+ */
+export type TournamentCountOutputTypeCountVenuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.VenueWhereInput
+}
+
+/**
+ * TournamentCountOutputType without action
+ */
+export type TournamentCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
 }
 
 
 export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  customName?: boolean
   description?: boolean
-  logoUrl?: boolean
-  bannerUrl?: boolean
-  location?: boolean
-  timezone?: boolean
-  visibility?: boolean
-  sport?: boolean
-  type?: boolean
-  participantType?: boolean
-  scoringRules?: boolean
-  maxParticipants?: boolean
-  registrationOpen?: boolean
-  registrationClose?: boolean
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: boolean
-  teamsPerGroup?: boolean
   start_date?: boolean
   end_date?: boolean
   created_at?: boolean
   updated_at?: boolean
+  autoApprove?: boolean
+  bannerUrl?: boolean
+  location?: boolean
+  logoUrl?: boolean
+  maxParticipants?: boolean
+  participantType?: boolean
+  registrationClose?: boolean
+  registrationOpen?: boolean
+  scoringRules?: boolean
+  sport?: boolean
+  timezone?: boolean
+  type?: boolean
+  visibility?: boolean
+  numberOfGroups?: boolean
+  teamsPerGroup?: boolean
+  customName?: boolean
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: boolean
-  seasonName?: boolean
   parent_id?: boolean
-  venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
-  organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
-  participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
+  seasonName?: boolean
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: boolean
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
-  standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
-  sponsors?: boolean | Prisma.Tournament$sponsorsArgs<ExtArgs>
+  participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
   socials?: boolean | Prisma.Tournament$socialsArgs<ExtArgs>
+  sponsors?: boolean | Prisma.Tournament$sponsorsArgs<ExtArgs>
+  standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   team_invites?: boolean | Prisma.Tournament$team_invitesArgs<ExtArgs>
-  tournament_invites?: boolean | Prisma.Tournament$tournament_invitesArgs<ExtArgs>
-  followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
+  organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
   seasons?: boolean | Prisma.Tournament$seasonsArgs<ExtArgs>
+  followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
+  tournament_invites?: boolean | Prisma.Tournament$tournament_invitesArgs<ExtArgs>
+  venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
+  payments?: boolean | Prisma.Tournament$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.TournamentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
 
 export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  customName?: boolean
   description?: boolean
-  logoUrl?: boolean
-  bannerUrl?: boolean
-  location?: boolean
-  timezone?: boolean
-  visibility?: boolean
-  sport?: boolean
-  type?: boolean
-  participantType?: boolean
-  scoringRules?: boolean
-  maxParticipants?: boolean
-  registrationOpen?: boolean
-  registrationClose?: boolean
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: boolean
-  teamsPerGroup?: boolean
   start_date?: boolean
   end_date?: boolean
   created_at?: boolean
   updated_at?: boolean
+  autoApprove?: boolean
+  bannerUrl?: boolean
+  location?: boolean
+  logoUrl?: boolean
+  maxParticipants?: boolean
+  participantType?: boolean
+  registrationClose?: boolean
+  registrationOpen?: boolean
+  scoringRules?: boolean
+  sport?: boolean
+  timezone?: boolean
+  type?: boolean
+  visibility?: boolean
+  numberOfGroups?: boolean
+  teamsPerGroup?: boolean
+  customName?: boolean
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: boolean
-  seasonName?: boolean
   parent_id?: boolean
+  seasonName?: boolean
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -4102,34 +4648,37 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  customName?: boolean
   description?: boolean
-  logoUrl?: boolean
-  bannerUrl?: boolean
-  location?: boolean
-  timezone?: boolean
-  visibility?: boolean
-  sport?: boolean
-  type?: boolean
-  participantType?: boolean
-  scoringRules?: boolean
-  maxParticipants?: boolean
-  registrationOpen?: boolean
-  registrationClose?: boolean
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: boolean
-  teamsPerGroup?: boolean
   start_date?: boolean
   end_date?: boolean
   created_at?: boolean
   updated_at?: boolean
+  autoApprove?: boolean
+  bannerUrl?: boolean
+  location?: boolean
+  logoUrl?: boolean
+  maxParticipants?: boolean
+  participantType?: boolean
+  registrationClose?: boolean
+  registrationOpen?: boolean
+  scoringRules?: boolean
+  sport?: boolean
+  timezone?: boolean
+  type?: boolean
+  visibility?: boolean
+  numberOfGroups?: boolean
+  teamsPerGroup?: boolean
+  customName?: boolean
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: boolean
-  seasonName?: boolean
   parent_id?: boolean
+  seasonName?: boolean
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -4137,51 +4686,55 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 export type TournamentSelectScalar = {
   id?: boolean
   name?: boolean
-  customName?: boolean
   description?: boolean
-  logoUrl?: boolean
-  bannerUrl?: boolean
-  location?: boolean
-  timezone?: boolean
-  visibility?: boolean
-  sport?: boolean
-  type?: boolean
-  participantType?: boolean
-  scoringRules?: boolean
-  maxParticipants?: boolean
-  registrationOpen?: boolean
-  registrationClose?: boolean
-  autoApprove?: boolean
-  isPinned?: boolean
-  twoLegsKnockout?: boolean
-  doubleRoundRobin?: boolean
-  thirdPlaceMatch?: boolean
-  numberOfGroups?: boolean
-  teamsPerGroup?: boolean
   start_date?: boolean
   end_date?: boolean
   created_at?: boolean
   updated_at?: boolean
+  autoApprove?: boolean
+  bannerUrl?: boolean
+  location?: boolean
+  logoUrl?: boolean
+  maxParticipants?: boolean
+  participantType?: boolean
+  registrationClose?: boolean
+  registrationOpen?: boolean
+  scoringRules?: boolean
+  sport?: boolean
+  timezone?: boolean
+  type?: boolean
+  visibility?: boolean
+  numberOfGroups?: boolean
+  teamsPerGroup?: boolean
+  customName?: boolean
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
   organization_id?: boolean
-  seasonName?: boolean
   parent_id?: boolean
+  seasonName?: boolean
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "customName" | "description" | "logoUrl" | "bannerUrl" | "location" | "timezone" | "visibility" | "sport" | "type" | "participantType" | "scoringRules" | "maxParticipants" | "registrationOpen" | "registrationClose" | "autoApprove" | "isPinned" | "twoLegsKnockout" | "doubleRoundRobin" | "thirdPlaceMatch" | "numberOfGroups" | "teamsPerGroup" | "start_date" | "end_date" | "created_at" | "updated_at" | "organization_id" | "seasonName" | "parent_id", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
-  organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
-  participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
-  standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
-  sponsors?: boolean | Prisma.Tournament$sponsorsArgs<ExtArgs>
+  participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
   socials?: boolean | Prisma.Tournament$socialsArgs<ExtArgs>
+  sponsors?: boolean | Prisma.Tournament$sponsorsArgs<ExtArgs>
+  standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   team_invites?: boolean | Prisma.Tournament$team_invitesArgs<ExtArgs>
-  tournament_invites?: boolean | Prisma.Tournament$tournament_invitesArgs<ExtArgs>
-  followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
+  organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
   seasons?: boolean | Prisma.Tournament$seasonsArgs<ExtArgs>
+  followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
+  tournament_invites?: boolean | Prisma.Tournament$tournament_invitesArgs<ExtArgs>
+  venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
+  payments?: boolean | Prisma.Tournament$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.TournamentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TournamentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4196,51 +4749,55 @@ export type TournamentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.E
 export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Tournament"
   objects: {
-    venues: Prisma.$VenuePayload<ExtArgs>[]
-    organization: Prisma.$OrganizationPayload<ExtArgs> | null
-    participants: Prisma.$ParticipantPayload<ExtArgs>[]
     fixtures: Prisma.$FixturePayload<ExtArgs>[]
-    standings: Prisma.$StandingPayload<ExtArgs>[]
     groups: Prisma.$GroupPayload<ExtArgs>[]
-    sponsors: Prisma.$SponsorPayload<ExtArgs>[]
+    participants: Prisma.$ParticipantPayload<ExtArgs>[]
     socials: Prisma.$SocialPayload<ExtArgs>[]
+    sponsors: Prisma.$SponsorPayload<ExtArgs>[]
+    standings: Prisma.$StandingPayload<ExtArgs>[]
     team_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
-    tournament_invites: Prisma.$TournamentInvitePayload<ExtArgs>[]
-    followers: Prisma.$TournamentFollowerPayload<ExtArgs>[]
+    organization: Prisma.$OrganizationPayload<ExtArgs> | null
     parent: Prisma.$TournamentPayload<ExtArgs> | null
     seasons: Prisma.$TournamentPayload<ExtArgs>[]
+    followers: Prisma.$TournamentFollowerPayload<ExtArgs>[]
+    tournament_invites: Prisma.$TournamentInvitePayload<ExtArgs>[]
+    venues: Prisma.$VenuePayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    customName: string | null
     description: string | null
-    logoUrl: string | null
-    bannerUrl: string | null
-    location: string | null
-    timezone: string
-    visibility: $Enums.Visibility
-    sport: string
-    type: $Enums.TournamentType
-    participantType: $Enums.ParticipantType
-    scoringRules: runtime.JsonValue
-    maxParticipants: number | null
-    registrationOpen: Date | null
-    registrationClose: Date | null
-    autoApprove: boolean
-    isPinned: boolean
-    twoLegsKnockout: boolean
-    doubleRoundRobin: boolean
-    thirdPlaceMatch: boolean
-    numberOfGroups: number | null
-    teamsPerGroup: number | null
     start_date: Date
     end_date: Date
     created_at: Date
     updated_at: Date
+    autoApprove: boolean
+    bannerUrl: string | null
+    location: string | null
+    logoUrl: string | null
+    maxParticipants: number | null
+    participantType: $Enums.ParticipantType
+    registrationClose: Date | null
+    registrationOpen: Date | null
+    scoringRules: runtime.JsonValue
+    sport: string
+    timezone: string
+    type: $Enums.TournamentType
+    visibility: $Enums.Visibility
+    numberOfGroups: number | null
+    teamsPerGroup: number | null
+    customName: string | null
+    thirdPlaceMatch: boolean
+    twoLegsKnockout: boolean
+    isPinned: boolean
     organization_id: string | null
-    seasonName: string | null
     parent_id: string | null
+    seasonName: string | null
+    doubleRoundRobin: boolean
+    isPremium: boolean
+    isPaidRegistration: boolean
+    registrationFee: number
   }, ExtArgs["result"]["tournament"]>
   composites: {}
 }
@@ -4635,19 +5192,20 @@ readonly fields: TournamentFieldRefs;
  */
 export interface Prisma__TournamentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  venues<T extends Prisma.Tournament$venuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$venuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  organization<T extends Prisma.Tournament$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  participants<T extends Prisma.Tournament$participantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   fixtures<T extends Prisma.Tournament$fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  standings<T extends Prisma.Tournament$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   groups<T extends Prisma.Tournament$groupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$groupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  sponsors<T extends Prisma.Tournament$sponsorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$sponsorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SponsorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  participants<T extends Prisma.Tournament$participantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   socials<T extends Prisma.Tournament$socialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$socialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sponsors<T extends Prisma.Tournament$sponsorsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$sponsorsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SponsorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  standings<T extends Prisma.Tournament$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   team_invites<T extends Prisma.Tournament$team_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$team_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tournament_invites<T extends Prisma.Tournament$tournament_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$tournament_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  followers<T extends Prisma.Tournament$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  organization<T extends Prisma.Tournament$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   parent<T extends Prisma.Tournament$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$parentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seasons<T extends Prisma.Tournament$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  followers<T extends Prisma.Tournament$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tournament_invites<T extends Prisma.Tournament$tournament_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$tournament_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  venues<T extends Prisma.Tournament$venuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$venuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.Tournament$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4679,34 +5237,37 @@ export interface Prisma__TournamentClient<T, Null = never, ExtArgs extends runti
 export interface TournamentFieldRefs {
   readonly id: Prisma.FieldRef<"Tournament", 'String'>
   readonly name: Prisma.FieldRef<"Tournament", 'String'>
-  readonly customName: Prisma.FieldRef<"Tournament", 'String'>
   readonly description: Prisma.FieldRef<"Tournament", 'String'>
-  readonly logoUrl: Prisma.FieldRef<"Tournament", 'String'>
-  readonly bannerUrl: Prisma.FieldRef<"Tournament", 'String'>
-  readonly location: Prisma.FieldRef<"Tournament", 'String'>
-  readonly timezone: Prisma.FieldRef<"Tournament", 'String'>
-  readonly visibility: Prisma.FieldRef<"Tournament", 'Visibility'>
-  readonly sport: Prisma.FieldRef<"Tournament", 'String'>
-  readonly type: Prisma.FieldRef<"Tournament", 'TournamentType'>
-  readonly participantType: Prisma.FieldRef<"Tournament", 'ParticipantType'>
-  readonly scoringRules: Prisma.FieldRef<"Tournament", 'Json'>
-  readonly maxParticipants: Prisma.FieldRef<"Tournament", 'Int'>
-  readonly registrationOpen: Prisma.FieldRef<"Tournament", 'DateTime'>
-  readonly registrationClose: Prisma.FieldRef<"Tournament", 'DateTime'>
-  readonly autoApprove: Prisma.FieldRef<"Tournament", 'Boolean'>
-  readonly isPinned: Prisma.FieldRef<"Tournament", 'Boolean'>
-  readonly twoLegsKnockout: Prisma.FieldRef<"Tournament", 'Boolean'>
-  readonly doubleRoundRobin: Prisma.FieldRef<"Tournament", 'Boolean'>
-  readonly thirdPlaceMatch: Prisma.FieldRef<"Tournament", 'Boolean'>
-  readonly numberOfGroups: Prisma.FieldRef<"Tournament", 'Int'>
-  readonly teamsPerGroup: Prisma.FieldRef<"Tournament", 'Int'>
   readonly start_date: Prisma.FieldRef<"Tournament", 'DateTime'>
   readonly end_date: Prisma.FieldRef<"Tournament", 'DateTime'>
   readonly created_at: Prisma.FieldRef<"Tournament", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Tournament", 'DateTime'>
+  readonly autoApprove: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly bannerUrl: Prisma.FieldRef<"Tournament", 'String'>
+  readonly location: Prisma.FieldRef<"Tournament", 'String'>
+  readonly logoUrl: Prisma.FieldRef<"Tournament", 'String'>
+  readonly maxParticipants: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly participantType: Prisma.FieldRef<"Tournament", 'ParticipantType'>
+  readonly registrationClose: Prisma.FieldRef<"Tournament", 'DateTime'>
+  readonly registrationOpen: Prisma.FieldRef<"Tournament", 'DateTime'>
+  readonly scoringRules: Prisma.FieldRef<"Tournament", 'Json'>
+  readonly sport: Prisma.FieldRef<"Tournament", 'String'>
+  readonly timezone: Prisma.FieldRef<"Tournament", 'String'>
+  readonly type: Prisma.FieldRef<"Tournament", 'TournamentType'>
+  readonly visibility: Prisma.FieldRef<"Tournament", 'Visibility'>
+  readonly numberOfGroups: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly teamsPerGroup: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly customName: Prisma.FieldRef<"Tournament", 'String'>
+  readonly thirdPlaceMatch: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly twoLegsKnockout: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly isPinned: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly organization_id: Prisma.FieldRef<"Tournament", 'String'>
-  readonly seasonName: Prisma.FieldRef<"Tournament", 'String'>
   readonly parent_id: Prisma.FieldRef<"Tournament", 'String'>
+  readonly seasonName: Prisma.FieldRef<"Tournament", 'String'>
+  readonly doubleRoundRobin: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly isPremium: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly isPaidRegistration: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly registrationFee: Prisma.FieldRef<"Tournament", 'Int'>
 }
     
 
@@ -5103,73 +5664,6 @@ export type TournamentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Tournament.venues
- */
-export type Tournament$venuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Venue
-   */
-  select?: Prisma.VenueSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Venue
-   */
-  omit?: Prisma.VenueOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.VenueInclude<ExtArgs> | null
-  where?: Prisma.VenueWhereInput
-  orderBy?: Prisma.VenueOrderByWithRelationInput | Prisma.VenueOrderByWithRelationInput[]
-  cursor?: Prisma.VenueWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.VenueScalarFieldEnum | Prisma.VenueScalarFieldEnum[]
-}
-
-/**
- * Tournament.organization
- */
-export type Tournament$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Organization
-   */
-  select?: Prisma.OrganizationSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Organization
-   */
-  omit?: Prisma.OrganizationOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.OrganizationInclude<ExtArgs> | null
-  where?: Prisma.OrganizationWhereInput
-}
-
-/**
- * Tournament.participants
- */
-export type Tournament$participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Participant
-   */
-  select?: Prisma.ParticipantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Participant
-   */
-  omit?: Prisma.ParticipantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ParticipantInclude<ExtArgs> | null
-  where?: Prisma.ParticipantWhereInput
-  orderBy?: Prisma.ParticipantOrderByWithRelationInput | Prisma.ParticipantOrderByWithRelationInput[]
-  cursor?: Prisma.ParticipantWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ParticipantScalarFieldEnum | Prisma.ParticipantScalarFieldEnum[]
-}
-
-/**
  * Tournament.fixtures
  */
 export type Tournament$fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5191,30 +5685,6 @@ export type Tournament$fixturesArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   distinct?: Prisma.FixtureScalarFieldEnum | Prisma.FixtureScalarFieldEnum[]
-}
-
-/**
- * Tournament.standings
- */
-export type Tournament$standingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Standing
-   */
-  select?: Prisma.StandingSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Standing
-   */
-  omit?: Prisma.StandingOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.StandingInclude<ExtArgs> | null
-  where?: Prisma.StandingWhereInput
-  orderBy?: Prisma.StandingOrderByWithRelationInput | Prisma.StandingOrderByWithRelationInput[]
-  cursor?: Prisma.StandingWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.StandingScalarFieldEnum | Prisma.StandingScalarFieldEnum[]
 }
 
 /**
@@ -5242,27 +5712,27 @@ export type Tournament$groupsArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
- * Tournament.sponsors
+ * Tournament.participants
  */
-export type Tournament$sponsorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Tournament$participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Sponsor
+   * Select specific fields to fetch from the Participant
    */
-  select?: Prisma.SponsorSelect<ExtArgs> | null
+  select?: Prisma.ParticipantSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Sponsor
+   * Omit specific fields from the Participant
    */
-  omit?: Prisma.SponsorOmit<ExtArgs> | null
+  omit?: Prisma.ParticipantOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.SponsorInclude<ExtArgs> | null
-  where?: Prisma.SponsorWhereInput
-  orderBy?: Prisma.SponsorOrderByWithRelationInput | Prisma.SponsorOrderByWithRelationInput[]
-  cursor?: Prisma.SponsorWhereUniqueInput
+  include?: Prisma.ParticipantInclude<ExtArgs> | null
+  where?: Prisma.ParticipantWhereInput
+  orderBy?: Prisma.ParticipantOrderByWithRelationInput | Prisma.ParticipantOrderByWithRelationInput[]
+  cursor?: Prisma.ParticipantWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.SponsorScalarFieldEnum | Prisma.SponsorScalarFieldEnum[]
+  distinct?: Prisma.ParticipantScalarFieldEnum | Prisma.ParticipantScalarFieldEnum[]
 }
 
 /**
@@ -5290,6 +5760,54 @@ export type Tournament$socialsArgs<ExtArgs extends runtime.Types.Extensions.Inte
 }
 
 /**
+ * Tournament.sponsors
+ */
+export type Tournament$sponsorsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Sponsor
+   */
+  select?: Prisma.SponsorSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Sponsor
+   */
+  omit?: Prisma.SponsorOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SponsorInclude<ExtArgs> | null
+  where?: Prisma.SponsorWhereInput
+  orderBy?: Prisma.SponsorOrderByWithRelationInput | Prisma.SponsorOrderByWithRelationInput[]
+  cursor?: Prisma.SponsorWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SponsorScalarFieldEnum | Prisma.SponsorScalarFieldEnum[]
+}
+
+/**
+ * Tournament.standings
+ */
+export type Tournament$standingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Standing
+   */
+  select?: Prisma.StandingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Standing
+   */
+  omit?: Prisma.StandingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StandingInclude<ExtArgs> | null
+  where?: Prisma.StandingWhereInput
+  orderBy?: Prisma.StandingOrderByWithRelationInput | Prisma.StandingOrderByWithRelationInput[]
+  cursor?: Prisma.StandingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.StandingScalarFieldEnum | Prisma.StandingScalarFieldEnum[]
+}
+
+/**
  * Tournament.team_invites
  */
 export type Tournament$team_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5314,51 +5832,22 @@ export type Tournament$team_invitesArgs<ExtArgs extends runtime.Types.Extensions
 }
 
 /**
- * Tournament.tournament_invites
+ * Tournament.organization
  */
-export type Tournament$tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Tournament$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the TournamentInvite
+   * Select specific fields to fetch from the Organization
    */
-  select?: Prisma.TournamentInviteSelect<ExtArgs> | null
+  select?: Prisma.OrganizationSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the TournamentInvite
+   * Omit specific fields from the Organization
    */
-  omit?: Prisma.TournamentInviteOmit<ExtArgs> | null
+  omit?: Prisma.OrganizationOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.TournamentInviteInclude<ExtArgs> | null
-  where?: Prisma.TournamentInviteWhereInput
-  orderBy?: Prisma.TournamentInviteOrderByWithRelationInput | Prisma.TournamentInviteOrderByWithRelationInput[]
-  cursor?: Prisma.TournamentInviteWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TournamentInviteScalarFieldEnum | Prisma.TournamentInviteScalarFieldEnum[]
-}
-
-/**
- * Tournament.followers
- */
-export type Tournament$followersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the TournamentFollower
-   */
-  select?: Prisma.TournamentFollowerSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the TournamentFollower
-   */
-  omit?: Prisma.TournamentFollowerOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TournamentFollowerInclude<ExtArgs> | null
-  where?: Prisma.TournamentFollowerWhereInput
-  orderBy?: Prisma.TournamentFollowerOrderByWithRelationInput | Prisma.TournamentFollowerOrderByWithRelationInput[]
-  cursor?: Prisma.TournamentFollowerWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TournamentFollowerScalarFieldEnum | Prisma.TournamentFollowerScalarFieldEnum[]
+  include?: Prisma.OrganizationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationWhereInput
 }
 
 /**
@@ -5402,6 +5891,102 @@ export type Tournament$seasonsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.TournamentScalarFieldEnum | Prisma.TournamentScalarFieldEnum[]
+}
+
+/**
+ * Tournament.followers
+ */
+export type Tournament$followersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TournamentFollower
+   */
+  select?: Prisma.TournamentFollowerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TournamentFollower
+   */
+  omit?: Prisma.TournamentFollowerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentFollowerInclude<ExtArgs> | null
+  where?: Prisma.TournamentFollowerWhereInput
+  orderBy?: Prisma.TournamentFollowerOrderByWithRelationInput | Prisma.TournamentFollowerOrderByWithRelationInput[]
+  cursor?: Prisma.TournamentFollowerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TournamentFollowerScalarFieldEnum | Prisma.TournamentFollowerScalarFieldEnum[]
+}
+
+/**
+ * Tournament.tournament_invites
+ */
+export type Tournament$tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TournamentInvite
+   */
+  select?: Prisma.TournamentInviteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TournamentInvite
+   */
+  omit?: Prisma.TournamentInviteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentInviteInclude<ExtArgs> | null
+  where?: Prisma.TournamentInviteWhereInput
+  orderBy?: Prisma.TournamentInviteOrderByWithRelationInput | Prisma.TournamentInviteOrderByWithRelationInput[]
+  cursor?: Prisma.TournamentInviteWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TournamentInviteScalarFieldEnum | Prisma.TournamentInviteScalarFieldEnum[]
+}
+
+/**
+ * Tournament.venues
+ */
+export type Tournament$venuesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Venue
+   */
+  select?: Prisma.VenueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Venue
+   */
+  omit?: Prisma.VenueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.VenueInclude<ExtArgs> | null
+  where?: Prisma.VenueWhereInput
+  orderBy?: Prisma.VenueOrderByWithRelationInput | Prisma.VenueOrderByWithRelationInput[]
+  cursor?: Prisma.VenueWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.VenueScalarFieldEnum | Prisma.VenueScalarFieldEnum[]
+}
+
+/**
+ * Tournament.payments
+ */
+export type Tournament$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

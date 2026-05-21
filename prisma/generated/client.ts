@@ -122,3 +122,13 @@ export type TeamInvite = Prisma.TeamInviteModel
  * 
  */
 export type TournamentInvite = Prisma.TournamentInviteModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel

@@ -182,9 +182,9 @@ export type GroupWhereInput = {
   tournament_id?: Prisma.StringFilter<"Group"> | string
   created_at?: Prisma.DateTimeFilter<"Group"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Group"> | Date | string
+  fixtures?: Prisma.FixtureListRelationFilter
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
   participants?: Prisma.ParticipantListRelationFilter
-  fixtures?: Prisma.FixtureListRelationFilter
 }
 
 export type GroupOrderByWithRelationInput = {
@@ -193,9 +193,9 @@ export type GroupOrderByWithRelationInput = {
   tournament_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  fixtures?: Prisma.FixtureOrderByRelationAggregateInput
   tournament?: Prisma.TournamentOrderByWithRelationInput
   participants?: Prisma.ParticipantOrderByRelationAggregateInput
-  fixtures?: Prisma.FixtureOrderByRelationAggregateInput
 }
 
 export type GroupWhereUniqueInput = Prisma.AtLeast<{
@@ -207,9 +207,9 @@ export type GroupWhereUniqueInput = Prisma.AtLeast<{
   tournament_id?: Prisma.StringFilter<"Group"> | string
   created_at?: Prisma.DateTimeFilter<"Group"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Group"> | Date | string
+  fixtures?: Prisma.FixtureListRelationFilter
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
   participants?: Prisma.ParticipantListRelationFilter
-  fixtures?: Prisma.FixtureListRelationFilter
 }, "id">
 
 export type GroupOrderByWithAggregationInput = {
@@ -239,9 +239,9 @@ export type GroupCreateInput = {
   name: string
   created_at?: Date | string
   updated_at?: Date | string
+  fixtures?: Prisma.FixtureCreateNestedManyWithoutGroupInput
   tournament: Prisma.TournamentCreateNestedOneWithoutGroupsInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutGroupInput
-  fixtures?: Prisma.FixtureCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateInput = {
@@ -250,8 +250,8 @@ export type GroupUncheckedCreateInput = {
   tournament_id: string
   created_at?: Date | string
   updated_at?: Date | string
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutGroupInput
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutGroupInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUpdateInput = {
@@ -259,9 +259,9 @@ export type GroupUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fixtures?: Prisma.FixtureUpdateManyWithoutGroupNestedInput
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutGroupsNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutGroupNestedInput
-  fixtures?: Prisma.FixtureUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateInput = {
@@ -270,8 +270,8 @@ export type GroupUncheckedUpdateInput = {
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutGroupNestedInput
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutGroupNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupCreateManyInput = {
@@ -415,8 +415,8 @@ export type GroupCreateWithoutTournamentInput = {
   name: string
   created_at?: Date | string
   updated_at?: Date | string
-  participants?: Prisma.ParticipantCreateNestedManyWithoutGroupInput
   fixtures?: Prisma.FixtureCreateNestedManyWithoutGroupInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutGroupInput
 }
 
 export type GroupUncheckedCreateWithoutTournamentInput = {
@@ -424,8 +424,8 @@ export type GroupUncheckedCreateWithoutTournamentInput = {
   name: string
   created_at?: Date | string
   updated_at?: Date | string
-  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutGroupInput
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutGroupInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutGroupInput
 }
 
 export type GroupCreateOrConnectWithoutTournamentInput = {
@@ -470,8 +470,8 @@ export type GroupCreateWithoutParticipantsInput = {
   name: string
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutGroupsInput
   fixtures?: Prisma.FixtureCreateNestedManyWithoutGroupInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutGroupsInput
 }
 
 export type GroupUncheckedCreateWithoutParticipantsInput = {
@@ -504,8 +504,8 @@ export type GroupUpdateWithoutParticipantsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutGroupsNestedInput
   fixtures?: Prisma.FixtureUpdateManyWithoutGroupNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutGroupsNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutParticipantsInput = {
@@ -581,8 +581,8 @@ export type GroupUpdateWithoutTournamentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  participants?: Prisma.ParticipantUpdateManyWithoutGroupNestedInput
   fixtures?: Prisma.FixtureUpdateManyWithoutGroupNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateWithoutTournamentInput = {
@@ -590,8 +590,8 @@ export type GroupUncheckedUpdateWithoutTournamentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutGroupNestedInput
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutGroupNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutGroupNestedInput
 }
 
 export type GroupUncheckedUpdateManyWithoutTournamentInput = {
@@ -607,13 +607,13 @@ export type GroupUncheckedUpdateManyWithoutTournamentInput = {
  */
 
 export type GroupCountOutputType = {
-  participants: number
   fixtures: number
+  participants: number
 }
 
 export type GroupCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  participants?: boolean | GroupCountOutputTypeCountParticipantsArgs
   fixtures?: boolean | GroupCountOutputTypeCountFixturesArgs
+  participants?: boolean | GroupCountOutputTypeCountParticipantsArgs
 }
 
 /**
@@ -629,15 +629,15 @@ export type GroupCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
 /**
  * GroupCountOutputType without action
  */
-export type GroupCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.ParticipantWhereInput
+export type GroupCountOutputTypeCountFixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FixtureWhereInput
 }
 
 /**
  * GroupCountOutputType without action
  */
-export type GroupCountOutputTypeCountFixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FixtureWhereInput
+export type GroupCountOutputTypeCountParticipantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ParticipantWhereInput
 }
 
 
@@ -647,9 +647,9 @@ export type GroupSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   tournament_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  fixtures?: boolean | Prisma.Group$fixturesArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participants?: boolean | Prisma.Group$participantsArgs<ExtArgs>
-  fixtures?: boolean | Prisma.Group$fixturesArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["group"]>
 
@@ -681,9 +681,9 @@ export type GroupSelectScalar = {
 
 export type GroupOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "tournament_id" | "created_at" | "updated_at", ExtArgs["result"]["group"]>
 export type GroupInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  fixtures?: boolean | Prisma.Group$fixturesArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participants?: boolean | Prisma.Group$participantsArgs<ExtArgs>
-  fixtures?: boolean | Prisma.Group$fixturesArgs<ExtArgs>
   _count?: boolean | Prisma.GroupCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type GroupIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -696,9 +696,9 @@ export type GroupIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $GroupPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Group"
   objects: {
+    fixtures: Prisma.$FixturePayload<ExtArgs>[]
     tournament: Prisma.$TournamentPayload<ExtArgs>
     participants: Prisma.$ParticipantPayload<ExtArgs>[]
-    fixtures: Prisma.$FixturePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1100,9 +1100,9 @@ readonly fields: GroupFieldRefs;
  */
 export interface Prisma__GroupClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  fixtures<T extends Prisma.Group$fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   participants<T extends Prisma.Group$participantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  fixtures<T extends Prisma.Group$fixturesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Group$fixturesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1533,30 +1533,6 @@ export type GroupDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
- * Group.participants
- */
-export type Group$participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Participant
-   */
-  select?: Prisma.ParticipantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Participant
-   */
-  omit?: Prisma.ParticipantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ParticipantInclude<ExtArgs> | null
-  where?: Prisma.ParticipantWhereInput
-  orderBy?: Prisma.ParticipantOrderByWithRelationInput | Prisma.ParticipantOrderByWithRelationInput[]
-  cursor?: Prisma.ParticipantWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.ParticipantScalarFieldEnum | Prisma.ParticipantScalarFieldEnum[]
-}
-
-/**
  * Group.fixtures
  */
 export type Group$fixturesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1578,6 +1554,30 @@ export type Group$fixturesArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.FixtureScalarFieldEnum | Prisma.FixtureScalarFieldEnum[]
+}
+
+/**
+ * Group.participants
+ */
+export type Group$participantsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Participant
+   */
+  select?: Prisma.ParticipantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Participant
+   */
+  omit?: Prisma.ParticipantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParticipantInclude<ExtArgs> | null
+  where?: Prisma.ParticipantWhereInput
+  orderBy?: Prisma.ParticipantOrderByWithRelationInput | Prisma.ParticipantOrderByWithRelationInput[]
+  cursor?: Prisma.ParticipantWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ParticipantScalarFieldEnum | Prisma.ParticipantScalarFieldEnum[]
 }
 
 /**

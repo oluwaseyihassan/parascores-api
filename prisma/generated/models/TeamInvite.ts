@@ -268,9 +268,9 @@ export type TeamInviteWhereInput = {
   isActive?: Prisma.BoolFilter<"TeamInvite"> | boolean
   created_at?: Prisma.DateTimeFilter<"TeamInvite"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"TeamInvite"> | Date | string
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantScalarRelationFilter, Prisma.ParticipantWhereInput>
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type TeamInviteOrderByWithRelationInput = {
@@ -285,9 +285,9 @@ export type TeamInviteOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  createdBy?: Prisma.UserOrderByWithRelationInput
   participant?: Prisma.ParticipantOrderByWithRelationInput
   tournament?: Prisma.TournamentOrderByWithRelationInput
-  createdBy?: Prisma.UserOrderByWithRelationInput
 }
 
 export type TeamInviteWhereUniqueInput = Prisma.AtLeast<{
@@ -305,9 +305,9 @@ export type TeamInviteWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"TeamInvite"> | boolean
   created_at?: Prisma.DateTimeFilter<"TeamInvite"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"TeamInvite"> | Date | string
+  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantScalarRelationFilter, Prisma.ParticipantWhereInput>
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
-  createdBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "token">
 
 export type TeamInviteOrderByWithAggregationInput = {
@@ -355,9 +355,9 @@ export type TeamInviteCreateInput = {
   isActive?: boolean
   created_at?: Date | string
   updated_at?: Date | string
+  createdBy: Prisma.UserCreateNestedOneWithoutCreated_invitesInput
   participant: Prisma.ParticipantCreateNestedOneWithoutInvitesInput
   tournament: Prisma.TournamentCreateNestedOneWithoutTeam_invitesInput
-  createdBy: Prisma.UserCreateNestedOneWithoutCreated_invitesInput
 }
 
 export type TeamInviteUncheckedCreateInput = {
@@ -383,9 +383,9 @@ export type TeamInviteUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreated_invitesNestedInput
   participant?: Prisma.ParticipantUpdateOneRequiredWithoutInvitesNestedInput
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutTeam_invitesNestedInput
-  createdBy?: Prisma.UserUpdateOneRequiredWithoutCreated_invitesNestedInput
 }
 
 export type TeamInviteUncheckedUpdateInput = {
@@ -707,8 +707,8 @@ export type TeamInviteCreateWithoutTournamentInput = {
   isActive?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  participant: Prisma.ParticipantCreateNestedOneWithoutInvitesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreated_invitesInput
+  participant: Prisma.ParticipantCreateNestedOneWithoutInvitesInput
 }
 
 export type TeamInviteUncheckedCreateWithoutTournamentInput = {
@@ -759,8 +759,8 @@ export type TeamInviteCreateWithoutParticipantInput = {
   isActive?: boolean
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutTeam_invitesInput
   createdBy: Prisma.UserCreateNestedOneWithoutCreated_invitesInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutTeam_invitesInput
 }
 
 export type TeamInviteUncheckedCreateWithoutParticipantInput = {
@@ -876,8 +876,8 @@ export type TeamInviteUpdateWithoutTournamentInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  participant?: Prisma.ParticipantUpdateOneRequiredWithoutInvitesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreated_invitesNestedInput
+  participant?: Prisma.ParticipantUpdateOneRequiredWithoutInvitesNestedInput
 }
 
 export type TeamInviteUncheckedUpdateWithoutTournamentInput = {
@@ -928,8 +928,8 @@ export type TeamInviteUpdateWithoutParticipantInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutTeam_invitesNestedInput
   createdBy?: Prisma.UserUpdateOneRequiredWithoutCreated_invitesNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutTeam_invitesNestedInput
 }
 
 export type TeamInviteUncheckedUpdateWithoutParticipantInput = {
@@ -972,9 +972,9 @@ export type TeamInviteSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   isActive?: boolean
   created_at?: boolean
   updated_at?: boolean
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamInvite"]>
 
 export type TeamInviteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -989,9 +989,9 @@ export type TeamInviteSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isActive?: boolean
   created_at?: boolean
   updated_at?: boolean
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamInvite"]>
 
 export type TeamInviteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1006,9 +1006,9 @@ export type TeamInviteSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isActive?: boolean
   created_at?: boolean
   updated_at?: boolean
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["teamInvite"]>
 
 export type TeamInviteSelectScalar = {
@@ -1027,27 +1027,27 @@ export type TeamInviteSelectScalar = {
 
 export type TeamInviteOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "token" | "participant_id" | "tournament_id" | "createdById" | "maxUses" | "usedCount" | "expiresAt" | "isActive" | "created_at" | "updated_at", ExtArgs["result"]["teamInvite"]>
 export type TeamInviteInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TeamInviteIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TeamInviteIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
-  createdBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TeamInvitePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TeamInvite"
   objects: {
+    createdBy: Prisma.$UserPayload<ExtArgs>
     participant: Prisma.$ParticipantPayload<ExtArgs>
     tournament: Prisma.$TournamentPayload<ExtArgs>
-    createdBy: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1455,9 +1455,9 @@ readonly fields: TeamInviteFieldRefs;
  */
 export interface Prisma__TeamInviteClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   participant<T extends Prisma.ParticipantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ParticipantDefaultArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  createdBy<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

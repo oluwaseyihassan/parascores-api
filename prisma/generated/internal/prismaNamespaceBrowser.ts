@@ -67,7 +67,9 @@ export const ModelName = {
   Social: 'Social',
   Venue: 'Venue',
   TeamInvite: 'TeamInvite',
-  TournamentInvite: 'TournamentInvite'
+  TournamentInvite: 'TournamentInvite',
+  Subscription: 'Subscription',
+  Payment: 'Payment'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -90,17 +92,17 @@ export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
   name: 'name',
-  picture: 'picture',
   password: 'password',
   role: 'role',
   metadata: 'metadata',
-  isEmailVerified: 'isEmailVerified',
-  emailVerificationToken: 'emailVerificationToken',
-  emailVerificationExpiry: 'emailVerificationExpiry',
-  passwordResetToken: 'passwordResetToken',
-  passwordResetExpiry: 'passwordResetExpiry',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  picture: 'picture',
+  emailVerificationExpiry: 'emailVerificationExpiry',
+  emailVerificationToken: 'emailVerificationToken',
+  isEmailVerified: 'isEmailVerified',
+  passwordResetExpiry: 'passwordResetExpiry',
+  passwordResetToken: 'passwordResetToken'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -110,13 +112,13 @@ export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  description: 'description',
   logoUrl: 'logoUrl',
   color: 'color',
   phone: 'phone',
   isVerified: 'isVerified',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  description: 'description'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -135,34 +137,37 @@ export type OrganizationMemberScalarFieldEnum = (typeof OrganizationMemberScalar
 export const TournamentScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  customName: 'customName',
   description: 'description',
-  logoUrl: 'logoUrl',
-  bannerUrl: 'bannerUrl',
-  location: 'location',
-  timezone: 'timezone',
-  visibility: 'visibility',
-  sport: 'sport',
-  type: 'type',
-  participantType: 'participantType',
-  scoringRules: 'scoringRules',
-  maxParticipants: 'maxParticipants',
-  registrationOpen: 'registrationOpen',
-  registrationClose: 'registrationClose',
-  autoApprove: 'autoApprove',
-  isPinned: 'isPinned',
-  twoLegsKnockout: 'twoLegsKnockout',
-  doubleRoundRobin: 'doubleRoundRobin',
-  thirdPlaceMatch: 'thirdPlaceMatch',
-  numberOfGroups: 'numberOfGroups',
-  teamsPerGroup: 'teamsPerGroup',
   start_date: 'start_date',
   end_date: 'end_date',
   created_at: 'created_at',
   updated_at: 'updated_at',
+  autoApprove: 'autoApprove',
+  bannerUrl: 'bannerUrl',
+  location: 'location',
+  logoUrl: 'logoUrl',
+  maxParticipants: 'maxParticipants',
+  participantType: 'participantType',
+  registrationClose: 'registrationClose',
+  registrationOpen: 'registrationOpen',
+  scoringRules: 'scoringRules',
+  sport: 'sport',
+  timezone: 'timezone',
+  type: 'type',
+  visibility: 'visibility',
+  numberOfGroups: 'numberOfGroups',
+  teamsPerGroup: 'teamsPerGroup',
+  customName: 'customName',
+  thirdPlaceMatch: 'thirdPlaceMatch',
+  twoLegsKnockout: 'twoLegsKnockout',
+  isPinned: 'isPinned',
   organization_id: 'organization_id',
+  parent_id: 'parent_id',
   seasonName: 'seasonName',
-  parent_id: 'parent_id'
+  doubleRoundRobin: 'doubleRoundRobin',
+  isPremium: 'isPremium',
+  isPaidRegistration: 'isPaidRegistration',
+  registrationFee: 'registrationFee'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
@@ -195,13 +200,13 @@ export const ParticipantScalarFieldEnum = {
   team_id: 'team_id',
   customName: 'customName',
   seed: 'seed',
-  logoUrl: 'logoUrl',
   status: 'status',
-  groupId: 'groupId',
-  linkCode: 'linkCode',
-  linkCodeExpires: 'linkCodeExpires',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  groupId: 'groupId',
+  logoUrl: 'logoUrl',
+  linkCode: 'linkCode',
+  linkCodeExpires: 'linkCodeExpires'
 } as const
 
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
@@ -210,25 +215,25 @@ export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[key
 export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
-  groupId: 'groupId',
-  stage: 'stage',
   round: 'round',
-  roundName: 'roundName',
   matchNumber: 'matchNumber',
   startTime: 'startTime',
-  venue: 'venue',
   homeTeamId: 'homeTeamId',
-  homeTeamPlaceholder: 'homeTeamPlaceholder',
   awayTeamId: 'awayTeamId',
-  awayTeamPlaceholder: 'awayTeamPlaceholder',
-  nextFixtureId: 'nextFixtureId',
   homeScore: 'homeScore',
   awayScore: 'awayScore',
-  homePenaltyScore: 'homePenaltyScore',
-  awayPenaltyScore: 'awayPenaltyScore',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  awayPenaltyScore: 'awayPenaltyScore',
+  awayTeamPlaceholder: 'awayTeamPlaceholder',
+  groupId: 'groupId',
+  homePenaltyScore: 'homePenaltyScore',
+  homeTeamPlaceholder: 'homeTeamPlaceholder',
+  nextFixtureId: 'nextFixtureId',
+  roundName: 'roundName',
+  stage: 'stage',
+  venue: 'venue'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
@@ -237,9 +242,9 @@ export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeo
 export const TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  created_at: 'created_at',
   logoUrl: 'logoUrl',
   ownerId: 'ownerId',
-  created_at: 'created_at',
   updated_at: 'updated_at'
 } as const
 
@@ -288,14 +293,14 @@ export type StandingScalarFieldEnum = (typeof StandingScalarFieldEnum)[keyof typ
 export const PlayerScalarFieldEnum = {
   id: 'id',
   participantId: 'participantId',
-  userId: 'userId',
   name: 'name',
   number: 'number',
   position: 'position',
-  avatarUrl: 'avatarUrl',
-  status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  avatarUrl: 'avatarUrl',
+  userId: 'userId',
+  status: 'status'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
@@ -304,12 +309,12 @@ export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof 
 export const SponsorScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   logoUrl: 'logoUrl',
   websiteUrl: 'websiteUrl',
   tournament_id: 'tournament_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  description: 'description'
 } as const
 
 export type SponsorScalarFieldEnum = (typeof SponsorScalarFieldEnum)[keyof typeof SponsorScalarFieldEnum]
@@ -321,9 +326,9 @@ export const SocialScalarFieldEnum = {
   url: 'url',
   handle: 'handle',
   tournament_id: 'tournament_id',
-  organization_id: 'organization_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  organization_id: 'organization_id'
 } as const
 
 export type SocialScalarFieldEnum = (typeof SocialScalarFieldEnum)[keyof typeof SocialScalarFieldEnum]
@@ -371,6 +376,45 @@ export const TournamentInviteScalarFieldEnum = {
 } as const
 
 export type TournamentInviteScalarFieldEnum = (typeof TournamentInviteScalarFieldEnum)[keyof typeof TournamentInviteScalarFieldEnum]
+
+
+export const SubscriptionScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  plan: 'plan',
+  status: 'status',
+  paystackCustomerCode: 'paystackCustomerCode',
+  paystackSubscriptionCode: 'paystackSubscriptionCode',
+  paystackPlanCode: 'paystackPlanCode',
+  currentPeriodStart: 'currentPeriodStart',
+  currentPeriodEnd: 'currentPeriodEnd',
+  cancelledAt: 'cancelledAt',
+  trialEnd: 'trialEnd',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  tournamentId: 'tournamentId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paystackReference: 'paystackReference',
+  paystackTransactionId: 'paystackTransactionId',
+  plan: 'plan',
+  metadata: 'metadata',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  userId: 'userId',
+  type: 'type'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -97,11 +97,40 @@ export const MatchEventType = {
   GOAL: 'GOAL',
   OWN_GOAL: 'OWN_GOAL',
   PENALTY: 'PENALTY',
-  MISSED_PENALTY: 'MISSED_PENALTY',
   YELLOW_CARD: 'YELLOW_CARD',
   RED_CARD: 'RED_CARD',
   SUBSTITUTION: 'SUBSTITUTION',
-  ASSIST: 'ASSIST'
+  ASSIST: 'ASSIST',
+  MISSED_PENALTY: 'MISSED_PENALTY'
 } as const
 
 export type MatchEventType = (typeof MatchEventType)[keyof typeof MatchEventType]
+
+
+export const SubscriptionPlan = {
+  FREE: 'FREE',
+  PER_TOURNAMENT: 'PER_TOURNAMENT',
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
+} as const
+
+export type SubscriptionPlan = (typeof SubscriptionPlan)[keyof typeof SubscriptionPlan]
+
+
+export const SubscriptionStatus = {
+  ACTIVE: 'ACTIVE',
+  PAST_DUE: 'PAST_DUE',
+  CANCELLED: 'CANCELLED',
+  TRIALING: 'TRIALING'
+} as const
+
+export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof SubscriptionStatus]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

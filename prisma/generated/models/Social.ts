@@ -30,9 +30,9 @@ export type SocialMinAggregateOutputType = {
   url: string | null
   handle: string | null
   tournament_id: string | null
-  organization_id: string | null
   created_at: Date | null
   updated_at: Date | null
+  organization_id: string | null
 }
 
 export type SocialMaxAggregateOutputType = {
@@ -41,9 +41,9 @@ export type SocialMaxAggregateOutputType = {
   url: string | null
   handle: string | null
   tournament_id: string | null
-  organization_id: string | null
   created_at: Date | null
   updated_at: Date | null
+  organization_id: string | null
 }
 
 export type SocialCountAggregateOutputType = {
@@ -52,9 +52,9 @@ export type SocialCountAggregateOutputType = {
   url: number
   handle: number
   tournament_id: number
-  organization_id: number
   created_at: number
   updated_at: number
+  organization_id: number
   _all: number
 }
 
@@ -65,9 +65,9 @@ export type SocialMinAggregateInputType = {
   url?: true
   handle?: true
   tournament_id?: true
-  organization_id?: true
   created_at?: true
   updated_at?: true
+  organization_id?: true
 }
 
 export type SocialMaxAggregateInputType = {
@@ -76,9 +76,9 @@ export type SocialMaxAggregateInputType = {
   url?: true
   handle?: true
   tournament_id?: true
-  organization_id?: true
   created_at?: true
   updated_at?: true
+  organization_id?: true
 }
 
 export type SocialCountAggregateInputType = {
@@ -87,9 +87,9 @@ export type SocialCountAggregateInputType = {
   url?: true
   handle?: true
   tournament_id?: true
-  organization_id?: true
   created_at?: true
   updated_at?: true
+  organization_id?: true
   _all?: true
 }
 
@@ -171,9 +171,9 @@ export type SocialGroupByOutputType = {
   url: string
   handle: string | null
   tournament_id: string | null
-  organization_id: string | null
   created_at: Date
   updated_at: Date
+  organization_id: string | null
   _count: SocialCountAggregateOutputType | null
   _min: SocialMinAggregateOutputType | null
   _max: SocialMaxAggregateOutputType | null
@@ -203,11 +203,11 @@ export type SocialWhereInput = {
   url?: Prisma.StringFilter<"Social"> | string
   handle?: Prisma.StringNullableFilter<"Social"> | string | null
   tournament_id?: Prisma.StringNullableFilter<"Social"> | string | null
-  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
   created_at?: Prisma.DateTimeFilter<"Social"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Social"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
+  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
 }
 
 export type SocialOrderByWithRelationInput = {
@@ -216,11 +216,11 @@ export type SocialOrderByWithRelationInput = {
   url?: Prisma.SortOrder
   handle?: Prisma.SortOrderInput | Prisma.SortOrder
   tournament_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  tournament?: Prisma.TournamentOrderByWithRelationInput
+  organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  tournament?: Prisma.TournamentOrderByWithRelationInput
 }
 
 export type SocialWhereUniqueInput = Prisma.AtLeast<{
@@ -232,11 +232,11 @@ export type SocialWhereUniqueInput = Prisma.AtLeast<{
   url?: Prisma.StringFilter<"Social"> | string
   handle?: Prisma.StringNullableFilter<"Social"> | string | null
   tournament_id?: Prisma.StringNullableFilter<"Social"> | string | null
-  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
   created_at?: Prisma.DateTimeFilter<"Social"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Social"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
+  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
 }, "id">
 
 export type SocialOrderByWithAggregationInput = {
@@ -245,9 +245,9 @@ export type SocialOrderByWithAggregationInput = {
   url?: Prisma.SortOrder
   handle?: Prisma.SortOrderInput | Prisma.SortOrder
   tournament_id?: Prisma.SortOrderInput | Prisma.SortOrder
-  organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.SocialCountOrderByAggregateInput
   _max?: Prisma.SocialMaxOrderByAggregateInput
   _min?: Prisma.SocialMinOrderByAggregateInput
@@ -262,9 +262,9 @@ export type SocialScalarWhereWithAggregatesInput = {
   url?: Prisma.StringWithAggregatesFilter<"Social"> | string
   handle?: Prisma.StringNullableWithAggregatesFilter<"Social"> | string | null
   tournament_id?: Prisma.StringNullableWithAggregatesFilter<"Social"> | string | null
-  organization_id?: Prisma.StringNullableWithAggregatesFilter<"Social"> | string | null
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Social"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Social"> | Date | string
+  organization_id?: Prisma.StringNullableWithAggregatesFilter<"Social"> | string | null
 }
 
 export type SocialCreateInput = {
@@ -274,8 +274,8 @@ export type SocialCreateInput = {
   handle?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament?: Prisma.TournamentCreateNestedOneWithoutSocialsInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutSocialsInput
+  tournament?: Prisma.TournamentCreateNestedOneWithoutSocialsInput
 }
 
 export type SocialUncheckedCreateInput = {
@@ -284,9 +284,9 @@ export type SocialUncheckedCreateInput = {
   url: string
   handle?: string | null
   tournament_id?: string | null
-  organization_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  organization_id?: string | null
 }
 
 export type SocialUpdateInput = {
@@ -296,8 +296,8 @@ export type SocialUpdateInput = {
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneWithoutSocialsNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutSocialsNestedInput
+  tournament?: Prisma.TournamentUpdateOneWithoutSocialsNestedInput
 }
 
 export type SocialUncheckedUpdateInput = {
@@ -306,9 +306,9 @@ export type SocialUncheckedUpdateInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournament_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SocialCreateManyInput = {
@@ -317,9 +317,9 @@ export type SocialCreateManyInput = {
   url: string
   handle?: string | null
   tournament_id?: string | null
-  organization_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  organization_id?: string | null
 }
 
 export type SocialUpdateManyMutationInput = {
@@ -337,9 +337,9 @@ export type SocialUncheckedUpdateManyInput = {
   url?: Prisma.StringFieldUpdateOperationsInput | string
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournament_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SocialListRelationFilter = {
@@ -358,9 +358,9 @@ export type SocialCountOrderByAggregateInput = {
   url?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
-  organization_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  organization_id?: Prisma.SortOrder
 }
 
 export type SocialMaxOrderByAggregateInput = {
@@ -369,9 +369,9 @@ export type SocialMaxOrderByAggregateInput = {
   url?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
-  organization_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  organization_id?: Prisma.SortOrder
 }
 
 export type SocialMinOrderByAggregateInput = {
@@ -380,9 +380,9 @@ export type SocialMinOrderByAggregateInput = {
   url?: Prisma.SortOrder
   handle?: Prisma.SortOrder
   tournament_id?: Prisma.SortOrder
-  organization_id?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
+  organization_id?: Prisma.SortOrder
 }
 
 export type SocialCreateNestedManyWithoutOrganizationInput = {
@@ -524,9 +524,9 @@ export type SocialScalarWhereInput = {
   url?: Prisma.StringFilter<"Social"> | string
   handle?: Prisma.StringNullableFilter<"Social"> | string | null
   tournament_id?: Prisma.StringNullableFilter<"Social"> | string | null
-  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
   created_at?: Prisma.DateTimeFilter<"Social"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Social"> | Date | string
+  organization_id?: Prisma.StringNullableFilter<"Social"> | string | null
 }
 
 export type SocialCreateWithoutTournamentInput = {
@@ -544,9 +544,9 @@ export type SocialUncheckedCreateWithoutTournamentInput = {
   platform: string
   url: string
   handle?: string | null
-  organization_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  organization_id?: string | null
 }
 
 export type SocialCreateOrConnectWithoutTournamentInput = {
@@ -620,9 +620,9 @@ export type SocialCreateManyTournamentInput = {
   platform: string
   url: string
   handle?: string | null
-  organization_id?: string | null
   created_at?: Date | string
   updated_at?: Date | string
+  organization_id?: string | null
 }
 
 export type SocialUpdateWithoutTournamentInput = {
@@ -640,9 +640,9 @@ export type SocialUncheckedUpdateWithoutTournamentInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type SocialUncheckedUpdateManyWithoutTournamentInput = {
@@ -650,9 +650,9 @@ export type SocialUncheckedUpdateManyWithoutTournamentInput = {
   platform?: Prisma.StringFieldUpdateOperationsInput | string
   url?: Prisma.StringFieldUpdateOperationsInput | string
   handle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -663,11 +663,11 @@ export type SocialSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   url?: boolean
   handle?: boolean
   tournament_id?: boolean
-  organization_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
+  organization_id?: boolean
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }, ExtArgs["result"]["social"]>
 
 export type SocialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -676,11 +676,11 @@ export type SocialSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   url?: boolean
   handle?: boolean
   tournament_id?: boolean
-  organization_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
+  organization_id?: boolean
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }, ExtArgs["result"]["social"]>
 
 export type SocialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -689,11 +689,11 @@ export type SocialSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   url?: boolean
   handle?: boolean
   tournament_id?: boolean
-  organization_id?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
+  organization_id?: boolean
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }, ExtArgs["result"]["social"]>
 
 export type SocialSelectScalar = {
@@ -702,30 +702,30 @@ export type SocialSelectScalar = {
   url?: boolean
   handle?: boolean
   tournament_id?: boolean
-  organization_id?: boolean
   created_at?: boolean
   updated_at?: boolean
+  organization_id?: boolean
 }
 
-export type SocialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "platform" | "url" | "handle" | "tournament_id" | "organization_id" | "created_at" | "updated_at", ExtArgs["result"]["social"]>
+export type SocialOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "platform" | "url" | "handle" | "tournament_id" | "created_at" | "updated_at" | "organization_id", ExtArgs["result"]["social"]>
 export type SocialInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }
 export type SocialIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }
 export type SocialIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
   organization?: boolean | Prisma.Social$organizationArgs<ExtArgs>
+  tournament?: boolean | Prisma.Social$tournamentArgs<ExtArgs>
 }
 
 export type $SocialPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Social"
   objects: {
-    tournament: Prisma.$TournamentPayload<ExtArgs> | null
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
+    tournament: Prisma.$TournamentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -733,9 +733,9 @@ export type $SocialPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     url: string
     handle: string | null
     tournament_id: string | null
-    organization_id: string | null
     created_at: Date
     updated_at: Date
+    organization_id: string | null
   }, ExtArgs["result"]["social"]>
   composites: {}
 }
@@ -1130,8 +1130,8 @@ readonly fields: SocialFieldRefs;
  */
 export interface Prisma__SocialClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tournament<T extends Prisma.Social$tournamentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Social$tournamentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   organization<T extends Prisma.Social$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Social$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  tournament<T extends Prisma.Social$tournamentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Social$tournamentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1166,9 +1166,9 @@ export interface SocialFieldRefs {
   readonly url: Prisma.FieldRef<"Social", 'String'>
   readonly handle: Prisma.FieldRef<"Social", 'String'>
   readonly tournament_id: Prisma.FieldRef<"Social", 'String'>
-  readonly organization_id: Prisma.FieldRef<"Social", 'String'>
   readonly created_at: Prisma.FieldRef<"Social", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Social", 'DateTime'>
+  readonly organization_id: Prisma.FieldRef<"Social", 'String'>
 }
     
 
@@ -1565,25 +1565,6 @@ export type SocialDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
 }
 
 /**
- * Social.tournament
- */
-export type Social$tournamentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Tournament
-   */
-  select?: Prisma.TournamentSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Tournament
-   */
-  omit?: Prisma.TournamentOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TournamentInclude<ExtArgs> | null
-  where?: Prisma.TournamentWhereInput
-}
-
-/**
  * Social.organization
  */
 export type Social$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1600,6 +1581,25 @@ export type Social$organizationArgs<ExtArgs extends runtime.Types.Extensions.Int
    */
   include?: Prisma.OrganizationInclude<ExtArgs> | null
   where?: Prisma.OrganizationWhereInput
+}
+
+/**
+ * Social.tournament
+ */
+export type Social$tournamentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Tournament
+   */
+  select?: Prisma.TournamentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Tournament
+   */
+  omit?: Prisma.TournamentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TournamentInclude<ExtArgs> | null
+  where?: Prisma.TournamentWhereInput
 }
 
 /**

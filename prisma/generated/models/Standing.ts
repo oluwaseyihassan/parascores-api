@@ -328,8 +328,8 @@ export type StandingWhereInput = {
   group?: Prisma.StringNullableFilter<"Standing"> | string | null
   created_at?: Prisma.DateTimeFilter<"Standing"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Standing"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantScalarRelationFilter, Prisma.ParticipantWhereInput>
+  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
 }
 
 export type StandingOrderByWithRelationInput = {
@@ -348,8 +348,8 @@ export type StandingOrderByWithRelationInput = {
   group?: Prisma.SortOrderInput | Prisma.SortOrder
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
-  tournament?: Prisma.TournamentOrderByWithRelationInput
   participant?: Prisma.ParticipantOrderByWithRelationInput
+  tournament?: Prisma.TournamentOrderByWithRelationInput
 }
 
 export type StandingWhereUniqueInput = Prisma.AtLeast<{
@@ -372,8 +372,8 @@ export type StandingWhereUniqueInput = Prisma.AtLeast<{
   group?: Prisma.StringNullableFilter<"Standing"> | string | null
   created_at?: Prisma.DateTimeFilter<"Standing"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Standing"> | Date | string
-  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantScalarRelationFilter, Prisma.ParticipantWhereInput>
+  tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
 }, "id" | "tournament_id_participant_id">
 
 export type StandingOrderByWithAggregationInput = {
@@ -434,8 +434,8 @@ export type StandingCreateInput = {
   group?: string | null
   created_at?: Date | string
   updated_at?: Date | string
-  tournament: Prisma.TournamentCreateNestedOneWithoutStandingsInput
   participant: Prisma.ParticipantCreateNestedOneWithoutStandingsInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutStandingsInput
 }
 
 export type StandingUncheckedCreateInput = {
@@ -470,8 +470,8 @@ export type StandingUpdateInput = {
   group?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tournament?: Prisma.TournamentUpdateOneRequiredWithoutStandingsNestedInput
   participant?: Prisma.ParticipantUpdateOneRequiredWithoutStandingsNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutStandingsNestedInput
 }
 
 export type StandingUncheckedUpdateInput = {
@@ -1016,8 +1016,8 @@ export type StandingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   group?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1036,8 +1036,8 @@ export type StandingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   group?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1056,8 +1056,8 @@ export type StandingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   group?: boolean
   created_at?: boolean
   updated_at?: boolean
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["standing"]>
 
 export type StandingSelectScalar = {
@@ -1080,23 +1080,23 @@ export type StandingSelectScalar = {
 
 export type StandingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "participant_id" | "played" | "wins" | "draws" | "losses" | "goalsFor" | "goalsAgainst" | "goalDiff" | "points" | "position" | "group" | "created_at" | "updated_at", ExtArgs["result"]["standing"]>
 export type StandingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }
 export type StandingIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }
 export type StandingIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.ParticipantDefaultArgs<ExtArgs>
+  tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
 }
 
 export type $StandingPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Standing"
   objects: {
-    tournament: Prisma.$TournamentPayload<ExtArgs>
     participant: Prisma.$ParticipantPayload<ExtArgs>
+    tournament: Prisma.$TournamentPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1508,8 +1508,8 @@ readonly fields: StandingFieldRefs;
  */
 export interface Prisma__StandingClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   participant<T extends Prisma.ParticipantDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ParticipantDefaultArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

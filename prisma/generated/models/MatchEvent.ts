@@ -270,8 +270,8 @@ export type MatchEventWhereInput = {
   relatedPlayerId?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   fixture?: Prisma.XOR<Prisma.FixtureScalarRelationFilter, Prisma.FixtureWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
-  relatedParticipant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  relatedParticipant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   relatedPlayer?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
 }
 
@@ -290,8 +290,8 @@ export type MatchEventOrderByWithRelationInput = {
   relatedPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   fixture?: Prisma.FixtureOrderByWithRelationInput
   participant?: Prisma.ParticipantOrderByWithRelationInput
-  relatedParticipant?: Prisma.ParticipantOrderByWithRelationInput
   player?: Prisma.PlayerOrderByWithRelationInput
+  relatedParticipant?: Prisma.ParticipantOrderByWithRelationInput
   relatedPlayer?: Prisma.PlayerOrderByWithRelationInput
 }
 
@@ -313,8 +313,8 @@ export type MatchEventWhereUniqueInput = Prisma.AtLeast<{
   relatedPlayerId?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   fixture?: Prisma.XOR<Prisma.FixtureScalarRelationFilter, Prisma.FixtureWhereInput>
   participant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
-  relatedParticipant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   player?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
+  relatedParticipant?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   relatedPlayer?: Prisma.XOR<Prisma.PlayerNullableScalarRelationFilter, Prisma.PlayerWhereInput> | null
 }, "id">
 
@@ -366,8 +366,8 @@ export type MatchEventCreateInput = {
   updated_at?: Date | string
   fixture: Prisma.FixtureCreateNestedOneWithoutMatchEventsInput
   participant?: Prisma.ParticipantCreateNestedOneWithoutMatchEventsInput
-  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   player?: Prisma.PlayerCreateNestedOneWithoutMatchEventsInput
+  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   relatedPlayer?: Prisma.PlayerCreateNestedOneWithoutRelatedMatchEventsInput
 }
 
@@ -396,8 +396,8 @@ export type MatchEventUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fixture?: Prisma.FixtureUpdateOneRequiredWithoutMatchEventsNestedInput
   participant?: Prisma.ParticipantUpdateOneWithoutMatchEventsNestedInput
-  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   player?: Prisma.PlayerUpdateOneWithoutMatchEventsNestedInput
+  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   relatedPlayer?: Prisma.PlayerUpdateOneWithoutRelatedMatchEventsNestedInput
 }
 
@@ -740,8 +740,8 @@ export type MatchEventCreateWithoutParticipantInput = {
   created_at?: Date | string
   updated_at?: Date | string
   fixture: Prisma.FixtureCreateNestedOneWithoutMatchEventsInput
-  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   player?: Prisma.PlayerCreateNestedOneWithoutMatchEventsInput
+  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   relatedPlayer?: Prisma.PlayerCreateNestedOneWithoutRelatedMatchEventsInput
 }
 
@@ -866,8 +866,8 @@ export type MatchEventCreateWithoutFixtureInput = {
   created_at?: Date | string
   updated_at?: Date | string
   participant?: Prisma.ParticipantCreateNestedOneWithoutMatchEventsInput
-  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   player?: Prisma.PlayerCreateNestedOneWithoutMatchEventsInput
+  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   relatedPlayer?: Prisma.PlayerCreateNestedOneWithoutRelatedMatchEventsInput
 }
 
@@ -959,8 +959,8 @@ export type MatchEventCreateWithoutRelatedPlayerInput = {
   updated_at?: Date | string
   fixture: Prisma.FixtureCreateNestedOneWithoutMatchEventsInput
   participant?: Prisma.ParticipantCreateNestedOneWithoutMatchEventsInput
-  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
   player?: Prisma.PlayerCreateNestedOneWithoutMatchEventsInput
+  relatedParticipant?: Prisma.ParticipantCreateNestedOneWithoutRelatedMatchEventsInput
 }
 
 export type MatchEventUncheckedCreateWithoutRelatedPlayerInput = {
@@ -1056,8 +1056,8 @@ export type MatchEventUpdateWithoutParticipantInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fixture?: Prisma.FixtureUpdateOneRequiredWithoutMatchEventsNestedInput
-  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   player?: Prisma.PlayerUpdateOneWithoutMatchEventsNestedInput
+  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   relatedPlayer?: Prisma.PlayerUpdateOneWithoutRelatedMatchEventsNestedInput
 }
 
@@ -1154,8 +1154,8 @@ export type MatchEventUpdateWithoutFixtureInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   participant?: Prisma.ParticipantUpdateOneWithoutMatchEventsNestedInput
-  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   player?: Prisma.PlayerUpdateOneWithoutMatchEventsNestedInput
+  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   relatedPlayer?: Prisma.PlayerUpdateOneWithoutRelatedMatchEventsNestedInput
 }
 
@@ -1267,8 +1267,8 @@ export type MatchEventUpdateWithoutRelatedPlayerInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   fixture?: Prisma.FixtureUpdateOneRequiredWithoutMatchEventsNestedInput
   participant?: Prisma.ParticipantUpdateOneWithoutMatchEventsNestedInput
-  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
   player?: Prisma.PlayerUpdateOneWithoutMatchEventsNestedInput
+  relatedParticipant?: Prisma.ParticipantUpdateOneWithoutRelatedMatchEventsNestedInput
 }
 
 export type MatchEventUncheckedUpdateWithoutRelatedPlayerInput = {
@@ -1316,8 +1316,8 @@ export type MatchEventSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   relatedPlayerId?: boolean
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }, ExtArgs["result"]["matchEvent"]>
 
@@ -1336,8 +1336,8 @@ export type MatchEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   relatedPlayerId?: boolean
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }, ExtArgs["result"]["matchEvent"]>
 
@@ -1356,8 +1356,8 @@ export type MatchEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   relatedPlayerId?: boolean
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }, ExtArgs["result"]["matchEvent"]>
 
@@ -1380,22 +1380,22 @@ export type MatchEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type MatchEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }
 export type MatchEventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }
 export type MatchEventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
-  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   player?: boolean | Prisma.MatchEvent$playerArgs<ExtArgs>
+  relatedParticipant?: boolean | Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>
   relatedPlayer?: boolean | Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>
 }
 
@@ -1404,8 +1404,8 @@ export type $MatchEventPayload<ExtArgs extends runtime.Types.Extensions.Internal
   objects: {
     fixture: Prisma.$FixturePayload<ExtArgs>
     participant: Prisma.$ParticipantPayload<ExtArgs> | null
-    relatedParticipant: Prisma.$ParticipantPayload<ExtArgs> | null
     player: Prisma.$PlayerPayload<ExtArgs> | null
+    relatedParticipant: Prisma.$ParticipantPayload<ExtArgs> | null
     relatedPlayer: Prisma.$PlayerPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1817,8 +1817,8 @@ export interface Prisma__MatchEventClient<T, Null = never, ExtArgs extends runti
   readonly [Symbol.toStringTag]: "PrismaPromise"
   fixture<T extends Prisma.FixtureDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FixtureDefaultArgs<ExtArgs>>): Prisma.Prisma__FixtureClient<runtime.Types.Result.GetResult<Prisma.$FixturePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   participant<T extends Prisma.MatchEvent$participantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchEvent$participantArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  relatedParticipant<T extends Prisma.MatchEvent$relatedParticipantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   player<T extends Prisma.MatchEvent$playerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchEvent$playerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  relatedParticipant<T extends Prisma.MatchEvent$relatedParticipantArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchEvent$relatedParticipantArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   relatedPlayer<T extends Prisma.MatchEvent$relatedPlayerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MatchEvent$relatedPlayerArgs<ExtArgs>>): Prisma.Prisma__PlayerClient<runtime.Types.Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2276,25 +2276,6 @@ export type MatchEvent$participantArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 /**
- * MatchEvent.relatedParticipant
- */
-export type MatchEvent$relatedParticipantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Participant
-   */
-  select?: Prisma.ParticipantSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Participant
-   */
-  omit?: Prisma.ParticipantOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ParticipantInclude<ExtArgs> | null
-  where?: Prisma.ParticipantWhereInput
-}
-
-/**
  * MatchEvent.player
  */
 export type MatchEvent$playerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2311,6 +2292,25 @@ export type MatchEvent$playerArgs<ExtArgs extends runtime.Types.Extensions.Inter
    */
   include?: Prisma.PlayerInclude<ExtArgs> | null
   where?: Prisma.PlayerWhereInput
+}
+
+/**
+ * MatchEvent.relatedParticipant
+ */
+export type MatchEvent$relatedParticipantArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Participant
+   */
+  select?: Prisma.ParticipantSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Participant
+   */
+  omit?: Prisma.ParticipantOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ParticipantInclude<ExtArgs> | null
+  where?: Prisma.ParticipantWhereInput
 }
 
 /**

@@ -166,16 +166,16 @@ export type TournamentFollowerWhereInput = {
   userId?: Prisma.StringFilter<"TournamentFollower"> | string
   tournamentId?: Prisma.StringFilter<"TournamentFollower"> | string
   createdAt?: Prisma.DateTimeFilter<"TournamentFollower"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type TournamentFollowerOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   tournamentId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
   tournament?: Prisma.TournamentOrderByWithRelationInput
+  user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type TournamentFollowerWhereUniqueInput = Prisma.AtLeast<{
@@ -186,8 +186,8 @@ export type TournamentFollowerWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"TournamentFollower"> | string
   tournamentId?: Prisma.StringFilter<"TournamentFollower"> | string
   createdAt?: Prisma.DateTimeFilter<"TournamentFollower"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   tournament?: Prisma.XOR<Prisma.TournamentScalarRelationFilter, Prisma.TournamentWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "userId_tournamentId">
 
 export type TournamentFollowerOrderByWithAggregationInput = {
@@ -210,8 +210,8 @@ export type TournamentFollowerScalarWhereWithAggregatesInput = {
 
 export type TournamentFollowerCreateInput = {
   createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutFollowed_tournamentsInput
   tournament: Prisma.TournamentCreateNestedOneWithoutFollowersInput
+  user: Prisma.UserCreateNestedOneWithoutFollowed_tournamentsInput
 }
 
 export type TournamentFollowerUncheckedCreateInput = {
@@ -222,8 +222,8 @@ export type TournamentFollowerUncheckedCreateInput = {
 
 export type TournamentFollowerUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutFollowed_tournamentsNestedInput
   tournament?: Prisma.TournamentUpdateOneRequiredWithoutFollowersNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutFollowed_tournamentsNestedInput
 }
 
 export type TournamentFollowerUncheckedUpdateInput = {
@@ -492,24 +492,24 @@ export type TournamentFollowerSelect<ExtArgs extends runtime.Types.Extensions.In
   userId?: boolean
   tournamentId?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tournamentFollower"]>
 
 export type TournamentFollowerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   userId?: boolean
   tournamentId?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tournamentFollower"]>
 
 export type TournamentFollowerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   userId?: boolean
   tournamentId?: boolean
   createdAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tournamentFollower"]>
 
 export type TournamentFollowerSelectScalar = {
@@ -520,23 +520,23 @@ export type TournamentFollowerSelectScalar = {
 
 export type TournamentFollowerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"userId" | "tournamentId" | "createdAt", ExtArgs["result"]["tournamentFollower"]>
 export type TournamentFollowerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TournamentFollowerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type TournamentFollowerIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   tournament?: boolean | Prisma.TournamentDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
 export type $TournamentFollowerPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TournamentFollower"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
     tournament: Prisma.$TournamentPayload<ExtArgs>
+    user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     userId: string
@@ -936,8 +936,8 @@ readonly fields: TournamentFollowerFieldRefs;
  */
 export interface Prisma__TournamentFollowerClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tournament<T extends Prisma.TournamentDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TournamentDefaultArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
