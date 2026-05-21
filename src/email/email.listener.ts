@@ -107,6 +107,7 @@ export class EmailListener {
         payload.playerName,
         payload.teamName,
         payload.tournamentName,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send player join request email:', error);
@@ -122,6 +123,7 @@ export class EmailListener {
         payload.teamName,
         payload.tournamentName,
         payload.customName,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send player join approval email:', error);
@@ -136,6 +138,7 @@ export class EmailListener {
         payload.playerName,
         payload.teamName,
         payload.tournamentName,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send player join rejection email:', error);
@@ -213,6 +216,7 @@ export class EmailListener {
         payload.teamName,
         payload.tournamentName,
         payload.dashboardUrl,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send tournament join request email:', error);
@@ -228,6 +232,7 @@ export class EmailListener {
         payload.teamName,
         payload.tournamentName,
         payload.tournamentUrl,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send tournament join approval email:', error);
@@ -242,6 +247,7 @@ export class EmailListener {
         payload.userName,
         payload.teamName,
         payload.tournamentName,
+        payload.tournamentLogoUrl,
       );
     } catch (error) {
       console.error('Failed to send tournament join rejection email:', error);
