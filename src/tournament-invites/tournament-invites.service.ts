@@ -83,6 +83,8 @@ export class TournamentInvitesService {
             end_date: true,
             location: true,
             autoApprove: true,
+            isPaidRegistration: true,
+            registrationFee: true,
             organization: {
               select: {
                 name: true,
@@ -152,6 +154,29 @@ export class TournamentInvitesService {
       throw new BadRequestException('You/Your team is already a participant in this tournament');
     }
 
+    // Check participant limit if not premium
+    const count = await this.db.participant.count({
+      where: { tournament_id: invite.tournament_id },
+    });
+
+    let isPremium = invite.tournament.isPremium;
+    if (!isPremium && invite.tournament.organization_id) {
+      const subscription = await this.db.subscription.findUnique({
+        where: { organizationId: invite.tournament.organization_id },
+      });
+      isPremium = !!(
+        subscription &&
+        (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
+        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
+      );
+    }
+
+    if (!isPremium && count >= 32) {
+      throw new BadRequestException(
+        'This tournament is on a Free plan and has reached its maximum limit of 32 participants. Please ask the organizer to upgrade.',
+      );
+    }
+
     // Determine initial status based on tournament settings
     const status = invite.tournament.autoApprove ? 'CONFIRMED' : 'PENDING';
 
@@ -210,6 +235,7 @@ export class TournamentInvitesService {
                 organizerName: member.user.name,
                 teamName: teamName || 'A new team',
                 tournamentName: fullTournament.name,
+                tournamentLogoUrl: fullTournament.logoUrl || undefined,
                 dashboardUrl: `${process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001'}/tournaments/${fullTournament.id}`,
               });
             }
