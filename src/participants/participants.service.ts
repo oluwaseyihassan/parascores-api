@@ -53,6 +53,21 @@ export class ParticipantsService {
       );
     }
 
+    const subscription = await this.db.subscription.findUnique({
+      where: { organizationId: tournament.organization_id! },
+    });
+    const isPremium = tournament.isPremium || (
+      subscription &&
+      (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
+      (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
+    );
+
+    if (!isPremium && tournament.participants.length >= 32) {
+      throw new BadRequestException(
+        'Free tournaments are limited to 32 participants. Please upgrade to Premium or Pro.',
+      );
+    }
+
     if (
       tournament.maxParticipants &&
       tournament.participants.length >= tournament.maxParticipants
@@ -111,6 +126,21 @@ export class ParticipantsService {
     if (!isMember) {
       throw new ForbiddenException(
         'You are not authorized to add participants to this tournament',
+      );
+    }
+
+    const subscription = await this.db.subscription.findUnique({
+      where: { organizationId: tournament.organization_id! },
+    });
+    const isPremium = tournament.isPremium || (
+      subscription &&
+      (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
+      (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
+    );
+
+    if (!isPremium && (tournament.participants.length + dto.participants.length) > 32) {
+      throw new BadRequestException(
+        'Free tournaments are limited to a maximum of 32 participants. Please upgrade to Premium or Pro.',
       );
     }
 
@@ -385,6 +415,7 @@ export class ParticipantsService {
             teamName: participant.customName || 'their team',
             tournamentName: participant.tournament.name,
             customName: participant.tournament.customName,
+            tournamentLogoUrl: participant.tournament.logoUrl || undefined,
           });
         }
       } catch (error) {
@@ -406,6 +437,7 @@ export class ParticipantsService {
             playerName: user.name,
             teamName: participant.customName || 'their team',
             tournamentName: participant.tournament.name,
+            tournamentLogoUrl: participant.tournament.logoUrl || undefined,
           });
         }
       } catch (error) {
@@ -490,6 +522,7 @@ export class ParticipantsService {
           teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
           tournamentName: participant.tournament.name,
           tournamentUrl,
+          tournamentLogoUrl: participant.tournament.logoUrl || undefined,
         });
       } else if (status.toUpperCase() === 'DECLINED') {
         this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_REJECTION, {
@@ -497,6 +530,7 @@ export class ParticipantsService {
           userName: updatedParticipant.user.name,
           teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
           tournamentName: participant.tournament.name,
+          tournamentLogoUrl: participant.tournament.logoUrl || undefined,
         });
       }
     }
