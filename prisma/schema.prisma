@@ -29,6 +29,7 @@ model User {
   created_invites            TeamInvite[]         @relation("InviteCreator")
   followed_tournaments       TournamentFollower[]
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
+  payments                   Payment[]
 }
 
 model Organization {
@@ -43,8 +44,10 @@ model Organization {
   updated_at  DateTime             @updatedAt
   description String?
   members     OrganizationMember[]
-  socials     Social[]
-  tournaments Tournament[]
+  socials      Social[]
+  tournaments  Tournament[]
+  subscription Subscription?
+  payments     Payment[]
 }
 
 model OrganizationMember {
@@ -89,6 +92,9 @@ model Tournament {
   parent_id          String?
   seasonName         String?
   doubleRoundRobin   Boolean              @default(false)
+  isPremium          Boolean              @default(false)
+  isPaidRegistration Boolean              @default(false)
+  registrationFee    Int                  @default(0)
   fixtures           Fixture[]
   groups             Group[]
   participants       Participant[]
@@ -102,6 +108,7 @@ model Tournament {
   followers          TournamentFollower[]
   tournament_invites TournamentInvite[]
   venues             Venue[]
+  payments           Payment[]
 }
 
 model TournamentFollower {
@@ -385,4 +392,63 @@ enum MatchEventType {
   SUBSTITUTION
   ASSIST
   MISSED_PENALTY
+}
+
+enum SubscriptionPlan {
+  FREE
+  PER_TOURNAMENT
+  PRO
+  ENTERPRISE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  TRIALING
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
+
+model Subscription {
+  id                       String             @id @default(cuid())
+  organizationId           String             @unique
+  plan                     SubscriptionPlan   @default(FREE)
+  status                   SubscriptionStatus @default(ACTIVE)
+  paystackCustomerCode     String?
+  paystackSubscriptionCode String?
+  paystackPlanCode         String?
+  currentPeriodStart       DateTime?
+  currentPeriodEnd         DateTime?
+  cancelledAt              DateTime?
+  trialEnd                 DateTime?
+  created_at               DateTime           @default(now())
+  updated_at               DateTime           @updatedAt
+
+  organization             Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model Payment {
+  id                    String           @id @default(cuid())
+  organizationId        String
+  tournamentId          String?
+  amount                Int              // Amount in smallest currency unit (kobo/cents)
+  currency              String           @default("NGN")
+  status                PaymentStatus    @default(PENDING)
+  paystackReference     String           @unique
+  paystackTransactionId String?
+  plan                  SubscriptionPlan?
+  metadata              Json?
+  created_at            DateTime         @default(now())
+  updated_at            DateTime         @updatedAt
+  userId                String?
+  type                  String           @default("SUBSCRIPTION")
+
+  organization          Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tournament            Tournament?      @relation(fields: [tournamentId], references: [id], onDelete: SetNull)
+  user                  User?            @relation(fields: [userId], references: [id])
 }
