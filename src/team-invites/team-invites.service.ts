@@ -249,6 +249,7 @@ export class TeamInvitesService {
         playerName: dto.name,
         teamName: invite.participant.customName || 'the team',
         tournamentName: invite.tournament.name,
+        tournamentLogoUrl: invite.tournament.logoUrl || undefined,
       });
     }
 
