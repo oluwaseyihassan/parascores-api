@@ -10,7 +10,7 @@ import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { StartSeasonDto } from './dto/start-season.dto';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 
-import { Visibility, FixtureStage, MatchEventType } from 'prisma/generated/client';
+import { Visibility, FixtureStage, MatchEventType, SubscriptionPlan, SubscriptionStatus } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -23,7 +23,34 @@ export class TournamentsService {
   async create(userId: string, dto: CreateTournamentDto) {
     const { start_date, end_date, ...rest } = dto;
 
-    // Check customName uniqueness
+    // 1. Check if user has OWNER or ADMIN role in the target organization
+    await this.organizationsService.validateMemberRole(
+      dto.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    // 2. Enforce Free plan tournament count limit (max 3)
+    const subscription = await this.db.subscription.findUnique({
+      where: { organizationId: dto.organization_id },
+    });
+
+    const isPremiumOrg = subscription &&
+      (subscription.status === SubscriptionStatus.ACTIVE || subscription.status === SubscriptionStatus.TRIALING) &&
+      (subscription.plan === SubscriptionPlan.PRO || subscription.plan === SubscriptionPlan.ENTERPRISE);
+
+    if (!isPremiumOrg) {
+      const count = await this.db.tournament.count({
+        where: { organization_id: dto.organization_id },
+      });
+      if (count >= 3) {
+        throw new BadRequestException(
+          'Free plan is limited to 3 tournaments. Please upgrade to Pro.',
+        );
+      }
+    }
+
+    // 3. Check customName uniqueness
     if (dto.customName) {
       const existing = await this.db.tournament.findUnique({
         where: { customName: dto.customName },
