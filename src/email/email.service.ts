@@ -229,14 +229,22 @@ export class EmailService {
     playerName: string,
     teamName: string,
     tournamentName: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
+        ${logoHtml}
         <h2 style="color: #4F46E5;">📋 New Player Join Request</h2>
         <p>Hello ${organizerName},</p>
         <p>A new player has requested to join <strong>${teamName}</strong> in <strong>${tournamentName}</strong>.</p>
@@ -274,14 +282,22 @@ export class EmailService {
     teamName: string,
     tournamentName: string,
     customName: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        ${logoHtml}
         <h2 style="color: #10B981;">🎉 Welcome to the Team!</h2>
         <p>Hello ${playerName},</p>
         <p>Great news! Your request to join <strong>${teamName}</strong> for the <strong>${tournamentName}</strong> tournament has been <strong>APPROVED</strong> by the organizer.</p>
@@ -317,14 +333,22 @@ export class EmailService {
     playerName: string,
     teamName: string,
     tournamentName: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        ${logoHtml}
         <h2 style="color: #EF4444;">📋 Join Request Update</h2>
         <p>Hello ${playerName},</p>
         <p>We're writing to inform you that your request to join <strong>${teamName}</strong> for the <strong>${tournamentName}</strong> tournament has been <strong>DECLINED</strong> by the tournament organizer at this time.</p>
@@ -538,14 +562,22 @@ export class EmailService {
     teamName: string,
     tournamentName: string,
     dashboardUrl: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        ${logoHtml}
         <h2 style="color: #4F46E5;">📋 New Team Join Request</h2>
         <p>Hello ${organizerName},</p>
         <p>A new team has requested to join <strong>${tournamentName}</strong>.</p>
@@ -582,14 +614,22 @@ export class EmailService {
     teamName: string,
     tournamentName: string,
     tournamentUrl: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        ${logoHtml}
         <h2 style="color: #10B981;">🎉 Welcome to the Tournament!</h2>
         <p>Hello ${userName},</p>
         <p>Great news! Your team <strong>${teamName}</strong> has been <strong>APPROVED</strong> to participate in <strong>${tournamentName}</strong>.</p>
@@ -625,14 +665,22 @@ export class EmailService {
     userName: string,
     teamName: string,
     tournamentName: string,
+    tournamentLogoUrl?: string,
   ): Promise<void> {
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'long',
     });
 
+    const logoHtml = tournamentLogoUrl
+      ? `<div style="text-align: center; margin-bottom: 20px;">
+           <img src="${tournamentLogoUrl}" alt="${tournamentName}" style="width: 64px; height: 64px; border-radius: 12px; object-fit: cover;" />
+         </div>`
+      : '';
+
     const html = `
       <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px; border: 1px solid #E5E7EB; border-radius: 12px;">
+        ${logoHtml}
         <h2 style="color: #EF4444;">📋 Tournament Registration Update</h2>
         <p>Hello ${userName},</p>
         <p>We're writing to inform you that your request for <strong>${teamName}</strong> to join <strong>${tournamentName}</strong> has been <strong>DECLINED</strong> by the tournament organizer.</p>
