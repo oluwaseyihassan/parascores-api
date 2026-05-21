@@ -166,6 +166,24 @@ export class CreateTournamentDto {
   autoApprove?: boolean;
 
   @ApiPropertyOptional({
+    description: 'Whether registration requires payment',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  isPaidRegistration?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'The registration fee in kobo/cents',
+    default: 0,
+    example: 100000,
+  })
+  @IsInt()
+  @IsOptional()
+  registrationFee?: number;
+
+  @ApiPropertyOptional({
     description: 'If true, the tournament is pinned to the top of the dashboard',
     default: false,
     example: true,
