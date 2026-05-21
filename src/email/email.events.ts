@@ -49,6 +49,7 @@ export interface TeamJoinRequestPayload {
   playerName: string;
   teamName: string;
   tournamentName: string;
+  tournamentLogoUrl?: string;
 }
 
 export interface TeamJoinApprovalPayload {
@@ -57,6 +58,7 @@ export interface TeamJoinApprovalPayload {
   teamName: string;
   tournamentName: string;
   customName: string;
+  tournamentLogoUrl?: string;
 }
 
 export interface TeamJoinRejectionPayload {
@@ -64,6 +66,7 @@ export interface TeamJoinRejectionPayload {
   playerName: string;
   teamName: string;
   tournamentName: string;
+  tournamentLogoUrl?: string;
 }
 
 export interface OrganizationMemberAddedPayload {
@@ -99,6 +102,7 @@ export interface TournamentJoinRequestPayload {
   organizerName: string;
   teamName: string;
   tournamentName: string;
+  tournamentLogoUrl?: string;
   dashboardUrl: string;
 }
 
@@ -108,6 +112,7 @@ export interface TournamentJoinApprovalPayload {
   teamName: string;
   tournamentName: string;
   tournamentUrl: string;
+  tournamentLogoUrl?: string;
 }
 
 export interface TournamentJoinRejectionPayload {
@@ -115,4 +120,5 @@ export interface TournamentJoinRejectionPayload {
   userName: string;
   teamName: string;
   tournamentName: string;
+  tournamentLogoUrl?: string;
 }
