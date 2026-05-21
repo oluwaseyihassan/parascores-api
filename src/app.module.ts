@@ -25,6 +25,7 @@ import { TeamInvitesModule } from './team-invites/team-invites.module';
 import { GroupsModule } from './groups/groups.module';
 import { TournamentInvitesModule } from './tournament-invites/tournament-invites.module';
 import { TeamsModule } from './teams/teams.module';
+import { PaymentsModule } from './payments/payments.module';
 // import { SentryModule } from '@sentry/nestjs/setup';
 // import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
@@ -59,6 +60,7 @@ import { APP_FILTER } from '@nestjs/core';
     GroupsModule,
     TournamentInvitesModule,
     TeamsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [
