@@ -1,5 +1,6 @@
 import { IsString, IsNotEmpty, IsOptional, IsHexColor, IsPhoneNumber, IsUrl } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
 
 export class CreateOrganizationDto {
   @ApiProperty({ description: 'The name of the organization' })
@@ -9,6 +10,7 @@ export class CreateOrganizationDto {
 
   @ApiPropertyOptional({ description: 'Optional URL for the organization logo' })
   @IsOptional()
+  @Transform(({ value }) => value === '' ? null : value)
   @IsUrl()
   logoUrl?: string;
 
