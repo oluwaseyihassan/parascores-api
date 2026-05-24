@@ -300,7 +300,9 @@ export const PlayerScalarFieldEnum = {
   updated_at: 'updated_at',
   avatarUrl: 'avatarUrl',
   userId: 'userId',
-  status: 'status'
+  status: 'status',
+  linkCode: 'linkCode',
+  linkCodeExpires: 'linkCodeExpires'
 } as const
 
 export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
