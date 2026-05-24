@@ -197,6 +197,7 @@ export class FixturesService {
           select: { id: true, name: true, sport: true },
         },
         group: true,
+        lineupPlayers: true,
       },
     });
 
@@ -445,6 +446,11 @@ export class FixturesService {
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
         ...(dto.venue !== undefined && { venue: dto.venue }),
+        ...(dto.lineupPlayerIds !== undefined && {
+          lineupPlayers: {
+            set: dto.lineupPlayerIds.map((id) => ({ id })),
+          },
+        }),
       },
       include: {
         homeTeam: {
@@ -463,6 +469,7 @@ export class FixturesService {
         },
         tournament: { select: { id: true, type: true } },
         group: true,
+        lineupPlayers: true,
       },
     });
 
