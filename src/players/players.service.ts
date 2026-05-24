@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Injectable()
 export class PlayersService {
@@ -73,10 +74,19 @@ export class PlayersService {
     return ResponseUtil.success(player);
   }
 
-  async update(id: string, updatePlayerDto: UpdatePlayerDto) {
+  async update(id: string, updatePlayerDto: UpdatePlayerDto, currentUser?: any) {
     const player = await this.db.player.findUnique({ where: { id } });
     if (!player) {
       throw new NotFoundException('Player not found');
+    }
+
+    if (currentUser) {
+      const isOwner = player.userId === currentUser.sub;
+      const isAdmin = currentUser.role === Role.SUPER_ADMIN;
+      const isOrganizer = currentUser.role === Role.ORGANIZER;
+      if (!isOwner && !isAdmin && !isOrganizer) {
+        throw new ForbiddenException('You do not have permission to edit this player profile');
+      }
     }
 
     const updatedPlayer = await this.db.player.update({
@@ -158,5 +168,86 @@ export class PlayersService {
     });
 
     return ResponseUtil.success(updatedPlayer);
+  }
+
+  async generateLinkCode(playerId: string) {
+    const player = await this.db.player.findUnique({ where: { id: playerId } });
+    if (!player) {
+      throw new NotFoundException('Player not found');
+    }
+
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 48);
+
+    const updated = await this.db.player.update({
+      where: { id: playerId },
+      data: {
+        linkCode: code,
+        linkCodeExpires: expiresAt,
+      },
+    });
+
+    return ResponseUtil.success({
+      code: updated.linkCode,
+      expiresAt: updated.linkCodeExpires,
+    });
+  }
+
+  async claimPlayer(code: string, userId: string) {
+    const player = await this.db.player.findFirst({
+      where: { linkCode: code.toUpperCase() },
+    });
+
+    if (!player) {
+      throw new NotFoundException('Invalid claim code');
+    }
+
+    if (player.linkCodeExpires && player.linkCodeExpires < new Date()) {
+      throw new ForbiddenException('Claim code has expired');
+    }
+
+    if (player.userId) {
+      throw new ForbiddenException('This player profile is already linked to a user');
+    }
+
+    const updatedPlayer = await this.db.player.update({
+      where: { id: player.id },
+      data: {
+        userId,
+        linkCode: null,
+        linkCodeExpires: null,
+      },
+      include: {
+        participant: {
+          include: { tournament: true },
+        },
+      },
+    });
+
+    return ResponseUtil.success(updatedPlayer, 'Player profile linked successfully');
+  }
+
+  async unlinkProfile(playerId: string) {
+    const player = await this.db.player.findUnique({ where: { id: playerId } });
+    if (!player) {
+      throw new NotFoundException('Player not found');
+    }
+
+    const updated = await this.db.player.update({
+      where: { id: playerId },
+      data: {
+        userId: null,
+        linkCode: null,
+        linkCodeExpires: null,
+      },
+      include: {
+        participant: {
+          include: { tournament: true },
+        },
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Player profile unlinked successfully');
   }
 }
