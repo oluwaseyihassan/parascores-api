@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   Min,
+  IsArray,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { FixtureStatus } from 'prisma/generated/client';
@@ -80,4 +81,13 @@ export class UpdateFixtureDto {
   @IsString()
   @IsOptional()
   venue?: string;
+
+  @ApiPropertyOptional({
+    description: 'Array of player IDs selected for the match lineup',
+    type: [String],
+  })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  lineupPlayerIds?: string[];
 }
