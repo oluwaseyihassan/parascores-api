@@ -416,7 +416,7 @@ export class TournamentsService {
             const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
             const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
             goalsMap.set(event.playerId, {
-              player: { id: event.player.id, name: event.player.name, number: event.player.number },
+              player: { id: event.player.id, name: event.player.name, number: event.player.number, avatarUrl: event.player.avatarUrl },
               teamName: participantName,
               teamLogoUrl: participantLogo,
               count: 0
@@ -430,7 +430,7 @@ export class TournamentsService {
             const participantName = event.relatedPlayer.participant?.team?.name || event.relatedPlayer.participant?.customName || event.relatedPlayer.participant?.user?.name || 'Unknown';
             const participantLogo = event.relatedPlayer.participant?.logoUrl || (event.relatedPlayer.participant?.team as any)?.logoUrl || null;
             assistsMap.set(event.relatedPlayerId, {
-              player: { id: event.relatedPlayer.id, name: event.relatedPlayer.name, number: event.relatedPlayer.number },
+              player: { id: event.relatedPlayer.id, name: event.relatedPlayer.name, number: event.relatedPlayer.number, avatarUrl: event.relatedPlayer.avatarUrl },
               teamName: participantName,
               teamLogoUrl: participantLogo,
               count: 0
@@ -444,7 +444,7 @@ export class TournamentsService {
             const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
             const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
             assistsMap.set(event.playerId, {
-              player: { id: event.player.id, name: event.player.name, number: event.player.number },
+              player: { id: event.player.id, name: event.player.name, number: event.player.number, avatarUrl: event.player.avatarUrl },
               teamName: participantName,
               teamLogoUrl: participantLogo,
               count: 0
