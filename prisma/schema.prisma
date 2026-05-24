@@ -188,6 +188,7 @@ model Fixture {
   sourceFixtures      Fixture[]     @relation("BracketProgression")
   tournament          Tournament    @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   matchEvents         MatchEvent[]
+  lineupPlayers       Player[]      @relation("FixtureLineups")
 }
 
 model Team {
@@ -254,10 +255,13 @@ model Player {
   avatarUrl          String?
   userId             String?
   status             PlayerStatus @default(APPROVED)
+  linkCode           String?      @unique
+  linkCodeExpires    DateTime?
   matchEvents        MatchEvent[]
   relatedMatchEvents MatchEvent[] @relation("RelatedPlayer")
   participant        Participant  @relation(fields: [participantId], references: [id], onDelete: Cascade)
   user               User?        @relation("UserPlayerProfiles", fields: [userId], references: [id])
+  lineups            Fixture[]    @relation("FixtureLineups")
 }
 
 model Sponsor {
