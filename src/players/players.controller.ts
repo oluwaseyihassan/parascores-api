@@ -14,6 +14,7 @@ import { UpdatePlayerDto } from './dto/update-player.dto';
 import { LinkPlayerDto } from './dto/link-player.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
+import { User } from 'src/auth/decorators/user.decorator';
 
 @ApiTags('players')
 @Controller('players')
@@ -48,14 +49,36 @@ export class PlayersController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a player by ID' })
-  update(@Param('id') id: string, @Body() updatePlayerDto: UpdatePlayerDto) {
-    return this.playersService.update(id, updatePlayerDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePlayerDto: UpdatePlayerDto,
+    @User() user: any,
+  ) {
+    return this.playersService.update(id, updatePlayerDto, user);
   }
 
   @Patch(':id/link')
   @ApiOperation({ summary: 'Link a player to a user account' })
   linkToUser(@Param('id') id: string, @Body() linkPlayerDto: LinkPlayerDto) {
     return this.playersService.linkToUser(id, linkPlayerDto.userId);
+  }
+
+  @Post(':id/generate-link-code')
+  @ApiOperation({ summary: 'Generate a claim code for a player' })
+  generateLinkCode(@Param('id') id: string) {
+    return this.playersService.generateLinkCode(id);
+  }
+
+  @Post(':id/unlink-profile')
+  @ApiOperation({ summary: 'Unlink a player from a user account' })
+  unlinkProfile(@Param('id') id: string) {
+    return this.playersService.unlinkProfile(id);
+  }
+
+  @Post('claim')
+  @ApiOperation({ summary: 'Claim/link a player profile using code' })
+  claimPlayer(@Body('code') code: string, @Req() req: any) {
+    return this.playersService.claimPlayer(code, req.user.sub);
   }
 
   @Delete(':id')
