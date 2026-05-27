@@ -15,6 +15,7 @@ import { PaymentsService } from './payments.service';
 import { PaystackService } from './paystack.service';
 import { InitializePaymentDto } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
+import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -45,6 +46,15 @@ export class PaymentsController {
     @Req() req: any,
   ) {
     return this.paymentsService.initializeRegistration(req.user.sub, dto);
+  }
+
+  @Post('initialize-player-claim')
+  @ApiOperation({ summary: 'Initialize a player profile claim fee payment' })
+  async initializePlayerClaim(
+    @Body() dto: InitializePlayerClaimDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.initializePlayerClaim(req.user.sub, dto);
   }
 
   @Get('verify/:reference')
