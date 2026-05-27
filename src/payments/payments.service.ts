@@ -10,6 +10,7 @@ import { OrganizationsService } from 'src/organizations/organizations.service';
 import { PaystackService } from './paystack.service';
 import { InitializePaymentDto, PlanType } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
+import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
   PaymentStatus,
@@ -254,6 +255,114 @@ export class PaymentsService {
     });
   }
 
+  /**
+   * Initialize a Paystack transaction for claiming a player profile.
+   * Creates a PENDING Payment record and returns the Paystack checkout URL.
+   */
+  async initializePlayerClaim(userId: string, dto: InitializePlayerClaimDto) {
+    const { playerId, code, callbackUrl } = dto;
+
+    // 1. Fetch user and player details
+    const [user, player] = await Promise.all([
+      this.db.user.findUnique({ where: { id: userId } }),
+      this.db.player.findUnique({
+        where: { id: playerId },
+        include: {
+          participant: {
+            include: { tournament: true },
+          },
+        },
+      }),
+    ]);
+
+    if (!user) throw new NotFoundException('User not found');
+    if (!player) throw new NotFoundException('Player not found');
+
+    // 2. Validate claim code
+    if (!player.linkCode || player.linkCode.toUpperCase() !== code.toUpperCase()) {
+      throw new BadRequestException('Invalid claim code');
+    }
+
+    if (player.linkCodeExpires && player.linkCodeExpires < new Date()) {
+      throw new BadRequestException('Claim code has expired');
+    }
+
+    if (player.userId) {
+      throw new BadRequestException('This player profile is already linked to a user');
+    }
+
+    // Check if user already has a claimed player profile in this tournament
+    const existingPlayerInTournament = await this.db.player.findFirst({
+      where: {
+        userId,
+        participant: {
+          tournament_id: player.participant.tournament_id,
+        },
+      },
+    });
+
+    if (existingPlayerInTournament) {
+      throw new BadRequestException('You already have a linked player profile in this tournament');
+    }
+
+    const feeAmount = 50000; // 500 Naira (50000 kobo)
+
+    // 3. Initialize Paystack transaction
+    const paystackResponse = await this.paystack.initializeTransaction({
+      email: user.email,
+      amount: feeAmount,
+      metadata: {
+        type: 'PLAYER_CLAIM',
+        userId,
+        playerId,
+        code,
+        custom_fields: [
+          {
+            display_name: 'Player Name',
+            variable_name: 'player_name',
+            value: player.name,
+          },
+          {
+            display_name: 'Tournament Name',
+            variable_name: 'tournament_name',
+            value: player.participant.tournament.name,
+          },
+          {
+            display_name: 'Payment Type',
+            variable_name: 'payment_type',
+            value: 'Player Profile Claim Fee',
+          },
+        ],
+      },
+      callback_url: callbackUrl,
+    });
+
+    // 4. Create a PENDING payment record
+    await this.db.payment.create({
+      data: {
+        amount: feeAmount,
+        currency: 'NGN',
+        status: PaymentStatus.PENDING,
+        paystackReference: paystackResponse.data.reference,
+        type: 'PLAYER_CLAIM',
+        userId,
+        metadata: {
+          type: 'PLAYER_CLAIM',
+          userId,
+          playerId,
+          code,
+          accessCode: paystackResponse.data.access_code,
+        },
+      },
+    });
+
+    return ResponseUtil.success({
+      authorization_url: paystackResponse.data.authorization_url,
+      access_code: paystackResponse.data.access_code,
+      reference: paystackResponse.data.reference,
+    });
+  }
+
   // ─── Verify ──────────────────────────────────────────────
 
   /**
@@ -270,6 +379,14 @@ export class PaymentsService {
 
     // Already processed — idempotent return
     if (payment.status === PaymentStatus.SUCCESS) {
+      if (payment.type === 'PLAYER_CLAIM') {
+        const metadata = payment.metadata as any;
+        return ResponseUtil.success({
+          payment,
+          player: { id: metadata?.playerId },
+        });
+      }
+
       if (payment.type === 'TOURNAMENT_REGISTRATION') {
         const metadata = payment.metadata as any;
         const participant = await this.db.participant.findFirst({
@@ -289,9 +406,11 @@ export class PaymentsService {
         });
       }
 
-      const subscription = await this.db.subscription.findUnique({
-        where: { organizationId: payment.organizationId },
-      });
+      const subscription = payment.organizationId
+        ? await this.db.subscription.findUnique({
+            where: { organizationId: payment.organizationId },
+          })
+        : null;
 
       // Include tournament info for per-tournament upgrades
       if (payment.tournamentId) {
@@ -331,6 +450,14 @@ export class PaymentsService {
         // Another process (webhook) already handled this — return current state
         if (updateResult.count === 0) {
           const currentPayment = await tx.payment.findUnique({ where: { id: payment.id } });
+          if (payment.type === 'PLAYER_CLAIM') {
+            const metadata = payment.metadata as any;
+            return ResponseUtil.success({
+              payment: currentPayment,
+              player: { id: metadata?.playerId },
+            });
+          }
+
           if (payment.type === 'TOURNAMENT_REGISTRATION') {
             const metadata = payment.metadata as any;
             const participant = await tx.participant.findFirst({
@@ -350,9 +477,11 @@ export class PaymentsService {
             });
           }
 
-          const subscription = await tx.subscription.findUnique({
-            where: { organizationId: payment.organizationId },
-          });
+          const subscription = payment.organizationId
+            ? await tx.subscription.findUnique({
+                where: { organizationId: payment.organizationId },
+              })
+            : null;
 
           // Include tournament info for per-tournament upgrades
           if (payment.tournamentId) {
@@ -367,6 +496,26 @@ export class PaymentsService {
         }
 
         const updatedPayment = await tx.payment.findUnique({ where: { id: payment.id } });
+
+        // Handle player claim payment
+        if (payment.type === 'PLAYER_CLAIM') {
+          const metadata = payment.metadata as any;
+          const { playerId, userId } = metadata;
+
+          await tx.player.update({
+            where: { id: playerId },
+            data: {
+              userId,
+              linkCode: null,
+              linkCodeExpires: null,
+            },
+          });
+
+          return ResponseUtil.success({
+            payment: updatedPayment,
+            player: { id: playerId },
+          });
+        }
 
         // Handle tournament registration payment
         if (payment.type === 'TOURNAMENT_REGISTRATION') {
@@ -451,6 +600,9 @@ export class PaymentsService {
         }
 
         // 5. Activate org subscription with period calculation
+        if (!payment.organizationId) {
+          throw new BadRequestException('Organization ID is missing for subscription activation');
+        }
         const now = new Date();
         const periodEnd = new Date(now);
         const interval = txData.plan_object?.interval;
@@ -677,6 +829,22 @@ export class PaymentsService {
       // Another process already handled this
       if (updateResult.count === 0) return;
 
+      // Handle player claim payment
+      if (payment.type === 'PLAYER_CLAIM') {
+        const metadata = payment.metadata as any;
+        const { playerId, userId } = metadata;
+
+        await tx.player.update({
+          where: { id: playerId },
+          data: {
+            userId,
+            linkCode: null,
+            linkCodeExpires: null,
+          },
+        });
+        return;
+      }
+
       // Handle tournament registration payment
       if (payment.type === 'TOURNAMENT_REGISTRATION') {
         const metadata = payment.metadata as any;
@@ -755,6 +923,10 @@ export class PaymentsService {
       }
 
       // Activate org subscription with period calculation
+      if (!payment.organizationId) {
+        this.logger.warn(`Organization ID is missing for charge success callback ${reference}`);
+        return;
+      }
       const now = new Date();
       const periodEnd = new Date(now);
       const interval = data.plan_object?.interval;
