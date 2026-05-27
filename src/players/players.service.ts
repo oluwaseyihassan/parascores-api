@@ -228,10 +228,67 @@ export class PlayersService {
     return ResponseUtil.success(updatedPlayer, 'Player profile linked successfully');
   }
 
-  async unlinkProfile(playerId: string) {
+  async verifyClaimCode(code: string, userId: string) {
+    const player = await this.db.player.findFirst({
+      where: { linkCode: code.toUpperCase() },
+      include: {
+        participant: {
+          include: {
+            tournament: true,
+          },
+        },
+      },
+    });
+
+    if (!player) {
+      throw new NotFoundException('Invalid claim code');
+    }
+
+    if (player.linkCodeExpires && player.linkCodeExpires < new Date()) {
+      throw new ForbiddenException('Claim code has expired');
+    }
+
+    if (player.userId) {
+      throw new ForbiddenException('This player profile is already linked to a user');
+    }
+
+    // Check if user already has a claimed player profile in this tournament
+    const existingPlayerInTournament = await this.db.player.findFirst({
+      where: {
+        userId,
+        participant: {
+          tournament_id: player.participant.tournament_id,
+        },
+      },
+    });
+
+    if (existingPlayerInTournament) {
+      throw new ForbiddenException('You already have a linked player profile in this tournament');
+    }
+
+    return ResponseUtil.success({
+      id: player.id,
+      name: player.name,
+      number: player.number,
+      position: player.position,
+      teamName: player.participant.customName || 'Individual',
+      tournamentName: player.participant.tournament.name,
+    });
+  }
+
+  async unlinkProfile(playerId: string, currentUser?: any) {
     const player = await this.db.player.findUnique({ where: { id: playerId } });
     if (!player) {
       throw new NotFoundException('Player not found');
+    }
+
+    if (currentUser) {
+      const isOwner = player.userId === currentUser.sub;
+      const isAdmin = currentUser.role === Role.SUPER_ADMIN;
+      const isOrganizer = currentUser.role === Role.ORGANIZER;
+      if (!isOwner && !isAdmin && !isOrganizer) {
+        throw new ForbiddenException('You do not have permission to unlink this player profile');
+      }
     }
 
     const updated = await this.db.player.update({
