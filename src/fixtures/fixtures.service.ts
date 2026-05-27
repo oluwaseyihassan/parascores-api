@@ -446,6 +446,8 @@ export class FixturesService {
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
         ...(dto.venue !== undefined && { venue: dto.venue }),
+        ...(dto.homeFormation !== undefined && { homeFormation: dto.homeFormation }),
+        ...(dto.awayFormation !== undefined && { awayFormation: dto.awayFormation }),
         ...(dto.lineupPlayerIds !== undefined && {
           lineupPlayers: {
             set: dto.lineupPlayerIds.map((id) => ({ id })),
