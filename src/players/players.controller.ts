@@ -71,8 +71,14 @@ export class PlayersController {
 
   @Post(':id/unlink-profile')
   @ApiOperation({ summary: 'Unlink a player from a user account' })
-  unlinkProfile(@Param('id') id: string) {
-    return this.playersService.unlinkProfile(id);
+  unlinkProfile(@Param('id') id: string, @Req() req: any) {
+    return this.playersService.unlinkProfile(id, req.user);
+  }
+
+  @Post('verify-claim-code')
+  @ApiOperation({ summary: 'Verify a player claim code before checkout' })
+  verifyClaimCode(@Body('code') code: string, @Req() req: any) {
+    return this.playersService.verifyClaimCode(code, req.user.sub);
   }
 
   @Post('claim')
