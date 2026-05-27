@@ -231,7 +231,7 @@ export type PaymentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 
 export type PaymentGroupByOutputType = {
   id: string
-  organizationId: string
+  organizationId: string | null
   tournamentId: string | null
   amount: number
   currency: string
@@ -271,7 +271,7 @@ export type PaymentWhereInput = {
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   id?: Prisma.StringFilter<"Payment"> | string
-  organizationId?: Prisma.StringFilter<"Payment"> | string
+  organizationId?: Prisma.StringNullableFilter<"Payment"> | string | null
   tournamentId?: Prisma.StringNullableFilter<"Payment"> | string | null
   amount?: Prisma.IntFilter<"Payment"> | number
   currency?: Prisma.StringFilter<"Payment"> | string
@@ -284,14 +284,14 @@ export type PaymentWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Payment"> | string | null
   type?: Prisma.StringFilter<"Payment"> | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type PaymentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
@@ -315,7 +315,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
-  organizationId?: Prisma.StringFilter<"Payment"> | string
+  organizationId?: Prisma.StringNullableFilter<"Payment"> | string | null
   tournamentId?: Prisma.StringNullableFilter<"Payment"> | string | null
   amount?: Prisma.IntFilter<"Payment"> | number
   currency?: Prisma.StringFilter<"Payment"> | string
@@ -327,14 +327,14 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Payment"> | string | null
   type?: Prisma.StringFilter<"Payment"> | string
-  organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "paystackReference">
 
 export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  organizationId?: Prisma.SortOrder
+  organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
   tournamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
@@ -359,7 +359,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   OR?: Prisma.PaymentScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PaymentScalarWhereWithAggregatesInput | Prisma.PaymentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Payment"> | string
-  organizationId?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  organizationId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   tournamentId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   amount?: Prisma.IntWithAggregatesFilter<"Payment"> | number
   currency?: Prisma.StringWithAggregatesFilter<"Payment"> | string
@@ -386,14 +386,14 @@ export type PaymentCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
-  organization: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutPaymentsInput
   user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
 }
 
 export type PaymentUncheckedCreateInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   tournamentId?: string | null
   amount: number
   currency?: string
@@ -420,14 +420,14 @@ export type PaymentUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPaymentsNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutPaymentsNestedInput
   user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
 }
 
 export type PaymentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
@@ -444,7 +444,7 @@ export type PaymentUncheckedUpdateInput = {
 
 export type PaymentCreateManyInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   tournamentId?: string | null
   amount: number
   currency?: string
@@ -475,7 +475,7 @@ export type PaymentUpdateManyMutationInput = {
 
 export type PaymentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
@@ -703,13 +703,13 @@ export type PaymentCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
-  organization: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutPaymentsInput
 }
 
 export type PaymentUncheckedCreateWithoutUserInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   tournamentId?: string | null
   amount: number
   currency?: string
@@ -754,7 +754,7 @@ export type PaymentScalarWhereInput = {
   OR?: Prisma.PaymentScalarWhereInput[]
   NOT?: Prisma.PaymentScalarWhereInput | Prisma.PaymentScalarWhereInput[]
   id?: Prisma.StringFilter<"Payment"> | string
-  organizationId?: Prisma.StringFilter<"Payment"> | string
+  organizationId?: Prisma.StringNullableFilter<"Payment"> | string | null
   tournamentId?: Prisma.StringNullableFilter<"Payment"> | string | null
   amount?: Prisma.IntFilter<"Payment"> | number
   currency?: Prisma.StringFilter<"Payment"> | string
@@ -839,13 +839,13 @@ export type PaymentCreateWithoutTournamentInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
-  organization: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
 }
 
 export type PaymentUncheckedCreateWithoutTournamentInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   amount: number
   currency?: string
   status?: $Enums.PaymentStatus
@@ -887,7 +887,7 @@ export type PaymentUpdateManyWithWhereWithoutTournamentInput = {
 
 export type PaymentCreateManyUserInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   tournamentId?: string | null
   amount: number
   currency?: string
@@ -913,13 +913,13 @@ export type PaymentUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPaymentsNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutPaymentsNestedInput
 }
 
 export type PaymentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
@@ -935,7 +935,7 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
 
 export type PaymentUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tournamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1015,7 +1015,7 @@ export type PaymentUncheckedUpdateManyWithoutOrganizationInput = {
 
 export type PaymentCreateManyTournamentInput = {
   id?: string
-  organizationId: string
+  organizationId?: string | null
   amount: number
   currency?: string
   status?: $Enums.PaymentStatus
@@ -1041,13 +1041,13 @@ export type PaymentUpdateWithoutTournamentInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutPaymentsNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
 }
 
 export type PaymentUncheckedUpdateWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -1063,7 +1063,7 @@ export type PaymentUncheckedUpdateWithoutTournamentInput = {
 
 export type PaymentUncheckedUpdateManyWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
+  organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   amount?: Prisma.IntFieldUpdateOperationsInput | number
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumPaymentStatusFieldUpdateOperationsInput | $Enums.PaymentStatus
@@ -1094,7 +1094,7 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updated_at?: boolean
   userId?: boolean
   type?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
@@ -1114,7 +1114,7 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   userId?: boolean
   type?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
@@ -1134,7 +1134,7 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   userId?: boolean
   type?: boolean
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }, ExtArgs["result"]["payment"]>
@@ -1158,17 +1158,17 @@ export type PaymentSelectScalar = {
 
 export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "tournamentId" | "amount" | "currency" | "status" | "paystackReference" | "paystackTransactionId" | "plan" | "metadata" | "created_at" | "updated_at" | "userId" | "type", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }
 export type PaymentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }
 export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
 }
@@ -1176,13 +1176,13 @@ export type PaymentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Payment"
   objects: {
-    organization: Prisma.$OrganizationPayload<ExtArgs>
+    organization: Prisma.$OrganizationPayload<ExtArgs> | null
     tournament: Prisma.$TournamentPayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    organizationId: string
+    organizationId: string | null
     tournamentId: string | null
     amount: number
     currency: string
@@ -1589,7 +1589,7 @@ readonly fields: PaymentFieldRefs;
  */
 export interface Prisma__PaymentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  organization<T extends Prisma.Payment$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payment$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   tournament<T extends Prisma.Payment$tournamentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payment$tournamentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.Payment$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Payment$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
@@ -2028,6 +2028,25 @@ export type PaymentDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Payments to delete.
    */
   limit?: number
+}
+
+/**
+ * Payment.organization
+ */
+export type Payment$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Organization
+   */
+  select?: Prisma.OrganizationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Organization
+   */
+  omit?: Prisma.OrganizationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationWhereInput
 }
 
 /**

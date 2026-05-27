@@ -526,10 +526,12 @@ export type OrganizationCreateNestedOneWithoutPaymentsInput = {
   connect?: Prisma.OrganizationWhereUniqueInput
 }
 
-export type OrganizationUpdateOneRequiredWithoutPaymentsNestedInput = {
+export type OrganizationUpdateOneWithoutPaymentsNestedInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPaymentsInput, Prisma.OrganizationUncheckedCreateWithoutPaymentsInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPaymentsInput
   upsert?: Prisma.OrganizationUpsertWithoutPaymentsInput
+  disconnect?: Prisma.OrganizationWhereInput | boolean
+  delete?: Prisma.OrganizationWhereInput | boolean
   connect?: Prisma.OrganizationWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPaymentsInput, Prisma.OrganizationUpdateWithoutPaymentsInput>, Prisma.OrganizationUncheckedUpdateWithoutPaymentsInput>
 }

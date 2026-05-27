@@ -2012,7 +2012,9 @@ export const FixtureScalarFieldEnum = {
   nextFixtureId: 'nextFixtureId',
   roundName: 'roundName',
   stage: 'stage',
-  venue: 'venue'
+  venue: 'venue',
+  homeFormation: 'homeFormation',
+  awayFormation: 'awayFormation'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
