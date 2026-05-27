@@ -11,12 +11,14 @@ import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dt
 import { ResponseUtil } from 'src/utils/api-response';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EmailEvents } from 'src/email/email.events';
+import { PaystackService } from 'src/payments/paystack.service';
 
 @Injectable()
 export class ParticipantsService {
   constructor(
     private readonly db: DatabaseService,
     private readonly eventEmitter: EventEmitter2,
+    private readonly paystack: PaystackService,
   ) {}
 
   async addParticipant(
@@ -393,10 +395,25 @@ export class ParticipantsService {
       throw new NotFoundException('Player not found in this team');
     }
 
-    const updatedPlayer = await this.db.player.update({
-      where: { id: playerId },
-      data: { status: status as any },
-    });
+    const originalUserId = player.userId;
+
+    let updatedPlayer;
+    if (status?.toUpperCase() === 'REJECTED') {
+      updatedPlayer = await this.db.player.update({
+        where: { id: playerId },
+        data: {
+          status: 'APPROVED',
+          userId: null,
+          linkCode: null,
+          linkCodeExpires: null,
+        },
+      });
+    } else {
+      updatedPlayer = await this.db.player.update({
+        where: { id: playerId },
+        data: { status: status as any },
+      });
+    }
 
     if (status?.toUpperCase() === 'APPROVED' && updatedPlayer.userId) {
       try {
@@ -421,10 +438,10 @@ export class ParticipantsService {
       } catch (error) {
         console.error('Failed to send player approval email:', error);
       }
-    } else if (status?.toUpperCase() === 'REJECTED' && updatedPlayer.userId) {
+    } else if (status?.toUpperCase() === 'REJECTED' && originalUserId) {
       try {
         const user = await this.db.user.findUnique({
-          where: { id: updatedPlayer.userId },
+          where: { id: originalUserId },
         });
         const participant = await this.db.participant.findUnique({
           where: { id: participantId },
@@ -442,6 +459,48 @@ export class ParticipantsService {
         }
       } catch (error) {
         console.error('Failed to send player rejection email:', error);
+      }
+
+      // Trigger automatic Paystack refund
+      try {
+        const payments = await this.db.payment.findMany({
+          where: {
+            type: 'PLAYER_CLAIM',
+            status: 'SUCCESS',
+            userId: originalUserId,
+          },
+        });
+
+        const payment = payments.find((p: any) => {
+          const meta = p.metadata as any;
+          return meta && meta.playerId === playerId && !meta.refunded;
+        });
+
+        if (payment && payment.paystackReference) {
+          const refundRes = await this.paystack.refundTransaction({
+            transaction: payment.paystackReference,
+            merchant_note: `Claim request rejected by organizer for player ${player.name} (ID: ${playerId})`,
+            customer_note: `Refund for rejected player profile claim on ${player.name}`,
+          });
+
+          if (refundRes?.status) {
+            const currentMetadata = (payment.metadata || {}) as Record<string, any>;
+            await this.db.payment.update({
+              where: { id: payment.id },
+              data: {
+                metadata: {
+                  ...currentMetadata,
+                  refunded: true,
+                  refundedAt: new Date().toISOString(),
+                  paystackRefundId: refundRes.data?.id || null,
+                },
+              },
+            });
+            console.log(`Successfully triggered Paystack refund for payment reference ${payment.paystackReference}`);
+          }
+        }
+      } catch (refundError) {
+        console.error('Failed to trigger automatic Paystack refund:', refundError);
       }
     }
 
