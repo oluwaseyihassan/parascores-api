@@ -295,6 +295,7 @@ export class PlayersService {
       where: { id: playerId },
       data: {
         userId: null,
+        status: 'APPROVED',
         linkCode: null,
         linkCodeExpires: null,
       },
