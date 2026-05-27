@@ -278,13 +278,15 @@ export class PaymentsService {
     if (!user) throw new NotFoundException('User not found');
     if (!player) throw new NotFoundException('Player not found');
 
-    // 2. Validate claim code
-    if (!player.linkCode || player.linkCode.toUpperCase() !== code.toUpperCase()) {
-      throw new BadRequestException('Invalid claim code');
-    }
+    // 2. Validate claim code if provided
+    if (code) {
+      if (!player.linkCode || player.linkCode.toUpperCase() !== code.toUpperCase()) {
+        throw new BadRequestException('Invalid claim code');
+      }
 
-    if (player.linkCodeExpires && player.linkCodeExpires < new Date()) {
-      throw new BadRequestException('Claim code has expired');
+      if (player.linkCodeExpires && player.linkCodeExpires < new Date()) {
+        throw new BadRequestException('Claim code has expired');
+      }
     }
 
     if (player.userId) {
@@ -315,7 +317,7 @@ export class PaymentsService {
         type: 'PLAYER_CLAIM',
         userId,
         playerId,
-        code,
+        ...(code && { code }),
         custom_fields: [
           {
             display_name: 'Player Name',
@@ -350,7 +352,7 @@ export class PaymentsService {
           type: 'PLAYER_CLAIM',
           userId,
           playerId,
-          code,
+          ...(code && { code }),
           accessCode: paystackResponse.data.access_code,
         },
       },
@@ -506,6 +508,7 @@ export class PaymentsService {
             where: { id: playerId },
             data: {
               userId,
+              status: 'PENDING',
               linkCode: null,
               linkCodeExpires: null,
             },
@@ -648,6 +651,11 @@ export class PaymentsService {
         }
       }
 
+      if (payment.type === 'PLAYER_CLAIM' && result.success) {
+        const metadata = payment.metadata as any;
+        await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
+      }
+
       return result;
     } else {
       // Mark as failed
@@ -764,6 +772,55 @@ export class PaymentsService {
 
   // ─── Private Helpers ─────────────────────────────────────
 
+  private async notifyOrganizersOfClaim(db: DatabaseService, playerId: string, userId: string) {
+    try {
+      const playerWithTourney = await db.player.findUnique({
+        where: { id: playerId },
+        include: {
+          participant: {
+            include: {
+              tournament: {
+                include: {
+                  organization: {
+                    include: {
+                      members: {
+                        where: {
+                          role: { in: ['OWNER', 'ADMIN'] }
+                        },
+                        include: {
+                          user: true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      });
+
+      if (playerWithTourney?.participant?.tournament?.organization?.members) {
+        const playerUser = await db.user.findUnique({ where: { id: userId } });
+        for (const member of playerWithTourney.participant.tournament.organization.members) {
+          if (member.user?.email) {
+            const notifyPayload = {
+              organizerEmail: member.user.email,
+              organizerName: member.user.name,
+              playerName: playerUser?.name || playerWithTourney.name,
+              teamName: playerWithTourney.participant.customName || 'Individual',
+              tournamentName: playerWithTourney.participant.tournament.name,
+              tournamentLogoUrl: playerWithTourney.participant.tournament.logoUrl || undefined,
+            };
+            this.eventEmitter.emit(EmailEvents.TEAM_JOIN_REQUEST, notifyPayload);
+          }
+        }
+      }
+    } catch (err) {
+      this.logger.error('Failed to notify organizers of player claim:', err);
+    }
+  }
+
   private resolvePlanType(planType: PlanType): {
     paystackPlanCode: string | null;
     subscriptionPlan: SubscriptionPlan;
@@ -838,6 +895,7 @@ export class PaymentsService {
           where: { id: playerId },
           data: {
             userId,
+            status: 'PENDING',
             linkCode: null,
             linkCodeExpires: null,
           },
@@ -972,6 +1030,11 @@ export class PaymentsService {
       } catch (err) {
         this.logger.error('Failed to emit tournament join approval event via webhook:', err);
       }
+    }
+
+    if (payment.type === 'PLAYER_CLAIM') {
+      const metadata = payment.metadata as any;
+      await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
     }
   }
 
