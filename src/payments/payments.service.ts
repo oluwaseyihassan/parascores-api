@@ -57,14 +57,21 @@ export class PaymentsService {
     if (!user) throw new NotFoundException('User not found');
 
     // 3. If per-tournament, validate the tournament exists
+    let resolvedTournamentId = tournamentId;
     if (tournamentId) {
-      const tournament = await this.db.tournament.findUnique({
-        where: { id: tournamentId },
+      const tournament = await this.db.tournament.findFirst({
+        where: {
+          OR: [
+            { id: tournamentId },
+            { customName: tournamentId },
+          ],
+        },
       });
       if (!tournament) throw new NotFoundException('Tournament not found');
       if (tournament.isPremium) {
         throw new BadRequestException('Tournament is already upgraded');
       }
+      resolvedTournamentId = tournament.id;
     }
 
     // 4. Resolve the Paystack plan code and subscription plan from the planType
@@ -78,7 +85,7 @@ export class PaymentsService {
       metadata: {
         organizationId,
         userId,
-        ...(tournamentId && { tournamentId }),
+        ...(resolvedTournamentId && { tournamentId: resolvedTournamentId }),
         organizationName: org.name,
         custom_fields: [
           {
@@ -86,7 +93,7 @@ export class PaymentsService {
             variable_name: 'organization',
             value: org.name,
           },
-          ...(tournamentId
+          ...(resolvedTournamentId
             ? [
                 {
                   display_name: 'Payment Type',
@@ -104,7 +111,7 @@ export class PaymentsService {
     await this.db.payment.create({
       data: {
         organizationId,
-        tournamentId: tournamentId || null,
+        tournamentId: resolvedTournamentId || null,
         amount,
         currency: 'NGN',
         status: PaymentStatus.PENDING,
@@ -113,7 +120,7 @@ export class PaymentsService {
         metadata: {
           planType,
           paystackPlanCode: paystackPlanCode || null,
-          tournamentId: tournamentId || null,
+          tournamentId: resolvedTournamentId || null,
           userId,
           accessCode: paystackResponse.data.access_code,
         },
@@ -136,8 +143,13 @@ export class PaymentsService {
 
     // 1. Fetch details and validate
     const [tournament, user, invite] = await Promise.all([
-      this.db.tournament.findUnique({
-        where: { id: tournamentId },
+      this.db.tournament.findFirst({
+        where: {
+          OR: [
+            { id: tournamentId },
+            { customName: tournamentId },
+          ],
+        },
       }),
       this.db.user.findUnique({ where: { id: userId } }),
       this.db.tournamentInvite.findUnique({
@@ -151,7 +163,9 @@ export class PaymentsService {
       throw new BadRequestException('Invalid or inactive invite token');
     }
 
-    if (invite.tournament_id !== tournamentId) {
+    const resolvedTournamentId = tournament.id;
+
+    if (invite.tournament_id !== resolvedTournamentId) {
       throw new BadRequestException('Invite token does not match tournament');
     }
 
@@ -173,7 +187,7 @@ export class PaymentsService {
 
     // Check participant limit
     const currentParticipantCount = await this.db.participant.count({
-      where: { tournament_id: tournamentId },
+      where: { tournament_id: resolvedTournamentId },
     });
 
     const subscription = await this.db.subscription.findUnique({
@@ -203,7 +217,7 @@ export class PaymentsService {
       metadata: {
         type: 'TOURNAMENT_REGISTRATION',
         userId,
-        tournamentId,
+        tournamentId: resolvedTournamentId,
         teamId,
         customName,
         logoUrl,
@@ -228,7 +242,7 @@ export class PaymentsService {
     await this.db.payment.create({
       data: {
         organizationId: tournament.organization_id,
-        tournamentId: tournament.id,
+        tournamentId: resolvedTournamentId,
         amount: feeAmount,
         currency: 'NGN',
         status: PaymentStatus.PENDING,
@@ -238,7 +252,7 @@ export class PaymentsService {
         metadata: {
           type: 'TOURNAMENT_REGISTRATION',
           userId,
-          tournamentId,
+          tournamentId: resolvedTournamentId,
           teamId,
           customName,
           logoUrl,
