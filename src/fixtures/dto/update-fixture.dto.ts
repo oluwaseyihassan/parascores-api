@@ -6,6 +6,7 @@ import {
   IsString,
   Min,
   IsArray,
+  Matches,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { FixtureStatus } from 'prisma/generated/client';
@@ -90,4 +91,26 @@ export class UpdateFixtureDto {
   @IsString({ each: true })
   @IsOptional()
   lineupPlayerIds?: string[];
+
+  @ApiPropertyOptional({
+    description: 'Home team formation (e.g. 4-3-3, 4-2-3-1)',
+    example: '4-3-3',
+  })
+  @IsString()
+  @Matches(/^\d(-\d){1,4}$/, {
+    message: 'homeFormation must be a valid formation like 4-3-3 or 4-2-3-1',
+  })
+  @IsOptional()
+  homeFormation?: string;
+
+  @ApiPropertyOptional({
+    description: 'Away team formation (e.g. 4-3-3, 4-2-3-1)',
+    example: '4-2-3-1',
+  })
+  @IsString()
+  @Matches(/^\d(-\d){1,4}$/, {
+    message: 'awayFormation must be a valid formation like 4-3-3 or 4-2-3-1',
+  })
+  @IsOptional()
+  awayFormation?: string;
 }
