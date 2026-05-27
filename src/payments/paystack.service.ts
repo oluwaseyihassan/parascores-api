@@ -174,6 +174,24 @@ export class PaystackService {
     return this.request('POST', '/subscription/disable', params);
   }
 
+  // ─── Refunds ─────────────────────────────────────────────
+
+  /**
+   * Refund a transaction by its reference or ID.
+   */
+  async refundTransaction(params: {
+    transaction: string;
+    amount?: number; // In kobo
+    merchant_note?: string;
+    customer_note?: string;
+  }) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: any;
+    }>('POST', '/refund', params);
+  }
+
   // ─── Webhooks ────────────────────────────────────────────
 
   /**
