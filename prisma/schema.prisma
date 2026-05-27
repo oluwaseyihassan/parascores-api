@@ -181,6 +181,8 @@ model Fixture {
   roundName           String?
   stage               FixtureStage?
   venue               String?
+  homeFormation       String?
+  awayFormation       String?
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
@@ -438,7 +440,7 @@ model Subscription {
 
 model Payment {
   id                    String           @id @default(cuid())
-  organizationId        String
+  organizationId        String?
   tournamentId          String?
   amount                Int              // Amount in smallest currency unit (kobo/cents)
   currency              String           @default("NGN")
@@ -452,7 +454,7 @@ model Payment {
   userId                String?
   type                  String           @default("SUBSCRIPTION")
 
-  organization          Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization          Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   tournament            Tournament?      @relation(fields: [tournamentId], references: [id], onDelete: SetNull)
   user                  User?            @relation(fields: [userId], references: [id])
 }
