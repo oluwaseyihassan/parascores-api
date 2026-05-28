@@ -11,6 +11,7 @@ import { PaystackService } from './paystack.service';
 import { InitializePaymentDto, PlanType } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
+import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
   PaymentStatus,
@@ -379,6 +380,127 @@ export class PaymentsService {
     });
   }
 
+  /**
+   * Initialize a Paystack transaction for registering/joining a team via invite link.
+   * Creates a PENDING Payment record and returns the Paystack checkout URL.
+   */
+  async initializeTeamJoin(userId: string, dto: InitializeTeamJoinDto) {
+    const { token, name, number, position, avatarUrl, callbackUrl } = dto;
+
+    // 1. Fetch user and invite details
+    const [user, invite] = await Promise.all([
+      this.db.user.findUnique({ where: { id: userId } }),
+      this.db.teamInvite.findUnique({
+        where: { token },
+        include: {
+          participant: true,
+          tournament: true,
+        },
+      }),
+    ]);
+
+    if (!user) throw new NotFoundException('User not found');
+    if (!invite) throw new NotFoundException('Invite link not found');
+
+    if (!invite.isActive) {
+      throw new BadRequestException('This invite link has been revoked');
+    }
+
+    if (invite.expiresAt && new Date(invite.expiresAt) < new Date()) {
+      throw new BadRequestException('This invite link has expired');
+    }
+
+    if (invite.maxUses && invite.usedCount >= invite.maxUses) {
+      throw new BadRequestException(
+        'This invite link has reached its maximum number of uses',
+      );
+    }
+
+    // Check if user is already registered for ANY team in this same tournament
+    const alreadyInTournament = await this.db.player.findFirst({
+      where: {
+        userId,
+        status: { in: ['APPROVED', 'PENDING'] },
+        participant: {
+          tournament_id: invite.tournament_id,
+        },
+      },
+    });
+
+    if (alreadyInTournament) {
+      throw new BadRequestException('You are already registered or have a pending request in this tournament');
+    }
+
+    const feeAmount = 50000; // 500 Naira (50000 kobo)
+
+    // 2. Initialize Paystack transaction
+    const paystackResponse = await this.paystack.initializeTransaction({
+      email: user.email,
+      amount: feeAmount,
+      metadata: {
+        type: 'TEAM_JOIN',
+        userId,
+        token,
+        name,
+        number,
+        position,
+        avatarUrl,
+        custom_fields: [
+          {
+            display_name: 'Player Name',
+            variable_name: 'player_name',
+            value: name,
+          },
+          {
+            display_name: 'Tournament Name',
+            variable_name: 'tournament_name',
+            value: invite.tournament.name,
+          },
+          {
+            display_name: 'Team Name',
+            variable_name: 'team_name',
+            value: invite.participant.customName || 'Unknown Team',
+          },
+          {
+            display_name: 'Payment Type',
+            variable_name: 'payment_type',
+            value: 'Player Registration Fee',
+          },
+        ],
+      },
+      callback_url: callbackUrl,
+    });
+
+    // 3. Create a PENDING payment record
+    await this.db.payment.create({
+      data: {
+        amount: feeAmount,
+        currency: 'NGN',
+        status: PaymentStatus.PENDING,
+        paystackReference: paystackResponse.data.reference,
+        type: 'TEAM_JOIN',
+        userId,
+        tournamentId: invite.tournament_id,
+        metadata: {
+          type: 'TEAM_JOIN',
+          userId,
+          token,
+          name,
+          number,
+          position,
+          avatarUrl,
+          accessCode: paystackResponse.data.access_code,
+        },
+      },
+    });
+
+    return ResponseUtil.success({
+      authorization_url: paystackResponse.data.authorization_url,
+      access_code: paystackResponse.data.access_code,
+      reference: paystackResponse.data.reference,
+    });
+  }
+
   // ─── Verify ──────────────────────────────────────────────
 
   /**
@@ -474,6 +596,24 @@ export class PaymentsService {
             });
           }
 
+          if (payment.type === 'TEAM_JOIN') {
+            const metadata = payment.metadata as any;
+            const invite = await tx.teamInvite.findUnique({
+              where: { token: metadata.token },
+            });
+            const player = await tx.player.findFirst({
+              where: {
+                userId: metadata.userId,
+                participantId: invite?.participant_id,
+              },
+            });
+            return ResponseUtil.success({
+              payment: currentPayment,
+              player,
+              status: player?.status,
+            });
+          }
+
           if (payment.type === 'TOURNAMENT_REGISTRATION') {
             const metadata = payment.metadata as any;
             const participant = await tx.participant.findFirst({
@@ -531,6 +671,44 @@ export class PaymentsService {
           return ResponseUtil.success({
             payment: updatedPayment,
             player: { id: playerId },
+          });
+        }
+
+        // Handle team join payment
+        if (payment.type === 'TEAM_JOIN') {
+          const metadata = payment.metadata as any;
+          const { token, userId, name, number, position, avatarUrl } = metadata;
+
+          const invite = await tx.teamInvite.findUnique({
+            where: { token },
+            include: { tournament: true },
+          });
+
+          if (!invite) throw new NotFoundException('Invite link not found');
+
+          const status = invite.tournament.autoApprove ? 'APPROVED' : 'PENDING';
+
+          const player = await tx.player.create({
+            data: {
+              participantId: invite.participant_id,
+              userId,
+              name,
+              number,
+              position,
+              avatarUrl,
+              status: status as any,
+            },
+          });
+
+          await tx.teamInvite.update({
+            where: { id: invite.id },
+            data: { usedCount: { increment: 1 } },
+          });
+
+          return ResponseUtil.success({
+            payment: updatedPayment,
+            player,
+            status,
           });
         }
 
@@ -668,6 +846,14 @@ export class PaymentsService {
       if (payment.type === 'PLAYER_CLAIM' && result.success) {
         const metadata = payment.metadata as any;
         await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
+      }
+
+      if (payment.type === 'TEAM_JOIN' && result.success) {
+        const metadata = payment.metadata as any;
+        const player = (result as any).data?.player;
+        if (player && player.status === 'PENDING') {
+          await this.notifyOrganizersOfClaim(this.db, player.id, metadata.userId);
+        }
       }
 
       return result;
@@ -917,6 +1103,39 @@ export class PaymentsService {
         return;
       }
 
+      // Handle team join payment
+      if (payment.type === 'TEAM_JOIN') {
+        const metadata = payment.metadata as any;
+        const { token, userId, name, number, position, avatarUrl } = metadata;
+
+        const invite = await tx.teamInvite.findUnique({
+          where: { token },
+          include: { tournament: true },
+        });
+
+        if (!invite) throw new NotFoundException('Invite link not found');
+
+        const status = invite.tournament.autoApprove ? 'APPROVED' : 'PENDING';
+
+        await tx.player.create({
+          data: {
+            participantId: invite.participant_id,
+            userId,
+            name,
+            number,
+            position,
+            avatarUrl,
+            status: status as any,
+          },
+        });
+
+        await tx.teamInvite.update({
+          where: { id: invite.id },
+          data: { usedCount: { increment: 1 } },
+        });
+        return;
+      }
+
       // Handle tournament registration payment
       if (payment.type === 'TOURNAMENT_REGISTRATION') {
         const metadata = payment.metadata as any;
@@ -1049,6 +1268,22 @@ export class PaymentsService {
     if (payment.type === 'PLAYER_CLAIM') {
       const metadata = payment.metadata as any;
       await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
+    }
+
+    if (payment.type === 'TEAM_JOIN') {
+      const metadata = payment.metadata as any;
+      const invite = await this.db.teamInvite.findUnique({
+        where: { token: metadata.token },
+      });
+      const player = await this.db.player.findFirst({
+        where: {
+          userId: metadata.userId,
+          participantId: invite?.participant_id,
+        },
+      });
+      if (player && player.status === 'PENDING') {
+        await this.notifyOrganizersOfClaim(this.db, player.id, metadata.userId);
+      }
     }
   }
 
