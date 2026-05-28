@@ -16,6 +16,7 @@ import { PaystackService } from './paystack.service';
 import { InitializePaymentDto } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
+import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -55,6 +56,15 @@ export class PaymentsController {
     @Req() req: any,
   ) {
     return this.paymentsService.initializePlayerClaim(req.user.sub, dto);
+  }
+
+  @Post('initialize-team-join')
+  @ApiOperation({ summary: 'Initialize a team join fee payment via invite link' })
+  async initializeTeamJoin(
+    @Body() dto: InitializeTeamJoinDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.initializeTeamJoin(req.user.sub, dto);
   }
 
   @Get('verify/:reference')
