@@ -399,15 +399,34 @@ export class ParticipantsService {
 
     let updatedPlayer;
     if (status?.toUpperCase() === 'REJECTED') {
-      updatedPlayer = await this.db.player.update({
-        where: { id: playerId },
-        data: {
-          status: 'APPROVED',
-          userId: null,
-          linkCode: null,
-          linkCodeExpires: null,
+      // Check if this player was added via a TEAM_JOIN invite link payment
+      const payments = await this.db.payment.findMany({
+        where: {
+          status: 'SUCCESS',
+          type: 'TEAM_JOIN',
         },
       });
+      const isTeamJoin = payments.some((p: any) => {
+        const meta = p.metadata as any;
+        return meta && meta.playerId === playerId;
+      });
+
+      if (isTeamJoin) {
+        await this.db.player.delete({
+          where: { id: playerId },
+        });
+        updatedPlayer = null;
+      } else {
+        updatedPlayer = await this.db.player.update({
+          where: { id: playerId },
+          data: {
+            status: 'APPROVED',
+            userId: null,
+            linkCode: null,
+            linkCodeExpires: null,
+          },
+        });
+      }
     } else {
       updatedPlayer = await this.db.player.update({
         where: { id: playerId },
@@ -465,7 +484,7 @@ export class ParticipantsService {
       try {
         const payments = await this.db.payment.findMany({
           where: {
-            type: 'PLAYER_CLAIM',
+            type: { in: ['PLAYER_CLAIM', 'TEAM_JOIN'] },
             status: 'SUCCESS',
             userId: originalUserId,
           },
