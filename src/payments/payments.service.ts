@@ -700,13 +700,24 @@ export class PaymentsService {
             },
           });
 
+          // Save the created player ID in the payment metadata
+          const updatedMetadata = {
+            ...(payment.metadata as any),
+            playerId: player.id,
+          };
+
+          const finalPayment = await tx.payment.update({
+            where: { id: payment.id },
+            data: { metadata: updatedMetadata },
+          });
+
           await tx.teamInvite.update({
             where: { id: invite.id },
             data: { usedCount: { increment: 1 } },
           });
 
           return ResponseUtil.success({
-            payment: updatedPayment,
+            payment: finalPayment,
             player,
             status,
           });
@@ -1117,7 +1128,7 @@ export class PaymentsService {
 
         const status = invite.tournament.autoApprove ? 'APPROVED' : 'PENDING';
 
-        await tx.player.create({
+        const player = await tx.player.create({
           data: {
             participantId: invite.participant_id,
             userId,
@@ -1127,6 +1138,16 @@ export class PaymentsService {
             avatarUrl,
             status: status as any,
           },
+        });
+
+        const updatedMetadata = {
+          ...(payment.metadata as any),
+          playerId: player.id,
+        };
+
+        await tx.payment.update({
+          where: { id: payment.id },
+          data: { metadata: updatedMetadata },
         });
 
         await tx.teamInvite.update({
