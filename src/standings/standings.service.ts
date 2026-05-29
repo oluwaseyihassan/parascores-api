@@ -3,10 +3,14 @@ import { CreateStandingDto } from './dto/create-standing.dto';
 import { UpdateStandingDto } from './dto/update-standing.dto';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class StandingsService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly redisService: RedisService,
+  ) {}
 
   async create(createStandingDto: CreateStandingDto) {
     const tournament = await this.db.tournament.findUnique({
@@ -33,15 +37,27 @@ export class StandingsService {
             user: true,
           },
         },
-        tournament: { select: { id: true, name: true } },
+        tournament: { select: { id: true, name: true, customName: true } },
       },
     });
+
+    // Invalidate caches
+    await this.redisService.del(`standings:${createStandingDto.tournament_id}`);
+    if (tournament.customName) {
+      await this.redisService.del(`standings:${tournament.customName}`);
+    }
 
     return ResponseUtil.success(standing);
   }
 
   // Extracted from TournamentsService
   async getStandings(tournamentId: string) {
+    const cacheKey = `standings:${tournamentId}`;
+    const cachedResponse = await this.redisService.get<any>(cacheKey);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
@@ -69,7 +85,7 @@ export class StandingsService {
       ],
     });
 
-    return ResponseUtil.success({
+    const response = ResponseUtil.success({
       standings: standings.map((s) => ({
         ...s,
         participantName:
@@ -79,6 +95,10 @@ export class StandingsService {
           'Unknown',
       })),
     });
+
+    await this.redisService.set(cacheKey, response, 3600); // Cache for 1 hour
+
+    return response;
   }
 
   async findOne(id: string) {
@@ -100,7 +120,10 @@ export class StandingsService {
   }
 
   async update(id: string, updateStandingDto: UpdateStandingDto) {
-    const standing = await this.db.standing.findUnique({ where: { id } });
+    const standing = await this.db.standing.findUnique({
+      where: { id },
+      include: { tournament: true },
+    });
     if (!standing) throw new NotFoundException('Standing not found');
 
     // recalculate goal difference if goals modify
@@ -124,14 +147,30 @@ export class StandingsService {
       },
     });
 
+    // Invalidate caches
+    await this.redisService.del(`standings:${standing.tournament_id}`);
+    if (standing.tournament?.customName) {
+      await this.redisService.del(`standings:${standing.tournament.customName}`);
+    }
+
     return ResponseUtil.success(updatedStanding);
   }
 
   async remove(id: string) {
-    const standing = await this.db.standing.findUnique({ where: { id } });
+    const standing = await this.db.standing.findUnique({
+      where: { id },
+      include: { tournament: true },
+    });
     if (!standing) throw new NotFoundException('Standing not found');
 
     await this.db.standing.delete({ where: { id } });
+
+    // Invalidate caches
+    await this.redisService.del(`standings:${standing.tournament_id}`);
+    if (standing.tournament?.customName) {
+      await this.redisService.del(`standings:${standing.tournament.customName}`);
+    }
+
     return ResponseUtil.success({ message: 'Standing deleted successfully' });
   }
 }

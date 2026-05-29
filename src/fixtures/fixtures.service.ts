@@ -10,6 +10,7 @@ import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class FixturesService {
@@ -18,6 +19,7 @@ export class FixturesService {
   constructor(
     private readonly db: DatabaseService,
     private readonly organizationsService: OrganizationsService,
+    private readonly redisService: RedisService,
   ) {}
 
   // Create a single fixture manually
@@ -158,11 +160,24 @@ export class FixturesService {
       },
     });
 
+    // Invalidate caches
+    await this.redisService.delPattern(`fixtures:tournament:${tournament.id}:*`);
+    if (tournament.customName) {
+      await this.redisService.delPattern(`fixtures:tournament:${tournament.customName}:*`);
+    }
+    await this.redisService.del('fixtures:live');
+
     return ResponseUtil.success(fixture);
   }
 
   // Get a single fixture by ID
   async findOne(fixtureId: string) {
+    const cacheKey = `fixtures:single:${fixtureId}`;
+    const cachedResponse = await this.redisService.get<any>(cacheKey);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     const fixture = await this.db.fixture.findUnique({
       where: { id: fixtureId },
       include: {
@@ -205,7 +220,10 @@ export class FixturesService {
       throw new NotFoundException('Fixture not found');
     }
 
-    return ResponseUtil.success(fixture);
+    const response = ResponseUtil.success(fixture);
+    await this.redisService.set(cacheKey, response, 3600); // Cache for 1 hour
+
+    return response;
   }
 
   // Get all fixtures for a specific tournament
@@ -214,6 +232,12 @@ export class FixturesService {
     round?: number,
     stage?: any,
   ) {
+    const cacheKey = `fixtures:tournament:${tournamentId}:${round ?? 'all'}:${stage ?? 'all'}`;
+    const cachedResponse = await this.redisService.get<any>(cacheKey);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
@@ -254,11 +278,20 @@ export class FixturesService {
       orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
     });
 
-    return ResponseUtil.success(fixtures);
+    const response = ResponseUtil.success(fixtures);
+    await this.redisService.set(cacheKey, response, 3600); // Cache for 1 hour
+
+    return response;
   }
 
   // Get all live fixtures
   async findLive() {
+    const cacheKey = `fixtures:live`;
+    const cachedResponse = await this.redisService.get<any>(cacheKey);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
     const fixtures = await this.db.fixture.findMany({
       where: { status: 'LIVE' },
       include: {
@@ -282,7 +315,10 @@ export class FixturesService {
       orderBy: { startTime: 'asc' },
     });
 
-    return ResponseUtil.success(fixtures);
+    const response = ResponseUtil.success(fixtures);
+    await this.redisService.set(cacheKey, response, 60); // Cache for 60 seconds
+
+    return response;
   }
 
   // Update a fixture (status, scores, etc.)
@@ -553,6 +589,18 @@ export class FixturesService {
       ) {
         await this.updateStandings(updatedFixture.tournament_id);
       }
+    }
+
+    // Invalidate caches
+    await this.redisService.del(`fixtures:single:${fixtureId}`);
+    await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament_id}:*`);
+    if (fixture.tournament?.customName) {
+      await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament.customName}:*`);
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.del(`standings:${fixture.tournament_id}`);
+    if (fixture.tournament?.customName) {
+      await this.redisService.del(`standings:${fixture.tournament.customName}`);
     }
 
     this.liveFixturesSubject.next({
