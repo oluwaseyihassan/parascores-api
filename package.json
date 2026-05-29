@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
+  "engine": {
+    "node": ">= 22.12.0"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
