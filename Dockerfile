@@ -25,4 +25,4 @@ COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 3000
 
-CMD npx prisma migrate deploy && node dist/main.js
+CMD npx prisma migrate deploy && node dist/src/main.js
