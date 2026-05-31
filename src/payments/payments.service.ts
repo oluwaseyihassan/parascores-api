@@ -57,8 +57,9 @@ export class PaymentsService {
     if (!org) throw new NotFoundException('Organization not found');
     if (!user) throw new NotFoundException('User not found');
 
-    // 3. If per-tournament, validate the tournament exists
+    // 3. If per-tournament, validate the tournament exists and calculate the upgrade fee
     let resolvedTournamentId = tournamentId;
+    let resolvedAmount = amount; // default to client-passed value (e.g. for Pro plans)
     if (tournamentId) {
       const tournament = await this.db.tournament.findFirst({
         where: {
@@ -73,6 +74,24 @@ export class PaymentsService {
         throw new BadRequestException('Tournament is already upgraded');
       }
       resolvedTournamentId = tournament.id;
+
+      // Calculate dynamic pricing based on maxParticipants
+      if (planType === 'PER_TOURNAMENT') {
+        const max = tournament.maxParticipants;
+        if (max === null) {
+          resolvedAmount = 25000 * 100; // ₦25,000 in kobo for unlimited
+        } else if (max <= 4) {
+          resolvedAmount = 5000 * 100;  // ₦5,000 in kobo
+        } else if (max <= 8) {
+          resolvedAmount = 8000 * 100;  // ₦8,000 in kobo
+        } else if (max <= 16) {
+          resolvedAmount = 12000 * 100; // ₦12,000 in kobo
+        } else if (max <= 32) {
+          resolvedAmount = 15000 * 100; // ₦15,000 in kobo
+        } else {
+          resolvedAmount = 25000 * 100; // ₦25,000 in kobo for >32
+        }
+      }
     }
 
     // 4. Resolve the Paystack plan code and subscription plan from the planType
@@ -81,7 +100,7 @@ export class PaymentsService {
     // 5. Initialize Paystack transaction
     const paystackResponse = await this.paystack.initializeTransaction({
       email: user.email,
-      amount,
+      amount: resolvedAmount,
       ...(paystackPlanCode && { plan: paystackPlanCode }),
       metadata: {
         organizationId,
@@ -113,7 +132,7 @@ export class PaymentsService {
       data: {
         organizationId,
         tournamentId: resolvedTournamentId || null,
-        amount,
+        amount: resolvedAmount,
         currency: 'NGN',
         status: PaymentStatus.PENDING,
         paystackReference: paystackResponse.data.reference,
