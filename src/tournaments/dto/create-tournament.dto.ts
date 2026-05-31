@@ -131,13 +131,13 @@ export class CreateTournamentDto {
   @IsOptional()
   timezone?: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Maximum number of participants allowed',
     example: 16,
   })
   @IsInt()
-  @IsOptional()
-  maxParticipants?: number;
+  @IsNotEmpty()
+  maxParticipants: number;
 
   @ApiPropertyOptional({
     description: 'Date when registration opens',
