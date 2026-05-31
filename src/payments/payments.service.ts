@@ -118,6 +118,7 @@ export class PaymentsService {
         status: PaymentStatus.PENDING,
         paystackReference: paystackResponse.data.reference,
         plan: subscriptionPlan,
+        userId,
         metadata: {
           planType,
           paystackPlanCode: paystackPlanCode || null,
