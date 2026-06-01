@@ -350,10 +350,17 @@ export class ParticipantsService {
   private async syncParticipantStanding(participantId: string, groupId: string | null) {
     const participant = await this.db.participant.findUnique({
       where: { id: participantId },
-      include: { group: true },
+      include: { group: true, tournament: true },
     });
 
     if (!participant) return;
+
+    if (
+      participant.tournament.type === 'KNOCKOUT' ||
+      participant.tournament.type === 'FRIENDLY'
+    ) {
+      return;
+    }
 
     await this.db.standing.upsert({
       where: {
