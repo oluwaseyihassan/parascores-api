@@ -19,7 +19,7 @@ export class EmailService {
     this.fromOluwaseyiEmail =
       process.env.EMAIL_FROM_OLUWASEYI ||
       'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>';
-    this.logoUrl = 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png';
+    this.logoUrl = 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png';
   }
 
   private async compileTemplate(
