@@ -50,7 +50,7 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api', app, document, {
-      customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png',
+      customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png',
       customSiteTitle: 'ParaScores API',
       customCss: `
         .swagger-ui .topbar { background-color: #16a34a; }
@@ -58,7 +58,7 @@ async function bootstrap() {
         .swagger-ui .topbar-wrapper a::before {
           content: '';
           display: inline-block;
-          background-image: url('https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1776229862/Screenshot_2026-04-15_060233_wexzxq.png');
+          background-image: url('https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png');
           background-size: contain;
           background-repeat: no-repeat;
           width: 40px;
