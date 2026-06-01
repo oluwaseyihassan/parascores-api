@@ -66,6 +66,12 @@ export class StandingsService {
       throw new NotFoundException('Tournament not found');
     }
 
+    if (tournament.type === 'KNOCKOUT' || tournament.type === 'FRIENDLY') {
+      const response = ResponseUtil.success({ standings: [] });
+      await this.redisService.set(cacheKey, response, 3600);
+      return response;
+    }
+
     const standings = await this.db.standing.findMany({
       where: { tournament_id: tournament.id },
       include: {
