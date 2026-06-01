@@ -39,9 +39,12 @@ export class TournamentsService {
       (subscription.status === SubscriptionStatus.ACTIVE || subscription.status === SubscriptionStatus.TRIALING) &&
       (subscription.plan === SubscriptionPlan.PRO || subscription.plan === SubscriptionPlan.ENTERPRISE);
 
-    if (!isPremiumOrg) {
+    if (!isPremiumOrg && dto.type !== 'FRIENDLY') {
       const count = await this.db.tournament.count({
-        where: { organization_id: dto.organization_id },
+        where: {
+          organization_id: dto.organization_id,
+          type: { not: 'FRIENDLY' },
+        },
       });
       if (count >= 3) {
         throw new BadRequestException(
