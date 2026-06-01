@@ -192,8 +192,11 @@ export class FixtureGeneratorService {
         );
     }
 
-    // Initialize standings for non-knockout tournaments
-    if (tournament.type !== TournamentType.KNOCKOUT) {
+    // Initialize standings for non-knockout and non-friendly tournaments
+    if (
+      tournament.type !== TournamentType.KNOCKOUT &&
+      tournament.type !== TournamentType.FRIENDLY
+    ) {
       await this.initializeStandings(tournament);
     }
 
@@ -1267,6 +1270,12 @@ export class FixtureGeneratorService {
 
   // Initialize standings for a tournament
   private async initializeStandings(tournament: Tournament) {
+    if (
+      tournament.type === TournamentType.KNOCKOUT ||
+      tournament.type === TournamentType.FRIENDLY
+    ) {
+      return;
+    }
     const participants = await this.db.participant.findMany({
       where: {
         tournament_id: tournament.id,
