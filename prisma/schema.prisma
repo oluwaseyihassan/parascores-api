@@ -28,6 +28,7 @@ model User {
   teams                      Team[]               @relation("UserTeams")
   created_invites            TeamInvite[]         @relation("InviteCreator")
   followed_tournaments       TournamentFollower[]
+  push_subscriptions         PushSubscription[]
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
   payments                   Payment[]
 }
@@ -458,4 +459,15 @@ model Payment {
   organization          Organization?    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   tournament            Tournament?      @relation(fields: [tournamentId], references: [id], onDelete: SetNull)
   user                  User?            @relation(fields: [userId], references: [id])
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
