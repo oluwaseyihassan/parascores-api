@@ -4,9 +4,10 @@ import { FixturesService } from './fixtures.service';
 import { DatabaseModule } from 'src/database/database.module';
 import { FixtureGeneratorService } from './fixture-generator/fixture-generator.service';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-  imports: [OrganizationsModule],
+  imports: [OrganizationsModule, NotificationsModule],
   controllers: [FixturesController],
   providers: [FixturesService, FixtureGeneratorService],
   exports: [FixturesService],

@@ -11,6 +11,7 @@ import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { RedisService } from 'src/redis/redis.service';
+import { NotificationsService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class FixturesService {
@@ -20,6 +21,7 @@ export class FixturesService {
     private readonly db: DatabaseService,
     private readonly organizationsService: OrganizationsService,
     private readonly redisService: RedisService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   // Create a single fixture manually
@@ -607,6 +609,40 @@ export class FixturesService {
       type: 'fixture_updated',
       data: updatedFixture,
     });
+
+    // Kickoff notification
+    if (updatedFixture.status === 'LIVE' && fixture.status !== 'LIVE') {
+      const homeName = updatedFixture.homeTeam?.customName || updatedFixture.homeTeam?.team?.name || 'TBD';
+      const awayName = updatedFixture.awayTeam?.customName || updatedFixture.awayTeam?.team?.name || 'TBD';
+      const title = `Match Kicked Off! ⚽`;
+      const body = `${homeName} vs ${awayName} has started. Follow for live updates!`;
+      const url = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
+      this.notificationsService.sendNotificationToTournamentFollowers(
+        updatedFixture.tournament_id,
+        title,
+        body,
+        url,
+        `fixture-${updatedFixture.id}-kickoff`
+      ).catch(() => {});
+    }
+
+    // Full-time completion notification
+    if (updatedFixture.status === 'COMPLETED' && fixture.status !== 'COMPLETED') {
+      const homeName = updatedFixture.homeTeam?.customName || updatedFixture.homeTeam?.team?.name || 'TBD';
+      const awayName = updatedFixture.awayTeam?.customName || updatedFixture.awayTeam?.team?.name || 'TBD';
+      const homeScore = updatedFixture.homeScore ?? 0;
+      const awayScore = updatedFixture.awayScore ?? 0;
+      const title = `Full Time: ${homeName} ${homeScore} - ${awayScore} ${awayName} 🏁`;
+      const body = `The match has ended. Final score: ${homeName} ${homeScore} - ${awayScore} ${awayName}.`;
+      const url = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
+      this.notificationsService.sendNotificationToTournamentFollowers(
+        updatedFixture.tournament_id,
+        title,
+        body,
+        url,
+        `fixture-${updatedFixture.id}-completion`
+      ).catch(() => {});
+    }
 
     return ResponseUtil.success(updatedFixture);
   }
