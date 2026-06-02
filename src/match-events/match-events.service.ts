@@ -6,12 +6,15 @@ import { FixturesService } from 'src/fixtures/fixtures.service';
 import { ResponseUtil } from 'src/utils/api-response';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 
+import { NotificationsService } from 'src/notifications/notifications.service';
+
 @Injectable()
 export class MatchEventsService {
   constructor(
     private readonly db: DatabaseService,
     private readonly fixturesService: FixturesService,
     private readonly organizationsService: OrganizationsService,
+    private readonly notificationsService: NotificationsService,
   ) {}
 
   async create(fixtureId: string, userId: string, createMatchEventDto: CreateMatchEventDto) {
@@ -63,6 +66,50 @@ export class MatchEventsService {
       type: 'event_added',
       data: event,
     });
+
+    // Check if event is a goal/own goal and trigger notification
+    if (event.type === 'GOAL' || event.type === 'OWN_GOAL') {
+      this.db.fixture.findUnique({
+        where: { id: fixtureId },
+        include: {
+          homeTeam: { include: { team: { select: { name: true } } } },
+          awayTeam: { include: { team: { select: { name: true } } } },
+        },
+      }).then((fullFixture) => {
+        if (fullFixture) {
+          const homeName = fullFixture.homeTeam?.customName || fullFixture.homeTeam?.team?.name || 'TBD';
+          const awayName = fullFixture.awayTeam?.customName || fullFixture.awayTeam?.team?.name || 'TBD';
+          
+          let title = 'Goal scored! ⚽';
+          let body = '';
+          const scorerName = event.player?.name || 'A player';
+          const minuteText = event.minute ? ` in the ${event.minute}'` : '';
+
+          if (event.type === 'GOAL') {
+            const scoringParticipant = event.participant;
+            const teamName = scoringParticipant?.customName || scoringParticipant?.team?.name || 'their team';
+            title = `GOAL! ${teamName} scored! ⚽`;
+            body = `${scorerName} scores for ${teamName}${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
+          } else if (event.type === 'OWN_GOAL') {
+            const scoringParticipant = event.participant;
+            const teamName = scoringParticipant?.customName || scoringParticipant?.team?.name || 'their team';
+            title = `Own Goal! 🤦‍♂️`;
+            body = `${scorerName} scores an own goal${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
+          }
+
+          const url = `/t/${fullFixture.tournament_id}/fixture/${fullFixture.id}`;
+          this.notificationsService.sendNotificationToTournamentFollowers(
+            fullFixture.tournament_id,
+            title,
+            body,
+            url,
+            `fixture-${fullFixture.id}-goal-${event.id}`
+          ).catch(() => {});
+        }
+      }).catch((err) => {
+        console.error('Error fetching fixture details for push notification:', err);
+      });
+    }
 
     return ResponseUtil.success(event);
   }
