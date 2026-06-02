@@ -256,6 +256,7 @@ export type UserWhereInput = {
   teams?: Prisma.TeamListRelationFilter
   created_invites?: Prisma.TeamInviteListRelationFilter
   followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
+  push_subscriptions?: Prisma.PushSubscriptionListRelationFilter
   created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
 }
@@ -281,6 +282,7 @@ export type UserOrderByWithRelationInput = {
   teams?: Prisma.TeamOrderByRelationAggregateInput
   created_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
   followed_tournaments?: Prisma.TournamentFollowerOrderByRelationAggregateInput
+  push_subscriptions?: Prisma.PushSubscriptionOrderByRelationAggregateInput
   created_tournament_invites?: Prisma.TournamentInviteOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
@@ -309,6 +311,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   teams?: Prisma.TeamListRelationFilter
   created_invites?: Prisma.TeamInviteListRelationFilter
   followed_tournaments?: Prisma.TournamentFollowerListRelationFilter
+  push_subscriptions?: Prisma.PushSubscriptionListRelationFilter
   created_tournament_invites?: Prisma.TournamentInviteListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
 }, "id" | "email">
@@ -374,6 +377,7 @@ export type UserCreateInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -399,6 +403,7 @@ export type UserUncheckedCreateInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -424,6 +429,7 @@ export type UserUpdateInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -449,6 +455,7 @@ export type UserUncheckedUpdateInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -707,6 +714,20 @@ export type UserUpdateOneWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type UserCreateNestedOneWithoutPush_subscriptionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPush_subscriptionsInput, Prisma.UserUncheckedCreateWithoutPush_subscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPush_subscriptionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPush_subscriptionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPush_subscriptionsInput, Prisma.UserUncheckedCreateWithoutPush_subscriptionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPush_subscriptionsInput
+  upsert?: Prisma.UserUpsertWithoutPush_subscriptionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPush_subscriptionsInput, Prisma.UserUpdateWithoutPush_subscriptionsInput>, Prisma.UserUncheckedUpdateWithoutPush_subscriptionsInput>
+}
+
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
   email: string
@@ -727,6 +748,7 @@ export type UserCreateWithoutOrganizationsInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -751,6 +773,7 @@ export type UserUncheckedCreateWithoutOrganizationsInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -791,6 +814,7 @@ export type UserUpdateWithoutOrganizationsInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -815,6 +839,7 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -839,6 +864,7 @@ export type UserCreateWithoutFollowed_tournamentsInput = {
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -863,6 +889,7 @@ export type UserUncheckedCreateWithoutFollowed_tournamentsInput = {
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -903,6 +930,7 @@ export type UserUpdateWithoutFollowed_tournamentsInput = {
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -927,6 +955,7 @@ export type UserUncheckedUpdateWithoutFollowed_tournamentsInput = {
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -951,6 +980,7 @@ export type UserCreateWithoutPlaying_inInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -975,6 +1005,7 @@ export type UserUncheckedCreateWithoutPlaying_inInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1015,6 +1046,7 @@ export type UserUpdateWithoutPlaying_inInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -1039,6 +1071,7 @@ export type UserUncheckedUpdateWithoutPlaying_inInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1063,6 +1096,7 @@ export type UserCreateWithoutTeamsInput = {
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -1087,6 +1121,7 @@ export type UserUncheckedCreateWithoutTeamsInput = {
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1127,6 +1162,7 @@ export type UserUpdateWithoutTeamsInput = {
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -1151,6 +1187,7 @@ export type UserUncheckedUpdateWithoutTeamsInput = {
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1175,6 +1212,7 @@ export type UserCreateWithoutPlayer_profilesInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -1199,6 +1237,7 @@ export type UserUncheckedCreateWithoutPlayer_profilesInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1239,6 +1278,7 @@ export type UserUpdateWithoutPlayer_profilesInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -1263,6 +1303,7 @@ export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1287,6 +1328,7 @@ export type UserCreateWithoutCreated_invitesInput = {
   player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
@@ -1311,6 +1353,7 @@ export type UserUncheckedCreateWithoutCreated_invitesInput = {
   player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
@@ -1351,6 +1394,7 @@ export type UserUpdateWithoutCreated_invitesInput = {
   player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
@@ -1375,6 +1419,7 @@ export type UserUncheckedUpdateWithoutCreated_invitesInput = {
   player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1400,6 +1445,7 @@ export type UserCreateWithoutCreated_tournament_invitesInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
 }
 
@@ -1424,6 +1470,7 @@ export type UserUncheckedCreateWithoutCreated_tournament_invitesInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1464,6 +1511,7 @@ export type UserUpdateWithoutCreated_tournament_invitesInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
 }
 
@@ -1488,6 +1536,7 @@ export type UserUncheckedUpdateWithoutCreated_tournament_invitesInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1512,6 +1561,7 @@ export type UserCreateWithoutPaymentsInput = {
   teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
 }
 
@@ -1536,6 +1586,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
   created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
 }
 
@@ -1576,6 +1627,7 @@ export type UserUpdateWithoutPaymentsInput = {
   teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
 }
 
@@ -1600,7 +1652,124 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
   created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserCreateWithoutPush_subscriptionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutPush_subscriptionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutPush_subscriptionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPush_subscriptionsInput, Prisma.UserUncheckedCreateWithoutPush_subscriptionsInput>
+}
+
+export type UserUpsertWithoutPush_subscriptionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPush_subscriptionsInput, Prisma.UserUncheckedUpdateWithoutPush_subscriptionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPush_subscriptionsInput, Prisma.UserUncheckedCreateWithoutPush_subscriptionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPush_subscriptionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPush_subscriptionsInput, Prisma.UserUncheckedUpdateWithoutPush_subscriptionsInput>
+}
+
+export type UserUpdateWithoutPush_subscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPush_subscriptionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1615,6 +1784,7 @@ export type UserCountOutputType = {
   teams: number
   created_invites: number
   followed_tournaments: number
+  push_subscriptions: number
   created_tournament_invites: number
   payments: number
 }
@@ -1626,6 +1796,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   teams?: boolean | UserCountOutputTypeCountTeamsArgs
   created_invites?: boolean | UserCountOutputTypeCountCreated_invitesArgs
   followed_tournaments?: boolean | UserCountOutputTypeCountFollowed_tournamentsArgs
+  push_subscriptions?: boolean | UserCountOutputTypeCountPush_subscriptionsArgs
   created_tournament_invites?: boolean | UserCountOutputTypeCountCreated_tournament_invitesArgs
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
 }
@@ -1685,6 +1856,13 @@ export type UserCountOutputTypeCountFollowed_tournamentsArgs<ExtArgs extends run
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountPush_subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PushSubscriptionWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountCreated_tournament_invitesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TournamentInviteWhereInput
 }
@@ -1718,6 +1896,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   teams?: boolean | Prisma.User$teamsArgs<ExtArgs>
   created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
   followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
+  push_subscriptions?: boolean | Prisma.User$push_subscriptionsArgs<ExtArgs>
   created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1782,6 +1961,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   teams?: boolean | Prisma.User$teamsArgs<ExtArgs>
   created_invites?: boolean | Prisma.User$created_invitesArgs<ExtArgs>
   followed_tournaments?: boolean | Prisma.User$followed_tournamentsArgs<ExtArgs>
+  push_subscriptions?: boolean | Prisma.User$push_subscriptionsArgs<ExtArgs>
   created_tournament_invites?: boolean | Prisma.User$created_tournament_invitesArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1798,6 +1978,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     teams: Prisma.$TeamPayload<ExtArgs>[]
     created_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
     followed_tournaments: Prisma.$TournamentFollowerPayload<ExtArgs>[]
+    push_subscriptions: Prisma.$PushSubscriptionPayload<ExtArgs>[]
     created_tournament_invites: Prisma.$TournamentInvitePayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
@@ -2216,6 +2397,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   teams<T extends Prisma.User$teamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$teamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   created_invites<T extends Prisma.User$created_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   followed_tournaments<T extends Prisma.User$followed_tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$followed_tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  push_subscriptions<T extends Prisma.User$push_subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$push_subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   created_tournament_invites<T extends Prisma.User$created_tournament_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_tournament_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2790,6 +2972,30 @@ export type User$followed_tournamentsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.TournamentFollowerScalarFieldEnum | Prisma.TournamentFollowerScalarFieldEnum[]
+}
+
+/**
+ * User.push_subscriptions
+ */
+export type User$push_subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PushSubscription
+   */
+  select?: Prisma.PushSubscriptionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PushSubscription
+   */
+  omit?: Prisma.PushSubscriptionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PushSubscriptionInclude<ExtArgs> | null
+  where?: Prisma.PushSubscriptionWhereInput
+  orderBy?: Prisma.PushSubscriptionOrderByWithRelationInput | Prisma.PushSubscriptionOrderByWithRelationInput[]
+  cursor?: Prisma.PushSubscriptionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PushSubscriptionScalarFieldEnum | Prisma.PushSubscriptionScalarFieldEnum[]
 }
 
 /**
