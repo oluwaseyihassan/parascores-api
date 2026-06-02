@@ -28,6 +28,7 @@ import { TeamsModule } from './teams/teams.module';
 import { PaymentsModule } from './payments/payments.module';
 import { AdminModule } from './admin/admin.module';
 import { RedisModule } from './redis/redis.module';
+import { NotificationsModule } from './notifications/notifications.module';
 // import { SentryModule } from '@sentry/nestjs/setup';
 // import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
@@ -65,6 +66,7 @@ import { APP_FILTER } from '@nestjs/core';
     PaymentsModule,
     AdminModule,
     RedisModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [
