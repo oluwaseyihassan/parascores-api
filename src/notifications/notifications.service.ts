@@ -93,10 +93,12 @@ export class NotificationsService implements OnModuleInit {
         try {
           await webpush.sendNotification(pushSubscription, payload);
         } catch (err: any) {
-          this.logger.error(`Failed to send push notification to sub ${sub.id}: ${err.message}`);
-          
-          // FIX 2: Check for explicit status code property or fallbacks
           const statusCode = err.statusCode || err.status || (err.res && err.res.statusCode);
+          const responseBody = err.body || '';
+          this.logger.error(
+            `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`
+          );
+          
           if (statusCode === 410 || statusCode === 404) {
             this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
             // Use catch block to prevent an unhandled rejection breaking the flatMap array context
