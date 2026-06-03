@@ -32,6 +32,7 @@ export class NotificationListener {
         body: payload.body,
         url: payload.url,
         tag: payload.tag,
+        icon: payload.icon,
       });
 
       // Fire all push notifications concurrently instead of sequentially

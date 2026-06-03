@@ -66,6 +66,7 @@ export class NotificationsService implements OnModuleInit {
     body: string,
     url: string,
     tag: string,
+    icon?: string,
   ) {
     // Emit event and return immediately — the NotificationListener
     // handles the actual DB query + push sending asynchronously
@@ -75,6 +76,7 @@ export class NotificationsService implements OnModuleInit {
       body,
       url,
       tag,
+      icon,
     } as SendTournamentPushPayload);
   }
 }

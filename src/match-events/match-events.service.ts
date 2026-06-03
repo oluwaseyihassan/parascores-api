@@ -98,12 +98,14 @@ export class MatchEventsService {
           }
 
           const url = `/t/${fullFixture.tournament_id}/fixture/${fullFixture.id}`;
+          const playerAvatar = event.player?.avatarUrl || undefined;
           this.notificationsService.sendNotificationToTournamentFollowers(
             fullFixture.tournament_id,
             title,
             body,
             url,
-            `fixture-${fullFixture.id}-goal-${event.id}`
+            `fixture-${fullFixture.id}-goal-${event.id}`,
+            playerAvatar,
           ).catch(() => {});
         }
       }).catch((err) => {

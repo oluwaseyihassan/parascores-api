@@ -8,4 +8,5 @@ export interface SendTournamentPushPayload {
   body: string;
   url: string;
   tag: string;
+  icon?: string;
 }
