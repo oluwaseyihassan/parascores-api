@@ -1,13 +1,18 @@
 import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import * as webpush from 'web-push';
+import { NotificationEvents, SendTournamentPushPayload } from './notification.events';
 
 @Injectable()
 export class NotificationsService implements OnModuleInit {
   private readonly logger = new Logger(NotificationsService.name);
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly eventEmitter: EventEmitter2,
+  ) {}
 
   onModuleInit() {
     const publicKey = process.env.VAPID_PUBLIC_KEY;
@@ -62,60 +67,14 @@ export class NotificationsService implements OnModuleInit {
     url: string,
     tag: string,
   ) {
-    const followers = await this.db.tournamentFollower.findMany({
-      where: { tournamentId },
-      include: {
-        user: {
-          include: {
-            push_subscriptions: true,
-          },
-        },
-      },
-    });
-
-    const payload = JSON.stringify({
+    // Emit event and return immediately — the NotificationListener
+    // handles the actual DB query + push sending asynchronously
+    this.eventEmitter.emit(NotificationEvents.SEND_TOURNAMENT_PUSH, {
+      tournamentId,
       title,
       body,
       url,
       tag,
-    });
-
-    const promises = followers.flatMap((follower) =>
-      follower.user.push_subscriptions.map(async (sub) => {
-        const pushSubscription = {
-          endpoint: sub.endpoint,
-          keys: {
-            p256dh: sub.p256dh,
-            auth: sub.auth,
-          },
-        };
-
-        try {
-          await webpush.sendNotification(pushSubscription, payload);
-        } catch (err: any) {
-          const statusCode = err.statusCode || err.status || (err.res && err.res.statusCode);
-          const responseBody = err.body || '';
-          this.logger.error(
-            `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`
-          );
-          
-          if (statusCode === 410 || statusCode === 404) {
-            this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
-            // Use catch block to prevent an unhandled rejection breaking the flatMap array context
-            await this.db.pushSubscription.delete({ where: { id: sub.id } }).catch(() => {});
-          }
-        }
-      }),
-    );
-
-    // FIX 1: Safely handle individual failures using Promise.allSettled
-    if (promises.length > 0) {
-      Promise.allSettled(promises).then((results) => {
-        const rejected = results.filter((r) => r.status === 'rejected');
-        if (rejected.length > 0) {
-          this.logger.error(`${rejected.length} push notification promises failed completely.`);
-        }
-      });
-    }
+    } as SendTournamentPushPayload);
   }
 }
