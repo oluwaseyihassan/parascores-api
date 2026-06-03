@@ -49,7 +49,7 @@ export class NotificationsService implements OnModuleInit {
       return await this.db.pushSubscription.delete({
         where: { endpoint },
       });
-    } catch (err) {
+    } catch (err: any) {
       // Ignore if already deleted
       this.logger.warn(`Failed to unsubscribe: ${err.message}`);
     }
@@ -94,18 +94,26 @@ export class NotificationsService implements OnModuleInit {
           await webpush.sendNotification(pushSubscription, payload);
         } catch (err: any) {
           this.logger.error(`Failed to send push notification to sub ${sub.id}: ${err.message}`);
-          // If subscription is expired or invalid (404 or 410), delete it
-          if (err.statusCode === 410 || err.statusCode === 404) {
+          
+          // FIX 2: Check for explicit status code property or fallbacks
+          const statusCode = err.statusCode || err.status || (err.res && err.res.statusCode);
+          if (statusCode === 410 || statusCode === 404) {
             this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
+            // Use catch block to prevent an unhandled rejection breaking the flatMap array context
             await this.db.pushSubscription.delete({ where: { id: sub.id } }).catch(() => {});
           }
         }
       }),
     );
 
-    // Run push dispatches in background without blocking
-    Promise.all(promises).catch((err) => {
-      this.logger.error(`Error in bulk push dispatch: ${err.message}`);
-    });
+    // FIX 1: Safely handle individual failures using Promise.allSettled
+    if (promises.length > 0) {
+      Promise.allSettled(promises).then((results) => {
+        const rejected = results.filter((r) => r.status === 'rejected');
+        if (rejected.length > 0) {
+          this.logger.error(`${rejected.length} push notification promises failed completely.`);
+        }
+      });
+    }
   }
 }
