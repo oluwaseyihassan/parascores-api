@@ -168,6 +168,7 @@ export class FixturesService {
       await this.redisService.delPattern(`fixtures:tournament:${tournament.customName}:*`);
     }
     await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
 
     return ResponseUtil.success(fixture);
   }
@@ -286,16 +287,23 @@ export class FixturesService {
     return response;
   }
 
-  // Get all live fixtures
-  async findLive() {
-    const cacheKey = `fixtures:live`;
+  // Get all live fixtures (optionally filtered by organization)
+  async findLive(organizationId?: string) {
+    const cacheKey = organizationId
+      ? `fixtures:live:org:${organizationId}`
+      : `fixtures:live`;
     const cachedResponse = await this.redisService.get<any>(cacheKey);
     if (cachedResponse) {
       return cachedResponse;
     }
 
+    const where: any = { status: 'LIVE' };
+    if (organizationId) {
+      where.tournament = { organization_id: organizationId };
+    }
+
     const fixtures = await this.db.fixture.findMany({
-      where: { status: 'LIVE' },
+      where,
       include: {
         homeTeam: {
           include: {
@@ -600,6 +608,7 @@ export class FixturesService {
       await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament.customName}:*`);
     }
     await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
     await this.redisService.del(`standings:${fixture.tournament_id}`);
     if (fixture.tournament?.customName) {
       await this.redisService.del(`standings:${fixture.tournament.customName}`);
