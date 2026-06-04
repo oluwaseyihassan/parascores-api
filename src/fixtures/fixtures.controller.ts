@@ -112,8 +112,14 @@ export class FixturesController {
   @Public()
   @Get('live')
   @ApiOperation({ summary: 'Get all live fixtures' })
-  async findLive() {
-    return this.fixturesService.findLive();
+  @ApiQuery({
+    name: 'organizationId',
+    required: false,
+    type: String,
+    description: 'Filter by organization ID',
+  })
+  async findLive(@Query('organizationId') organizationId?: string) {
+    return this.fixturesService.findLive(organizationId);
   }
 
   // Get recent completed fixtures
