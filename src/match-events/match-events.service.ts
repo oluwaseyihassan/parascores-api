@@ -54,7 +54,7 @@ export class MatchEventsService {
         player: true,
         participant: {
           include: {
-            team: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true, logoUrl: true } },
           },
         },
         relatedPlayer: true,
@@ -98,14 +98,18 @@ export class MatchEventsService {
           }
 
           const url = `/t/${fullFixture.tournament_id}/fixture/${fullFixture.id}`;
-          const playerAvatar = event.player?.avatarUrl || undefined;
+          // Fallback chain: player avatar → participant logo → team logo
+          const notificationIcon = event.player?.avatarUrl
+            || event.participant?.logoUrl
+            || event.participant?.team?.logoUrl
+            || undefined;
           this.notificationsService.sendNotificationToTournamentFollowers(
             fullFixture.tournament_id,
             title,
             body,
             url,
             `fixture-${fullFixture.id}-goal-${event.id}`,
-            playerAvatar,
+            notificationIcon,
           ).catch(() => {});
         }
       }).catch((err) => {
