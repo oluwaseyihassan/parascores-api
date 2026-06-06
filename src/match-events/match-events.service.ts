@@ -39,10 +39,10 @@ export class MatchEventsService {
     const event = await this.db.matchEvent.create({
       data: {
         fixture_id: fixtureId,
-        participant_id: createMatchEventDto.participantId,
-        playerId: createMatchEventDto.playerId,
-        relatedParticipant_id: createMatchEventDto.relatedParticipantId,
-        relatedPlayerId: createMatchEventDto.relatedPlayerId,
+        participant_id: createMatchEventDto.participantId || null,
+        playerId: createMatchEventDto.playerId || null,
+        relatedParticipant_id: createMatchEventDto.relatedParticipantId || null,
+        relatedPlayerId: createMatchEventDto.relatedPlayerId || null,
         type: createMatchEventDto.type,
         minute: createMatchEventDto.minute,
         description: createMatchEventDto.description,
@@ -197,16 +197,16 @@ export class MatchEventsService {
       where: { id },
       data: {
         ...(updateMatchEventDto.participantId !== undefined && {
-          participant_id: updateMatchEventDto.participantId,
+          participant_id: updateMatchEventDto.participantId || null,
         }),
         ...(updateMatchEventDto.playerId !== undefined && {
-          playerId: updateMatchEventDto.playerId,
+          playerId: updateMatchEventDto.playerId || null,
         }),
         ...(updateMatchEventDto.relatedParticipantId !== undefined && {
-          relatedParticipant_id: updateMatchEventDto.relatedParticipantId,
+          relatedParticipant_id: updateMatchEventDto.relatedParticipantId || null,
         }),
         ...(updateMatchEventDto.relatedPlayerId !== undefined && {
-          relatedPlayerId: updateMatchEventDto.relatedPlayerId,
+          relatedPlayerId: updateMatchEventDto.relatedPlayerId || null,
         }),
         ...(updateMatchEventDto.type !== undefined && {
           type: updateMatchEventDto.type as any,
