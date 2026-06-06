@@ -185,6 +185,10 @@ model Fixture {
   homeFormation       String?
   awayFormation       String?
   lineupPositions     Json?         @default("{}")
+  timerStartedAt      DateTime?
+  timerElapsedSeconds Int           @default(0)
+  timerIsRunning      Boolean       @default(false)
+  matchDuration       Int           @default(90)
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
@@ -400,6 +404,7 @@ enum MatchEventType {
   SUBSTITUTION
   ASSIST
   MISSED_PENALTY
+  PENALTY_SAVE
 }
 
 enum SubscriptionPlan {
