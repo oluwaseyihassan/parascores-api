@@ -67,8 +67,18 @@ export class MatchEventsService {
       data: event,
     });
 
-    // Check if event is a goal/own goal and trigger notification
-    if (event.type === 'GOAL' || event.type === 'OWN_GOAL') {
+    // Check if event should trigger a push notification
+    const isNotifyType = [
+      'GOAL',
+      'OWN_GOAL',
+      'PENALTY',
+      'MISSED_PENALTY',
+      'YELLOW_CARD',
+      'RED_CARD',
+      'SUBSTITUTION',
+    ].includes(event.type);
+
+    if (isNotifyType) {
       this.db.fixture.findUnique({
         where: { id: fixtureId },
         include: {
@@ -80,21 +90,36 @@ export class MatchEventsService {
           const homeName = fullFixture.homeTeam?.customName || fullFixture.homeTeam?.team?.name || 'TBD';
           const awayName = fullFixture.awayTeam?.customName || fullFixture.awayTeam?.team?.name || 'TBD';
           
-          let title = 'Goal scored! ⚽';
+          let title = 'Match Event Update! 🔔';
           let body = '';
           const scorerName = event.player?.name || 'A player';
           const minuteText = event.minute ? ` in the ${event.minute}'` : '';
+          const scoringParticipant = event.participant;
+          const teamName = scoringParticipant?.customName || scoringParticipant?.team?.name || 'their team';
 
           if (event.type === 'GOAL') {
-            const scoringParticipant = event.participant;
-            const teamName = scoringParticipant?.customName || scoringParticipant?.team?.name || 'their team';
             title = `GOAL! ${teamName} scored! ⚽`;
             body = `${scorerName} scores for ${teamName}${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
           } else if (event.type === 'OWN_GOAL') {
-            const scoringParticipant = event.participant;
-            const teamName = scoringParticipant?.customName || scoringParticipant?.team?.name || 'their team';
             title = `Own Goal! 🤦‍♂️`;
             body = `${scorerName} scores an own goal${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
+          } else if (event.type === 'PENALTY') {
+            title = `GOAL! Penalty scored! ⚽`;
+            body = `${scorerName} scores a penalty for ${teamName}${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
+          } else if (event.type === 'MISSED_PENALTY') {
+            title = `Penalty Missed! ❌`;
+            body = `${scorerName} misses a penalty for ${teamName}${minuteText}. Current score: ${homeName} ${fullFixture.homeScore ?? 0} - ${fullFixture.awayScore ?? 0} ${awayName}.`;
+          } else if (event.type === 'YELLOW_CARD') {
+            title = `Yellow Card! 🟨`;
+            body = `${scorerName} receives a yellow card${minuteText} for ${teamName}.`;
+          } else if (event.type === 'RED_CARD') {
+            title = `Red Card! 🟥`;
+            body = `${scorerName} receives a red card${minuteText} for ${teamName}.`;
+          } else if (event.type === 'SUBSTITUTION') {
+            const playerInName = event.player?.name || 'Player In';
+            const playerOutName = event.relatedPlayer?.name || 'Player Out';
+            title = `Substitution! 🔄`;
+            body = `Sub for ${teamName}${minuteText}: ${playerInName} replaces ${playerOutName}.`;
           }
 
           const url = `/t/${fullFixture.tournament_id}/fixture/${fullFixture.id}`;
@@ -108,7 +133,7 @@ export class MatchEventsService {
             title,
             body,
             url,
-            `fixture-${fullFixture.id}-goal-${event.id}`,
+            `fixture-${fullFixture.id}-event-${event.id}`,
             notificationIcon,
           ).catch(() => {});
         }
