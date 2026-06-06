@@ -2090,7 +2090,10 @@ export const FixtureScalarFieldEnum = {
   venue: 'venue',
   homeFormation: 'homeFormation',
   awayFormation: 'awayFormation',
-  lineupPositions: 'lineupPositions'
+  lineupPositions: 'lineupPositions',
+  timerStartedAt: 'timerStartedAt',
+  timerElapsedSeconds: 'timerElapsedSeconds',
+  timerIsRunning: 'timerIsRunning'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]

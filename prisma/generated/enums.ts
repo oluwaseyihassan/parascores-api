@@ -101,7 +101,8 @@ export const MatchEventType = {
   RED_CARD: 'RED_CARD',
   SUBSTITUTION: 'SUBSTITUTION',
   ASSIST: 'ASSIST',
-  MISSED_PENALTY: 'MISSED_PENALTY'
+  MISSED_PENALTY: 'MISSED_PENALTY',
+  PENALTY_SAVE: 'PENALTY_SAVE'
 } as const
 
 export type MatchEventType = (typeof MatchEventType)[keyof typeof MatchEventType]
