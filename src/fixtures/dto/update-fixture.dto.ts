@@ -7,6 +7,7 @@ import {
   Min,
   IsArray,
   Matches,
+  IsBoolean,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { FixtureStatus } from 'prisma/generated/client';
@@ -120,4 +121,37 @@ export class UpdateFixtureDto {
   })
   @IsOptional()
   lineupPositions?: Record<string, string>;
+
+  @ApiPropertyOptional({
+    description: 'Match timer start time',
+    example: '2024-06-01T15:00:00Z',
+  })
+  @IsDateString()
+  @IsOptional()
+  timerStartedAt?: string;
+
+  @ApiPropertyOptional({
+    description: 'Match timer elapsed duration in seconds',
+    example: 2700,
+  })
+  @IsInt()
+  @IsOptional()
+  timerElapsedSeconds?: number;
+
+  @ApiPropertyOptional({
+    description: 'Whether the match timer is running',
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  timerIsRunning?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Match duration in minutes',
+    example: 90,
+  })
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  matchDuration?: number;
 }
