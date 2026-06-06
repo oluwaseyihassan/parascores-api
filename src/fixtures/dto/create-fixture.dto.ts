@@ -70,4 +70,13 @@ export class CreateFixtureDto {
   @IsEnum(FixtureStage)
   @IsOptional()
   stage?: FixtureStage;
+
+  @ApiPropertyOptional({
+    description: 'Match duration in minutes',
+    example: 90,
+  })
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  matchDuration?: number;
 }
