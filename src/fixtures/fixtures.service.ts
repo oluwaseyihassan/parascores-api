@@ -144,6 +144,7 @@ export class FixturesService {
         groupId: dto.groupId || null,
         stage: dto.stage || null,
         status: 'SCHEDULED',
+        matchDuration: dto.matchDuration !== undefined ? dto.matchDuration : undefined,
       },
       include: {
         homeTeam: {
@@ -363,6 +364,10 @@ export class FixturesService {
         'homePenaltyScore',
         'awayPenaltyScore',
         'status',
+        'timerStartedAt',
+        'timerElapsedSeconds',
+        'timerIsRunning',
+        'matchDuration',
       ];
       const attemptedFields = Object.keys(dto).filter(
         (key) => dto[key] !== undefined,
@@ -480,6 +485,18 @@ export class FixturesService {
         ...(dto.status !== undefined && { status: dto.status }),
         ...(dto.homeScore !== undefined && { homeScore: dto.homeScore }),
         ...(dto.awayScore !== undefined && { awayScore: dto.awayScore }),
+        ...(dto.timerStartedAt !== undefined && {
+          timerStartedAt: dto.timerStartedAt ? new Date(dto.timerStartedAt) : null,
+        }),
+        ...(dto.timerElapsedSeconds !== undefined && {
+          timerElapsedSeconds: dto.timerElapsedSeconds,
+        }),
+        ...(dto.timerIsRunning !== undefined && {
+          timerIsRunning: dto.timerIsRunning,
+        }),
+        ...(dto.matchDuration !== undefined && {
+          matchDuration: dto.matchDuration,
+        }),
         ...(dto.startTime !== undefined && {
           startTime: new Date(dto.startTime),
         }),
