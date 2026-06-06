@@ -51,6 +51,7 @@ export class PlayersService {
           },
         },
         matchEvents: true,
+        relatedMatchEvents: true,
         user: {
           include: {
             player_profiles: {
@@ -86,6 +87,11 @@ export class PlayersService {
       const isOrganizer = currentUser.role === Role.ORGANIZER;
       if (!isOwner && !isAdmin && !isOrganizer) {
         throw new ForbiddenException('You do not have permission to edit this player profile');
+      }
+
+      // Player-owners cannot edit until their claim is approved
+      if (isOwner && !isAdmin && !isOrganizer && player.status === 'PENDING') {
+        throw new ForbiddenException('Your profile claim is pending approval. You cannot edit your profile until the organizer has approved it.');
       }
     }
 
@@ -144,6 +150,7 @@ export class PlayersService {
           },
         },
         matchEvents: true,
+        relatedMatchEvents: true,
       },
       orderBy: { created_at: 'desc' },
     });
