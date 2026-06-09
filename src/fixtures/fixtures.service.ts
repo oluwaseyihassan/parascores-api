@@ -58,20 +58,29 @@ export class FixturesService {
       throw new BadRequestException('Home and Away teams must be different');
     }
 
-    // Check for duplicates and matchday limits
+    // Check for duplicates and matchday limits across the entire round
     const existingFixturesInRound = await this.db.fixture.findMany({
       where: {
         tournament_id: tournament.id,
         round: dto.round,
-        ...(dto.groupId ? { groupId: dto.groupId } : {}),
-        ...(dto.stage ? { stage: dto.stage } : {}),
       },
       select: { homeTeamId: true, awayTeamId: true },
     });
 
     // 1. Duplicate check (Teams already playing in this round)
     const teamsInRound = new Set<string>();
+    const isTwoLegsKnockout = tournament.type === 'KNOCKOUT' && tournament.twoLegsKnockout;
+
     for (const f of existingFixturesInRound) {
+      // Allow same matchup twice in the same round for two-legged knockouts
+      const isSameMatchup = 
+        (f.homeTeamId === dto.homeTeamId && f.awayTeamId === dto.awayTeamId) ||
+        (f.homeTeamId === dto.awayTeamId && f.awayTeamId === dto.homeTeamId);
+
+      if (isTwoLegsKnockout && isSameMatchup) {
+        continue;
+      }
+
       if (f.homeTeamId) teamsInRound.add(f.homeTeamId);
       if (f.awayTeamId) teamsInRound.add(f.awayTeamId);
     }
