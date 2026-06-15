@@ -96,39 +96,8 @@ export class FixturesService {
       );
     }
 
-    // 2. Matchday limit check
-    let maxFixtures = 0;
-    if (
-      tournament.type === 'ROUND_ROBIN' ||
-      tournament.type === 'LEAGUE' ||
-      tournament.type === 'GROUP' ||
-      tournament.type === 'HYBRID'
-    ) {
-      // Determine relevant participant count
-      let participantCount = 0;
-      if (dto.groupId) {
-        participantCount = await this.db.participant.count({
-          where: { groupId: dto.groupId },
-        });
-      } else if (
-        tournament.type === 'ROUND_ROBIN' ||
-        tournament.type === 'LEAGUE'
-      ) {
-        participantCount = await this.db.participant.count({
-          where: { tournament_id: tournament.id },
-        });
-      }
-
-      if (participantCount > 0) {
-        maxFixtures = Math.floor(participantCount / 2);
-      }
-    }
-
-    if (maxFixtures > 0 && existingFixturesInRound.length >= maxFixtures) {
-      throw new BadRequestException(
-        `This matchday already has the maximum number of matches (${maxFixtures}) for the number of teams participating`,
-      );
-    }
+    // Note: The per-team duplicate check above already prevents any team
+    // from being scheduled twice in the same round, which is the correct constraint.
 
     // Auto-calculate match number if not provided
     let matchNumber = dto.matchNumber;
