@@ -49,7 +49,7 @@ async function bootstrap() {
       .setVersion('1.0')
       .build();
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document, {
+    SwaggerModule.setup('api-docs', app, document, {
       customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png',
       customSiteTitle: 'ParaScores API',
       customCss: `

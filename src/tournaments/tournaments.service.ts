@@ -487,8 +487,8 @@ export class TournamentsService {
       }
     }
 
-    const topScorers = Array.from(goalsMap.values()).sort((a, b) => b.count - a.count).slice(0, 10);
-    const topAssists = Array.from(assistsMap.values()).sort((a, b) => b.count - a.count).slice(0, 10);
+    const topScorers = Array.from(goalsMap.values()).sort((a, b) => b.count - a.count);
+    const topAssists = Array.from(assistsMap.values()).sort((a, b) => b.count - a.count);
 
     return ResponseUtil.success({ topScorers, topAssists });
   }
