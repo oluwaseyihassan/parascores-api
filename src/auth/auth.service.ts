@@ -424,7 +424,8 @@ export class AuthService {
   setAccessTokenCookie(res: Response, token: string) {
     const isProduction = process.env.NODE_ENV === 'production';
     const domain =
-      process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+      process.env.COOKIE_DOMAIN ||
+      (process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me');
     res.cookie('access_token', token, {
       domain: domain,
       path: '/',
@@ -437,7 +438,8 @@ export class AuthService {
   setRefreshTokenCookie(res: Response, token: string) {
     const isProduction = process.env.NODE_ENV === 'production';
     const domain =
-      process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+      process.env.COOKIE_DOMAIN ||
+      (process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me');
     res.cookie('refresh_token', token, {
       domain: domain,
       path: '/',

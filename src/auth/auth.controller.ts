@@ -167,7 +167,7 @@ export class AuthController {
 
     console.log('redirectUrl from state:', redirectUrl);
     console.log('User logged in successfully, redirecting to frontend');
-    const frontendUrl = redirectUrl || 'http://manage.lvh.me:3001';
+    const frontendUrl = redirectUrl || process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001';
     response.redirect(frontendUrl);
   }
 
@@ -218,7 +218,8 @@ export class AuthController {
   @ApiResponse({ status: HttpStatus.OK, description: 'User logged out' })
   logout(@Res({ passthrough: true }) response: Response) {
     const domain =
-      process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me';
+      process.env.COOKIE_DOMAIN ||
+      (process.env.NODE_ENV === 'production' ? '.parascores.com' : '.lvh.me');
     response.clearCookie('access_token', { domain, path: '/' });
     response.clearCookie('refresh_token', { domain, path: '/' });
     console.log('User logged out');

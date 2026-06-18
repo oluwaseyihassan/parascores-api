@@ -23,8 +23,12 @@ async function bootstrap() {
       'https://parascores-web.vercel.app',
       'http://manage.lvh.me:3001',
       'https://manage.parascores.com',
+      'http://manage-dev.lvh.me:3001',
+      'https://manage-dev.parascores.com',
       'http://admin.lvh.me:3001', // 🔴 Admin Subdomain (Local)
       'https://admin.parascores.com', // 🔴 Admin Subdomain (Prod)
+      'https://admin-dev.parascores.com',
+      'https://dev.parascores.com',
     ],
     credentials: true, // Required for cookies to work
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

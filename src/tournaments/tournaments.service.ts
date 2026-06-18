@@ -362,6 +362,7 @@ export class TournamentsService {
                 team: { select: { id: true, name: true } },
               },
             },
+            group: true,
             matchEvents: {
               where: {
                 type: { in: ['YELLOW_CARD', 'RED_CARD'] }
