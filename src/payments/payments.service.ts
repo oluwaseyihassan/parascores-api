@@ -75,21 +75,13 @@ export class PaymentsService {
       }
       resolvedTournamentId = tournament.id;
 
-      // Calculate dynamic pricing based on maxParticipants
+      // Calculate dynamic pricing based on maxParticipants (₦1,000 per team)
       if (planType === 'PER_TOURNAMENT') {
         const max = tournament.maxParticipants;
         if (max === null) {
           resolvedAmount = 25000 * 100; // ₦25,000 in kobo for unlimited
-        } else if (max <= 4) {
-          resolvedAmount = 5000 * 100;  // ₦5,000 in kobo
-        } else if (max <= 8) {
-          resolvedAmount = 8000 * 100;  // ₦8,000 in kobo
-        } else if (max <= 16) {
-          resolvedAmount = 12000 * 100; // ₦12,000 in kobo
-        } else if (max <= 32) {
-          resolvedAmount = 15000 * 100; // ₦15,000 in kobo
         } else {
-          resolvedAmount = 25000 * 100; // ₦25,000 in kobo for >32
+          resolvedAmount = max * 1000 * 100; // ₦1,000 per team in kobo
         }
       }
     }
