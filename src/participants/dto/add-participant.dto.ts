@@ -6,7 +6,8 @@ import {
   IsString,
   ValidateIf,
   IsArray,
-  ValidateNested
+  ValidateNested,
+  MaxLength
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -29,6 +30,15 @@ export class AddParticipantDto {
   @IsString()
   @IsNotEmpty()
   customName?: string;
+
+  @ApiPropertyOptional({
+    description: 'Short name/abbreviation for the participant',
+    example: 'JDG',
+  })
+  @IsString()
+  @IsOptional()
+  @MaxLength(10)
+  customShortName?: string;
 
   @ApiPropertyOptional({
     description: 'Seed number for the participant',

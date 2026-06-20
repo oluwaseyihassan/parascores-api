@@ -139,6 +139,7 @@ model Participant {
   user_id            String?
   team_id            String?
   customName         String?
+  customShortName    String?
   seed               Int?
   status             ParticipantStatus @default(PENDING)
   created_at         DateTime          @default(now())
@@ -202,6 +203,7 @@ model Fixture {
 model Team {
   id           String        @id @default(cuid())
   name         String
+  shortName    String?
   created_at   DateTime      @default(now())
   logoUrl      String?
   ownerId      String?

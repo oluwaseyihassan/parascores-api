@@ -88,6 +88,7 @@ export class ParticipantsService {
         tournament_id: tournament.id,
         user_id: dto.userId,
         customName: dto.customName,
+        customShortName: dto.customShortName,
         team_id: dto.teamId,
         seed: dto.seed,
         logoUrl: dto.logoUrl,
@@ -163,6 +164,7 @@ export class ParticipantsService {
       tournament_id: tournament.id,
       user_id: p.userId,
       customName: p.customName,
+      customShortName: p.customShortName,
       team_id: p.teamId,
       seed: p.seed,
       logoUrl: p.logoUrl,
@@ -300,6 +302,7 @@ export class ParticipantsService {
       where: { id: participantId },
       data: {
         customName: dto.customName !== undefined ? dto.customName : undefined,
+        customShortName: dto.customShortName !== undefined ? dto.customShortName : undefined,
         logoUrl: dto.logoUrl !== undefined ? dto.logoUrl : undefined,
         groupId: dto.groupId !== undefined ? dto.groupId : undefined,
         team_id: dto.teamId !== undefined ? dto.teamId : undefined,

@@ -1084,6 +1084,7 @@ export class FixturesService {
             name: true,
             customName: true,
             sport: true,
+            logoUrl: true,
             organization: {
               select: { name: true, slug: true, logoUrl: true },
             },

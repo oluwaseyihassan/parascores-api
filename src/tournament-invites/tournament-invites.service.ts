@@ -200,6 +200,7 @@ export class TournamentInvitesService {
           user_id: userId,
           team_id: dto.teamId, // Link to persistent team profile
           customName: teamName,
+          customShortName: dto.customShortName,
           logoUrl: teamLogo,
           status: status as any,
         },
