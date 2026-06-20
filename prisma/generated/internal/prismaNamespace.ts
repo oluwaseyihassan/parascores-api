@@ -2053,6 +2053,7 @@ export const ParticipantScalarFieldEnum = {
   user_id: 'user_id',
   team_id: 'team_id',
   customName: 'customName',
+  customShortName: 'customShortName',
   seed: 'seed',
   status: 'status',
   created_at: 'created_at',
@@ -2103,6 +2104,7 @@ export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeo
 export const TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  shortName: 'shortName',
   created_at: 'created_at',
   logoUrl: 'logoUrl',
   ownerId: 'ownerId',

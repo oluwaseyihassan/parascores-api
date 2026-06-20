@@ -40,6 +40,7 @@ export type ParticipantMinAggregateOutputType = {
   user_id: string | null
   team_id: string | null
   customName: string | null
+  customShortName: string | null
   seed: number | null
   status: $Enums.ParticipantStatus | null
   created_at: Date | null
@@ -56,6 +57,7 @@ export type ParticipantMaxAggregateOutputType = {
   user_id: string | null
   team_id: string | null
   customName: string | null
+  customShortName: string | null
   seed: number | null
   status: $Enums.ParticipantStatus | null
   created_at: Date | null
@@ -72,6 +74,7 @@ export type ParticipantCountAggregateOutputType = {
   user_id: number
   team_id: number
   customName: number
+  customShortName: number
   seed: number
   status: number
   created_at: number
@@ -98,6 +101,7 @@ export type ParticipantMinAggregateInputType = {
   user_id?: true
   team_id?: true
   customName?: true
+  customShortName?: true
   seed?: true
   status?: true
   created_at?: true
@@ -114,6 +118,7 @@ export type ParticipantMaxAggregateInputType = {
   user_id?: true
   team_id?: true
   customName?: true
+  customShortName?: true
   seed?: true
   status?: true
   created_at?: true
@@ -130,6 +135,7 @@ export type ParticipantCountAggregateInputType = {
   user_id?: true
   team_id?: true
   customName?: true
+  customShortName?: true
   seed?: true
   status?: true
   created_at?: true
@@ -233,6 +239,7 @@ export type ParticipantGroupByOutputType = {
   user_id: string | null
   team_id: string | null
   customName: string | null
+  customShortName: string | null
   seed: number | null
   status: $Enums.ParticipantStatus
   created_at: Date
@@ -272,6 +279,7 @@ export type ParticipantWhereInput = {
   user_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
+  customShortName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
@@ -299,6 +307,7 @@ export type ParticipantOrderByWithRelationInput = {
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   team_id?: Prisma.SortOrderInput | Prisma.SortOrder
   customName?: Prisma.SortOrderInput | Prisma.SortOrder
+  customShortName?: Prisma.SortOrderInput | Prisma.SortOrder
   seed?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -330,6 +339,7 @@ export type ParticipantWhereUniqueInput = Prisma.AtLeast<{
   user_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
+  customShortName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
@@ -356,6 +366,7 @@ export type ParticipantOrderByWithAggregationInput = {
   user_id?: Prisma.SortOrderInput | Prisma.SortOrder
   team_id?: Prisma.SortOrderInput | Prisma.SortOrder
   customName?: Prisma.SortOrderInput | Prisma.SortOrder
+  customShortName?: Prisma.SortOrderInput | Prisma.SortOrder
   seed?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -380,6 +391,7 @@ export type ParticipantScalarWhereWithAggregatesInput = {
   user_id?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   team_id?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
+  customShortName?: Prisma.StringNullableWithAggregatesFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableWithAggregatesFilter<"Participant"> | number | null
   status?: Prisma.EnumParticipantStatusWithAggregatesFilter<"Participant"> | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Participant"> | Date | string
@@ -393,6 +405,7 @@ export type ParticipantScalarWhereWithAggregatesInput = {
 export type ParticipantCreateInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -419,6 +432,7 @@ export type ParticipantUncheckedCreateInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -439,6 +453,7 @@ export type ParticipantUncheckedCreateInput = {
 export type ParticipantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -465,6 +480,7 @@ export type ParticipantUncheckedUpdateInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -488,6 +504,7 @@ export type ParticipantCreateManyInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -501,6 +518,7 @@ export type ParticipantCreateManyInput = {
 export type ParticipantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -516,6 +534,7 @@ export type ParticipantUncheckedUpdateManyInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -542,6 +561,7 @@ export type ParticipantCountOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
+  customShortName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -562,6 +582,7 @@ export type ParticipantMaxOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
+  customShortName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -578,6 +599,7 @@ export type ParticipantMinOrderByAggregateInput = {
   user_id?: Prisma.SortOrder
   team_id?: Prisma.SortOrder
   customName?: Prisma.SortOrder
+  customShortName?: Prisma.SortOrder
   seed?: Prisma.SortOrder
   status?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -883,6 +905,7 @@ export type ParticipantUpdateOneRequiredWithoutInvitesNestedInput = {
 export type ParticipantCreateWithoutUserInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -907,6 +930,7 @@ export type ParticipantUncheckedCreateWithoutUserInput = {
   tournament_id: string
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -959,6 +983,7 @@ export type ParticipantScalarWhereInput = {
   user_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   team_id?: Prisma.StringNullableFilter<"Participant"> | string | null
   customName?: Prisma.StringNullableFilter<"Participant"> | string | null
+  customShortName?: Prisma.StringNullableFilter<"Participant"> | string | null
   seed?: Prisma.IntNullableFilter<"Participant"> | number | null
   status?: Prisma.EnumParticipantStatusFilter<"Participant"> | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFilter<"Participant"> | Date | string
@@ -972,6 +997,7 @@ export type ParticipantScalarWhereInput = {
 export type ParticipantCreateWithoutTournamentInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -996,6 +1022,7 @@ export type ParticipantUncheckedCreateWithoutTournamentInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1042,6 +1069,7 @@ export type ParticipantUpdateManyWithWhereWithoutTournamentInput = {
 export type ParticipantCreateWithoutGroupInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1067,6 +1095,7 @@ export type ParticipantUncheckedCreateWithoutGroupInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1112,6 +1141,7 @@ export type ParticipantUpdateManyWithWhereWithoutGroupInput = {
 export type ParticipantCreateWithoutAway_fixturesInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1137,6 +1167,7 @@ export type ParticipantUncheckedCreateWithoutAway_fixturesInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1161,6 +1192,7 @@ export type ParticipantCreateOrConnectWithoutAway_fixturesInput = {
 export type ParticipantCreateWithoutHome_fixturesInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1186,6 +1218,7 @@ export type ParticipantUncheckedCreateWithoutHome_fixturesInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1221,6 +1254,7 @@ export type ParticipantUpdateToOneWithWhereWithoutAway_fixturesInput = {
 export type ParticipantUpdateWithoutAway_fixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1246,6 +1280,7 @@ export type ParticipantUncheckedUpdateWithoutAway_fixturesInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1276,6 +1311,7 @@ export type ParticipantUpdateToOneWithWhereWithoutHome_fixturesInput = {
 export type ParticipantUpdateWithoutHome_fixturesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1301,6 +1337,7 @@ export type ParticipantUncheckedUpdateWithoutHome_fixturesInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1320,6 +1357,7 @@ export type ParticipantUncheckedUpdateWithoutHome_fixturesInput = {
 export type ParticipantCreateWithoutTeamInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1344,6 +1382,7 @@ export type ParticipantUncheckedCreateWithoutTeamInput = {
   tournament_id: string
   user_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1390,6 +1429,7 @@ export type ParticipantUpdateManyWithWhereWithoutTeamInput = {
 export type ParticipantCreateWithoutMatchEventsInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1415,6 +1455,7 @@ export type ParticipantUncheckedCreateWithoutMatchEventsInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1439,6 +1480,7 @@ export type ParticipantCreateOrConnectWithoutMatchEventsInput = {
 export type ParticipantCreateWithoutRelatedMatchEventsInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1464,6 +1506,7 @@ export type ParticipantUncheckedCreateWithoutRelatedMatchEventsInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1499,6 +1542,7 @@ export type ParticipantUpdateToOneWithWhereWithoutMatchEventsInput = {
 export type ParticipantUpdateWithoutMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1524,6 +1568,7 @@ export type ParticipantUncheckedUpdateWithoutMatchEventsInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1554,6 +1599,7 @@ export type ParticipantUpdateToOneWithWhereWithoutRelatedMatchEventsInput = {
 export type ParticipantUpdateWithoutRelatedMatchEventsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1579,6 +1625,7 @@ export type ParticipantUncheckedUpdateWithoutRelatedMatchEventsInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1598,6 +1645,7 @@ export type ParticipantUncheckedUpdateWithoutRelatedMatchEventsInput = {
 export type ParticipantCreateWithoutStandingsInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1623,6 +1671,7 @@ export type ParticipantUncheckedCreateWithoutStandingsInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1658,6 +1707,7 @@ export type ParticipantUpdateToOneWithWhereWithoutStandingsInput = {
 export type ParticipantUpdateWithoutStandingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1683,6 +1733,7 @@ export type ParticipantUncheckedUpdateWithoutStandingsInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1702,6 +1753,7 @@ export type ParticipantUncheckedUpdateWithoutStandingsInput = {
 export type ParticipantCreateWithoutPlayersInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1727,6 +1779,7 @@ export type ParticipantUncheckedCreateWithoutPlayersInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1762,6 +1815,7 @@ export type ParticipantUpdateToOneWithWhereWithoutPlayersInput = {
 export type ParticipantUpdateWithoutPlayersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1787,6 +1841,7 @@ export type ParticipantUncheckedUpdateWithoutPlayersInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1806,6 +1861,7 @@ export type ParticipantUncheckedUpdateWithoutPlayersInput = {
 export type ParticipantCreateWithoutInvitesInput = {
   id?: string
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1831,6 +1887,7 @@ export type ParticipantUncheckedCreateWithoutInvitesInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1866,6 +1923,7 @@ export type ParticipantUpdateToOneWithWhereWithoutInvitesInput = {
 export type ParticipantUpdateWithoutInvitesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1891,6 +1949,7 @@ export type ParticipantUncheckedUpdateWithoutInvitesInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1912,6 +1971,7 @@ export type ParticipantCreateManyUserInput = {
   tournament_id: string
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1925,6 +1985,7 @@ export type ParticipantCreateManyUserInput = {
 export type ParticipantUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1949,6 +2010,7 @@ export type ParticipantUncheckedUpdateWithoutUserInput = {
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1971,6 +2033,7 @@ export type ParticipantUncheckedUpdateManyWithoutUserInput = {
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1986,6 +2049,7 @@ export type ParticipantCreateManyTournamentInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -1999,6 +2063,7 @@ export type ParticipantCreateManyTournamentInput = {
 export type ParticipantUpdateWithoutTournamentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2023,6 +2088,7 @@ export type ParticipantUncheckedUpdateWithoutTournamentInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2045,6 +2111,7 @@ export type ParticipantUncheckedUpdateManyWithoutTournamentInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2061,6 +2128,7 @@ export type ParticipantCreateManyGroupInput = {
   user_id?: string | null
   team_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -2073,6 +2141,7 @@ export type ParticipantCreateManyGroupInput = {
 export type ParticipantUpdateWithoutGroupInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2098,6 +2167,7 @@ export type ParticipantUncheckedUpdateWithoutGroupInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2120,6 +2190,7 @@ export type ParticipantUncheckedUpdateManyWithoutGroupInput = {
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   team_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2134,6 +2205,7 @@ export type ParticipantCreateManyTeamInput = {
   tournament_id: string
   user_id?: string | null
   customName?: string | null
+  customShortName?: string | null
   seed?: number | null
   status?: $Enums.ParticipantStatus
   created_at?: Date | string
@@ -2147,6 +2219,7 @@ export type ParticipantCreateManyTeamInput = {
 export type ParticipantUpdateWithoutTeamInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2171,6 +2244,7 @@ export type ParticipantUncheckedUpdateWithoutTeamInput = {
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2193,6 +2267,7 @@ export type ParticipantUncheckedUpdateManyWithoutTeamInput = {
   tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
   user_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customShortName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seed?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumParticipantStatusFieldUpdateOperationsInput | $Enums.ParticipantStatus
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2294,6 +2369,7 @@ export type ParticipantSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   user_id?: boolean
   team_id?: boolean
   customName?: boolean
+  customShortName?: boolean
   seed?: boolean
   status?: boolean
   created_at?: boolean
@@ -2322,6 +2398,7 @@ export type ParticipantSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   user_id?: boolean
   team_id?: boolean
   customName?: boolean
+  customShortName?: boolean
   seed?: boolean
   status?: boolean
   created_at?: boolean
@@ -2342,6 +2419,7 @@ export type ParticipantSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   user_id?: boolean
   team_id?: boolean
   customName?: boolean
+  customShortName?: boolean
   seed?: boolean
   status?: boolean
   created_at?: boolean
@@ -2362,6 +2440,7 @@ export type ParticipantSelectScalar = {
   user_id?: boolean
   team_id?: boolean
   customName?: boolean
+  customShortName?: boolean
   seed?: boolean
   status?: boolean
   created_at?: boolean
@@ -2372,7 +2451,7 @@ export type ParticipantSelectScalar = {
   linkCodeExpires?: boolean
 }
 
-export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "seed" | "status" | "created_at" | "updated_at" | "groupId" | "logoUrl" | "linkCode" | "linkCodeExpires", ExtArgs["result"]["participant"]>
+export type ParticipantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "user_id" | "team_id" | "customName" | "customShortName" | "seed" | "status" | "created_at" | "updated_at" | "groupId" | "logoUrl" | "linkCode" | "linkCodeExpires", ExtArgs["result"]["participant"]>
 export type ParticipantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   away_fixtures?: boolean | Prisma.Participant$away_fixturesArgs<ExtArgs>
   home_fixtures?: boolean | Prisma.Participant$home_fixturesArgs<ExtArgs>
@@ -2421,6 +2500,7 @@ export type $ParticipantPayload<ExtArgs extends runtime.Types.Extensions.Interna
     user_id: string | null
     team_id: string | null
     customName: string | null
+    customShortName: string | null
     seed: number | null
     status: $Enums.ParticipantStatus
     created_at: Date
@@ -2868,6 +2948,7 @@ export interface ParticipantFieldRefs {
   readonly user_id: Prisma.FieldRef<"Participant", 'String'>
   readonly team_id: Prisma.FieldRef<"Participant", 'String'>
   readonly customName: Prisma.FieldRef<"Participant", 'String'>
+  readonly customShortName: Prisma.FieldRef<"Participant", 'String'>
   readonly seed: Prisma.FieldRef<"Participant", 'Int'>
   readonly status: Prisma.FieldRef<"Participant", 'ParticipantStatus'>
   readonly created_at: Prisma.FieldRef<"Participant", 'DateTime'>

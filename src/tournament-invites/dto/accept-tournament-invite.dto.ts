@@ -7,6 +7,11 @@ export class AcceptTournamentInviteDto {
   @IsString()
   customName?: string;
 
+  @ApiProperty({ description: 'The short name/abbreviation for the new team', required: false })
+  @IsOptional()
+  @IsString()
+  customShortName?: string;
+
   @ApiProperty({ required: false, description: 'Optional logo URL for the team' })
   @IsOptional()
   @IsString()

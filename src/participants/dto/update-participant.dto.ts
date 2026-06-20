@@ -8,6 +8,12 @@ export class UpdateParticipantDto {
   @MaxLength(100)
   customName?: string;
 
+  @ApiProperty({ description: 'Short name/abbreviation for the participant/team', required: false })
+  @IsString()
+  @IsOptional()
+  @MaxLength(10)
+  customShortName?: string;
+
   @ApiProperty({ description: 'Logo URL for the participant/team', required: false })
   @IsString()
   @IsOptional()
