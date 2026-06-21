@@ -324,6 +324,9 @@ export class TournamentsService {
         sponsors: true,
         socials: true,
         venues: true,
+        _count: {
+          select: { followers: true },
+        },
       },
     });
     if (!tournament) {
@@ -342,6 +345,9 @@ export class TournamentsService {
         sponsors: true,
         socials: true,
         venues: true,
+        _count: {
+          select: { followers: true },
+        },
         organization: {
           select: { id: true, slug: true, name: true, isVerified: true, logoUrl: true, color: true },
         },

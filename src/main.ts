@@ -29,6 +29,8 @@ async function bootstrap() {
       'https://admin.parascores.com', // 🔴 Admin Subdomain (Prod)
       'https://admin-dev.parascores.com',
       'https://dev.parascores.com',
+      'https://dev.parascores.com:3001',
+      'https://manage-dev.parascores.com:3001',
     ],
     credentials: true, // Required for cookies to work
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
