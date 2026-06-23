@@ -242,7 +242,8 @@ export const FixtureScalarFieldEnum = {
   timerStartedAt: 'timerStartedAt',
   timerElapsedSeconds: 'timerElapsedSeconds',
   timerIsRunning: 'timerIsRunning',
-  matchDuration: 'matchDuration'
+  matchDuration: 'matchDuration',
+  manOfTheMatchPlayerId: 'manOfTheMatchPlayerId'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]

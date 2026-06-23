@@ -195,6 +195,16 @@ export class FixturesService {
         },
         group: true,
         lineupPlayers: true,
+        manOfTheMatchPlayer: {
+          include: {
+            participant: {
+              include: {
+                team: { select: { id: true, name: true, logoUrl: true } },
+                user: { select: { id: true, name: true } },
+              },
+            },
+          },
+        },
       },
     });
 
@@ -256,6 +266,9 @@ export class FixturesService {
           },
         },
         group: true,
+        manOfTheMatchPlayer: {
+          select: { id: true, name: true, number: true },
+        },
       },
       orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
     });
@@ -346,6 +359,7 @@ export class FixturesService {
         'timerElapsedSeconds',
         'timerIsRunning',
         'matchDuration',
+        'manOfTheMatchPlayerId',
       ];
       const attemptedFields = Object.keys(dto).filter(
         (key) => dto[key] !== undefined,
@@ -495,6 +509,9 @@ export class FixturesService {
             set: dto.lineupPlayerIds.map((id) => ({ id })),
           },
         }),
+        ...(dto.manOfTheMatchPlayerId !== undefined && {
+          manOfTheMatchPlayerId: dto.manOfTheMatchPlayerId,
+        }),
       },
       include: {
         homeTeam: {
@@ -514,6 +531,16 @@ export class FixturesService {
         tournament: { select: { id: true, type: true } },
         group: true,
         lineupPlayers: true,
+        manOfTheMatchPlayer: {
+          include: {
+            participant: {
+              include: {
+                team: { select: { id: true, name: true, logoUrl: true } },
+                user: { select: { id: true, name: true } },
+              },
+            },
+          },
+        },
       },
     });
 
