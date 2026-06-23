@@ -270,7 +270,7 @@ export class FixturesService {
           select: { id: true, name: true, number: true },
         },
       },
-      orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
+      orderBy: [{ round: 'asc' }, { startTime: 'asc' }, { matchNumber: 'asc' }],
     });
 
     const response = ResponseUtil.success(fixtures);
