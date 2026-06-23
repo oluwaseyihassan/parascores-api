@@ -154,4 +154,12 @@ export class UpdateFixtureDto {
   @Min(1)
   @IsOptional()
   matchDuration?: number;
+
+  @ApiPropertyOptional({
+    description: 'Player ID selected as Man of the Match',
+    example: 'player-id',
+  })
+  @IsString()
+  @IsOptional()
+  manOfTheMatchPlayerId?: string;
 }

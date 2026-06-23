@@ -198,6 +198,8 @@ model Fixture {
   tournament          Tournament    @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   matchEvents         MatchEvent[]
   lineupPlayers       Player[]      @relation("FixtureLineups")
+  manOfTheMatchPlayerId String?
+  manOfTheMatchPlayer   Player?       @relation("ManOfTheMatch", fields: [manOfTheMatchPlayerId], references: [id])
 }
 
 model Team {
@@ -272,6 +274,7 @@ model Player {
   participant        Participant  @relation(fields: [participantId], references: [id], onDelete: Cascade)
   user               User?        @relation("UserPlayerProfiles", fields: [userId], references: [id])
   lineups            Fixture[]    @relation("FixtureLineups")
+  manOfTheMatchFixtures Fixture[] @relation("ManOfTheMatch")
 }
 
 model Sponsor {
