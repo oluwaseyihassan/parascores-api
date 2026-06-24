@@ -1126,6 +1126,78 @@ export class FixturesService {
     return ResponseUtil.success(fixtures);
   }
 
+  async findByDate(date: string) {
+    const startOfDay = new Date(`${date}T00:00:00.000Z`);
+    const endOfDay = new Date(`${date}T23:59:59.999Z`);
+
+    const fixtures = await this.db.fixture.findMany({
+      where: {
+        startTime: {
+          gte: startOfDay,
+          lte: endOfDay,
+        },
+      },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        tournament: {
+          select: {
+            id: true,
+            name: true,
+            customName: true,
+            sport: true,
+            logoUrl: true,
+            organization: {
+              select: { name: true, slug: true, logoUrl: true },
+            },
+          },
+        },
+        group: true,
+      },
+      orderBy: { startTime: 'asc' },
+    });
+
+    return ResponseUtil.success(fixtures);
+  }
+
+  async findFixtureDates(tournamentIds?: string[]) {
+    const whereClause: any = {};
+    if (tournamentIds && tournamentIds.length > 0) {
+      whereClause.tournament_id = { in: tournamentIds };
+    }
+
+    const fixtures = await this.db.fixture.findMany({
+      where: whereClause,
+      select: {
+        startTime: true,
+      },
+      orderBy: { startTime: 'asc' },
+    });
+
+    const dates = new Set<string>();
+    for (const fixture of fixtures) {
+      if (fixture.startTime) {
+        const d = new Date(fixture.startTime);
+        const year = d.getUTCFullYear();
+        const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(d.getUTCDate()).padStart(2, '0');
+        dates.add(`${year}-${month}-${day}`);
+      }
+    }
+
+    return ResponseUtil.success(Array.from(dates));
+  }
+
   // Delete a single fixture
   async delete(fixtureId: string, userId: string) {
     const fixture = await this.db.fixture.findUnique({

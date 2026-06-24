@@ -142,6 +142,35 @@ export class FixturesController {
     );
   }
 
+  // Get fixtures for a specific date
+  @Public()
+  @Get('by-date')
+  @ApiOperation({ summary: 'Get fixtures for a specific date' })
+  @ApiQuery({
+    name: 'date',
+    required: true,
+    type: String,
+    description: 'Date in YYYY-MM-DD format (UTC)',
+  })
+  async findByDate(@Query('date') date: string) {
+    return this.fixturesService.findByDate(date);
+  }
+
+  // Get fixture dates for highlighting calendar
+  @Public()
+  @Get('dates')
+  @ApiOperation({ summary: 'Get dates with fixtures' })
+  @ApiQuery({
+    name: 'tournamentIds',
+    required: false,
+    type: String,
+    description: 'Comma-separated tournament IDs to filter',
+  })
+  async findFixtureDates(@Query('tournamentIds') tournamentIds?: string) {
+    const ids = tournamentIds ? tournamentIds.split(',').filter(Boolean) : undefined;
+    return this.fixturesService.findFixtureDates(ids);
+  }
+
   // Get a single fixture by ID
   @Public()
   @Get(':id')
