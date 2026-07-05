@@ -89,6 +89,15 @@ export class AdminController {
     return this.adminService.deleteTournament(id);
   }
 
+  @Patch('tournaments/:id/pricing')
+  @ApiOperation({ summary: 'Update tournament pricing' })
+  updateTournamentPricing(
+    @Param('id') id: string,
+    @Body() body: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
+  ) {
+    return this.adminService.updateTournamentPricing(id, body);
+  }
+
   // ─── Organizations ─────────────────────────────────────────
 
   @Get('organizations')

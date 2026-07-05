@@ -31,6 +31,8 @@ export type TournamentAvgAggregateOutputType = {
   numberOfGroups: number | null
   teamsPerGroup: number | null
   registrationFee: number | null
+  tournamentPrice: number | null
+  paymentPerTeam: number | null
 }
 
 export type TournamentSumAggregateOutputType = {
@@ -38,6 +40,8 @@ export type TournamentSumAggregateOutputType = {
   numberOfGroups: number | null
   teamsPerGroup: number | null
   registrationFee: number | null
+  tournamentPrice: number | null
+  paymentPerTeam: number | null
 }
 
 export type TournamentMinAggregateOutputType = {
@@ -73,6 +77,8 @@ export type TournamentMinAggregateOutputType = {
   isPremium: boolean | null
   isPaidRegistration: boolean | null
   registrationFee: number | null
+  tournamentPrice: number | null
+  paymentPerTeam: number | null
 }
 
 export type TournamentMaxAggregateOutputType = {
@@ -108,6 +114,8 @@ export type TournamentMaxAggregateOutputType = {
   isPremium: boolean | null
   isPaidRegistration: boolean | null
   registrationFee: number | null
+  tournamentPrice: number | null
+  paymentPerTeam: number | null
 }
 
 export type TournamentCountAggregateOutputType = {
@@ -144,6 +152,8 @@ export type TournamentCountAggregateOutputType = {
   isPremium: number
   isPaidRegistration: number
   registrationFee: number
+  tournamentPrice: number
+  paymentPerTeam: number
   _all: number
 }
 
@@ -153,6 +163,8 @@ export type TournamentAvgAggregateInputType = {
   numberOfGroups?: true
   teamsPerGroup?: true
   registrationFee?: true
+  tournamentPrice?: true
+  paymentPerTeam?: true
 }
 
 export type TournamentSumAggregateInputType = {
@@ -160,6 +172,8 @@ export type TournamentSumAggregateInputType = {
   numberOfGroups?: true
   teamsPerGroup?: true
   registrationFee?: true
+  tournamentPrice?: true
+  paymentPerTeam?: true
 }
 
 export type TournamentMinAggregateInputType = {
@@ -195,6 +209,8 @@ export type TournamentMinAggregateInputType = {
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
+  tournamentPrice?: true
+  paymentPerTeam?: true
 }
 
 export type TournamentMaxAggregateInputType = {
@@ -230,6 +246,8 @@ export type TournamentMaxAggregateInputType = {
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
+  tournamentPrice?: true
+  paymentPerTeam?: true
 }
 
 export type TournamentCountAggregateInputType = {
@@ -266,6 +284,8 @@ export type TournamentCountAggregateInputType = {
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
+  tournamentPrice?: true
+  paymentPerTeam?: true
   _all?: true
 }
 
@@ -389,6 +409,8 @@ export type TournamentGroupByOutputType = {
   isPremium: boolean
   isPaidRegistration: boolean
   registrationFee: number
+  tournamentPrice: number
+  paymentPerTeam: number
   _count: TournamentCountAggregateOutputType | null
   _avg: TournamentAvgAggregateOutputType | null
   _sum: TournamentSumAggregateOutputType | null
@@ -448,6 +470,8 @@ export type TournamentWhereInput = {
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
+  tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
+  paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
   fixtures?: Prisma.FixtureListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   participants?: Prisma.ParticipantListRelationFilter
@@ -498,6 +522,8 @@ export type TournamentOrderByWithRelationInput = {
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
   fixtures?: Prisma.FixtureOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
   participants?: Prisma.ParticipantOrderByRelationAggregateInput
@@ -551,6 +577,8 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
+  tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
+  paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
   fixtures?: Prisma.FixtureListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   participants?: Prisma.ParticipantListRelationFilter
@@ -601,6 +629,8 @@ export type TournamentOrderByWithAggregationInput = {
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
   _count?: Prisma.TournamentCountOrderByAggregateInput
   _avg?: Prisma.TournamentAvgOrderByAggregateInput
   _max?: Prisma.TournamentMaxOrderByAggregateInput
@@ -645,6 +675,8 @@ export type TournamentScalarWhereWithAggregatesInput = {
   isPremium?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
+  tournamentPrice?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
+  paymentPerTeam?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
 }
 
 export type TournamentCreateInput = {
@@ -679,6 +711,8 @@ export type TournamentCreateInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -729,6 +763,8 @@ export type TournamentUncheckedCreateInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -775,6 +811,8 @@ export type TournamentUpdateInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -825,6 +863,8 @@ export type TournamentUncheckedUpdateInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -873,6 +913,8 @@ export type TournamentCreateManyInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
 }
 
 export type TournamentUpdateManyMutationInput = {
@@ -907,6 +949,8 @@ export type TournamentUpdateManyMutationInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentUncheckedUpdateManyInput = {
@@ -943,6 +987,8 @@ export type TournamentUncheckedUpdateManyInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentListRelationFilter = {
@@ -994,6 +1040,8 @@ export type TournamentCountOrderByAggregateInput = {
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
 }
 
 export type TournamentAvgOrderByAggregateInput = {
@@ -1001,6 +1049,8 @@ export type TournamentAvgOrderByAggregateInput = {
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
 }
 
 export type TournamentMaxOrderByAggregateInput = {
@@ -1036,6 +1086,8 @@ export type TournamentMaxOrderByAggregateInput = {
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
 }
 
 export type TournamentMinOrderByAggregateInput = {
@@ -1071,6 +1123,8 @@ export type TournamentMinOrderByAggregateInput = {
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
 }
 
 export type TournamentSumOrderByAggregateInput = {
@@ -1078,6 +1132,8 @@ export type TournamentSumOrderByAggregateInput = {
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
+  tournamentPrice?: Prisma.SortOrder
+  paymentPerTeam?: Prisma.SortOrder
 }
 
 export type TournamentScalarRelationFilter = {
@@ -1403,6 +1459,8 @@ export type TournamentCreateWithoutOrganizationInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1451,6 +1509,8 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1528,6 +1588,8 @@ export type TournamentScalarWhereInput = {
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
+  tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
+  paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
 }
 
 export type TournamentCreateWithoutSeasonsInput = {
@@ -1562,6 +1624,8 @@ export type TournamentCreateWithoutSeasonsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1611,6 +1675,8 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1661,6 +1727,8 @@ export type TournamentCreateWithoutParentInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1709,6 +1777,8 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1776,6 +1846,8 @@ export type TournamentUpdateWithoutSeasonsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -1825,6 +1897,8 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -1886,6 +1960,8 @@ export type TournamentCreateWithoutFollowersInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1935,6 +2011,8 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1996,6 +2074,8 @@ export type TournamentUpdateWithoutFollowersInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -2045,6 +2125,8 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2090,6 +2172,8 @@ export type TournamentCreateWithoutGroupsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2139,6 +2223,8 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2200,6 +2286,8 @@ export type TournamentUpdateWithoutGroupsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2249,6 +2337,8 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2294,6 +2384,8 @@ export type TournamentCreateWithoutParticipantsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2343,6 +2435,8 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2404,6 +2498,8 @@ export type TournamentUpdateWithoutParticipantsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2453,6 +2549,8 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2498,6 +2596,8 @@ export type TournamentCreateWithoutFixturesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2547,6 +2647,8 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2608,6 +2710,8 @@ export type TournamentUpdateWithoutFixturesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2657,6 +2761,8 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2702,6 +2808,8 @@ export type TournamentCreateWithoutStandingsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -2751,6 +2859,8 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -2812,6 +2922,8 @@ export type TournamentUpdateWithoutStandingsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -2861,6 +2973,8 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2906,6 +3020,8 @@ export type TournamentCreateWithoutSponsorsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -2955,6 +3071,8 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3016,6 +3134,8 @@ export type TournamentUpdateWithoutSponsorsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3065,6 +3185,8 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3110,6 +3232,8 @@ export type TournamentCreateWithoutSocialsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3159,6 +3283,8 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3220,6 +3346,8 @@ export type TournamentUpdateWithoutSocialsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3269,6 +3397,8 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3314,6 +3444,8 @@ export type TournamentCreateWithoutVenuesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3363,6 +3495,8 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3424,6 +3558,8 @@ export type TournamentUpdateWithoutVenuesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3473,6 +3609,8 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3518,6 +3656,8 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3567,6 +3707,8 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3628,6 +3770,8 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3677,6 +3821,8 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3722,6 +3868,8 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3771,6 +3919,8 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3832,6 +3982,8 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3881,6 +4033,8 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3926,6 +4080,8 @@ export type TournamentCreateWithoutPaymentsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3975,6 +4131,8 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -4036,6 +4194,8 @@ export type TournamentUpdateWithoutPaymentsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4085,6 +4245,8 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4131,6 +4293,8 @@ export type TournamentCreateManyOrganizationInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
 }
 
 export type TournamentUpdateWithoutOrganizationInput = {
@@ -4165,6 +4329,8 @@ export type TournamentUpdateWithoutOrganizationInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4213,6 +4379,8 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4260,6 +4428,8 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type TournamentCreateManyParentInput = {
@@ -4295,6 +4465,8 @@ export type TournamentCreateManyParentInput = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
 }
 
 export type TournamentUpdateWithoutParentInput = {
@@ -4329,6 +4501,8 @@ export type TournamentUpdateWithoutParentInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4377,6 +4551,8 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4424,6 +4600,8 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -4590,6 +4768,8 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
+  tournamentPrice?: boolean
+  paymentPerTeam?: boolean
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
   participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
@@ -4641,6 +4821,8 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
+  tournamentPrice?: boolean
+  paymentPerTeam?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -4679,6 +4861,8 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
+  tournamentPrice?: boolean
+  paymentPerTeam?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -4717,9 +4901,11 @@ export type TournamentSelectScalar = {
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
+  tournamentPrice?: boolean
+  paymentPerTeam?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -4798,6 +4984,8 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     isPremium: boolean
     isPaidRegistration: boolean
     registrationFee: number
+    tournamentPrice: number
+    paymentPerTeam: number
   }, ExtArgs["result"]["tournament"]>
   composites: {}
 }
@@ -5268,6 +5456,8 @@ export interface TournamentFieldRefs {
   readonly isPremium: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly isPaidRegistration: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly registrationFee: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly tournamentPrice: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly paymentPerTeam: Prisma.FieldRef<"Tournament", 'Int'>
 }
     
 

@@ -168,7 +168,9 @@ export const TournamentScalarFieldEnum = {
   doubleRoundRobin: 'doubleRoundRobin',
   isPremium: 'isPremium',
   isPaidRegistration: 'isPaidRegistration',
-  registrationFee: 'registrationFee'
+  registrationFee: 'registrationFee',
+  tournamentPrice: 'tournamentPrice',
+  paymentPerTeam: 'paymentPerTeam'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
