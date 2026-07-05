@@ -96,6 +96,8 @@ model Tournament {
   isPremium          Boolean              @default(false)
   isPaidRegistration Boolean              @default(false)
   registrationFee    Int                  @default(0)
+  tournamentPrice    Int                  @default(0)
+  paymentPerTeam     Int                  @default(0)
   fixtures           Fixture[]
   groups             Group[]
   participants       Participant[]
@@ -127,7 +129,7 @@ model Group {
   name          String
   tournament_id String
   created_at    DateTime      @default(now())
-  updated_at    DateTime      @updatedAt
+  updated_at      DateTime      @updatedAt
   fixtures      Fixture[]
   tournament    Tournament    @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
   participants  Participant[]

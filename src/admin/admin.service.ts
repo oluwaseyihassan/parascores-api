@@ -263,6 +263,8 @@ export class AdminService {
           start_date: true,
           end_date: true,
           created_at: true,
+          tournamentPrice: true,
+          paymentPerTeam: true,
           organization: { select: { id: true, name: true, slug: true } },
           _count: {
             select: {
@@ -285,6 +287,35 @@ export class AdminService {
 
     await this.db.tournament.delete({ where: { id } });
     return ResponseUtil.success(null, 'Tournament deleted successfully');
+  }
+
+  async updateTournamentPricing(
+    id: string,
+    data: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
+  ) {
+    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const updateData: any = {};
+    if (data.tournamentPrice !== undefined) {
+      updateData.tournamentPrice = data.tournamentPrice ?? 0;
+    }
+    if (data.paymentPerTeam !== undefined) {
+      updateData.paymentPerTeam = data.paymentPerTeam ?? 0;
+    }
+
+    const updated = await this.db.tournament.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        name: true,
+        tournamentPrice: true,
+        paymentPerTeam: true,
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Tournament pricing updated');
   }
 
   // ─── Organizations ─────────────────────────────────────────

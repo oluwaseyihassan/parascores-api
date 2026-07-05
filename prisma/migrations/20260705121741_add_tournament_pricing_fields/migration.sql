@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Tournament" ADD COLUMN "paymentPerTeam" INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE "Tournament" ADD COLUMN "tournamentPrice" INTEGER NOT NULL DEFAULT 0;
