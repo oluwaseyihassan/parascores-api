@@ -78,6 +78,7 @@ export type PlayerStatus = (typeof PlayerStatus)[keyof typeof PlayerStatus]
 export const FixtureStatus = {
   SCHEDULED: 'SCHEDULED',
   LIVE: 'LIVE',
+  EXTRATIME: 'EXTRATIME',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const

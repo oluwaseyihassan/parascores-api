@@ -289,7 +289,7 @@ export class FixturesService {
       return cachedResponse;
     }
 
-    const where: any = { status: 'LIVE' };
+    const where: any = { status: { in: ['LIVE', 'EXTRATIME'] } };
     if (organizationId) {
       where.tournament = { organization_id: organizationId };
     }
@@ -868,7 +868,7 @@ export class FixturesService {
 
     if (!nextFixture) return;
 
-    if (nextFixture.status === 'LIVE' || nextFixture.status === 'COMPLETED') {
+    if (nextFixture.status === 'LIVE' || nextFixture.status === 'EXTRATIME' || nextFixture.status === 'COMPLETED') {
       throw new BadRequestException(
         'Cannot change the result of this match because the next round match has already been played. Reset the downstream match first.',
       );
@@ -884,7 +884,7 @@ export class FixturesService {
         },
       });
 
-      if (leg2OfNext && (leg2OfNext.status === 'LIVE' || leg2OfNext.status === 'COMPLETED')) {
+      if (leg2OfNext && (leg2OfNext.status === 'LIVE' || leg2OfNext.status === 'EXTRATIME' || leg2OfNext.status === 'COMPLETED')) {
         throw new BadRequestException(
           'Cannot change the result of this match because the next round Leg 2 has already been played. Reset the downstream match first.',
         );
@@ -938,7 +938,7 @@ export class FixturesService {
       });
 
       if (thirdPlaceFixture) {
-        if (thirdPlaceFixture.status === 'LIVE' || thirdPlaceFixture.status === 'COMPLETED') {
+        if (thirdPlaceFixture.status === 'LIVE' || thirdPlaceFixture.status === 'EXTRATIME' || thirdPlaceFixture.status === 'COMPLETED') {
           throw new BadRequestException(
             'Cannot change the result because the 3rd Place Match has already been played.',
           );

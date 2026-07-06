@@ -393,6 +393,7 @@ enum PlayerStatus {
 enum FixtureStatus {
   SCHEDULED
   LIVE
+  EXTRATIME
   COMPLETED
   CANCELLED
 }
