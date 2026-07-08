@@ -115,35 +115,6 @@ export class TournamentsService {
       }
     }
 
-    // Enforce capacity limits for upgraded tournaments (premium) based on paid amount
-    if (dto.maxParticipants !== undefined && tournament.isPremium) {
-      const maxRequested = dto.maxParticipants;
-      
-      const payments = await this.db.payment.findMany({
-        where: {
-          tournamentId: tournament.id,
-          plan: 'PER_TOURNAMENT',
-          status: 'SUCCESS'
-        }
-      });
-      
-      const maxPaidKobo = payments.reduce((max, p) => Math.max(max, p.amount), 0);
-      const maxPaidNaira = maxPaidKobo / 100;
-      
-      let allowedMax = 0;
-      if (maxPaidNaira >= 25000) allowedMax = 999999; // Unlimited
-      else if (maxPaidNaira >= 15000) allowedMax = 32;
-      else if (maxPaidNaira >= 12000) allowedMax = 16;
-      else if (maxPaidNaira >= 8000) allowedMax = 8;
-      else if (maxPaidNaira >= 5000) allowedMax = 4;
-      
-      if (maxRequested === null || maxRequested > allowedMax) {
-        throw new BadRequestException(
-          `Your paid upgrade tier only supports up to ${allowedMax === 999999 ? 'unlimited' : allowedMax} participants. Please upgrade your tournament plan to increase capacity.`
-        );
-      }
-    }
-
     const updated = await this.db.tournament.update({
       where: { id: tournament.id },
       data: {
