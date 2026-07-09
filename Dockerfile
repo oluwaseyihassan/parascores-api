@@ -3,15 +3,14 @@ FROM node:22-alpine AS base
 RUN apk add --no-cache openssl
 WORKDIR /app
 
-# ---- Dependencies ----
-FROM base AS deps
+# ---- Build ----
+FROM base AS build
 COPY package.json package-lock.json ./
 RUN npm ci
-
-# ---- Build ----
-FROM deps AS build
 COPY . .
 RUN npx prisma generate && npm run build
+# Strip devDependencies (local delete, no network — fast)
+RUN npm prune --omit=dev
 
 # ---- Production ----
 FROM base AS production
