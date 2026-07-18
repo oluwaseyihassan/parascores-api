@@ -233,7 +233,11 @@ export class AuthService {
     );
   }
 
-  async changePassword(userId: string, currentPassword: string, newPassword: string) {
+  async changePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ) {
     const user = await this.usersService.findOne(userId);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -243,7 +247,10 @@ export class AuthService {
       throw new BadRequestException('OAuth users cannot change password');
     }
 
-    const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
     if (!isPasswordValid) {
       throw new BadRequestException('Incorrect current password');
     }
@@ -276,7 +283,7 @@ export class AuthService {
       role: updatedUser.role,
       name: updatedUser.name,
     };
-    
+
     const access_token = await this.generateToken(payload, '7d');
     const refresh_token = await this.generateToken(payload, '30d');
 
@@ -362,7 +369,13 @@ export class AuthService {
     this.setRefreshTokenCookie(response, refresh_token);
 
     return ResponseUtil.success(
-      { id: user.id, email: user.email, name: user.name, role: user.role, hasPassword: !!user.password },
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        hasPassword: !!user.password,
+      },
       'Login successful',
     );
   }
@@ -406,7 +419,10 @@ export class AuthService {
       throw new NotFoundException('User not found');
     }
     const { password, ...result } = user;
-    return ResponseUtil.success({ ...result, hasPassword: !!password }, 'User profile retrieved');
+    return ResponseUtil.success(
+      { ...result, hasPassword: !!password },
+      'User profile retrieved',
+    );
   }
 
   async generateToken(

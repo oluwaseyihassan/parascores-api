@@ -1,7 +1,22 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param, Req } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  Req,
+} from '@nestjs/common';
 import { ParticipantsService } from './participants.service';
-import { AddParticipantDto, BulkAddParticipantDto } from 'src/participants/dto/add-participant.dto';
-import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
+import {
+  AddParticipantDto,
+  BulkAddParticipantDto,
+} from 'src/participants/dto/add-participant.dto';
+import {
+  AddPlayerDto,
+  BulkAddPlayerDto,
+} from 'src/participants/dto/add-player.dto';
 import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Public } from 'src/auth/decorators/public.decorator';
@@ -109,7 +124,11 @@ export class ParticipantsController {
     @Param('playerId') playerId: string,
     @Body('status') status: string,
   ) {
-    return this.participantsService.updatePlayerStatus(participantId, playerId, status);
+    return this.participantsService.updatePlayerStatus(
+      participantId,
+      playerId,
+      status,
+    );
   }
 
   @Delete(':participantId/players/:playerId')

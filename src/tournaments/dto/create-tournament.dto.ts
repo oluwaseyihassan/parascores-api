@@ -184,7 +184,8 @@ export class CreateTournamentDto {
   registrationFee?: number;
 
   @ApiPropertyOptional({
-    description: 'If true, the tournament is pinned to the top of the dashboard',
+    description:
+      'If true, the tournament is pinned to the top of the dashboard',
     default: false,
     example: true,
   })
@@ -193,7 +194,8 @@ export class CreateTournamentDto {
   isPinned?: boolean;
 
   @ApiPropertyOptional({
-    description: 'If true, knockout rounds (excluding final) will have two legs',
+    description:
+      'If true, knockout rounds (excluding final) will have two legs',
     default: false,
     example: true,
   })
@@ -202,7 +204,8 @@ export class CreateTournamentDto {
   twoLegsKnockout?: boolean;
 
   @ApiPropertyOptional({
-    description: 'If true, a third-place match is generated for tournament losers',
+    description:
+      'If true, a third-place match is generated for tournament losers',
     default: false,
     example: true,
   })
@@ -211,7 +214,8 @@ export class CreateTournamentDto {
   thirdPlaceMatch?: boolean;
 
   @ApiPropertyOptional({
-    description: 'If true, teams play each other twice in round-robin or group stages',
+    description:
+      'If true, teams play each other twice in round-robin or group stages',
     default: false,
     example: true,
   })

@@ -10,7 +10,13 @@ import { UpdateTournamentDto } from './dto/update-tournament.dto';
 import { StartSeasonDto } from './dto/start-season.dto';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 
-import { Visibility, FixtureStage, MatchEventType, SubscriptionPlan, SubscriptionStatus } from 'prisma/generated/client';
+import {
+  Visibility,
+  FixtureStage,
+  MatchEventType,
+  SubscriptionPlan,
+  SubscriptionStatus,
+} from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
 @Injectable()
@@ -35,9 +41,12 @@ export class TournamentsService {
       where: { organizationId: dto.organization_id },
     });
 
-    const isPremiumOrg = subscription &&
-      (subscription.status === SubscriptionStatus.ACTIVE || subscription.status === SubscriptionStatus.TRIALING) &&
-      (subscription.plan === SubscriptionPlan.PRO || subscription.plan === SubscriptionPlan.ENTERPRISE);
+    const isPremiumOrg =
+      subscription &&
+      (subscription.status === SubscriptionStatus.ACTIVE ||
+        subscription.status === SubscriptionStatus.TRIALING) &&
+      (subscription.plan === SubscriptionPlan.PRO ||
+        subscription.plan === SubscriptionPlan.ENTERPRISE);
 
     if (!isPremiumOrg && dto.type !== 'FRIENDLY') {
       const count = await this.db.tournament.count({
@@ -93,7 +102,10 @@ export class TournamentsService {
     );
 
     // Check if user has OWNER or ADMIN role in the target organization
-    if (dto.organization_id && dto.organization_id !== tournament.organization_id) {
+    if (
+      dto.organization_id &&
+      dto.organization_id !== tournament.organization_id
+    ) {
       await this.organizationsService.validateMemberRole(
         dto.organization_id,
         userId,
@@ -152,18 +164,18 @@ export class TournamentsService {
         end_date: new Date(dto.end_date),
         organization_id: parentTournament.organization_id,
         parent_id: parentTournament.parent_id || parentTournament.id,
-        
+
         sport: parentTournament.sport,
         type: parentTournament.type,
         participantType: parentTournament.participantType,
         scoringRules: parentTournament.scoringRules || {},
         visibility: parentTournament.visibility || Visibility.PUBLIC,
-        
+
         logoUrl: parentTournament.logoUrl,
         bannerUrl: parentTournament.bannerUrl,
         location: parentTournament.location,
         timezone: parentTournament.timezone,
-        
+
         maxParticipants: parentTournament.maxParticipants,
         autoApprove: parentTournament.autoApprove,
         twoLegsKnockout: parentTournament.twoLegsKnockout,
@@ -171,14 +183,21 @@ export class TournamentsService {
         numberOfGroups: parentTournament.numberOfGroups,
         teamsPerGroup: parentTournament.teamsPerGroup,
         doubleRoundRobin: (parentTournament as any).doubleRoundRobin,
-        isPinned: false
+        isPinned: false,
       },
     });
 
     return ResponseUtil.success(season);
   }
 
-  async findAllPublic(page: number = 1, limit: number = 10, organizationSlug?: string, search?: string, type?: string, status?: string) {
+  async findAllPublic(
+    page: number = 1,
+    limit: number = 10,
+    organizationSlug?: string,
+    search?: string,
+    type?: string,
+    status?: string,
+  ) {
     const skip = (page - 1) * limit;
 
     const whereClause: any = {
@@ -210,14 +229,26 @@ export class TournamentsService {
       }
     }
 
-    console.log('[DEBUG findAllPublic] status:', status, 'whereClause:', JSON.stringify(whereClause));
+    console.log(
+      '[DEBUG findAllPublic] status:',
+      status,
+      'whereClause:',
+      JSON.stringify(whereClause),
+    );
 
     const [tournaments, total] = await Promise.all([
       this.db.tournament.findMany({
         where: whereClause,
         include: {
           organization: {
-            select: { id: true, name: true, slug: true, isVerified: true, logoUrl: true, color: true },
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+              isVerified: true,
+              logoUrl: true,
+              color: true,
+            },
           },
           _count: {
             select: { participants: true },
@@ -235,15 +266,20 @@ export class TournamentsService {
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
-  async findAllMine(userId: string, page: number = 1, limit: number = 10, organizationId?: string) {
+  async findAllMine(
+    userId: string,
+    page: number = 1,
+    limit: number = 10,
+    organizationId?: string,
+  ) {
     const skip = (page - 1) * limit;
 
     const where: any = {
       organization: {
         members: {
-          some: { userId }
-        }
-      }
+          some: { userId },
+        },
+      },
     };
 
     if (organizationId) {
@@ -320,10 +356,17 @@ export class TournamentsService {
           select: { followers: true },
         },
         organization: {
-          select: { id: true, slug: true, name: true, isVerified: true, logoUrl: true, color: true },
+          select: {
+            id: true,
+            slug: true,
+            name: true,
+            isVerified: true,
+            logoUrl: true,
+            color: true,
+          },
         },
         participants: {
-          include: { players: true }
+          include: { players: true },
         },
         fixtures: {
           include: {
@@ -342,17 +385,17 @@ export class TournamentsService {
             group: true,
             matchEvents: {
               where: {
-                type: { in: ['YELLOW_CARD', 'RED_CARD'] }
-              }
-            }
+                type: { in: ['YELLOW_CARD', 'RED_CARD'] },
+              },
+            },
           },
-          orderBy: { matchNumber: 'asc' }
+          orderBy: { matchNumber: 'asc' },
         },
         standings: {
           include: {
             participant: {
-              include: { team: true, user: true }
-            }
+              include: { team: true, user: true },
+            },
           },
           orderBy: [
             { group: 'asc' },
@@ -361,7 +404,7 @@ export class TournamentsService {
             { goalsFor: 'desc' },
             { played: 'asc' },
           ],
-        }
+        },
       },
     });
 
@@ -369,8 +412,16 @@ export class TournamentsService {
       throw new NotFoundException('Tournament not found');
     }
 
-    const { participants, fixtures, standings, sponsors, socials, venues, ...tournamentData } = tournament;
-    
+    const {
+      participants,
+      fixtures,
+      standings,
+      sponsors,
+      socials,
+      venues,
+      ...tournamentData
+    } = tournament;
+
     // Format standings to match what StandingsService returns
     const formattedStandings = standings.map((s) => ({
       ...s,
@@ -388,7 +439,7 @@ export class TournamentsService {
       standings: formattedStandings,
       sponsors,
       socials,
-      venues
+      venues,
     });
   }
 
@@ -396,9 +447,9 @@ export class TournamentsService {
   async getPlayerStats(tournamentId: string) {
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
-      select: { id: true, participantType: true }
+      select: { id: true, participantType: true },
     });
-    
+
     if (!tournament) throw new NotFoundException('Tournament not found');
 
     if (tournament.participantType === 'INDIVIDUAL') {
@@ -408,28 +459,53 @@ export class TournamentsService {
     const events = await this.db.matchEvent.findMany({
       where: {
         fixture: { tournament_id: tournament.id },
-        type: { in: [MatchEventType.GOAL, MatchEventType.PENALTY, MatchEventType.ASSIST] }
+        type: {
+          in: [
+            MatchEventType.GOAL,
+            MatchEventType.PENALTY,
+            MatchEventType.ASSIST,
+          ],
+        },
       },
       include: {
-        player: { include: { participant: { include: { team: true, user: true } } } },
-        relatedPlayer: { include: { participant: { include: { team: true, user: true } } } },
-      }
+        player: {
+          include: { participant: { include: { team: true, user: true } } },
+        },
+        relatedPlayer: {
+          include: { participant: { include: { team: true, user: true } } },
+        },
+      },
     });
 
     const goalsMap = new Map<string, any>();
     const assistsMap = new Map<string, any>();
 
     for (const event of events) {
-      if (event.type === MatchEventType.GOAL || event.type === MatchEventType.PENALTY) {
+      if (
+        event.type === MatchEventType.GOAL ||
+        event.type === MatchEventType.PENALTY
+      ) {
         if (event.playerId && event.player) {
           if (!goalsMap.has(event.playerId)) {
-            const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
-            const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
+            const participantName =
+              event.player.participant?.team?.name ||
+              event.player.participant?.customName ||
+              event.player.participant?.user?.name ||
+              'Unknown';
+            const participantLogo =
+              event.player.participant?.logoUrl ||
+              (event.player.participant?.team as any)?.logoUrl ||
+              null;
             goalsMap.set(event.playerId, {
-              player: { id: event.player.id, name: event.player.name, number: event.player.number, avatarUrl: event.player.avatarUrl },
+              player: {
+                id: event.player.id,
+                name: event.player.name,
+                number: event.player.number,
+                avatarUrl: event.player.avatarUrl,
+              },
               teamName: participantName,
               teamLogoUrl: participantLogo,
-              count: 0
+              count: 0,
             });
           }
           goalsMap.get(event.playerId).count += 1;
@@ -437,13 +513,25 @@ export class TournamentsService {
 
         if (event.relatedPlayerId && event.relatedPlayer) {
           if (!assistsMap.has(event.relatedPlayerId)) {
-            const participantName = event.relatedPlayer.participant?.team?.name || event.relatedPlayer.participant?.customName || event.relatedPlayer.participant?.user?.name || 'Unknown';
-            const participantLogo = event.relatedPlayer.participant?.logoUrl || (event.relatedPlayer.participant?.team as any)?.logoUrl || null;
+            const participantName =
+              event.relatedPlayer.participant?.team?.name ||
+              event.relatedPlayer.participant?.customName ||
+              event.relatedPlayer.participant?.user?.name ||
+              'Unknown';
+            const participantLogo =
+              event.relatedPlayer.participant?.logoUrl ||
+              (event.relatedPlayer.participant?.team as any)?.logoUrl ||
+              null;
             assistsMap.set(event.relatedPlayerId, {
-              player: { id: event.relatedPlayer.id, name: event.relatedPlayer.name, number: event.relatedPlayer.number, avatarUrl: event.relatedPlayer.avatarUrl },
+              player: {
+                id: event.relatedPlayer.id,
+                name: event.relatedPlayer.name,
+                number: event.relatedPlayer.number,
+                avatarUrl: event.relatedPlayer.avatarUrl,
+              },
               teamName: participantName,
               teamLogoUrl: participantLogo,
-              count: 0
+              count: 0,
             });
           }
           assistsMap.get(event.relatedPlayerId).count += 1;
@@ -451,13 +539,25 @@ export class TournamentsService {
       } else if (event.type === MatchEventType.ASSIST) {
         if (event.playerId && event.player) {
           if (!assistsMap.has(event.playerId)) {
-            const participantName = event.player.participant?.team?.name || event.player.participant?.customName || event.player.participant?.user?.name || 'Unknown';
-            const participantLogo = event.player.participant?.logoUrl || (event.player.participant?.team as any)?.logoUrl || null;
+            const participantName =
+              event.player.participant?.team?.name ||
+              event.player.participant?.customName ||
+              event.player.participant?.user?.name ||
+              'Unknown';
+            const participantLogo =
+              event.player.participant?.logoUrl ||
+              (event.player.participant?.team as any)?.logoUrl ||
+              null;
             assistsMap.set(event.playerId, {
-              player: { id: event.player.id, name: event.player.name, number: event.player.number, avatarUrl: event.player.avatarUrl },
+              player: {
+                id: event.player.id,
+                name: event.player.name,
+                number: event.player.number,
+                avatarUrl: event.player.avatarUrl,
+              },
               teamName: participantName,
               teamLogoUrl: participantLogo,
-              count: 0
+              count: 0,
             });
           }
           assistsMap.get(event.playerId).count += 1;
@@ -465,8 +565,12 @@ export class TournamentsService {
       }
     }
 
-    const topScorers = Array.from(goalsMap.values()).sort((a, b) => b.count - a.count);
-    const topAssists = Array.from(assistsMap.values()).sort((a, b) => b.count - a.count);
+    const topScorers = Array.from(goalsMap.values()).sort(
+      (a, b) => b.count - a.count,
+    );
+    const topAssists = Array.from(assistsMap.values()).sort(
+      (a, b) => b.count - a.count,
+    );
 
     return ResponseUtil.success({ topScorers, topAssists });
   }
@@ -509,18 +613,20 @@ export class TournamentsService {
     if (!tournament) throw new NotFoundException('Tournament not found');
 
     const existing = await this.db.tournamentFollower.findUnique({
-      where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+      where: { userId_tournamentId: { userId, tournamentId: tournament.id } },
     });
 
     if (!existing) {
       await this.db.tournamentFollower.create({
-        data: { userId, tournamentId: tournament.id }
+        data: { userId, tournamentId: tournament.id },
       });
     } else {
       throw new BadRequestException('Tournament already followed');
     }
 
-    return ResponseUtil.success({ message: 'Successfully followed tournament' });
+    return ResponseUtil.success({
+      message: 'Successfully followed tournament',
+    });
   }
 
   // Unfollow a tournament
@@ -531,19 +637,25 @@ export class TournamentsService {
     if (!tournament) throw new NotFoundException('Tournament not found');
 
     const existing = await this.db.tournamentFollower.findUnique({
-      where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+      where: { userId_tournamentId: { userId, tournamentId: tournament.id } },
     });
 
     if (existing) {
       await this.db.tournamentFollower.delete({
-        where: { userId_tournamentId: { userId, tournamentId: tournament.id } }
+        where: { userId_tournamentId: { userId, tournamentId: tournament.id } },
       });
     }
-    return ResponseUtil.success({ message: 'Successfully unfollowed tournament' });
+    return ResponseUtil.success({
+      message: 'Successfully unfollowed tournament',
+    });
   }
 
   // List followed tournaments
-  async getFollowedTournaments(userId: string, page: number = 1, limit: number = 20) {
+  async getFollowedTournaments(
+    userId: string,
+    page: number = 1,
+    limit: number = 20,
+  ) {
     const skip = (page - 1) * limit;
 
     const [followers, total] = await Promise.all([
@@ -553,20 +665,27 @@ export class TournamentsService {
           tournament: {
             include: {
               organization: {
-                select: { id: true, name: true, slug: true, isVerified: true, logoUrl: true, color: true },
+                select: {
+                  id: true,
+                  name: true,
+                  slug: true,
+                  isVerified: true,
+                  logoUrl: true,
+                  color: true,
+                },
               },
-              _count: { select: { participants: true } }
-            }
-          }
+              _count: { select: { participants: true } },
+            },
+          },
         },
         skip,
         take: limit,
-        orderBy: { createdAt: 'desc' }
+        orderBy: { createdAt: 'desc' },
       }),
-      this.db.tournamentFollower.count({ where: { userId } })
+      this.db.tournamentFollower.count({ where: { userId } }),
     ]);
 
-    const tournaments = followers.map(f => f.tournament);
+    const tournaments = followers.map((f) => f.tournament);
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 }

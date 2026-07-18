@@ -25,7 +25,9 @@ export class CreatePlayerDto {
   @IsOptional()
   position?: string;
 
-  @ApiPropertyOptional({ description: 'User ID to link this player to a user account' })
+  @ApiPropertyOptional({
+    description: 'User ID to link this player to a user account',
+  })
   @IsString()
   @IsOptional()
   userId?: string;

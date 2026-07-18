@@ -1,4 +1,9 @@
-import { Injectable, OnModuleDestroy, OnModuleInit, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  OnModuleDestroy,
+  OnModuleInit,
+  Logger,
+} from '@nestjs/common';
 import Redis from 'ioredis';
 
 @Injectable()
@@ -28,7 +33,9 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
 
       this.client.on('error', (err) => {
         this.isConnected = false;
-        this.logger.warn('Redis is offline or encountered a connection error. Caching will be disabled.');
+        this.logger.warn(
+          'Redis is offline or encountered a connection error. Caching will be disabled.',
+        );
       });
     } catch (err) {
       this.logger.error('Failed to initialize Redis client:', err);

@@ -69,7 +69,14 @@ export class TournamentsController {
     @Query('status') status?: string,
   ) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.findAllPublic(page, limit, organizationSlug, search, type, status);
+    return this.tournamentsService.findAllPublic(
+      page,
+      limit,
+      organizationSlug,
+      search,
+      type,
+      status,
+    );
   }
 
   @Get('mine')
@@ -109,7 +116,10 @@ export class TournamentsController {
   // create tournament
   @Post()
   @ApiOperation({ summary: 'Create a new tournament' })
-  async create(@Body() createTournamentDto: CreateTournamentDto, @Req() req: any) {
+  async create(
+    @Body() createTournamentDto: CreateTournamentDto,
+    @Req() req: any,
+  ) {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
   }
 
@@ -132,7 +142,11 @@ export class TournamentsController {
     @Query() paginationQuery: PaginationQueryDto,
   ) {
     const { page, limit } = paginationQuery;
-    return this.tournamentsService.getFollowedTournaments(req.user.sub, page, limit);
+    return this.tournamentsService.getFollowedTournaments(
+      req.user.sub,
+      page,
+      limit,
+    );
   }
 
   @Post(':id/follow')

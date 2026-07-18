@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsOptional, IsString, IsInt, IsDateString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsInt,
+  IsDateString,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateTeamInviteDto {
@@ -17,7 +23,9 @@ export class CreateTeamInviteDto {
   @IsOptional()
   maxUses?: number;
 
-  @ApiPropertyOptional({ description: 'Expiry date (ISO string, null = never)' })
+  @ApiPropertyOptional({
+    description: 'Expiry date (ISO string, null = never)',
+  })
   @IsDateString()
   @IsOptional()
   expiresAt?: string;

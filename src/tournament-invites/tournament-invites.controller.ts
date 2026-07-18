@@ -16,7 +16,9 @@ import { Public } from 'src/auth/decorators/public.decorator';
 @ApiTags('tournament-invites')
 @Controller('tournament-invites')
 export class TournamentInvitesController {
-  constructor(private readonly tournamentInvitesService: TournamentInvitesService) {}
+  constructor(
+    private readonly tournamentInvitesService: TournamentInvitesService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a tournament invite link' })

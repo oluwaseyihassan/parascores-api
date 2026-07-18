@@ -167,7 +167,10 @@ export class AuthController {
 
     console.log('redirectUrl from state:', redirectUrl);
     console.log('User logged in successfully, redirecting to frontend');
-    const frontendUrl = redirectUrl || process.env.CLIENT_DASHBOARD_URL || 'http://manage.lvh.me:3001';
+    const frontendUrl =
+      redirectUrl ||
+      process.env.CLIENT_DASHBOARD_URL ||
+      'http://manage.lvh.me:3001';
     response.redirect(frontendUrl);
   }
 

@@ -55,11 +55,15 @@ export class TeamInvitesService {
     }
 
     if (!tournament.organization) {
-      throw new BadRequestException('Tournament is not linked to any organization');
+      throw new BadRequestException(
+        'Tournament is not linked to any organization',
+      );
     }
 
     const membership = tournament.organization.members[0];
-    const isAuthorized = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+    const isAuthorized =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
 
     if (!isAuthorized) {
       throw new ForbiddenException(
@@ -94,7 +98,14 @@ export class TeamInvitesService {
             customName: true,
             logoUrl: true,
             players: {
-              select: { id: true, name: true, number: true, position: true, avatarUrl: true, status: true },
+              select: {
+                id: true,
+                name: true,
+                number: true,
+                position: true,
+                avatarUrl: true,
+                status: true,
+              },
             },
           },
         },
@@ -127,7 +138,8 @@ export class TeamInvitesService {
     }
 
     // Check validity without modifying
-    const isExpired = invite.expiresAt && new Date(invite.expiresAt) < new Date();
+    const isExpired =
+      invite.expiresAt && new Date(invite.expiresAt) < new Date();
     const isMaxedOut = invite.maxUses && invite.usedCount >= invite.maxUses;
 
     return ResponseUtil.success({
@@ -154,7 +166,9 @@ export class TeamInvitesService {
               include: {
                 members: {
                   where: { role: { in: ['OWNER', 'ADMIN'] } },
-                  include: { user: { select: { id: true, email: true, name: true } } },
+                  include: {
+                    user: { select: { id: true, email: true, name: true } },
+                  },
                 },
               },
             },
@@ -183,8 +197,9 @@ export class TeamInvitesService {
 
     // Identify the primary contact for notifications (OWNER or first ADMIN)
     const organization = invite.tournament.organization;
-    const primaryContact = organization?.members.find(m => m.role === 'OWNER')?.user || 
-                         organization?.members[0]?.user;
+    const primaryContact =
+      organization?.members.find((m) => m.role === 'OWNER')?.user ||
+      organization?.members[0]?.user;
 
     // 1b. Check if user is already registered for ANY team in this same tournament
     const alreadyInTournament = await this.db.player.findFirst({
@@ -257,9 +272,10 @@ export class TeamInvitesService {
       player,
       tournament: invite.tournament,
       status,
-      message: status === 'PENDING' 
-        ? `Request sent! Waiting for approval to join ${invite.participant.customName || 'the team'}`
-        : `Successfully joined ${invite.participant.customName || 'the team'}`,
+      message:
+        status === 'PENDING'
+          ? `Request sent! Waiting for approval to join ${invite.participant.customName || 'the team'}`
+          : `Successfully joined ${invite.participant.customName || 'the team'}`,
     });
   }
 
@@ -276,7 +292,9 @@ export class TeamInvitesService {
     }
 
     if (!invite.tournament.organization_id) {
-      throw new BadRequestException('Tournament is not linked to any organization');
+      throw new BadRequestException(
+        'Tournament is not linked to any organization',
+      );
     }
 
     // Verify user is a member of the organization that owns this tournament
@@ -287,11 +305,15 @@ export class TeamInvitesService {
       },
     });
 
-    const isAdmin = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+    const isAdmin =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
     const isCreator = invite.createdById === userId;
 
     if (!isAdmin && !isCreator) {
-      throw new ForbiddenException('You do not have permission to revoke this invite');
+      throw new ForbiddenException(
+        'You do not have permission to revoke this invite',
+      );
     }
 
     await this.db.teamInvite.update({

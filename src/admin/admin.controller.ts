@@ -58,10 +58,7 @@ export class AdminController {
 
   @Patch('users/:id/role')
   @ApiOperation({ summary: 'Update user role' })
-  updateUserRole(
-    @Param('id') id: string,
-    @Body('role') role: string,
-  ) {
+  updateUserRole(@Param('id') id: string, @Body('role') role: string) {
     return this.adminService.updateUserRole(id, role);
   }
 
@@ -93,7 +90,8 @@ export class AdminController {
   @ApiOperation({ summary: 'Update tournament pricing' })
   updateTournamentPricing(
     @Param('id') id: string,
-    @Body() body: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
+    @Body()
+    body: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
   ) {
     return this.adminService.updateTournamentPricing(id, body);
   }
