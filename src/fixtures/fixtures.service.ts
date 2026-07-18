@@ -298,7 +298,9 @@ export class FixturesService {
       return cachedResponse;
     }
 
-    const where: any = { status: 'LIVE' };
+    const where: any = {
+      status: { in: ['LIVE', 'NORMAL_TIME_ENDED', 'EXTRATIME'] },
+    };
     if (organizationId) {
       where.tournament = { organization_id: organizationId };
     }
@@ -437,7 +439,11 @@ export class FixturesService {
     }
 
     // Validate Leg 1 completion before starting Leg 2
-    if (dto.status === 'LIVE' && fixture.status !== 'LIVE') {
+    if (
+      dto.status === 'LIVE' &&
+      fixture.status !== 'LIVE' &&
+      fixture.status !== 'NORMAL_TIME_ENDED'
+    ) {
       // Validate that both teams are assigned (not TBD)
       const homeTeamId = dto.homeTeamId || fixture.homeTeamId;
       const awayTeamId = dto.awayTeamId || fixture.awayTeamId;
@@ -687,7 +693,11 @@ export class FixturesService {
     });
 
     // Kickoff notification
-    if (updatedFixture.status === 'LIVE' && fixture.status !== 'LIVE') {
+    if (
+      updatedFixture.status === 'LIVE' &&
+      fixture.status !== 'LIVE' &&
+      fixture.status !== 'NORMAL_TIME_ENDED'
+    ) {
       const homeName =
         updatedFixture.homeTeam?.customName ||
         updatedFixture.homeTeam?.team?.name ||
@@ -946,7 +956,12 @@ export class FixturesService {
 
     if (!nextFixture) return;
 
-    if (nextFixture.status === 'LIVE' || nextFixture.status === 'COMPLETED') {
+    if (
+      nextFixture.status === 'LIVE' ||
+      nextFixture.status === 'NORMAL_TIME_ENDED' ||
+      nextFixture.status === 'EXTRATIME' ||
+      nextFixture.status === 'COMPLETED'
+    ) {
       throw new BadRequestException(
         'Cannot change the result of this match because the next round match has already been played. Reset the downstream match first.',
       );
@@ -967,7 +982,10 @@ export class FixturesService {
 
       if (
         leg2OfNext &&
-        (leg2OfNext.status === 'LIVE' || leg2OfNext.status === 'COMPLETED')
+        (leg2OfNext.status === 'LIVE' ||
+          leg2OfNext.status === 'NORMAL_TIME_ENDED' ||
+          leg2OfNext.status === 'EXTRATIME' ||
+          leg2OfNext.status === 'COMPLETED')
       ) {
         throw new BadRequestException(
           'Cannot change the result of this match because the next round Leg 2 has already been played. Reset the downstream match first.',
@@ -1037,6 +1055,8 @@ export class FixturesService {
       if (thirdPlaceFixture) {
         if (
           thirdPlaceFixture.status === 'LIVE' ||
+          thirdPlaceFixture.status === 'NORMAL_TIME_ENDED' ||
+          thirdPlaceFixture.status === 'EXTRATIME' ||
           thirdPlaceFixture.status === 'COMPLETED'
         ) {
           throw new BadRequestException(
