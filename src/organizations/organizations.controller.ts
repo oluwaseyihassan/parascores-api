@@ -1,11 +1,26 @@
-import { Controller, Post, Body, Req, UseGuards, Patch, Param, Get, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Req,
+  UseGuards,
+  Patch,
+  Param,
+  Get,
+  Delete,
+} from '@nestjs/common';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { OrganizationsService } from './organizations.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 import { AddMemberDto } from './dto/add-member.dto';
 import { UpdateMemberRoleDto } from './dto/update-member-role.dto';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 
 @ApiTags('organizations')
 @Controller('organizations')
@@ -14,7 +29,10 @@ export class OrganizationsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new organization' })
-  @ApiResponse({ status: 201, description: 'Organization created successfully' })
+  @ApiResponse({
+    status: 201,
+    description: 'Organization created successfully',
+  })
   @ApiResponse({ status: 409, description: 'Organization slug already exists' })
   async create(@Req() req: any, @Body() dto: CreateOrganizationDto) {
     // req.user.sub contains the authenticated user's ID
@@ -30,10 +48,7 @@ export class OrganizationsController {
 
   @Post(':id/members')
   @ApiOperation({ summary: 'Add a member to an organization' })
-  async addMember(
-    @Param('id') id: string,
-    @Body() dto: AddMemberDto,
-  ) {
+  async addMember(@Param('id') id: string, @Body() dto: AddMemberDto) {
     return this.organizationsService.addMember(id, dto.email, dto.role);
   }
 
@@ -49,10 +64,7 @@ export class OrganizationsController {
 
   @Delete(':id/members/:userId')
   @ApiOperation({ summary: 'Remove a member from an organization' })
-  async removeMember(
-    @Param('id') id: string,
-    @Param('userId') userId: string,
-  ) {
+  async removeMember(@Param('id') id: string, @Param('userId') userId: string) {
     return this.organizationsService.removeMember(id, userId);
   }
 
@@ -60,7 +72,10 @@ export class OrganizationsController {
   @Public()
   @Get('public/:slug')
   @ApiOperation({ summary: 'Get a public organization profile by slug' })
-  @ApiResponse({ status: 200, description: 'Organization public profile retrieved successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Organization public profile retrieved successfully',
+  })
   async getPublicProfile(@Param('slug') slug: string) {
     return this.organizationsService.getPublicProfile(slug);
   }
@@ -68,29 +83,49 @@ export class OrganizationsController {
   // Entity Management Routes
   @Get(':id')
   @ApiOperation({ summary: 'Get an organization' })
-  @ApiResponse({ status: 200, description: 'Organization retrieved successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Organization retrieved successfully',
+  })
   async findOne(@Param('id') id: string) {
     return this.organizationsService.findOne(id);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update an organization' })
-  @ApiResponse({ status: 200, description: 'Organization updated successfully' })
+  @ApiResponse({
+    status: 200,
+    description: 'Organization updated successfully',
+  })
   async update(@Param('id') id: string, @Body() dto: UpdateOrganizationDto) {
     return this.organizationsService.update(id, dto);
   }
 
   @Post(':id/request-delete')
-  @ApiOperation({ summary: 'Request a deletion verification code for an organization' })
-  @ApiResponse({ status: 200, description: 'Verification code sent to owner email' })
+  @ApiOperation({
+    summary: 'Request a deletion verification code for an organization',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Verification code sent to owner email',
+  })
   async requestDeleteCode(@Param('id') id: string, @Req() req: any) {
     return this.organizationsService.requestDeleteCode(id, req.user.sub);
   }
 
   @Post(':id/confirm-delete')
-  @ApiOperation({ summary: 'Confirm organization deletion with the verification code' })
-  @ApiResponse({ status: 200, description: 'Organization deleted successfully' })
-  async confirmDelete(@Param('id') id: string, @Req() req: any, @Body() body: { code: string }) {
+  @ApiOperation({
+    summary: 'Confirm organization deletion with the verification code',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Organization deleted successfully',
+  })
+  async confirmDelete(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body() body: { code: string },
+  ) {
     return this.organizationsService.confirmDelete(id, req.user.sub, body.code);
   }
 }

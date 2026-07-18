@@ -19,7 +19,13 @@ export class AppController {
   @Public()
   @Post('contact')
   async submitContactForm(
-    @Body() dto: { name: string; email: string; subject: string; message: string },
+    @Body()
+    dto: {
+      name: string;
+      email: string;
+      subject: string;
+      message: string;
+    },
   ) {
     return this.appService.handleContactForm(dto);
   }

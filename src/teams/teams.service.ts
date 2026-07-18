@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
 import { CreateTeamDto } from './dto/create-team.dto';
@@ -29,11 +33,13 @@ export class TeamsService {
 
   async searchTeams(query?: string) {
     const teams = await this.db.team.findMany({
-      where: query ? {
-        name: { contains: query, mode: 'insensitive' }
-      } : {},
+      where: query
+        ? {
+            name: { contains: query, mode: 'insensitive' },
+          }
+        : {},
       orderBy: { name: 'asc' },
-      take: 20
+      take: 20,
     });
     return ResponseUtil.success(teams);
   }
@@ -48,7 +54,9 @@ export class TeamsService {
     }
 
     if (team.ownerId !== userId) {
-      throw new ForbiddenException('You do not have access to this team profile');
+      throw new ForbiddenException(
+        'You do not have access to this team profile',
+      );
     }
 
     return ResponseUtil.success(team);
@@ -70,13 +78,13 @@ export class TeamsService {
                 end_date: true,
                 sport: true,
                 type: true,
-              }
+              },
             },
             standings: true,
           },
-          orderBy: { created_at: 'desc' }
-        }
-      }
+          orderBy: { created_at: 'desc' },
+        },
+      },
     });
 
     if (!team) throw new NotFoundException('Team not found');
@@ -84,10 +92,9 @@ export class TeamsService {
     return ResponseUtil.success(team);
   }
 
-
   async updateTeam(id: string, dto: UpdateTeamDto, userId: string) {
     const team = await this.db.team.findUnique({ where: { id } });
-    
+
     if (!team) throw new NotFoundException('Team not found');
     if (team.ownerId !== userId) throw new ForbiddenException('Not authorized');
 
@@ -107,7 +114,10 @@ export class TeamsService {
         },
       });
     } catch (error) {
-      console.error(`Failed to sync team updates to participants for team ${id}:`, error);
+      console.error(
+        `Failed to sync team updates to participants for team ${id}:`,
+        error,
+      );
     }
 
     return ResponseUtil.success(updated);
@@ -116,7 +126,10 @@ export class TeamsService {
   async claimParticipant(teamId: string, code: string, userId: string) {
     const team = await this.db.team.findUnique({ where: { id: teamId } });
     if (!team) throw new NotFoundException('Team profile not found');
-    if (team.ownerId !== userId) throw new ForbiddenException('You are not the owner of this team profile');
+    if (team.ownerId !== userId)
+      throw new ForbiddenException(
+        'You are not the owner of this team profile',
+      );
 
     const participant = await this.db.participant.findUnique({
       where: { linkCode: code.toUpperCase() },
@@ -126,12 +139,17 @@ export class TeamsService {
       throw new NotFoundException('Invalid claim code');
     }
 
-    if (participant.linkCodeExpires && participant.linkCodeExpires < new Date()) {
+    if (
+      participant.linkCodeExpires &&
+      participant.linkCodeExpires < new Date()
+    ) {
       throw new ForbiddenException('Claim code has expired');
     }
 
     if (participant.team_id) {
-      throw new ForbiddenException('This participant is already linked to a team profile');
+      throw new ForbiddenException(
+        'This participant is already linked to a team profile',
+      );
     }
 
     const updatedParticipant = await this.db.participant.update({
@@ -141,16 +159,19 @@ export class TeamsService {
         linkCode: null,
         linkCodeExpires: null,
         customName: team.name,
-        logoUrl: team.logoUrl
-      }
+        logoUrl: team.logoUrl,
+      },
     });
 
-    return ResponseUtil.success(updatedParticipant, 'Team profile linked successfully');
+    return ResponseUtil.success(
+      updatedParticipant,
+      'Team profile linked successfully',
+    );
   }
 
   async deleteTeam(id: string, userId: string) {
     const team = await this.db.team.findUnique({ where: { id } });
-    
+
     if (!team) throw new NotFoundException('Team not found');
     if (team.ownerId !== userId) throw new ForbiddenException('Not authorized');
 
@@ -159,16 +180,20 @@ export class TeamsService {
       where: {
         team_id: id,
         tournament: {
-          end_date: { gte: new Date() }
-        }
-      }
+          end_date: { gte: new Date() },
+        },
+      },
     });
 
     if (activeParticipation) {
-      throw new ForbiddenException('This team profile cannot be deleted because it is currently registered in an active tournament. Please withdraw from the tournament first.');
+      throw new ForbiddenException(
+        'This team profile cannot be deleted because it is currently registered in an active tournament. Please withdraw from the tournament first.',
+      );
     }
 
     await this.db.team.delete({ where: { id } });
-    return ResponseUtil.success({ message: 'Team profile deleted successfully' });
+    return ResponseUtil.success({
+      message: 'Team profile deleted successfully',
+    });
   }
 }

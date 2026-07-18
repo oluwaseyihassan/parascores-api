@@ -116,7 +116,8 @@ export class UpdateFixtureDto {
   awayFormation?: string;
 
   @ApiPropertyOptional({
-    description: 'Lineup positions mapping player IDs to coordinate position strings',
+    description:
+      'Lineup positions mapping player IDs to coordinate position strings',
     example: { 'player-id-1': 'DEF-1-3' },
   })
   @IsOptional()

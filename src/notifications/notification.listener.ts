@@ -38,31 +38,36 @@ export class NotificationListener {
       // Fire all push notifications concurrently instead of sequentially
       const notificationPromises = followers.flatMap((follower) =>
         follower.user.push_subscriptions.map((sub) =>
-          webpush.sendNotification(
-            {
-              endpoint: sub.endpoint,
-              keys: {
-                p256dh: sub.p256dh,
-                auth: sub.auth,
+          webpush
+            .sendNotification(
+              {
+                endpoint: sub.endpoint,
+                keys: {
+                  p256dh: sub.p256dh,
+                  auth: sub.auth,
+                },
               },
-            },
-            pushPayload,
-            {
-              TTL: 24 * 60 * 60, // 24 hours (86400 seconds)
-              urgency: 'high',
-            },
-          ).catch(async (err: any) => {
-            const statusCode = err.statusCode || err.status || (err.res && err.res.statusCode);
-            const responseBody = err.body || '';
-            this.logger.error(
-              `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`
-            );
+              pushPayload,
+              {
+                TTL: 24 * 60 * 60, // 24 hours (86400 seconds)
+                urgency: 'high',
+              },
+            )
+            .catch(async (err: any) => {
+              const statusCode =
+                err.statusCode || err.status || (err.res && err.res.statusCode);
+              const responseBody = err.body || '';
+              this.logger.error(
+                `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`,
+              );
 
-            if (statusCode === 410 || statusCode === 404) {
-              this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
-              await this.db.pushSubscription.delete({ where: { id: sub.id } }).catch(() => {});
-            }
-          }),
+              if (statusCode === 410 || statusCode === 404) {
+                this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
+                await this.db.pushSubscription
+                  .delete({ where: { id: sub.id } })
+                  .catch(() => {});
+              }
+            }),
         ),
       );
 
@@ -70,7 +75,9 @@ export class NotificationListener {
         const results = await Promise.allSettled(notificationPromises);
         const rejected = results.filter((r) => r.status === 'rejected');
         if (rejected.length > 0) {
-          this.logger.error(`${rejected.length} push notification promises failed completely.`);
+          this.logger.error(
+            `${rejected.length} push notification promises failed completely.`,
+          );
         }
       }
     } catch (err: any) {

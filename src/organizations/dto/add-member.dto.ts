@@ -8,7 +8,10 @@ export class AddMemberDto {
   @IsNotEmpty()
   email: string;
 
-  @ApiProperty({ description: 'Role to assign to the user', enum: OrganizationRole })
+  @ApiProperty({
+    description: 'Role to assign to the user',
+    enum: OrganizationRole,
+  })
   @IsEnum(OrganizationRole)
   @IsNotEmpty()
   role: OrganizationRole;

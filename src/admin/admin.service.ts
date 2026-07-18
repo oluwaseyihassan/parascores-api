@@ -166,7 +166,11 @@ export class AdminService {
         player_profiles: {
           include: {
             participant: {
-              include: { tournament: { select: { id: true, name: true, customName: true } } },
+              include: {
+                tournament: {
+                  select: { id: true, name: true, customName: true },
+                },
+              },
             },
           },
         },
@@ -506,12 +510,16 @@ export class AdminService {
         take: limit,
         orderBy: { created_at: 'desc' },
         include: {
-          user: { select: { id: true, name: true, email: true, picture: true } },
+          user: {
+            select: { id: true, name: true, email: true, picture: true },
+          },
           participant: {
             select: {
               id: true,
               customName: true,
-              tournament: { select: { id: true, name: true, customName: true } },
+              tournament: {
+                select: { id: true, name: true, customName: true },
+              },
             },
           },
         },

@@ -10,7 +10,7 @@ export class CreateTeamDto {
 
   @ApiProperty({ example: 'https://example.com/logo.png', required: false })
   @IsOptional()
-  @Transform(({ value }) => value === '' ? null : value)
+  @Transform(({ value }) => (value === '' ? null : value))
   @IsUrl()
   logoUrl?: string;
 }

@@ -3,7 +3,10 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import * as webpush from 'web-push';
-import { NotificationEvents, SendTournamentPushPayload } from './notification.events';
+import {
+  NotificationEvents,
+  SendTournamentPushPayload,
+} from './notification.events';
 
 @Injectable()
 export class NotificationsService implements OnModuleInit {
@@ -20,7 +23,9 @@ export class NotificationsService implements OnModuleInit {
     const mailto = process.env.VAPID_MAILTO || 'mailto:admin@parascores.com';
 
     if (!publicKey || !privateKey) {
-      this.logger.warn('VAPID keys are not configured. Web Push notifications will not be sent.');
+      this.logger.warn(
+        'VAPID keys are not configured. Web Push notifications will not be sent.',
+      );
       return;
     }
 

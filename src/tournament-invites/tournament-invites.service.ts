@@ -22,7 +22,9 @@ export class TournamentInvitesService {
   async createInvite(dto: CreateTournamentInviteDto, userId: string) {
     // Find tournament by ID or slug
     const tournament = await this.db.tournament.findFirst({
-      where: { OR: [{ id: dto.tournamentId }, { customName: dto.tournamentId }] },
+      where: {
+        OR: [{ id: dto.tournamentId }, { customName: dto.tournamentId }],
+      },
       include: {
         organization: {
           include: {
@@ -40,11 +42,15 @@ export class TournamentInvitesService {
     }
 
     if (!tournament.organization) {
-      throw new BadRequestException('Tournament is not linked to any organization');
+      throw new BadRequestException(
+        'Tournament is not linked to any organization',
+      );
     }
 
     const membership = tournament.organization.members[0];
-    const isAuthorized = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+    const isAuthorized =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
 
     if (!isAuthorized) {
       throw new ForbiddenException(
@@ -102,7 +108,8 @@ export class TournamentInvitesService {
     }
 
     // Check validity without modifying
-    const isExpired = invite.expiresAt && new Date(invite.expiresAt) < new Date();
+    const isExpired =
+      invite.expiresAt && new Date(invite.expiresAt) < new Date();
     const isMaxedOut = invite.maxUses && invite.usedCount >= invite.maxUses;
 
     return ResponseUtil.success({
@@ -113,7 +120,11 @@ export class TournamentInvitesService {
     });
   }
 
-  async acceptInvite(token: string, userId: string, dto: AcceptTournamentInviteDto) {
+  async acceptInvite(
+    token: string,
+    userId: string,
+    dto: AcceptTournamentInviteDto,
+  ) {
     const invite = await this.db.tournamentInvite.findUnique({
       where: { token },
       include: {
@@ -149,9 +160,13 @@ export class TournamentInvitesService {
 
     if (existingParticipant) {
       if (existingParticipant.status === 'PENDING') {
-        throw new BadRequestException('You have already sent a request to join this tournament. Please wait for the organizer to approve it.');
+        throw new BadRequestException(
+          'You have already sent a request to join this tournament. Please wait for the organizer to approve it.',
+        );
       }
-      throw new BadRequestException('You/Your team is already a participant in this tournament');
+      throw new BadRequestException(
+        'You/Your team is already a participant in this tournament',
+      );
     }
 
     // Check participant limit if not premium
@@ -166,7 +181,8 @@ export class TournamentInvitesService {
       });
       isPremium = !!(
         subscription &&
-        (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
+        (subscription.status === 'ACTIVE' ||
+          subscription.status === 'TRIALING') &&
         (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
       );
     }
@@ -251,9 +267,10 @@ export class TournamentInvitesService {
       participant,
       tournament: invite.tournament,
       status,
-      message: status === 'PENDING' 
-        ? `Request sent! Waiting for approval to join ${invite.tournament.name}`
-        : `Successfully joined ${invite.tournament.name}`,
+      message:
+        status === 'PENDING'
+          ? `Request sent! Waiting for approval to join ${invite.tournament.name}`
+          : `Successfully joined ${invite.tournament.name}`,
     });
   }
 
@@ -270,7 +287,9 @@ export class TournamentInvitesService {
     }
 
     if (!invite.tournament.organization_id) {
-      throw new BadRequestException('Tournament is not linked to any organization');
+      throw new BadRequestException(
+        'Tournament is not linked to any organization',
+      );
     }
 
     // Verify user is a member of the organization that owns this tournament
@@ -281,11 +300,15 @@ export class TournamentInvitesService {
       },
     });
 
-    const isAdmin = membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+    const isAdmin =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
     const isCreator = invite.createdById === userId;
 
     if (!isAdmin && !isCreator) {
-      throw new ForbiddenException('You do not have permission to revoke this invite');
+      throw new ForbiddenException(
+        'You do not have permission to revoke this invite',
+      );
     }
 
     await this.db.tournamentInvite.update({
