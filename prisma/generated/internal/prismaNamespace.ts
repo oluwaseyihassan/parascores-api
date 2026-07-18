@@ -2123,6 +2123,7 @@ export const MatchEventScalarFieldEnum = {
   participant_id: 'participant_id',
   relatedParticipant_id: 'relatedParticipant_id',
   type: 'type',
+  half: 'half',
   minute: 'minute',
   description: 'description',
   metadata: 'metadata',
@@ -2538,6 +2539,20 @@ export type EnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$P
  * Reference to a field of type 'MatchEventType[]'
  */
 export type ListEnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchEventType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'MatchHalf'
+ */
+export type EnumMatchHalfFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchHalf'>
+    
+
+
+/**
+ * Reference to a field of type 'MatchHalf[]'
+ */
+export type ListEnumMatchHalfFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchHalf[]'>
     
 
 

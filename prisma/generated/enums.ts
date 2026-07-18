@@ -78,8 +78,8 @@ export type PlayerStatus = (typeof PlayerStatus)[keyof typeof PlayerStatus]
 export const FixtureStatus = {
   SCHEDULED: 'SCHEDULED',
   LIVE: 'LIVE',
-  NORMAL_TIME_ENDED: 'NORMAL_TIME_ENDED',
   EXTRATIME: 'EXTRATIME',
+  NORMAL_TIME_ENDED: 'NORMAL_TIME_ENDED',
   COMPLETED: 'COMPLETED',
   CANCELLED: 'CANCELLED'
 } as const
@@ -108,6 +108,16 @@ export const MatchEventType = {
 } as const
 
 export type MatchEventType = (typeof MatchEventType)[keyof typeof MatchEventType]
+
+
+export const MatchHalf = {
+  FIRST_HALF: 'FIRST_HALF',
+  SECOND_HALF: 'SECOND_HALF',
+  EXTRA_TIME: 'EXTRA_TIME',
+  PENALTY_SHOOTOUT: 'PENALTY_SHOOTOUT'
+} as const
+
+export type MatchHalf = (typeof MatchHalf)[keyof typeof MatchHalf]
 
 
 export const SubscriptionPlan = {

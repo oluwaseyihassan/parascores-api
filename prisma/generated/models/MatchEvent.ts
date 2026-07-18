@@ -40,6 +40,7 @@ export type MatchEventMinAggregateOutputType = {
   participant_id: string | null
   relatedParticipant_id: string | null
   type: $Enums.MatchEventType | null
+  half: $Enums.MatchHalf | null
   minute: number | null
   description: string | null
   created_at: Date | null
@@ -54,6 +55,7 @@ export type MatchEventMaxAggregateOutputType = {
   participant_id: string | null
   relatedParticipant_id: string | null
   type: $Enums.MatchEventType | null
+  half: $Enums.MatchHalf | null
   minute: number | null
   description: string | null
   created_at: Date | null
@@ -68,6 +70,7 @@ export type MatchEventCountAggregateOutputType = {
   participant_id: number
   relatedParticipant_id: number
   type: number
+  half: number
   minute: number
   description: number
   metadata: number
@@ -93,6 +96,7 @@ export type MatchEventMinAggregateInputType = {
   participant_id?: true
   relatedParticipant_id?: true
   type?: true
+  half?: true
   minute?: true
   description?: true
   created_at?: true
@@ -107,6 +111,7 @@ export type MatchEventMaxAggregateInputType = {
   participant_id?: true
   relatedParticipant_id?: true
   type?: true
+  half?: true
   minute?: true
   description?: true
   created_at?: true
@@ -121,6 +126,7 @@ export type MatchEventCountAggregateInputType = {
   participant_id?: true
   relatedParticipant_id?: true
   type?: true
+  half?: true
   minute?: true
   description?: true
   metadata?: true
@@ -223,6 +229,7 @@ export type MatchEventGroupByOutputType = {
   participant_id: string | null
   relatedParticipant_id: string | null
   type: $Enums.MatchEventType
+  half: $Enums.MatchHalf | null
   minute: number | null
   description: string | null
   metadata: runtime.JsonValue | null
@@ -261,6 +268,7 @@ export type MatchEventWhereInput = {
   participant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   relatedParticipant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   type?: Prisma.EnumMatchEventTypeFilter<"MatchEvent"> | $Enums.MatchEventType
+  half?: Prisma.EnumMatchHalfNullableFilter<"MatchEvent"> | $Enums.MatchHalf | null
   minute?: Prisma.IntNullableFilter<"MatchEvent"> | number | null
   description?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   metadata?: Prisma.JsonNullableFilter<"MatchEvent">
@@ -281,6 +289,7 @@ export type MatchEventOrderByWithRelationInput = {
   participant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   relatedParticipant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  half?: Prisma.SortOrderInput | Prisma.SortOrder
   minute?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -304,6 +313,7 @@ export type MatchEventWhereUniqueInput = Prisma.AtLeast<{
   participant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   relatedParticipant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   type?: Prisma.EnumMatchEventTypeFilter<"MatchEvent"> | $Enums.MatchEventType
+  half?: Prisma.EnumMatchHalfNullableFilter<"MatchEvent"> | $Enums.MatchHalf | null
   minute?: Prisma.IntNullableFilter<"MatchEvent"> | number | null
   description?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   metadata?: Prisma.JsonNullableFilter<"MatchEvent">
@@ -324,6 +334,7 @@ export type MatchEventOrderByWithAggregationInput = {
   participant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   relatedParticipant_id?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  half?: Prisma.SortOrderInput | Prisma.SortOrder
   minute?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -347,6 +358,7 @@ export type MatchEventScalarWhereWithAggregatesInput = {
   participant_id?: Prisma.StringNullableWithAggregatesFilter<"MatchEvent"> | string | null
   relatedParticipant_id?: Prisma.StringNullableWithAggregatesFilter<"MatchEvent"> | string | null
   type?: Prisma.EnumMatchEventTypeWithAggregatesFilter<"MatchEvent"> | $Enums.MatchEventType
+  half?: Prisma.EnumMatchHalfNullableWithAggregatesFilter<"MatchEvent"> | $Enums.MatchHalf | null
   minute?: Prisma.IntNullableWithAggregatesFilter<"MatchEvent"> | number | null
   description?: Prisma.StringNullableWithAggregatesFilter<"MatchEvent"> | string | null
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"MatchEvent">
@@ -359,6 +371,7 @@ export type MatchEventScalarWhereWithAggregatesInput = {
 export type MatchEventCreateInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -377,6 +390,7 @@ export type MatchEventUncheckedCreateInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -389,6 +403,7 @@ export type MatchEventUncheckedCreateInput = {
 export type MatchEventUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -407,6 +422,7 @@ export type MatchEventUncheckedUpdateInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -422,6 +438,7 @@ export type MatchEventCreateManyInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -434,6 +451,7 @@ export type MatchEventCreateManyInput = {
 export type MatchEventUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -447,6 +465,7 @@ export type MatchEventUncheckedUpdateManyInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -472,6 +491,7 @@ export type MatchEventCountOrderByAggregateInput = {
   participant_id?: Prisma.SortOrder
   relatedParticipant_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  half?: Prisma.SortOrder
   minute?: Prisma.SortOrder
   description?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
@@ -491,6 +511,7 @@ export type MatchEventMaxOrderByAggregateInput = {
   participant_id?: Prisma.SortOrder
   relatedParticipant_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  half?: Prisma.SortOrder
   minute?: Prisma.SortOrder
   description?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -505,6 +526,7 @@ export type MatchEventMinOrderByAggregateInput = {
   participant_id?: Prisma.SortOrder
   relatedParticipant_id?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  half?: Prisma.SortOrder
   minute?: Prisma.SortOrder
   description?: Prisma.SortOrder
   created_at?: Prisma.SortOrder
@@ -647,6 +669,10 @@ export type EnumMatchEventTypeFieldUpdateOperationsInput = {
   set?: $Enums.MatchEventType
 }
 
+export type NullableEnumMatchHalfFieldUpdateOperationsInput = {
+  set?: $Enums.MatchHalf | null
+}
+
 export type MatchEventCreateNestedManyWithoutPlayerInput = {
   create?: Prisma.XOR<Prisma.MatchEventCreateWithoutPlayerInput, Prisma.MatchEventUncheckedCreateWithoutPlayerInput> | Prisma.MatchEventCreateWithoutPlayerInput[] | Prisma.MatchEventUncheckedCreateWithoutPlayerInput[]
   connectOrCreate?: Prisma.MatchEventCreateOrConnectWithoutPlayerInput | Prisma.MatchEventCreateOrConnectWithoutPlayerInput[]
@@ -734,6 +760,7 @@ export type MatchEventUncheckedUpdateManyWithoutRelatedPlayerNestedInput = {
 export type MatchEventCreateWithoutParticipantInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -750,6 +777,7 @@ export type MatchEventUncheckedCreateWithoutParticipantInput = {
   fixture_id: string
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -772,6 +800,7 @@ export type MatchEventCreateManyParticipantInputEnvelope = {
 export type MatchEventCreateWithoutRelatedParticipantInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -788,6 +817,7 @@ export type MatchEventUncheckedCreateWithoutRelatedParticipantInput = {
   fixture_id: string
   participant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -832,6 +862,7 @@ export type MatchEventScalarWhereInput = {
   participant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   relatedParticipant_id?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   type?: Prisma.EnumMatchEventTypeFilter<"MatchEvent"> | $Enums.MatchEventType
+  half?: Prisma.EnumMatchHalfNullableFilter<"MatchEvent"> | $Enums.MatchHalf | null
   minute?: Prisma.IntNullableFilter<"MatchEvent"> | number | null
   description?: Prisma.StringNullableFilter<"MatchEvent"> | string | null
   metadata?: Prisma.JsonNullableFilter<"MatchEvent">
@@ -860,6 +891,7 @@ export type MatchEventUpdateManyWithWhereWithoutRelatedParticipantInput = {
 export type MatchEventCreateWithoutFixtureInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -876,6 +908,7 @@ export type MatchEventUncheckedCreateWithoutFixtureInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -914,6 +947,7 @@ export type MatchEventUpdateManyWithWhereWithoutFixtureInput = {
 export type MatchEventCreateWithoutPlayerInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -931,6 +965,7 @@ export type MatchEventUncheckedCreateWithoutPlayerInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -952,6 +987,7 @@ export type MatchEventCreateManyPlayerInputEnvelope = {
 export type MatchEventCreateWithoutRelatedPlayerInput = {
   id?: string
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -969,6 +1005,7 @@ export type MatchEventUncheckedCreateWithoutRelatedPlayerInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1024,6 +1061,7 @@ export type MatchEventCreateManyParticipantInput = {
   fixture_id: string
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1038,6 +1076,7 @@ export type MatchEventCreateManyRelatedParticipantInput = {
   fixture_id: string
   participant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1050,6 +1089,7 @@ export type MatchEventCreateManyRelatedParticipantInput = {
 export type MatchEventUpdateWithoutParticipantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1066,6 +1106,7 @@ export type MatchEventUncheckedUpdateWithoutParticipantInput = {
   fixture_id?: Prisma.StringFieldUpdateOperationsInput | string
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1080,6 +1121,7 @@ export type MatchEventUncheckedUpdateManyWithoutParticipantInput = {
   fixture_id?: Prisma.StringFieldUpdateOperationsInput | string
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1092,6 +1134,7 @@ export type MatchEventUncheckedUpdateManyWithoutParticipantInput = {
 export type MatchEventUpdateWithoutRelatedParticipantInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1108,6 +1151,7 @@ export type MatchEventUncheckedUpdateWithoutRelatedParticipantInput = {
   fixture_id?: Prisma.StringFieldUpdateOperationsInput | string
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1122,6 +1166,7 @@ export type MatchEventUncheckedUpdateManyWithoutRelatedParticipantInput = {
   fixture_id?: Prisma.StringFieldUpdateOperationsInput | string
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1136,6 +1181,7 @@ export type MatchEventCreateManyFixtureInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1148,6 +1194,7 @@ export type MatchEventCreateManyFixtureInput = {
 export type MatchEventUpdateWithoutFixtureInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1164,6 +1211,7 @@ export type MatchEventUncheckedUpdateWithoutFixtureInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1178,6 +1226,7 @@ export type MatchEventUncheckedUpdateManyWithoutFixtureInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1193,6 +1242,7 @@ export type MatchEventCreateManyPlayerInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1207,6 +1257,7 @@ export type MatchEventCreateManyRelatedPlayerInput = {
   participant_id?: string | null
   relatedParticipant_id?: string | null
   type: $Enums.MatchEventType
+  half?: $Enums.MatchHalf | null
   minute?: number | null
   description?: string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1218,6 +1269,7 @@ export type MatchEventCreateManyRelatedPlayerInput = {
 export type MatchEventUpdateWithoutPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1235,6 +1287,7 @@ export type MatchEventUncheckedUpdateWithoutPlayerInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1249,6 +1302,7 @@ export type MatchEventUncheckedUpdateManyWithoutPlayerInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1260,6 +1314,7 @@ export type MatchEventUncheckedUpdateManyWithoutPlayerInput = {
 export type MatchEventUpdateWithoutRelatedPlayerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1277,6 +1332,7 @@ export type MatchEventUncheckedUpdateWithoutRelatedPlayerInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1291,6 +1347,7 @@ export type MatchEventUncheckedUpdateManyWithoutRelatedPlayerInput = {
   participant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   relatedParticipant_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.EnumMatchEventTypeFieldUpdateOperationsInput | $Enums.MatchEventType
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
   minute?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1307,6 +1364,7 @@ export type MatchEventSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   participant_id?: boolean
   relatedParticipant_id?: boolean
   type?: boolean
+  half?: boolean
   minute?: boolean
   description?: boolean
   metadata?: boolean
@@ -1327,6 +1385,7 @@ export type MatchEventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   participant_id?: boolean
   relatedParticipant_id?: boolean
   type?: boolean
+  half?: boolean
   minute?: boolean
   description?: boolean
   metadata?: boolean
@@ -1347,6 +1406,7 @@ export type MatchEventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   participant_id?: boolean
   relatedParticipant_id?: boolean
   type?: boolean
+  half?: boolean
   minute?: boolean
   description?: boolean
   metadata?: boolean
@@ -1367,6 +1427,7 @@ export type MatchEventSelectScalar = {
   participant_id?: boolean
   relatedParticipant_id?: boolean
   type?: boolean
+  half?: boolean
   minute?: boolean
   description?: boolean
   metadata?: boolean
@@ -1376,7 +1437,7 @@ export type MatchEventSelectScalar = {
   relatedPlayerId?: boolean
 }
 
-export type MatchEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fixture_id" | "participant_id" | "relatedParticipant_id" | "type" | "minute" | "description" | "metadata" | "created_at" | "updated_at" | "playerId" | "relatedPlayerId", ExtArgs["result"]["matchEvent"]>
+export type MatchEventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fixture_id" | "participant_id" | "relatedParticipant_id" | "type" | "half" | "minute" | "description" | "metadata" | "created_at" | "updated_at" | "playerId" | "relatedPlayerId", ExtArgs["result"]["matchEvent"]>
 export type MatchEventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixture?: boolean | Prisma.FixtureDefaultArgs<ExtArgs>
   participant?: boolean | Prisma.MatchEvent$participantArgs<ExtArgs>
@@ -1414,6 +1475,7 @@ export type $MatchEventPayload<ExtArgs extends runtime.Types.Extensions.Internal
     participant_id: string | null
     relatedParticipant_id: string | null
     type: $Enums.MatchEventType
+    half: $Enums.MatchHalf | null
     minute: number | null
     description: string | null
     metadata: runtime.JsonValue | null
@@ -1854,6 +1916,7 @@ export interface MatchEventFieldRefs {
   readonly participant_id: Prisma.FieldRef<"MatchEvent", 'String'>
   readonly relatedParticipant_id: Prisma.FieldRef<"MatchEvent", 'String'>
   readonly type: Prisma.FieldRef<"MatchEvent", 'MatchEventType'>
+  readonly half: Prisma.FieldRef<"MatchEvent", 'MatchHalf'>
   readonly minute: Prisma.FieldRef<"MatchEvent", 'Int'>
   readonly description: Prisma.FieldRef<"MatchEvent", 'String'>
   readonly metadata: Prisma.FieldRef<"MatchEvent", 'Json'>
