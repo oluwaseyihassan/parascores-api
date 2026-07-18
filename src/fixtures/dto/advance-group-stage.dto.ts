@@ -14,8 +14,7 @@ export class AdvanceGroupStageDto {
   qualifiedParticipantIds?: string[];
 
   @ApiProperty({
-    description:
-      'Manual ordering/seeding for the knockout bracket (optional)',
+    description: 'Manual ordering/seeding for the knockout bracket (optional)',
     required: false,
     type: [String],
   })

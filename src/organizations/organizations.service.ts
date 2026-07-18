@@ -1,19 +1,34 @@
-import { Injectable, ConflictException, NotFoundException, ForbiddenException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+  ForbiddenException,
+  BadRequestException,
+} from '@nestjs/common';
 import { OrganizationRole } from 'prisma/generated/client';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateOrganizationDto } from './dto/create-organization.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EmailEvents, OrganizationMemberAddedPayload, OrganizationMemberRoleUpdatedPayload, OrganizationMemberRemovedPayload, OrganizationDeleteCodePayload } from 'src/email/email.events';
+import {
+  EmailEvents,
+  OrganizationMemberAddedPayload,
+  OrganizationMemberRoleUpdatedPayload,
+  OrganizationMemberRemovedPayload,
+  OrganizationDeleteCodePayload,
+} from 'src/email/email.events';
 
 // In-memory store for deletion codes (orgId -> { code, expiresAt, userId })
-const deletionCodes = new Map<string, { code: string; expiresAt: Date; userId: string }>();
+const deletionCodes = new Map<
+  string,
+  { code: string; expiresAt: Date; userId: string }
+>();
 
 @Injectable()
 export class OrganizationsService {
   constructor(
     private readonly db: DatabaseService,
-    private readonly eventEmitter: EventEmitter2
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async create(userId: string, dto: CreateOrganizationDto) {
@@ -59,7 +74,10 @@ export class OrganizationsService {
       return org;
     });
 
-    return ResponseUtil.success(organization, 'Organization created successfully');
+    return ResponseUtil.success(
+      organization,
+      'Organization created successfully',
+    );
   }
 
   async findOne(id: string) {
@@ -85,7 +103,10 @@ export class OrganizationsService {
       throw new NotFoundException('Organization not found');
     }
 
-    return ResponseUtil.success(organization, 'Organization retrieved successfully');
+    return ResponseUtil.success(
+      organization,
+      'Organization retrieved successfully',
+    );
   }
 
   async update(id: string, dto: any) {
@@ -121,7 +142,11 @@ export class OrganizationsService {
     return ResponseUtil.success(members, 'Members retrieved successfully');
   }
 
-  async addMember(organizationId: string, email: string, role: OrganizationRole) {
+  async addMember(
+    organizationId: string,
+    email: string,
+    role: OrganizationRole,
+  ) {
     // Find user by email
     const user = await this.db.user.findUnique({ where: { email } });
     if (!user) {
@@ -139,7 +164,9 @@ export class OrganizationsService {
     });
 
     if (existingMember) {
-      throw new ConflictException('User is already a member of this organization.');
+      throw new ConflictException(
+        'User is already a member of this organization.',
+      );
     }
 
     const member = await this.db.organizationMember.create({
@@ -169,7 +196,9 @@ export class OrganizationsService {
     }
 
     // Emit event for email notification
-    const organization = await this.db.organization.findUnique({ where: { id: organizationId } });
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+    });
     if (organization) {
       this.eventEmitter.emit(EmailEvents.ORGANIZATION_MEMBER_ADDED, {
         email: user.email,
@@ -182,7 +211,11 @@ export class OrganizationsService {
     return ResponseUtil.success(member, 'Member added successfully');
   }
 
-  async updateMemberRole(organizationId: string, userId: string, role: OrganizationRole) {
+  async updateMemberRole(
+    organizationId: string,
+    userId: string,
+    role: OrganizationRole,
+  ) {
     // If demoting an owner, ensure there is at least one other owner
     if (role !== 'OWNER') {
       const owners = await this.db.organizationMember.count({
@@ -193,7 +226,9 @@ export class OrganizationsService {
       });
 
       if (currentMember?.role === 'OWNER' && owners <= 1) {
-        throw new ForbiddenException('Cannot demote the last owner of the organization.');
+        throw new ForbiddenException(
+          'Cannot demote the last owner of the organization.',
+        );
       }
     }
 
@@ -218,7 +253,9 @@ export class OrganizationsService {
     });
 
     // Emit event for email notification
-    const organization = await this.db.organization.findUnique({ where: { id: organizationId } });
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+    });
     if (organization) {
       this.eventEmitter.emit(EmailEvents.ORGANIZATION_MEMBER_ROLE_UPDATED, {
         email: updated.user.email,
@@ -251,11 +288,15 @@ export class OrganizationsService {
         where: { organizationId, role: 'OWNER' },
       });
       if (owners <= 1) {
-        throw new ForbiddenException('Cannot remove the last owner of the organization.');
+        throw new ForbiddenException(
+          'Cannot remove the last owner of the organization.',
+        );
       }
     }
 
-    const organization = await this.db.organization.findUnique({ where: { id: organizationId } });
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+    });
     const user = await this.db.user.findUnique({ where: { id: userId } });
 
     await this.db.organizationMember.delete({
@@ -283,7 +324,11 @@ export class OrganizationsService {
    * Validates that a user has one of the required roles in an organization.
    * Throws ForbiddenException if not authorized.
    */
-  async validateMemberRole(organizationId: string, userId: string, requiredRoles: OrganizationRole[]) {
+  async validateMemberRole(
+    organizationId: string,
+    userId: string,
+    requiredRoles: OrganizationRole[],
+  ) {
     const membership = await this.db.organizationMember.findUnique({
       where: {
         organizationId_userId: {
@@ -294,7 +339,9 @@ export class OrganizationsService {
     });
 
     if (!membership || !requiredRoles.includes(membership.role)) {
-      throw new ForbiddenException('You do not have the required permissions to perform this action.');
+      throw new ForbiddenException(
+        'You do not have the required permissions to perform this action.',
+      );
     }
 
     return membership;
@@ -328,7 +375,10 @@ export class OrganizationsService {
       throw new NotFoundException('Organization not found');
     }
 
-    return ResponseUtil.success(organization, 'Organization public profile retrieved successfully');
+    return ResponseUtil.success(
+      organization,
+      'Organization public profile retrieved successfully',
+    );
   }
 
   async requestDeleteCode(orgId: string, userId: string) {
@@ -343,7 +393,9 @@ export class OrganizationsService {
     if (!user) throw new NotFoundException('User not found');
 
     // Count tournaments that will be deleted
-    const tournamentCount = await this.db.tournament.count({ where: { organization_id: orgId } });
+    const tournamentCount = await this.db.tournament.count({
+      where: { organization_id: orgId },
+    });
 
     // Generate 6-digit code
     const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -356,9 +408,12 @@ export class OrganizationsService {
     });
 
     // Auto-cleanup after 10 minutes
-    setTimeout(() => {
-      deletionCodes.delete(orgId);
-    }, 10 * 60 * 1000);
+    setTimeout(
+      () => {
+        deletionCodes.delete(orgId);
+      },
+      10 * 60 * 1000,
+    );
 
     // Emit email event
     this.eventEmitter.emit(EmailEvents.ORGANIZATION_DELETE_CODE, {
@@ -370,7 +425,12 @@ export class OrganizationsService {
     } as OrganizationDeleteCodePayload);
 
     return ResponseUtil.success(
-      { tournamentCount, memberCount: await this.db.organizationMember.count({ where: { organizationId: orgId } }) },
+      {
+        tournamentCount,
+        memberCount: await this.db.organizationMember.count({
+          where: { organizationId: orgId },
+        }),
+      },
       'Verification code sent to your email',
     );
   }
@@ -385,7 +445,9 @@ export class OrganizationsService {
     // Validate code
     const stored = deletionCodes.get(orgId);
     if (!stored) {
-      throw new BadRequestException('No deletion code found. Please request a new code.');
+      throw new BadRequestException(
+        'No deletion code found. Please request a new code.',
+      );
     }
 
     if (stored.userId !== userId) {
@@ -394,7 +456,9 @@ export class OrganizationsService {
 
     if (new Date() > stored.expiresAt) {
       deletionCodes.delete(orgId);
-      throw new BadRequestException('Verification code has expired. Please request a new one.');
+      throw new BadRequestException(
+        'Verification code has expired. Please request a new one.',
+      );
     }
 
     if (stored.code !== code) {
@@ -409,27 +473,51 @@ export class OrganizationsService {
         select: { id: true },
       });
 
-      const tournamentIds = tournaments.map(t => t.id);
+      const tournamentIds = tournaments.map((t) => t.id);
 
       if (tournamentIds.length > 0) {
         // Delete all tournament-related data
-        await tx.matchEvent.deleteMany({ where: { fixture: { tournament_id: { in: tournamentIds } } } });
-        await tx.fixture.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.standing.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.player.deleteMany({ where: { participant: { tournament_id: { in: tournamentIds } } } });
-        await tx.teamInvite.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.participant.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.group.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.sponsor.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.social.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.venue.deleteMany({ where: { tournament_id: { in: tournamentIds } } });
-        await tx.tournamentFollower.deleteMany({ where: { tournamentId: { in: tournamentIds } } });
+        await tx.matchEvent.deleteMany({
+          where: { fixture: { tournament_id: { in: tournamentIds } } },
+        });
+        await tx.fixture.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.standing.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.player.deleteMany({
+          where: { participant: { tournament_id: { in: tournamentIds } } },
+        });
+        await tx.teamInvite.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.participant.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.group.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.sponsor.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.social.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.venue.deleteMany({
+          where: { tournament_id: { in: tournamentIds } },
+        });
+        await tx.tournamentFollower.deleteMany({
+          where: { tournamentId: { in: tournamentIds } },
+        });
         await tx.tournament.deleteMany({ where: { organization_id: orgId } });
       }
 
       // Delete org-level socials and members, then the org itself
       await tx.social.deleteMany({ where: { organization_id: orgId } });
-      await tx.organizationMember.deleteMany({ where: { organizationId: orgId } });
+      await tx.organizationMember.deleteMany({
+        where: { organizationId: orgId },
+      });
       await tx.organization.delete({ where: { id: orgId } });
     });
 

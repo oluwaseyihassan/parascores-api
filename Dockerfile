@@ -24,4 +24,4 @@ COPY --from=build /app/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 3000
 
-CMD npx prisma migrate deploy && node dist/src/main.js
+CMD ["sh", "-c", "set -e; echo 'Running Prisma migrations...'; npx prisma migrate deploy 2>&1; echo 'Starting application...'; exec node dist/src/main.js 2>&1"]

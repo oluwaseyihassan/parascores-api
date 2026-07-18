@@ -62,7 +62,6 @@ export class GenerateFixturesDto {
   @IsOptional()
   teamsPerGroup?: number;
 
-
   @ApiPropertyOptional({
     description:
       'Manual group assignments. Keys are group labels (e.g. "Group A"), values are arrays of participant IDs.',

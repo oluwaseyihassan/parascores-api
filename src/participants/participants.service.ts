@@ -5,8 +5,14 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { AddParticipantDto, BulkAddParticipantDto } from 'src/participants/dto/add-participant.dto';
-import { AddPlayerDto, BulkAddPlayerDto } from 'src/participants/dto/add-player.dto';
+import {
+  AddParticipantDto,
+  BulkAddParticipantDto,
+} from 'src/participants/dto/add-participant.dto';
+import {
+  AddPlayerDto,
+  BulkAddPlayerDto,
+} from 'src/participants/dto/add-player.dto';
 import { UpdateParticipantDto } from 'src/participants/dto/update-participant.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { EventEmitter2 } from '@nestjs/event-emitter';
@@ -56,13 +62,14 @@ export class ParticipantsService {
     }
 
     const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: tournament.organization_id! },
+      where: { organizationId: tournament.organization_id },
     });
-    const isPremium = tournament.isPremium || (
-      subscription &&
-      (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
-      (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
-    );
+    const isPremium =
+      tournament.isPremium ||
+      (subscription &&
+        (subscription.status === 'ACTIVE' ||
+          subscription.status === 'TRIALING') &&
+        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE'));
 
     if (!isPremium && tournament.participants.length >= 32) {
       throw new BadRequestException(
@@ -133,15 +140,19 @@ export class ParticipantsService {
     }
 
     const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: tournament.organization_id! },
+      where: { organizationId: tournament.organization_id },
     });
-    const isPremium = tournament.isPremium || (
-      subscription &&
-      (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
-      (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
-    );
+    const isPremium =
+      tournament.isPremium ||
+      (subscription &&
+        (subscription.status === 'ACTIVE' ||
+          subscription.status === 'TRIALING') &&
+        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE'));
 
-    if (!isPremium && (tournament.participants.length + dto.participants.length) > 32) {
+    if (
+      !isPremium &&
+      tournament.participants.length + dto.participants.length > 32
+    ) {
       throw new BadRequestException(
         'Free tournaments are limited to a maximum of 32 participants. Please upgrade to Premium or Pro.',
       );
@@ -149,9 +160,12 @@ export class ParticipantsService {
 
     if (
       tournament.maxParticipants &&
-      (tournament.participants.length + dto.participants.length) > tournament.maxParticipants
+      tournament.participants.length + dto.participants.length >
+        tournament.maxParticipants
     ) {
-      throw new BadRequestException(`Adding these participants would exceed the maximum limit of ${tournament.maxParticipants}`);
+      throw new BadRequestException(
+        `Adding these participants would exceed the maximum limit of ${tournament.maxParticipants}`,
+      );
     }
 
     if (tournament.fixtures.length > 0) {
@@ -160,7 +174,7 @@ export class ParticipantsService {
       );
     }
 
-    const participantsData = dto.participants.map(p => ({
+    const participantsData = dto.participants.map((p) => ({
       tournament_id: tournament.id,
       user_id: p.userId,
       customName: p.customName,
@@ -302,7 +316,8 @@ export class ParticipantsService {
       where: { id: participantId },
       data: {
         customName: dto.customName !== undefined ? dto.customName : undefined,
-        customShortName: dto.customShortName !== undefined ? dto.customShortName : undefined,
+        customShortName:
+          dto.customShortName !== undefined ? dto.customShortName : undefined,
         logoUrl: dto.logoUrl !== undefined ? dto.logoUrl : undefined,
         groupId: dto.groupId !== undefined ? dto.groupId : undefined,
         team_id: dto.teamId !== undefined ? dto.teamId : undefined,
@@ -312,7 +327,7 @@ export class ParticipantsService {
         user: true,
         team: true,
         group: true,
-      }
+      },
     });
 
     // Sync standing if groupId was changed
@@ -350,7 +365,10 @@ export class ParticipantsService {
     });
   }
 
-  private async syncParticipantStanding(participantId: string, groupId: string | null) {
+  private async syncParticipantStanding(
+    participantId: string,
+    groupId: string | null,
+  ) {
     const participant = await this.db.participant.findUnique({
       where: { id: participantId },
       include: { group: true, tournament: true },
@@ -417,7 +435,7 @@ export class ParticipantsService {
         },
       });
       const isTeamJoin = payments.some((p: any) => {
-        const meta = p.metadata as any;
+        const meta = p.metadata;
         return meta && meta.playerId === playerId;
       });
 
@@ -501,7 +519,7 @@ export class ParticipantsService {
         });
 
         const payment = payments.find((p: any) => {
-          const meta = p.metadata as any;
+          const meta = p.metadata;
           return meta && meta.playerId === playerId && !meta.refunded;
         });
 
@@ -513,7 +531,10 @@ export class ParticipantsService {
           });
 
           if (refundRes?.status) {
-            const currentMetadata = (payment.metadata || {}) as Record<string, any>;
+            const currentMetadata = (payment.metadata || {}) as Record<
+              string,
+              any
+            >;
             await this.db.payment.update({
               where: { id: payment.id },
               data: {
@@ -525,11 +546,16 @@ export class ParticipantsService {
                 },
               },
             });
-            console.log(`Successfully triggered Paystack refund for payment reference ${payment.paystackReference}`);
+            console.log(
+              `Successfully triggered Paystack refund for payment reference ${payment.paystackReference}`,
+            );
           }
         }
       } catch (refundError) {
-        console.error('Failed to trigger automatic Paystack refund:', refundError);
+        console.error(
+          'Failed to trigger automatic Paystack refund:',
+          refundError,
+        );
       }
     }
 
@@ -561,10 +587,10 @@ export class ParticipantsService {
   ) {
     const participant = await this.db.participant.findUnique({
       where: { id: participantId },
-      include: { 
+      include: {
         tournament: true,
         user: true,
-        team: true
+        team: true,
       },
     });
 
@@ -584,9 +610,12 @@ export class ParticipantsService {
       },
     });
 
-    const isAuthorized = isMember && (isMember.role === 'OWNER' || isMember.role === 'ADMIN');
+    const isAuthorized =
+      isMember && (isMember.role === 'OWNER' || isMember.role === 'ADMIN');
     if (!isAuthorized) {
-      throw new ForbiddenException('You are not authorized to update participant status');
+      throw new ForbiddenException(
+        'You are not authorized to update participant status',
+      );
     }
 
     const updatedParticipant = await this.db.participant.update({
@@ -597,7 +626,7 @@ export class ParticipantsService {
         user: true,
         team: true,
         group: true,
-      }
+      },
     });
 
     // Notify user
@@ -607,7 +636,10 @@ export class ParticipantsService {
         this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_APPROVAL, {
           userEmail: updatedParticipant.user.email,
           userName: updatedParticipant.user.name,
-          teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
+          teamName:
+            updatedParticipant.customName ||
+            updatedParticipant.team?.name ||
+            'your team',
           tournamentName: participant.tournament.name,
           tournamentUrl,
           tournamentLogoUrl: participant.tournament.logoUrl || undefined,
@@ -616,7 +648,10 @@ export class ParticipantsService {
         this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_REJECTION, {
           userEmail: updatedParticipant.user.email,
           userName: updatedParticipant.user.name,
-          teamName: updatedParticipant.customName || updatedParticipant.team?.name || 'your team',
+          teamName:
+            updatedParticipant.customName ||
+            updatedParticipant.team?.name ||
+            'your team',
           tournamentName: participant.tournament.name,
           tournamentLogoUrl: participant.tournament.logoUrl || undefined,
         });
@@ -625,7 +660,10 @@ export class ParticipantsService {
 
     // Sync standing if confirmed
     if (status.toUpperCase() === 'CONFIRMED' && updatedParticipant.groupId) {
-      await this.syncParticipantStanding(participantId, updatedParticipant.groupId);
+      await this.syncParticipantStanding(
+        participantId,
+        updatedParticipant.groupId,
+      );
     }
 
     return ResponseUtil.success(updatedParticipant);

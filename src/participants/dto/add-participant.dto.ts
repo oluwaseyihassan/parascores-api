@@ -7,7 +7,7 @@ import {
   ValidateIf,
   IsArray,
   ValidateNested,
-  MaxLength
+  MaxLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { ApiPropertyOptional } from '@nestjs/swagger';

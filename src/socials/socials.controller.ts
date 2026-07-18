@@ -45,7 +45,9 @@ export class SocialsController {
   @Public()
   @Get('/organizations/:organizationId')
   @ApiOperation({ summary: 'Get social links of an organization' })
-  async getOrganizationSocials(@Param('organizationId') organizationId: string) {
+  async getOrganizationSocials(
+    @Param('organizationId') organizationId: string,
+  ) {
     return this.socialsService.getOrganizationSocials(organizationId);
   }
 

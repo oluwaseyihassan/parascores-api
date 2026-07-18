@@ -2,7 +2,10 @@ import { IsString, IsNotEmpty, IsDateString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class StartSeasonDto {
-  @ApiProperty({ description: 'The name of the new season', example: '2024/2025' })
+  @ApiProperty({
+    description: 'The name of the new season',
+    example: '2024/2025',
+  })
   @IsString()
   @IsNotEmpty()
   seasonName: string;

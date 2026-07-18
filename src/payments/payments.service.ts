@@ -42,11 +42,10 @@ export class PaymentsService {
     const { organizationId, planType, callbackUrl, amount, tournamentId } = dto;
 
     // 1. Validate user is OWNER or ADMIN of the org
-    await this.organizationsService.validateMemberRole(
-      organizationId,
-      userId,
-      ['OWNER', 'ADMIN'],
-    );
+    await this.organizationsService.validateMemberRole(organizationId, userId, [
+      'OWNER',
+      'ADMIN',
+    ]);
 
     // 2. Fetch org details and user email
     const [org, user] = await Promise.all([
@@ -63,10 +62,7 @@ export class PaymentsService {
     if (tournamentId) {
       const tournament = await this.db.tournament.findFirst({
         where: {
-          OR: [
-            { id: tournamentId },
-            { customName: tournamentId },
-          ],
+          OR: [{ id: tournamentId }, { customName: tournamentId }],
         },
       });
       if (!tournament) throw new NotFoundException('Tournament not found');
@@ -87,7 +83,8 @@ export class PaymentsService {
     }
 
     // 4. Resolve the Paystack plan code and subscription plan from the planType
-    const { paystackPlanCode, subscriptionPlan } = this.resolvePlanType(planType);
+    const { paystackPlanCode, subscriptionPlan } =
+      this.resolvePlanType(planType);
 
     // 5. Initialize Paystack transaction
     const paystackResponse = await this.paystack.initializeTransaction({
@@ -152,16 +149,14 @@ export class PaymentsService {
    * Creates a PENDING Payment record and returns the Paystack checkout URL.
    */
   async initializeRegistration(userId: string, dto: InitializeRegistrationDto) {
-    const { tournamentId, teamId, customName, logoUrl, token, callbackUrl } = dto;
+    const { tournamentId, teamId, customName, logoUrl, token, callbackUrl } =
+      dto;
 
     // 1. Fetch details and validate
     const [tournament, user, invite] = await Promise.all([
       this.db.tournament.findFirst({
         where: {
-          OR: [
-            { id: tournamentId },
-            { customName: tournamentId },
-          ],
+          OR: [{ id: tournamentId }, { customName: tournamentId }],
         },
       }),
       this.db.user.findUnique({ where: { id: userId } }),
@@ -187,11 +182,15 @@ export class PaymentsService {
     }
 
     if (invite.maxUses && invite.usedCount >= invite.maxUses) {
-      throw new BadRequestException('Invite token has reached its maximum uses');
+      throw new BadRequestException(
+        'Invite token has reached its maximum uses',
+      );
     }
 
     if (!tournament.isPaidRegistration) {
-      throw new BadRequestException('This tournament does not require a registration fee');
+      throw new BadRequestException(
+        'This tournament does not require a registration fee',
+      );
     }
 
     if (!tournament.organization_id) {
@@ -206,11 +205,12 @@ export class PaymentsService {
     const subscription = await this.db.subscription.findUnique({
       where: { organizationId: tournament.organization_id },
     });
-    const isPremium = tournament.isPremium || (
-      subscription &&
-      (subscription.status === 'ACTIVE' || subscription.status === 'TRIALING') &&
-      (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE')
-    );
+    const isPremium =
+      tournament.isPremium ||
+      (subscription &&
+        (subscription.status === 'ACTIVE' ||
+          subscription.status === 'TRIALING') &&
+        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE'));
 
     if (!isPremium && currentParticipantCount >= 32) {
       throw new BadRequestException(
@@ -307,7 +307,10 @@ export class PaymentsService {
 
     // 2. Validate claim code if provided
     if (code) {
-      if (!player.linkCode || player.linkCode.toUpperCase() !== code.toUpperCase()) {
+      if (
+        !player.linkCode ||
+        player.linkCode.toUpperCase() !== code.toUpperCase()
+      ) {
         throw new BadRequestException('Invalid claim code');
       }
 
@@ -317,7 +320,9 @@ export class PaymentsService {
     }
 
     if (player.userId) {
-      throw new BadRequestException('This player profile is already linked to a user');
+      throw new BadRequestException(
+        'This player profile is already linked to a user',
+      );
     }
 
     // Check if user already has a claimed player profile in this tournament
@@ -331,7 +336,9 @@ export class PaymentsService {
     });
 
     if (existingPlayerInTournament) {
-      throw new BadRequestException('You already have a linked player profile in this tournament');
+      throw new BadRequestException(
+        'You already have a linked player profile in this tournament',
+      );
     }
 
     const feeAmount = 50000; // 500 Naira (50000 kobo)
@@ -440,7 +447,9 @@ export class PaymentsService {
     });
 
     if (alreadyInTournament) {
-      throw new BadRequestException('You are already registered or have a pending request in this tournament');
+      throw new BadRequestException(
+        'You are already registered or have a pending request in this tournament',
+      );
     }
 
     const feeAmount = 50000; // 500 Naira (50000 kobo)
@@ -542,12 +551,14 @@ export class PaymentsService {
         const participant = await this.db.participant.findFirst({
           where: {
             tournament_id: payment.tournamentId!,
-            ...(metadata.teamId ? { team_id: metadata.teamId } : { user_id: payment.userId! }),
+            ...(metadata.teamId
+              ? { team_id: metadata.teamId }
+              : { user_id: payment.userId! }),
           },
           include: {
             user: true,
             team: true,
-          }
+          },
         });
         return ResponseUtil.success({
           payment,
@@ -599,7 +610,9 @@ export class PaymentsService {
 
         // Another process (webhook) already handled this — return current state
         if (updateResult.count === 0) {
-          const currentPayment = await tx.payment.findUnique({ where: { id: payment.id } });
+          const currentPayment = await tx.payment.findUnique({
+            where: { id: payment.id },
+          });
           if (payment.type === 'PLAYER_CLAIM') {
             const metadata = payment.metadata as any;
             return ResponseUtil.success({
@@ -631,12 +644,14 @@ export class PaymentsService {
             const participant = await tx.participant.findFirst({
               where: {
                 tournament_id: payment.tournamentId!,
-                ...(metadata.teamId ? { team_id: metadata.teamId } : { user_id: payment.userId! }),
+                ...(metadata.teamId
+                  ? { team_id: metadata.teamId }
+                  : { user_id: payment.userId! }),
               },
               include: {
                 user: true,
                 team: true,
-              }
+              },
             });
             return ResponseUtil.success({
               payment: currentPayment,
@@ -660,10 +675,15 @@ export class PaymentsService {
             });
           }
 
-          return ResponseUtil.success({ payment: currentPayment, subscription });
+          return ResponseUtil.success({
+            payment: currentPayment,
+            subscription,
+          });
         }
 
-        const updatedPayment = await tx.payment.findUnique({ where: { id: payment.id } });
+        const updatedPayment = await tx.payment.findUnique({
+          where: { id: payment.id },
+        });
 
         // Handle player claim payment
         if (payment.type === 'PLAYER_CLAIM') {
@@ -738,7 +758,8 @@ export class PaymentsService {
         // Handle tournament registration payment
         if (payment.type === 'TOURNAMENT_REGISTRATION') {
           const metadata = payment.metadata as any;
-          const { tournamentId, userId, teamId, customName, logoUrl, token } = metadata;
+          const { tournamentId, userId, teamId, customName, logoUrl, token } =
+            metadata;
 
           let participant = await tx.participant.findFirst({
             where: {
@@ -748,7 +769,7 @@ export class PaymentsService {
             include: {
               user: true,
               team: true,
-            }
+            },
           });
 
           if (!participant) {
@@ -775,7 +796,7 @@ export class PaymentsService {
               include: {
                 user: true,
                 team: true,
-              }
+              },
             });
 
             await tx.tournamentInvite.update({
@@ -784,13 +805,16 @@ export class PaymentsService {
             });
 
             const fullTournament = await tx.tournament.findUnique({
-              where: { id: tournamentId }
+              where: { id: tournamentId },
             });
             if (participant.user?.email && fullTournament) {
               notifyPayload = {
                 userEmail: participant.user.email,
                 userName: participant.user.name,
-                teamName: participant.customName || participant.team?.name || 'your team',
+                teamName:
+                  participant.customName ||
+                  participant.team?.name ||
+                  'your team',
                 tournamentName: fullTournament.name,
                 tournamentUrl: `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/t/${fullTournament.customName || fullTournament.id}`,
                 tournamentLogoUrl: fullTournament.logoUrl || undefined,
@@ -806,7 +830,10 @@ export class PaymentsService {
         }
 
         // 4. Handle per-tournament upgrade (no subscription period needed)
-        if (payment.plan === SubscriptionPlan.PER_TOURNAMENT && payment.tournamentId) {
+        if (
+          payment.plan === SubscriptionPlan.PER_TOURNAMENT &&
+          payment.tournamentId
+        ) {
           await tx.tournament.update({
             where: { id: payment.tournamentId },
             data: { isPremium: true },
@@ -819,7 +846,9 @@ export class PaymentsService {
 
         // 5. Activate org subscription with period calculation
         if (!payment.organizationId) {
-          throw new BadRequestException('Organization ID is missing for subscription activation');
+          throw new BadRequestException(
+            'Organization ID is missing for subscription activation',
+          );
         }
         const now = new Date();
         const periodEnd = new Date(now);
@@ -840,7 +869,9 @@ export class PaymentsService {
             plan: payment.plan || SubscriptionPlan.PRO,
             status: SubscriptionStatus.ACTIVE,
             paystackCustomerCode: txData.customer.customer_code,
-            paystackPlanCode: txData.plan_object?.plan_code || (payment.metadata as any)?.planCode,
+            paystackPlanCode:
+              txData.plan_object?.plan_code ||
+              (payment.metadata as any)?.planCode,
             currentPeriodStart: now,
             currentPeriodEnd: periodEnd,
           },
@@ -848,7 +879,9 @@ export class PaymentsService {
             plan: payment.plan || SubscriptionPlan.PRO,
             status: SubscriptionStatus.ACTIVE,
             paystackCustomerCode: txData.customer.customer_code,
-            paystackPlanCode: txData.plan_object?.plan_code || (payment.metadata as any)?.planCode,
+            paystackPlanCode:
+              txData.plan_object?.plan_code ||
+              (payment.metadata as any)?.planCode,
             currentPeriodStart: now,
             currentPeriodEnd: periodEnd,
             cancelledAt: null,
@@ -860,22 +893,36 @@ export class PaymentsService {
 
       if (notifyPayload) {
         try {
-          this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_APPROVAL, notifyPayload);
+          this.eventEmitter.emit(
+            EmailEvents.TOURNAMENT_JOIN_APPROVAL,
+            notifyPayload,
+          );
         } catch (err) {
-          this.logger.error('Failed to emit tournament join approval event via callback:', err);
+          this.logger.error(
+            'Failed to emit tournament join approval event via callback:',
+            err,
+          );
         }
       }
 
       if (payment.type === 'PLAYER_CLAIM' && result.success) {
         const metadata = payment.metadata as any;
-        await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
+        await this.notifyOrganizersOfClaim(
+          this.db,
+          metadata.playerId,
+          metadata.userId,
+        );
       }
 
       if (payment.type === 'TEAM_JOIN' && result.success) {
         const metadata = payment.metadata as any;
         const player = (result as any).data?.player;
         if (player && player.status === 'PENDING') {
-          await this.notifyOrganizersOfClaim(this.db, player.id, metadata.userId);
+          await this.notifyOrganizersOfClaim(
+            this.db,
+            player.id,
+            metadata.userId,
+          );
         }
       }
 
@@ -995,7 +1042,11 @@ export class PaymentsService {
 
   // ─── Private Helpers ─────────────────────────────────────
 
-  private async notifyOrganizersOfClaim(db: DatabaseService, playerId: string, userId: string) {
+  private async notifyOrganizersOfClaim(
+    db: DatabaseService,
+    playerId: string,
+    userId: string,
+  ) {
     try {
       const playerWithTourney = await db.player.findUnique({
         where: { id: playerId },
@@ -1008,34 +1059,40 @@ export class PaymentsService {
                     include: {
                       members: {
                         where: {
-                          role: { in: ['OWNER', 'ADMIN'] }
+                          role: { in: ['OWNER', 'ADMIN'] },
                         },
                         include: {
-                          user: true
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+                          user: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
       });
 
       if (playerWithTourney?.participant?.tournament?.organization?.members) {
         const playerUser = await db.user.findUnique({ where: { id: userId } });
-        for (const member of playerWithTourney.participant.tournament.organization.members) {
+        for (const member of playerWithTourney.participant.tournament
+          .organization.members) {
           if (member.user?.email) {
             const notifyPayload = {
               organizerEmail: member.user.email,
               organizerName: member.user.name,
               playerName: playerUser?.name || playerWithTourney.name,
-              teamName: playerWithTourney.participant.customName || 'Individual',
+              teamName:
+                playerWithTourney.participant.customName || 'Individual',
               tournamentName: playerWithTourney.participant.tournament.name,
-              tournamentLogoUrl: playerWithTourney.participant.tournament.logoUrl || undefined,
+              tournamentLogoUrl:
+                playerWithTourney.participant.tournament.logoUrl || undefined,
             };
-            this.eventEmitter.emit(EmailEvents.TEAM_JOIN_REQUEST, notifyPayload);
+            this.eventEmitter.emit(
+              EmailEvents.TEAM_JOIN_REQUEST,
+              notifyPayload,
+            );
           }
         }
       }
@@ -1068,7 +1125,6 @@ export class PaymentsService {
         throw new BadRequestException(`Unknown plan type: ${planType}`);
     }
   }
-
 
   // ─── Webhook Handlers ────────────────────────────────────
 
@@ -1172,7 +1228,8 @@ export class PaymentsService {
       // Handle tournament registration payment
       if (payment.type === 'TOURNAMENT_REGISTRATION') {
         const metadata = payment.metadata as any;
-        const { tournamentId, userId, teamId, customName, logoUrl, token } = metadata;
+        const { tournamentId, userId, teamId, customName, logoUrl, token } =
+          metadata;
 
         let participant = await tx.participant.findFirst({
           where: {
@@ -1182,7 +1239,7 @@ export class PaymentsService {
           include: {
             user: true,
             team: true,
-          }
+          },
         });
 
         if (!participant) {
@@ -1209,7 +1266,7 @@ export class PaymentsService {
             include: {
               user: true,
               team: true,
-            }
+            },
           });
 
           await tx.tournamentInvite.update({
@@ -1218,13 +1275,14 @@ export class PaymentsService {
           });
 
           const fullTournament = await tx.tournament.findUnique({
-            where: { id: tournamentId }
+            where: { id: tournamentId },
           });
           if (participant.user?.email && fullTournament) {
             notifyPayload = {
               userEmail: participant.user.email,
               userName: participant.user.name,
-              teamName: participant.customName || participant.team?.name || 'your team',
+              teamName:
+                participant.customName || participant.team?.name || 'your team',
               tournamentName: fullTournament.name,
               tournamentUrl: `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/t/${fullTournament.customName || fullTournament.id}`,
               tournamentLogoUrl: fullTournament.logoUrl || undefined,
@@ -1235,7 +1293,10 @@ export class PaymentsService {
       }
 
       // Handle per-tournament upgrade
-      if (payment.plan === SubscriptionPlan.PER_TOURNAMENT && payment.tournamentId) {
+      if (
+        payment.plan === SubscriptionPlan.PER_TOURNAMENT &&
+        payment.tournamentId
+      ) {
         await tx.tournament.update({
           where: { id: payment.tournamentId },
           data: { isPremium: true },
@@ -1248,7 +1309,9 @@ export class PaymentsService {
 
       // Activate org subscription with period calculation
       if (!payment.organizationId) {
-        this.logger.warn(`Organization ID is missing for charge success callback ${reference}`);
+        this.logger.warn(
+          `Organization ID is missing for charge success callback ${reference}`,
+        );
         return;
       }
       const now = new Date();
@@ -1270,7 +1333,8 @@ export class PaymentsService {
           plan: payment.plan || SubscriptionPlan.PRO,
           status: SubscriptionStatus.ACTIVE,
           paystackCustomerCode: data.customer?.customer_code,
-          paystackPlanCode: data.plan_object?.plan_code || (payment.metadata as any)?.planCode,
+          paystackPlanCode:
+            data.plan_object?.plan_code || (payment.metadata as any)?.planCode,
           currentPeriodStart: now,
           currentPeriodEnd: periodEnd,
         },
@@ -1278,7 +1342,8 @@ export class PaymentsService {
           plan: payment.plan || SubscriptionPlan.PRO,
           status: SubscriptionStatus.ACTIVE,
           paystackCustomerCode: data.customer?.customer_code,
-          paystackPlanCode: data.plan_object?.plan_code || (payment.metadata as any)?.planCode,
+          paystackPlanCode:
+            data.plan_object?.plan_code || (payment.metadata as any)?.planCode,
           currentPeriodStart: now,
           currentPeriodEnd: periodEnd,
           cancelledAt: null,
@@ -1292,15 +1357,25 @@ export class PaymentsService {
 
     if (notifyPayload) {
       try {
-        this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_APPROVAL, notifyPayload);
+        this.eventEmitter.emit(
+          EmailEvents.TOURNAMENT_JOIN_APPROVAL,
+          notifyPayload,
+        );
       } catch (err) {
-        this.logger.error('Failed to emit tournament join approval event via webhook:', err);
+        this.logger.error(
+          'Failed to emit tournament join approval event via webhook:',
+          err,
+        );
       }
     }
 
     if (payment.type === 'PLAYER_CLAIM') {
       const metadata = payment.metadata as any;
-      await this.notifyOrganizersOfClaim(this.db, metadata.playerId, metadata.userId);
+      await this.notifyOrganizersOfClaim(
+        this.db,
+        metadata.playerId,
+        metadata.userId,
+      );
     }
 
     if (payment.type === 'TEAM_JOIN') {
