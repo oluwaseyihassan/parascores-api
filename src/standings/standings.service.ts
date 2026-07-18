@@ -156,7 +156,9 @@ export class StandingsService {
     // Invalidate caches
     await this.redisService.del(`standings:${standing.tournament_id}`);
     if (standing.tournament?.customName) {
-      await this.redisService.del(`standings:${standing.tournament.customName}`);
+      await this.redisService.del(
+        `standings:${standing.tournament.customName}`,
+      );
     }
 
     return ResponseUtil.success(updatedStanding);
@@ -174,7 +176,9 @@ export class StandingsService {
     // Invalidate caches
     await this.redisService.del(`standings:${standing.tournament_id}`);
     if (standing.tournament?.customName) {
-      await this.redisService.del(`standings:${standing.tournament.customName}`);
+      await this.redisService.del(
+        `standings:${standing.tournament.customName}`,
+      );
     }
 
     return ResponseUtil.success({ message: 'Standing deleted successfully' });

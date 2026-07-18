@@ -61,10 +61,7 @@ export class FixturesController {
   // Create a single fixture manually
   @Post()
   @ApiOperation({ summary: 'Create a single fixture manually' })
-  async create(
-    @Body() createFixtureDto: CreateFixtureDto,
-    @Req() req,
-  ) {
+  async create(@Body() createFixtureDto: CreateFixtureDto, @Req() req) {
     return this.fixturesService.create(createFixtureDto, req.user.sub);
   }
 
@@ -137,9 +134,7 @@ export class FixturesController {
   @Get('upcoming')
   @ApiOperation({ summary: 'Get upcoming scheduled fixtures' })
   async findUpcoming(@Query('limit') limit?: string) {
-    return this.fixturesService.findUpcoming(
-      limit ? parseInt(limit, 10) : 10,
-    );
+    return this.fixturesService.findUpcoming(limit ? parseInt(limit, 10) : 10);
   }
 
   // Get fixtures for a specific date
@@ -167,7 +162,9 @@ export class FixturesController {
     description: 'Comma-separated tournament IDs to filter',
   })
   async findFixtureDates(@Query('tournamentIds') tournamentIds?: string) {
-    const ids = tournamentIds ? tournamentIds.split(',').filter(Boolean) : undefined;
+    const ids = tournamentIds
+      ? tournamentIds.split(',').filter(Boolean)
+      : undefined;
     return this.fixturesService.findFixtureDates(ids);
   }
 
@@ -200,7 +197,12 @@ export class FixturesController {
   // Delete all fixtures for a tournament
   @Delete('tournaments/:tournamentId')
   @ApiOperation({ summary: 'Delete all fixtures for a specific tournament' })
-  @ApiQuery({ name: 'stage', required: false, type: String, description: 'Filter by stage (GROUP_STAGE or KNOCKOUT)' })
+  @ApiQuery({
+    name: 'stage',
+    required: false,
+    type: String,
+    description: 'Filter by stage (GROUP_STAGE or KNOCKOUT)',
+  })
   async deleteTournamentFixtures(
     @Param('tournamentId') tournamentId: string,
     @Req() req,

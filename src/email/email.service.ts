@@ -19,7 +19,8 @@ export class EmailService {
     this.fromOluwaseyiEmail =
       process.env.EMAIL_FROM_OLUWASEYI ||
       'Oluwaseyi - ParaScores <oluwaseyi@parascores.com>';
-    this.logoUrl = 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png';
+    this.logoUrl =
+      'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png';
   }
 
   private async compileTemplate(
@@ -509,7 +510,6 @@ export class EmailService {
       console.log(`Organization removal email sent to ${email}`);
     }
   }
-
 
   async sendOrganizationDeleteCodeEmail(
     email: string,

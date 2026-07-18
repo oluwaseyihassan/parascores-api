@@ -39,7 +39,7 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
-// Set global validation pipe
+  // Set global validation pipe
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -56,7 +56,8 @@ async function bootstrap() {
       .build();
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api-docs', app, document, {
-      customfavIcon: 'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png',
+      customfavIcon:
+        'https://res.cloudinary.com/djsnerfzp/image/upload/q_auto/f_auto/v1780327900/parascores-logo.png',
       customSiteTitle: 'ParaScores API',
       customCss: `
         .swagger-ui .topbar { background-color: #16a34a; }

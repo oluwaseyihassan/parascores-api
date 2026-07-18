@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { DatabaseService } from 'src/database/database.service';
@@ -75,7 +79,11 @@ export class PlayersService {
     return ResponseUtil.success(player);
   }
 
-  async update(id: string, updatePlayerDto: UpdatePlayerDto, currentUser?: any) {
+  async update(
+    id: string,
+    updatePlayerDto: UpdatePlayerDto,
+    currentUser?: any,
+  ) {
     const player = await this.db.player.findUnique({ where: { id } });
     if (!player) {
       throw new NotFoundException('Player not found');
@@ -86,12 +94,16 @@ export class PlayersService {
       const isAdmin = currentUser.role === Role.SUPER_ADMIN;
       const isOrganizer = currentUser.role === Role.ORGANIZER;
       if (!isOwner && !isAdmin && !isOrganizer) {
-        throw new ForbiddenException('You do not have permission to edit this player profile');
+        throw new ForbiddenException(
+          'You do not have permission to edit this player profile',
+        );
       }
 
       // Player-owners cannot edit until their claim is approved
       if (isOwner && !isAdmin && !isOrganizer && player.status === 'PENDING') {
-        throw new ForbiddenException('Your profile claim is pending approval. You cannot edit your profile until the organizer has approved it.');
+        throw new ForbiddenException(
+          'Your profile claim is pending approval. You cannot edit your profile until the organizer has approved it.',
+        );
       }
     }
 
@@ -215,7 +227,9 @@ export class PlayersService {
     }
 
     if (player.userId) {
-      throw new ForbiddenException('This player profile is already linked to a user');
+      throw new ForbiddenException(
+        'This player profile is already linked to a user',
+      );
     }
 
     const updatedPlayer = await this.db.player.update({
@@ -232,7 +246,10 @@ export class PlayersService {
       },
     });
 
-    return ResponseUtil.success(updatedPlayer, 'Player profile linked successfully');
+    return ResponseUtil.success(
+      updatedPlayer,
+      'Player profile linked successfully',
+    );
   }
 
   async verifyClaimCode(code: string, userId: string) {
@@ -256,7 +273,9 @@ export class PlayersService {
     }
 
     if (player.userId) {
-      throw new ForbiddenException('This player profile is already linked to a user');
+      throw new ForbiddenException(
+        'This player profile is already linked to a user',
+      );
     }
 
     // Check if user already has a claimed player profile in this tournament
@@ -270,7 +289,9 @@ export class PlayersService {
     });
 
     if (existingPlayerInTournament) {
-      throw new ForbiddenException('You already have a linked player profile in this tournament');
+      throw new ForbiddenException(
+        'You already have a linked player profile in this tournament',
+      );
     }
 
     return ResponseUtil.success({
@@ -294,7 +315,9 @@ export class PlayersService {
       const isAdmin = currentUser.role === Role.SUPER_ADMIN;
       const isOrganizer = currentUser.role === Role.ORGANIZER;
       if (!isOwner && !isAdmin && !isOrganizer) {
-        throw new ForbiddenException('You do not have permission to unlink this player profile');
+        throw new ForbiddenException(
+          'You do not have permission to unlink this player profile',
+        );
       }
     }
 
@@ -313,6 +336,9 @@ export class PlayersService {
       },
     });
 
-    return ResponseUtil.success(updated, 'Player profile unlinked successfully');
+    return ResponseUtil.success(
+      updated,
+      'Player profile unlinked successfully',
+    );
   }
 }

@@ -10,7 +10,9 @@ export class GroupsService {
 
   async create(dto: CreateGroupDto) {
     const tournament = await this.db.tournament.findFirst({
-      where: { OR: [{ id: dto.tournament_id }, { customName: dto.tournament_id }] },
+      where: {
+        OR: [{ id: dto.tournament_id }, { customName: dto.tournament_id }],
+      },
     });
     if (!tournament) throw new NotFoundException('Tournament not found');
 
@@ -36,7 +38,7 @@ export class GroupsService {
           include: {
             team: true,
             user: true,
-          }
+          },
         },
       },
       orderBy: { created_at: 'asc' },
@@ -56,29 +58,29 @@ export class GroupsService {
   }
 
   async remove(id: string) {
-    const group = await this.db.group.findUnique({ 
+    const group = await this.db.group.findUnique({
       where: { id },
-      include: { participants: true }
+      include: { participants: true },
     });
     if (!group) throw new NotFoundException('Group not found');
 
     // Unassign participants and sync standings
     if (group.participants && group.participants.length > 0) {
-      const participantIds = group.participants.map(p => p.id);
-      
+      const participantIds = group.participants.map((p) => p.id);
+
       // Update participants
       await this.db.participant.updateMany({
         where: { id: { in: participantIds } },
-        data: { groupId: null }
+        data: { groupId: null },
       });
 
       // Update standings
       await this.db.standing.updateMany({
-        where: { 
+        where: {
           participant_id: { in: participantIds },
-          tournament_id: group.tournament_id 
+          tournament_id: group.tournament_id,
         },
-        data: { group: null }
+        data: { group: null },
       });
     }
 

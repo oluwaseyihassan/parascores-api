@@ -28,7 +28,9 @@ export class FixturesService {
   async create(dto: CreateFixtureDto, userId: string) {
     // Validate tournament exists
     const tournament = await this.db.tournament.findFirst({
-      where: { OR: [{ id: dto.tournament_id }, { customName: dto.tournament_id }] },
+      where: {
+        OR: [{ id: dto.tournament_id }, { customName: dto.tournament_id }],
+      },
       include: {
         organization: {
           include: {
@@ -45,7 +47,8 @@ export class FixturesService {
     // Authorization check
     const membership = tournament.organization?.members[0];
     const isAuthorized =
-      membership && (membership.role === 'OWNER' || membership.role === 'ADMIN');
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
 
     if (!isAuthorized) {
       throw new ForbiddenException(
@@ -69,11 +72,12 @@ export class FixturesService {
 
     // 1. Duplicate check (Teams already playing in this round)
     const teamsInRound = new Set<string>();
-    const isTwoLegsKnockout = tournament.type === 'KNOCKOUT' && tournament.twoLegsKnockout;
+    const isTwoLegsKnockout =
+      tournament.type === 'KNOCKOUT' && tournament.twoLegsKnockout;
 
     for (const f of existingFixturesInRound) {
       // Allow same matchup twice in the same round for two-legged knockouts
-      const isSameMatchup = 
+      const isSameMatchup =
         (f.homeTeamId === dto.homeTeamId && f.awayTeamId === dto.awayTeamId) ||
         (f.homeTeamId === dto.awayTeamId && f.awayTeamId === dto.homeTeamId);
 
@@ -122,7 +126,8 @@ export class FixturesService {
         groupId: dto.groupId || null,
         stage: dto.stage || null,
         status: 'SCHEDULED',
-        matchDuration: dto.matchDuration !== undefined ? dto.matchDuration : undefined,
+        matchDuration:
+          dto.matchDuration !== undefined ? dto.matchDuration : undefined,
       },
       include: {
         homeTeam: {
@@ -142,9 +147,13 @@ export class FixturesService {
     });
 
     // Invalidate caches
-    await this.redisService.delPattern(`fixtures:tournament:${tournament.id}:*`);
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
     if (tournament.customName) {
-      await this.redisService.delPattern(`fixtures:tournament:${tournament.customName}:*`);
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
     }
     await this.redisService.del('fixtures:live');
     await this.redisService.delPattern('fixtures:live:org:*');
@@ -289,7 +298,9 @@ export class FixturesService {
       return cachedResponse;
     }
 
-    const where: any = { status: { in: ['LIVE', 'NORMAL_TIME_ENDED', 'EXTRATIME'] } };
+    const where: any = {
+      status: { in: ['LIVE', 'NORMAL_TIME_ENDED', 'EXTRATIME'] },
+    };
     if (organizationId) {
       where.tournament = { organization_id: organizationId };
     }
@@ -428,7 +439,11 @@ export class FixturesService {
     }
 
     // Validate Leg 1 completion before starting Leg 2
-    if (dto.status === 'LIVE' && fixture.status !== 'LIVE' && fixture.status !== 'NORMAL_TIME_ENDED') {
+    if (
+      dto.status === 'LIVE' &&
+      fixture.status !== 'LIVE' &&
+      fixture.status !== 'NORMAL_TIME_ENDED'
+    ) {
       // Validate that both teams are assigned (not TBD)
       const homeTeamId = dto.homeTeamId || fixture.homeTeamId;
       const awayTeamId = dto.awayTeamId || fixture.awayTeamId;
@@ -478,7 +493,9 @@ export class FixturesService {
         ...(dto.homeScore !== undefined && { homeScore: dto.homeScore }),
         ...(dto.awayScore !== undefined && { awayScore: dto.awayScore }),
         ...(dto.timerStartedAt !== undefined && {
-          timerStartedAt: dto.timerStartedAt ? new Date(dto.timerStartedAt) : null,
+          timerStartedAt: dto.timerStartedAt
+            ? new Date(dto.timerStartedAt)
+            : null,
         }),
         ...(dto.timerElapsedSeconds !== undefined && {
           timerElapsedSeconds: dto.timerElapsedSeconds,
@@ -501,9 +518,15 @@ export class FixturesService {
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
         ...(dto.venue !== undefined && { venue: dto.venue }),
-        ...(dto.homeFormation !== undefined && { homeFormation: dto.homeFormation }),
-        ...(dto.awayFormation !== undefined && { awayFormation: dto.awayFormation }),
-        ...(dto.lineupPositions !== undefined && { lineupPositions: dto.lineupPositions }),
+        ...(dto.homeFormation !== undefined && {
+          homeFormation: dto.homeFormation,
+        }),
+        ...(dto.awayFormation !== undefined && {
+          awayFormation: dto.awayFormation,
+        }),
+        ...(dto.lineupPositions !== undefined && {
+          lineupPositions: dto.lineupPositions,
+        }),
         ...(dto.lineupPlayerIds !== undefined && {
           lineupPlayers: {
             set: dto.lineupPlayerIds.map((id) => ({ id })),
@@ -583,8 +606,10 @@ export class FixturesService {
               else if (oldAwayPen > oldHomePen) oldWinnerId = leg2.awayTeamId;
             }
 
-            const newAggHome = (leg2.homeScore ?? 0) + (updatedFixture.awayScore ?? 0);
-            const newAggAway = (leg2.awayScore ?? 0) + (updatedFixture.homeScore ?? 0);
+            const newAggHome =
+              (leg2.homeScore ?? 0) + (updatedFixture.awayScore ?? 0);
+            const newAggAway =
+              (leg2.awayScore ?? 0) + (updatedFixture.homeScore ?? 0);
             let newWinnerId: string | null = null;
             if (newAggHome > newAggAway) newWinnerId = leg2.homeTeamId;
             else if (newAggAway > newAggHome) newWinnerId = leg2.awayTeamId;
@@ -596,19 +621,41 @@ export class FixturesService {
             }
 
             if (oldWinnerId && newWinnerId && oldWinnerId !== newWinnerId) {
-              await this.validateAndSwapDownstream(leg2, oldWinnerId, newWinnerId);
-            } else if (newWinnerId && (!oldWinnerId || oldWinnerId === newWinnerId)) {
+              await this.validateAndSwapDownstream(
+                leg2,
+                oldWinnerId,
+                newWinnerId,
+              );
+            } else if (
+              newWinnerId &&
+              (!oldWinnerId || oldWinnerId === newWinnerId)
+            ) {
               await this.handleKnockoutProgression(leg2);
             }
           }
         } else if (!isLeg1) {
           const oldWinnerId = wasAlreadyCompleted
-            ? await this.determineWinnerFromFixture(fixture, fixture.tournament_id)
+            ? await this.determineWinnerFromFixture(
+                fixture,
+                fixture.tournament_id,
+              )
             : null;
-          const newWinnerId = await this.determineWinnerFromFixture(updatedFixture, updatedFixture.tournament_id);
+          const newWinnerId = await this.determineWinnerFromFixture(
+            updatedFixture,
+            updatedFixture.tournament_id,
+          );
 
-          if (wasAlreadyCompleted && oldWinnerId && newWinnerId && oldWinnerId !== newWinnerId) {
-            await this.validateAndSwapDownstream(updatedFixture, oldWinnerId, newWinnerId);
+          if (
+            wasAlreadyCompleted &&
+            oldWinnerId &&
+            newWinnerId &&
+            oldWinnerId !== newWinnerId
+          ) {
+            await this.validateAndSwapDownstream(
+              updatedFixture,
+              oldWinnerId,
+              newWinnerId,
+            );
           } else {
             await this.handleKnockoutProgression(updatedFixture);
           }
@@ -625,9 +672,13 @@ export class FixturesService {
 
     // Invalidate caches
     await this.redisService.del(`fixtures:single:${fixtureId}`);
-    await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament_id}:*`);
+    await this.redisService.delPattern(
+      `fixtures:tournament:${fixture.tournament_id}:*`,
+    );
     if (fixture.tournament?.customName) {
-      await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament.customName}:*`);
+      await this.redisService.delPattern(
+        `fixtures:tournament:${fixture.tournament.customName}:*`,
+      );
     }
     await this.redisService.del('fixtures:live');
     await this.redisService.delPattern('fixtures:live:org:*');
@@ -642,37 +693,60 @@ export class FixturesService {
     });
 
     // Kickoff notification
-    if (updatedFixture.status === 'LIVE' && fixture.status !== 'LIVE' && fixture.status !== 'NORMAL_TIME_ENDED') {
-      const homeName = updatedFixture.homeTeam?.customName || updatedFixture.homeTeam?.team?.name || 'TBD';
-      const awayName = updatedFixture.awayTeam?.customName || updatedFixture.awayTeam?.team?.name || 'TBD';
+    if (
+      updatedFixture.status === 'LIVE' &&
+      fixture.status !== 'LIVE' &&
+      fixture.status !== 'NORMAL_TIME_ENDED'
+    ) {
+      const homeName =
+        updatedFixture.homeTeam?.customName ||
+        updatedFixture.homeTeam?.team?.name ||
+        'TBD';
+      const awayName =
+        updatedFixture.awayTeam?.customName ||
+        updatedFixture.awayTeam?.team?.name ||
+        'TBD';
       const title = `Match Kicked Off! ⚽`;
       const body = `${homeName} vs ${awayName} has started. Follow for live updates!`;
       const url = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
-      this.notificationsService.sendNotificationToTournamentFollowers(
-        updatedFixture.tournament_id,
-        title,
-        body,
-        url,
-        `fixture-${updatedFixture.id}-kickoff`
-      ).catch(() => {});
+      this.notificationsService
+        .sendNotificationToTournamentFollowers(
+          updatedFixture.tournament_id,
+          title,
+          body,
+          url,
+          `fixture-${updatedFixture.id}-kickoff`,
+        )
+        .catch(() => {});
     }
 
     // Full-time completion notification
-    if (updatedFixture.status === 'COMPLETED' && fixture.status !== 'COMPLETED') {
-      const homeName = updatedFixture.homeTeam?.customName || updatedFixture.homeTeam?.team?.name || 'TBD';
-      const awayName = updatedFixture.awayTeam?.customName || updatedFixture.awayTeam?.team?.name || 'TBD';
+    if (
+      updatedFixture.status === 'COMPLETED' &&
+      fixture.status !== 'COMPLETED'
+    ) {
+      const homeName =
+        updatedFixture.homeTeam?.customName ||
+        updatedFixture.homeTeam?.team?.name ||
+        'TBD';
+      const awayName =
+        updatedFixture.awayTeam?.customName ||
+        updatedFixture.awayTeam?.team?.name ||
+        'TBD';
       const homeScore = updatedFixture.homeScore ?? 0;
       const awayScore = updatedFixture.awayScore ?? 0;
       const title = `Full Time: ${homeName} ${homeScore} - ${awayScore} ${awayName} 🏁`;
       const body = `The match has ended. Final score: ${homeName} ${homeScore} - ${awayScore} ${awayName}.`;
       const url = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
-      this.notificationsService.sendNotificationToTournamentFollowers(
-        updatedFixture.tournament_id,
-        title,
-        body,
-        url,
-        `fixture-${updatedFixture.id}-completion`
-      ).catch(() => {});
+      this.notificationsService
+        .sendNotificationToTournamentFollowers(
+          updatedFixture.tournament_id,
+          title,
+          body,
+          url,
+          `fixture-${updatedFixture.id}-completion`,
+        )
+        .catch(() => {});
     }
 
     return ResponseUtil.success(updatedFixture);
@@ -733,7 +807,10 @@ export class FixturesService {
     }
 
     if (winnerId) {
-      const loserId = winnerId === fixture.homeTeamId ? fixture.awayTeamId : fixture.homeTeamId;
+      const loserId =
+        winnerId === fixture.homeTeamId
+          ? fixture.awayTeamId
+          : fixture.homeTeamId;
 
       let isHomeFeed = fixture.matchNumber % 2 !== 0;
 
@@ -768,7 +845,9 @@ export class FixturesService {
             await this.db.fixture.update({
               where: { id: leg2OfNext.id },
               data: {
-                ...(isHomeFeed ? { awayTeamId: winnerId } : { homeTeamId: winnerId }),
+                ...(isHomeFeed
+                  ? { awayTeamId: winnerId }
+                  : { homeTeamId: winnerId }),
               },
             });
           }
@@ -800,7 +879,9 @@ export class FixturesService {
               await this.db.fixture.update({
                 where: { id: thirdPlaceFixture.id },
                 data: {
-                  ...(isHomeFeed ? { homeTeamId: loserId } : { awayTeamId: loserId }),
+                  ...(isHomeFeed
+                    ? { homeTeamId: loserId }
+                    : { awayTeamId: loserId }),
                 },
               });
             }
@@ -811,7 +892,10 @@ export class FixturesService {
   }
 
   // Determine the winner of a fixture, accounting for two-legged aggregate scores
-  private async determineWinnerFromFixture(fixture: any, tournamentId: string): Promise<string | null> {
+  private async determineWinnerFromFixture(
+    fixture: any,
+    tournamentId: string,
+  ): Promise<string | null> {
     const tournament = await this.db.tournament.findUnique({
       where: { id: tournamentId },
       select: { type: true, twoLegsKnockout: true },
@@ -854,7 +938,11 @@ export class FixturesService {
   }
 
   // Validate and swap downstream teams when a winner changes on a score edit
-  private async validateAndSwapDownstream(fixture: any, oldWinnerId: string, newWinnerId: string) {
+  private async validateAndSwapDownstream(
+    fixture: any,
+    oldWinnerId: string,
+    newWinnerId: string,
+  ) {
     if (!fixture.nextFixtureId) return;
 
     const tournament = await this.db.tournament.findUnique({
@@ -868,13 +956,21 @@ export class FixturesService {
 
     if (!nextFixture) return;
 
-    if (nextFixture.status === 'LIVE' || nextFixture.status === 'NORMAL_TIME_ENDED' || nextFixture.status === 'EXTRATIME' || nextFixture.status === 'COMPLETED') {
+    if (
+      nextFixture.status === 'LIVE' ||
+      nextFixture.status === 'NORMAL_TIME_ENDED' ||
+      nextFixture.status === 'EXTRATIME' ||
+      nextFixture.status === 'COMPLETED'
+    ) {
       throw new BadRequestException(
         'Cannot change the result of this match because the next round match has already been played. Reset the downstream match first.',
       );
     }
 
-    if (tournament?.twoLegsKnockout && nextFixture.roundName?.includes('Leg 1')) {
+    if (
+      tournament?.twoLegsKnockout &&
+      nextFixture.roundName?.includes('Leg 1')
+    ) {
       const leg2OfNext = await this.db.fixture.findFirst({
         where: {
           tournament_id: fixture.tournament_id,
@@ -884,7 +980,13 @@ export class FixturesService {
         },
       });
 
-      if (leg2OfNext && (leg2OfNext.status === 'LIVE' || leg2OfNext.status === 'NORMAL_TIME_ENDED' || leg2OfNext.status === 'EXTRATIME' || leg2OfNext.status === 'COMPLETED')) {
+      if (
+        leg2OfNext &&
+        (leg2OfNext.status === 'LIVE' ||
+          leg2OfNext.status === 'NORMAL_TIME_ENDED' ||
+          leg2OfNext.status === 'EXTRATIME' ||
+          leg2OfNext.status === 'COMPLETED')
+      ) {
         throw new BadRequestException(
           'Cannot change the result of this match because the next round Leg 2 has already been played. Reset the downstream match first.',
         );
@@ -897,17 +999,28 @@ export class FixturesService {
       isHomeFeed = slotIndex % 2 !== 0;
     }
 
-    const oldLoserId = oldWinnerId === fixture.homeTeamId ? fixture.awayTeamId : fixture.homeTeamId;
-    const newLoserId = newWinnerId === fixture.homeTeamId ? fixture.awayTeamId : fixture.homeTeamId;
+    const oldLoserId =
+      oldWinnerId === fixture.homeTeamId
+        ? fixture.awayTeamId
+        : fixture.homeTeamId;
+    const newLoserId =
+      newWinnerId === fixture.homeTeamId
+        ? fixture.awayTeamId
+        : fixture.homeTeamId;
 
     await this.db.fixture.update({
       where: { id: nextFixture.id },
       data: {
-        ...(isHomeFeed ? { homeTeamId: newWinnerId } : { awayTeamId: newWinnerId }),
+        ...(isHomeFeed
+          ? { homeTeamId: newWinnerId }
+          : { awayTeamId: newWinnerId }),
       },
     });
 
-    if (tournament?.twoLegsKnockout && nextFixture.roundName?.includes('Leg 1')) {
+    if (
+      tournament?.twoLegsKnockout &&
+      nextFixture.roundName?.includes('Leg 1')
+    ) {
       const leg2OfNext = await this.db.fixture.findFirst({
         where: {
           tournament_id: fixture.tournament_id,
@@ -921,7 +1034,9 @@ export class FixturesService {
         await this.db.fixture.update({
           where: { id: leg2OfNext.id },
           data: {
-            ...(isHomeFeed ? { awayTeamId: newWinnerId } : { homeTeamId: newWinnerId }),
+            ...(isHomeFeed
+              ? { awayTeamId: newWinnerId }
+              : { homeTeamId: newWinnerId }),
           },
         });
       }
@@ -938,7 +1053,12 @@ export class FixturesService {
       });
 
       if (thirdPlaceFixture) {
-        if (thirdPlaceFixture.status === 'LIVE' || thirdPlaceFixture.status === 'NORMAL_TIME_ENDED' || thirdPlaceFixture.status === 'EXTRATIME' || thirdPlaceFixture.status === 'COMPLETED') {
+        if (
+          thirdPlaceFixture.status === 'LIVE' ||
+          thirdPlaceFixture.status === 'NORMAL_TIME_ENDED' ||
+          thirdPlaceFixture.status === 'EXTRATIME' ||
+          thirdPlaceFixture.status === 'COMPLETED'
+        ) {
           throw new BadRequestException(
             'Cannot change the result because the 3rd Place Match has already been played.',
           );
@@ -947,7 +1067,9 @@ export class FixturesService {
         await this.db.fixture.update({
           where: { id: thirdPlaceFixture.id },
           data: {
-            ...(isHomeFeed ? { homeTeamId: newLoserId } : { awayTeamId: newLoserId }),
+            ...(isHomeFeed
+              ? { homeTeamId: newLoserId }
+              : { awayTeamId: newLoserId }),
           },
         });
       }
@@ -1240,7 +1362,11 @@ export class FixturesService {
   }
 
   // Delete all fixtures for a tournament
-  async deleteAllTournamentFixtures(tournamentId: string, userId: string, stage?: string) {
+  async deleteAllTournamentFixtures(
+    tournamentId: string,
+    userId: string,
+    stage?: string,
+  ) {
     const tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
     });
@@ -1260,9 +1386,9 @@ export class FixturesService {
 
     // Delete all fixtures (cascades to MatchEvents)
     await this.db.fixture.deleteMany({
-      where: { 
+      where: {
         tournament_id: tournament.id,
-        ...(stage ? { stage: stage as any } : {})
+        ...(stage ? { stage: stage as any } : {}),
       },
     });
 
