@@ -7,7 +7,12 @@ import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-  imports: [DatabaseModule, FixturesModule, OrganizationsModule, NotificationsModule],
+  imports: [
+    DatabaseModule,
+    FixturesModule,
+    OrganizationsModule,
+    NotificationsModule,
+  ],
   controllers: [MatchEventsController],
   providers: [MatchEventsService],
 })

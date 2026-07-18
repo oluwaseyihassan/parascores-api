@@ -26,7 +26,11 @@ export class MatchEventsController {
     @Body() createMatchEventDto: CreateMatchEventDto,
     @Req() req,
   ) {
-    return this.matchEventsService.create(fixtureId, req.user.sub, createMatchEventDto);
+    return this.matchEventsService.create(
+      fixtureId,
+      req.user.sub,
+      createMatchEventDto,
+    );
   }
 
   @Public()
@@ -50,7 +54,11 @@ export class MatchEventsController {
     @Body() updateMatchEventDto: UpdateMatchEventDto,
     @Req() req,
   ) {
-    return this.matchEventsService.update(id, req.user.sub, updateMatchEventDto);
+    return this.matchEventsService.update(
+      id,
+      req.user.sub,
+      updateMatchEventDto,
+    );
   }
 
   @Delete(':id')

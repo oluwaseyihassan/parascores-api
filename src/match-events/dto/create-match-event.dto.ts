@@ -1,6 +1,6 @@
 import { IsEnum, IsInt, IsOptional, IsString, Min, Max } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { MatchEventType } from 'prisma/generated/client';
+import { MatchEventType, MatchHalf } from 'prisma/generated/client';
 
 export class CreateMatchEventDto {
   @ApiPropertyOptional({
@@ -18,6 +18,15 @@ export class CreateMatchEventDto {
   })
   @IsEnum(MatchEventType)
   type: MatchEventType;
+
+  @ApiPropertyOptional({
+    description: 'Half or section of the match when event occurred',
+    enum: MatchHalf,
+    example: MatchHalf.FIRST_HALF,
+  })
+  @IsEnum(MatchHalf)
+  @IsOptional()
+  half?: MatchHalf;
 
   @ApiPropertyOptional({
     description: 'Minute when event occurred',

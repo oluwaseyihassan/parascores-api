@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "FixtureStatus" ADD VALUE 'NORMAL_TIME_ENDED';

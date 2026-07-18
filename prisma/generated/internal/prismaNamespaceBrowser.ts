@@ -270,6 +270,7 @@ export const MatchEventScalarFieldEnum = {
   participant_id: 'participant_id',
   relatedParticipant_id: 'relatedParticipant_id',
   type: 'type',
+  half: 'half',
   minute: 'minute',
   description: 'description',
   metadata: 'metadata',

@@ -222,6 +222,7 @@ model MatchEvent {
   participant_id        String?
   relatedParticipant_id String?
   type                  MatchEventType
+  half                  MatchHalf?
   minute                Int?
   description           String?
   metadata              Json?
@@ -393,6 +394,8 @@ enum PlayerStatus {
 enum FixtureStatus {
   SCHEDULED
   LIVE
+  EXTRATIME
+  NORMAL_TIME_ENDED
   COMPLETED
   CANCELLED
 }
@@ -412,6 +415,13 @@ enum MatchEventType {
   ASSIST
   MISSED_PENALTY
   PENALTY_SAVE
+}
+
+enum MatchHalf {
+  FIRST_HALF
+  SECOND_HALF
+  EXTRA_TIME
+  PENALTY_SHOOTOUT
 }
 
 enum SubscriptionPlan {
