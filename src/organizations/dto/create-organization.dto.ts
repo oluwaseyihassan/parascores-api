@@ -1,4 +1,11 @@
-import { IsString, IsNotEmpty, IsOptional, IsHexColor, IsPhoneNumber, IsUrl } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsHexColor,
+  IsPhoneNumber,
+  IsUrl,
+} from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 
@@ -8,13 +15,17 @@ export class CreateOrganizationDto {
   @IsNotEmpty()
   name: string;
 
-  @ApiPropertyOptional({ description: 'Optional URL for the organization logo' })
+  @ApiPropertyOptional({
+    description: 'Optional URL for the organization logo',
+  })
   @IsOptional()
-  @Transform(({ value }) => value === '' ? null : value)
+  @Transform(({ value }) => (value === '' ? null : value))
   @IsUrl()
   logoUrl?: string;
 
-  @ApiPropertyOptional({ description: 'Optional bio or description for the organization' })
+  @ApiPropertyOptional({
+    description: 'Optional bio or description for the organization',
+  })
   @IsString()
   @IsOptional()
   description?: string;
