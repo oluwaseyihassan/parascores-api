@@ -128,6 +128,8 @@ export class FixturesService {
         status: 'SCHEDULED',
         matchDuration:
           dto.matchDuration !== undefined ? dto.matchDuration : undefined,
+        livestreamUrl: dto.livestreamUrl || null,
+        livestreamPlatform: dto.livestreamPlatform || null,
       },
       include: {
         homeTeam: {
@@ -534,6 +536,12 @@ export class FixturesService {
         }),
         ...(dto.manOfTheMatchPlayerId !== undefined && {
           manOfTheMatchPlayerId: dto.manOfTheMatchPlayerId,
+        }),
+        ...(dto.livestreamUrl !== undefined && {
+          livestreamUrl: dto.livestreamUrl || null,
+        }),
+        ...(dto.livestreamPlatform !== undefined && {
+          livestreamPlatform: dto.livestreamPlatform || null,
         }),
       },
       include: {

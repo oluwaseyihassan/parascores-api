@@ -163,4 +163,20 @@ export class UpdateFixtureDto {
   @IsString()
   @IsOptional()
   manOfTheMatchPlayerId?: string;
+
+  @ApiPropertyOptional({
+    description: 'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
+    example: 'https://youtube.com/watch?v=abc123',
+  })
+  @IsString()
+  @IsOptional()
+  livestreamUrl?: string;
+
+  @ApiPropertyOptional({
+    description: 'Livestream platform name (e.g. youtube, twitch, facebook)',
+    example: 'youtube',
+  })
+  @IsString()
+  @IsOptional()
+  livestreamPlatform?: string;
 }

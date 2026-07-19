@@ -202,6 +202,8 @@ model Fixture {
   lineupPlayers       Player[]      @relation("FixtureLineups")
   manOfTheMatchPlayerId String?
   manOfTheMatchPlayer   Player?       @relation("ManOfTheMatch", fields: [manOfTheMatchPlayerId], references: [id])
+  livestreamUrl         String?
+  livestreamPlatform    String?
 }
 
 model Team {
