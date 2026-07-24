@@ -669,10 +669,6 @@ export type EnumMatchEventTypeFieldUpdateOperationsInput = {
   set?: $Enums.MatchEventType
 }
 
-export type NullableEnumMatchHalfFieldUpdateOperationsInput = {
-  set?: $Enums.MatchHalf | null
-}
-
 export type MatchEventCreateNestedManyWithoutPlayerInput = {
   create?: Prisma.XOR<Prisma.MatchEventCreateWithoutPlayerInput, Prisma.MatchEventUncheckedCreateWithoutPlayerInput> | Prisma.MatchEventCreateWithoutPlayerInput[] | Prisma.MatchEventUncheckedCreateWithoutPlayerInput[]
   connectOrCreate?: Prisma.MatchEventCreateOrConnectWithoutPlayerInput | Prisma.MatchEventCreateOrConnectWithoutPlayerInput[]

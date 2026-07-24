@@ -120,6 +120,15 @@ export const MatchHalf = {
 export type MatchHalf = (typeof MatchHalf)[keyof typeof MatchHalf]
 
 
+export const HighlightPlatform = {
+  YOUTUBE_SHORTS: 'YOUTUBE_SHORTS',
+  INSTAGRAM_REEL: 'INSTAGRAM_REEL',
+  TIKTOK: 'TIKTOK'
+} as const
+
+export type HighlightPlatform = (typeof HighlightPlatform)[keyof typeof HighlightPlatform]
+
+
 export const SubscriptionPlan = {
   FREE: 'FREE',
   PER_TOURNAMENT: 'PER_TOURNAMENT',

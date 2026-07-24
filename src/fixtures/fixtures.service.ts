@@ -508,6 +508,7 @@ export class FixturesService {
         ...(dto.matchDuration !== undefined && {
           matchDuration: dto.matchDuration,
         }),
+        ...(dto.half !== undefined && { half: dto.half }),
         ...(dto.startTime !== undefined && {
           startTime: new Date(dto.startTime),
         }),

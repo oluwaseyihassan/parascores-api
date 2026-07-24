@@ -192,6 +192,7 @@ model Fixture {
   timerElapsedSeconds Int           @default(0)
   timerIsRunning      Boolean       @default(false)
   matchDuration       Int           @default(90)
+  half                MatchHalf?
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
@@ -204,6 +205,7 @@ model Fixture {
   manOfTheMatchPlayer   Player?       @relation("ManOfTheMatch", fields: [manOfTheMatchPlayerId], references: [id])
   livestreamUrl         String?
   livestreamPlatform    String?
+  highlights            Highlight[]
 }
 
 model Team {
@@ -424,6 +426,29 @@ enum MatchHalf {
   SECOND_HALF
   EXTRA_TIME
   PENALTY_SHOOTOUT
+}
+
+enum HighlightPlatform {
+  YOUTUBE_SHORTS
+  INSTAGRAM_REEL
+  TIKTOK
+}
+
+model Highlight {
+  id           String           @id @default(cuid())
+  fixture_id   String
+  platform     HighlightPlatform
+  externalUrl  String
+  embedUrl     String
+  thumbnailUrl String?
+  caption      String?
+  duration     Int?
+  createdById  String
+  created_at   DateTime         @default(now())
+  updated_at   DateTime         @updatedAt
+  fixture      Fixture          @relation(fields: [fixture_id], references: [id], onDelete: Cascade)
+
+  @@index([fixture_id])
 }
 
 enum SubscriptionPlan {

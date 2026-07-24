@@ -12,8 +12,8 @@ import { OrganizationsService } from 'src/organizations/organizations.service';
 
 import {
   Visibility,
-  FixtureStage,
   MatchEventType,
+  MatchHalf,
   SubscriptionPlan,
   SubscriptionStatus,
 } from 'prisma/generated/client';
@@ -481,6 +481,10 @@ export class TournamentsService {
     const assistsMap = new Map<string, any>();
 
     for (const event of events) {
+      if (event.half === MatchHalf.PENALTY_SHOOTOUT) {
+        continue;
+      }
+
       if (
         event.type === MatchEventType.GOAL ||
         event.type === MatchEventType.PENALTY

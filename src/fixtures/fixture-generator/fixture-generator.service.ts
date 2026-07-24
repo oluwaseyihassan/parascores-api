@@ -844,13 +844,18 @@ export class FixtureGeneratorService {
       }
       createdGroups = existingGroups;
     } else {
-      const groupNames = Array.from(
-        { length: numGroups },
-        (_, i) => `Group ${String.fromCharCode(65 + i)}`,
-      ); // Group A, Group B, etc.
+      // Use labels from manual group assignments if provided; otherwise fall back to Group A, B...
+      const assignmentLabels =
+        options.groupAssignments &&
+        Object.keys(options.groupAssignments).length > 0
+          ? Object.keys(options.groupAssignments)
+          : Array.from(
+              { length: numGroups },
+              (_, i) => `Group ${String.fromCharCode(65 + i)}`,
+            );
 
       // create or find existing groups
-      for (const name of groupNames) {
+      for (const name of assignmentLabels) {
         const group = await this.db.group.create({
           data: {
             name,

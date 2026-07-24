@@ -19,6 +19,7 @@ import { SocialsModule } from './socials/socials.module';
 import { ParticipantsModule } from './participants/participants.module';
 import { PlayersModule } from './players/players.module';
 import { MatchEventsModule } from './match-events/match-events.module';
+import { HighlightsModule } from './highlights/highlights.module';
 import { StandingsModule } from './standings/standings.module';
 import { VenuesModule } from './venues/venues.module';
 import { TeamInvitesModule } from './team-invites/team-invites.module';
@@ -56,6 +57,7 @@ import { APP_FILTER } from '@nestjs/core';
     ParticipantsModule,
     PlayersModule,
     MatchEventsModule,
+    HighlightsModule,
     StandingsModule,
     EmailModule,
     VenuesModule,

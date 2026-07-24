@@ -81,7 +81,8 @@ export class CreateFixtureDto {
   matchDuration?: number;
 
   @ApiPropertyOptional({
-    description: 'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
+    description:
+      'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
     example: 'https://youtube.com/watch?v=abc123',
   })
   @IsString()

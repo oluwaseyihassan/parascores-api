@@ -33,10 +33,7 @@ export class PaymentsController {
 
   @Post('initialize')
   @ApiOperation({ summary: 'Initialize a subscription payment' })
-  async initialize(
-    @Body() dto: InitializePaymentDto,
-    @Req() req: any,
-  ) {
+  async initialize(@Body() dto: InitializePaymentDto, @Req() req: any) {
     return this.paymentsService.initializeSubscription(req.user.sub, dto);
   }
 
@@ -59,7 +56,9 @@ export class PaymentsController {
   }
 
   @Post('initialize-team-join')
-  @ApiOperation({ summary: 'Initialize a team join fee payment via invite link' })
+  @ApiOperation({
+    summary: 'Initialize a team join fee payment via invite link',
+  })
   async initializeTeamJoin(
     @Body() dto: InitializeTeamJoinDto,
     @Req() req: any,
@@ -115,10 +114,7 @@ export class PaymentsController {
 
   @Post('cancel/:orgId')
   @ApiOperation({ summary: 'Cancel subscription for an organization' })
-  async cancelSubscription(
-    @Param('orgId') orgId: string,
-    @Req() req: any,
-  ) {
+  async cancelSubscription(@Param('orgId') orgId: string, @Req() req: any) {
     return this.paymentsService.cancelSubscription(req.user.sub, orgId);
   }
 
