@@ -7,12 +7,17 @@ export class InitializeRegistrationDto {
   @IsString()
   tournamentId: string;
 
-  @ApiPropertyOptional({ description: 'Existing Team ID if registering with an existing team' })
+  @ApiPropertyOptional({
+    description: 'Existing Team ID if registering with an existing team',
+  })
   @IsOptional()
   @IsString()
   teamId?: string;
 
-  @ApiPropertyOptional({ description: 'Custom participant/team name if registering a new or custom team' })
+  @ApiPropertyOptional({
+    description:
+      'Custom participant/team name if registering a new or custom team',
+  })
   @IsOptional()
   @IsString()
   customName?: string;
@@ -22,7 +27,9 @@ export class InitializeRegistrationDto {
   @IsString()
   logoUrl?: string;
 
-  @ApiProperty({ description: 'Invite token to validate registration permissions' })
+  @ApiProperty({
+    description: 'Invite token to validate registration permissions',
+  })
   @IsNotEmpty()
   @IsString()
   token: string;

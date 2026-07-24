@@ -420,6 +420,13 @@ export type EnumFixtureStageNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel> | $Enums.FixtureStage | null
 }
 
+export type EnumMatchHalfNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel> | $Enums.MatchHalf | null
+}
+
 export type EnumFixtureStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.FixtureStatus | Prisma.EnumFixtureStatusFieldRefInput<$PrismaModel>
   in?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
@@ -440,18 +447,21 @@ export type EnumFixtureStageNullableWithAggregatesFilter<$PrismaModel = never> =
   _max?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
 }
 
+export type EnumMatchHalfNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel> | $Enums.MatchHalf | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
+}
+
 export type EnumMatchEventTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.MatchEventType | Prisma.EnumMatchEventTypeFieldRefInput<$PrismaModel>
   in?: $Enums.MatchEventType[] | Prisma.ListEnumMatchEventTypeFieldRefInput<$PrismaModel>
   notIn?: $Enums.MatchEventType[] | Prisma.ListEnumMatchEventTypeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel> | $Enums.MatchEventType
-}
-
-export type EnumMatchHalfNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
-  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel> | $Enums.MatchHalf | null
 }
 
 export type EnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -462,16 +472,6 @@ export type EnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
-}
-
-export type EnumMatchHalfNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
-  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel> | $Enums.MatchHalf | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
 }
 
 export type EnumPlayerStatusFilter<$PrismaModel = never> = {
@@ -489,6 +489,23 @@ export type EnumPlayerStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
+}
+
+export type EnumHighlightPlatformFilter<$PrismaModel = never> = {
+  equals?: $Enums.HighlightPlatform | Prisma.EnumHighlightPlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel> | $Enums.HighlightPlatform
+}
+
+export type EnumHighlightPlatformWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HighlightPlatform | Prisma.EnumHighlightPlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHighlightPlatformWithAggregatesFilter<$PrismaModel> | $Enums.HighlightPlatform
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel>
 }
 
 export type EnumSubscriptionPlanFilter<$PrismaModel = never> = {
@@ -924,6 +941,13 @@ export type NestedEnumFixtureStageNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel> | $Enums.FixtureStage | null
 }
 
+export type NestedEnumMatchHalfNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel> | $Enums.MatchHalf | null
+}
+
 export type NestedEnumFixtureStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.FixtureStatus | Prisma.EnumFixtureStatusFieldRefInput<$PrismaModel>
   in?: $Enums.FixtureStatus[] | Prisma.ListEnumFixtureStatusFieldRefInput<$PrismaModel>
@@ -944,18 +968,21 @@ export type NestedEnumFixtureStageNullableWithAggregatesFilter<$PrismaModel = ne
   _max?: Prisma.NestedEnumFixtureStageNullableFilter<$PrismaModel>
 }
 
+export type NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
+  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel> | $Enums.MatchHalf | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
+}
+
 export type NestedEnumMatchEventTypeFilter<$PrismaModel = never> = {
   equals?: $Enums.MatchEventType | Prisma.EnumMatchEventTypeFieldRefInput<$PrismaModel>
   in?: $Enums.MatchEventType[] | Prisma.ListEnumMatchEventTypeFieldRefInput<$PrismaModel>
   notIn?: $Enums.MatchEventType[] | Prisma.ListEnumMatchEventTypeFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel> | $Enums.MatchEventType
-}
-
-export type NestedEnumMatchHalfNullableFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
-  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel> | $Enums.MatchHalf | null
 }
 
 export type NestedEnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> = {
@@ -966,16 +993,6 @@ export type NestedEnumMatchEventTypeWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
   _max?: Prisma.NestedEnumMatchEventTypeFilter<$PrismaModel>
-}
-
-export type NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.MatchHalf | Prisma.EnumMatchHalfFieldRefInput<$PrismaModel> | null
-  in?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  notIn?: $Enums.MatchHalf[] | Prisma.ListEnumMatchHalfFieldRefInput<$PrismaModel> | null
-  not?: Prisma.NestedEnumMatchHalfNullableWithAggregatesFilter<$PrismaModel> | $Enums.MatchHalf | null
-  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumMatchHalfNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumPlayerStatusFilter<$PrismaModel = never> = {
@@ -993,6 +1010,23 @@ export type NestedEnumPlayerStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumPlayerStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumHighlightPlatformFilter<$PrismaModel = never> = {
+  equals?: $Enums.HighlightPlatform | Prisma.EnumHighlightPlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel> | $Enums.HighlightPlatform
+}
+
+export type NestedEnumHighlightPlatformWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HighlightPlatform | Prisma.EnumHighlightPlatformFieldRefInput<$PrismaModel>
+  in?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HighlightPlatform[] | Prisma.ListEnumHighlightPlatformFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHighlightPlatformWithAggregatesFilter<$PrismaModel> | $Enums.HighlightPlatform
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHighlightPlatformFilter<$PrismaModel>
 }
 
 export type NestedEnumSubscriptionPlanFilter<$PrismaModel = never> = {

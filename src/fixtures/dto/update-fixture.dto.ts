@@ -10,7 +10,7 @@ import {
   IsBoolean,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { FixtureStatus } from 'prisma/generated/client';
+import { FixtureStatus, MatchHalf } from 'prisma/generated/client';
 
 export class UpdateFixtureDto {
   @ApiPropertyOptional({
@@ -157,6 +157,15 @@ export class UpdateFixtureDto {
   matchDuration?: number;
 
   @ApiPropertyOptional({
+    description: 'Current match half',
+    enum: MatchHalf,
+    example: MatchHalf.SECOND_HALF,
+  })
+  @IsEnum(MatchHalf)
+  @IsOptional()
+  half?: MatchHalf;
+
+  @ApiPropertyOptional({
     description: 'Player ID selected as Man of the Match',
     example: 'player-id',
   })
@@ -165,7 +174,8 @@ export class UpdateFixtureDto {
   manOfTheMatchPlayerId?: string;
 
   @ApiPropertyOptional({
-    description: 'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
+    description:
+      'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
     example: 'https://youtube.com/watch?v=abc123',
   })
   @IsString()

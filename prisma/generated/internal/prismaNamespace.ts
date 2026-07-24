@@ -401,6 +401,7 @@ export const ModelName = {
   Venue: 'Venue',
   TeamInvite: 'TeamInvite',
   TournamentInvite: 'TournamentInvite',
+  Highlight: 'Highlight',
   Subscription: 'Subscription',
   Payment: 'Payment',
   PushSubscription: 'PushSubscription'
@@ -419,7 +420,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "subscription" | "payment" | "pushSubscription"
+    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "subscription" | "payment" | "pushSubscription"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1681,6 +1682,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Highlight: {
+      payload: Prisma.$HighlightPayload<ExtArgs>
+      fields: Prisma.HighlightFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.HighlightFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.HighlightFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        findFirst: {
+          args: Prisma.HighlightFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.HighlightFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        findMany: {
+          args: Prisma.HighlightFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>[]
+        }
+        create: {
+          args: Prisma.HighlightCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        createMany: {
+          args: Prisma.HighlightCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.HighlightCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>[]
+        }
+        delete: {
+          args: Prisma.HighlightDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        update: {
+          args: Prisma.HighlightUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        deleteMany: {
+          args: Prisma.HighlightDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.HighlightUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.HighlightUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>[]
+        }
+        upsert: {
+          args: Prisma.HighlightUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$HighlightPayload>
+        }
+        aggregate: {
+          args: Prisma.HighlightAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateHighlight>
+        }
+        groupBy: {
+          args: Prisma.HighlightGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HighlightGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.HighlightCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.HighlightCountAggregateOutputType> | number
+        }
+      }
+    }
     Subscription: {
       payload: Prisma.$SubscriptionPayload<ExtArgs>
       fields: Prisma.SubscriptionFieldRefs
@@ -2098,7 +2173,10 @@ export const FixtureScalarFieldEnum = {
   timerElapsedSeconds: 'timerElapsedSeconds',
   timerIsRunning: 'timerIsRunning',
   matchDuration: 'matchDuration',
-  manOfTheMatchPlayerId: 'manOfTheMatchPlayerId'
+  half: 'half',
+  manOfTheMatchPlayerId: 'manOfTheMatchPlayerId',
+  livestreamUrl: 'livestreamUrl',
+  livestreamPlatform: 'livestreamPlatform'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
@@ -2245,6 +2323,23 @@ export const TournamentInviteScalarFieldEnum = {
 } as const
 
 export type TournamentInviteScalarFieldEnum = (typeof TournamentInviteScalarFieldEnum)[keyof typeof TournamentInviteScalarFieldEnum]
+
+
+export const HighlightScalarFieldEnum = {
+  id: 'id',
+  fixture_id: 'fixture_id',
+  platform: 'platform',
+  externalUrl: 'externalUrl',
+  embedUrl: 'embedUrl',
+  thumbnailUrl: 'thumbnailUrl',
+  caption: 'caption',
+  duration: 'duration',
+  createdById: 'createdById',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type HighlightScalarFieldEnum = (typeof HighlightScalarFieldEnum)[keyof typeof HighlightScalarFieldEnum]
 
 
 export const SubscriptionScalarFieldEnum = {
@@ -2529,20 +2624,6 @@ export type ListEnumFixtureStageFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
- * Reference to a field of type 'MatchEventType'
- */
-export type EnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchEventType'>
-    
-
-
-/**
- * Reference to a field of type 'MatchEventType[]'
- */
-export type ListEnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchEventType[]'>
-    
-
-
-/**
  * Reference to a field of type 'MatchHalf'
  */
 export type EnumMatchHalfFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchHalf'>
@@ -2557,6 +2638,20 @@ export type ListEnumMatchHalfFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
+ * Reference to a field of type 'MatchEventType'
+ */
+export type EnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchEventType'>
+    
+
+
+/**
+ * Reference to a field of type 'MatchEventType[]'
+ */
+export type ListEnumMatchEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MatchEventType[]'>
+    
+
+
+/**
  * Reference to a field of type 'PlayerStatus'
  */
 export type EnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerStatus'>
@@ -2567,6 +2662,20 @@ export type EnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'PlayerStatus[]'
  */
 export type ListEnumPlayerStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PlayerStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HighlightPlatform'
+ */
+export type EnumHighlightPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HighlightPlatform'>
+    
+
+
+/**
+ * Reference to a field of type 'HighlightPlatform[]'
+ */
+export type ListEnumHighlightPlatformFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HighlightPlatform[]'>
     
 
 
@@ -2737,6 +2846,7 @@ export type GlobalOmitConfig = {
   venue?: Prisma.VenueOmit
   teamInvite?: Prisma.TeamInviteOmit
   tournamentInvite?: Prisma.TournamentInviteOmit
+  highlight?: Prisma.HighlightOmit
   subscription?: Prisma.SubscriptionOmit
   payment?: Prisma.PaymentOmit
   pushSubscription?: Prisma.PushSubscriptionOmit
