@@ -7,7 +7,10 @@ export class InitializePlayerClaimDto {
   @IsString()
   playerId: string;
 
-  @ApiProperty({ description: '6-character link code for the player profile', required: false })
+  @ApiProperty({
+    description: '6-character link code for the player profile',
+    required: false,
+  })
   @IsOptional()
   @IsString()
   code?: string;

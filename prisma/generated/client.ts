@@ -123,6 +123,11 @@ export type TeamInvite = Prisma.TeamInviteModel
  */
 export type TournamentInvite = Prisma.TournamentInviteModel
 /**
+ * Model Highlight
+ * 
+ */
+export type Highlight = Prisma.HighlightModel
+/**
  * Model Subscription
  * 
  */

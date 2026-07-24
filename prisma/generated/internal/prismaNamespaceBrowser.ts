@@ -68,6 +68,7 @@ export const ModelName = {
   Venue: 'Venue',
   TeamInvite: 'TeamInvite',
   TournamentInvite: 'TournamentInvite',
+  Highlight: 'Highlight',
   Subscription: 'Subscription',
   Payment: 'Payment',
   PushSubscription: 'PushSubscription'
@@ -245,7 +246,10 @@ export const FixtureScalarFieldEnum = {
   timerElapsedSeconds: 'timerElapsedSeconds',
   timerIsRunning: 'timerIsRunning',
   matchDuration: 'matchDuration',
-  manOfTheMatchPlayerId: 'manOfTheMatchPlayerId'
+  half: 'half',
+  manOfTheMatchPlayerId: 'manOfTheMatchPlayerId',
+  livestreamUrl: 'livestreamUrl',
+  livestreamPlatform: 'livestreamPlatform'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
@@ -392,6 +396,23 @@ export const TournamentInviteScalarFieldEnum = {
 } as const
 
 export type TournamentInviteScalarFieldEnum = (typeof TournamentInviteScalarFieldEnum)[keyof typeof TournamentInviteScalarFieldEnum]
+
+
+export const HighlightScalarFieldEnum = {
+  id: 'id',
+  fixture_id: 'fixture_id',
+  platform: 'platform',
+  externalUrl: 'externalUrl',
+  embedUrl: 'embedUrl',
+  thumbnailUrl: 'thumbnailUrl',
+  caption: 'caption',
+  duration: 'duration',
+  createdById: 'createdById',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type HighlightScalarFieldEnum = (typeof HighlightScalarFieldEnum)[keyof typeof HighlightScalarFieldEnum]
 
 
 export const SubscriptionScalarFieldEnum = {
