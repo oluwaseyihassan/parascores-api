@@ -6,6 +6,11 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { ResponseUtil } from 'src/utils/api-response';
+import {
+  Prisma,
+  SubscriptionPlan,
+  SubscriptionStatus,
+} from 'prisma/generated/client';
 
 @Injectable()
 export class AdminService {
@@ -414,6 +419,101 @@ export class AdminService {
 
     if (!org) throw new NotFoundException('Organization not found');
     return ResponseUtil.success(org);
+  }
+
+  async updateOrganizationVerification(id: string, isVerified: boolean) {
+    const org = await this.db.organization.findUnique({ where: { id } });
+    if (!org) throw new NotFoundException('Organization not found');
+
+    const updated = await this.db.organization.update({
+      where: { id },
+      data: { isVerified },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        isVerified: true,
+      },
+    });
+
+    this.logger.log(
+      `Organization ${id} verification set to ${isVerified} by admin`,
+    );
+
+    return ResponseUtil.success(
+      updated,
+      `Organization ${isVerified ? 'verified' : 'unverified'} successfully`,
+    );
+  }
+
+  async updateOrganizationSubscription(
+    id: string,
+    data: {
+      plan?: SubscriptionPlan;
+      status?: SubscriptionStatus;
+      currentPeriodEnd?: string;
+    },
+  ) {
+    const org = await this.db.organization.findUnique({
+      where: { id },
+      include: { subscription: true },
+    });
+    if (!org) throw new NotFoundException('Organization not found');
+
+    const updateData: Prisma.SubscriptionUpdateInput = {};
+    if (data.plan !== undefined) {
+      const validPlans = Object.values(SubscriptionPlan);
+      if (!validPlans.includes(data.plan)) {
+        throw new BadRequestException(
+          `Invalid plan. Valid plans: ${validPlans.join(', ')}`,
+        );
+      }
+      updateData.plan = data.plan;
+    }
+    if (data.status !== undefined) {
+      const validStatuses = Object.values(SubscriptionStatus);
+      if (!validStatuses.includes(data.status)) {
+        throw new BadRequestException(
+          `Invalid status. Valid statuses: ${validStatuses.join(', ')}`,
+        );
+      }
+      updateData.status = data.status;
+    }
+    if (data.currentPeriodEnd !== undefined) {
+      const date = new Date(data.currentPeriodEnd);
+      if (isNaN(date.getTime())) {
+        throw new BadRequestException('Invalid currentPeriodEnd date');
+      }
+      updateData.currentPeriodEnd = date;
+    }
+
+    let subscription;
+    if (org.subscription) {
+      subscription = await this.db.subscription.update({
+        where: { organizationId: id },
+        data: updateData,
+      });
+    } else {
+      subscription = await this.db.subscription.create({
+        data: {
+          organizationId: id,
+          plan: data.plan || SubscriptionPlan.FREE,
+          status: data.status || SubscriptionStatus.ACTIVE,
+          ...(data.currentPeriodEnd
+            ? { currentPeriodEnd: new Date(data.currentPeriodEnd) }
+            : {}),
+        },
+      });
+    }
+
+    this.logger.log(
+      `Organization ${id} subscription updated by admin: ${JSON.stringify(updateData)}`,
+    );
+
+    return ResponseUtil.success(
+      subscription,
+      'Organization subscription updated successfully',
+    );
   }
 
   // ─── Payments ──────────────────────────────────────────────

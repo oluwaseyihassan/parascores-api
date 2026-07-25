@@ -11,6 +11,7 @@ import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { SubscriptionPlan, SubscriptionStatus } from 'prisma/generated/client';
 
 @ApiTags('admin')
 @Controller('admin')
@@ -116,6 +117,29 @@ export class AdminController {
   @ApiOperation({ summary: 'Get organization details' })
   getOrganization(@Param('id') id: string) {
     return this.adminService.getOrganization(id);
+  }
+
+  @Patch('organizations/:id/verify')
+  @ApiOperation({ summary: 'Verify or unverify an organization' })
+  updateOrganizationVerification(
+    @Param('id') id: string,
+    @Body('isVerified') isVerified: boolean,
+  ) {
+    return this.adminService.updateOrganizationVerification(id, isVerified);
+  }
+
+  @Patch('organizations/:id/subscription')
+  @ApiOperation({ summary: 'Update organization subscription' })
+  updateOrganizationSubscription(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      plan?: SubscriptionPlan;
+      status?: SubscriptionStatus;
+      currentPeriodEnd?: string;
+    },
+  ) {
+    return this.adminService.updateOrganizationSubscription(id, body);
   }
 
   // ─── Payments ──────────────────────────────────────────────
