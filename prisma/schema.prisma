@@ -31,6 +31,7 @@ model User {
   push_subscriptions         PushSubscription[]
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
   payments                   Payment[]
+  audit_logs                 AuditLog[]
 }
 
 model Organization {
@@ -519,4 +520,21 @@ model PushSubscription {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  actor      User     @relation(fields: [actorId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@index([entityType, entityId])
+  @@index([action])
 }

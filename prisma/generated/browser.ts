@@ -122,3 +122,8 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type PushSubscription = Prisma.PushSubscriptionModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
