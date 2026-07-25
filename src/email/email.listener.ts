@@ -14,6 +14,7 @@ import {
   OrganizationMemberAddedPayload,
   OrganizationMemberRoleUpdatedPayload,
   OrganizationMemberRemovedPayload,
+  OrganizationCreatedPayload,
   OrganizationDeleteCodePayload,
   TournamentJoinRequestPayload,
   TournamentJoinApprovalPayload,
@@ -190,6 +191,21 @@ export class EmailListener {
       );
     } catch (error) {
       console.error('Failed to send organization member removed email:', error);
+    }
+  }
+
+  @OnEvent(EmailEvents.ORGANIZATION_CREATED, { async: true })
+  async handleOrganizationCreated(payload: OrganizationCreatedPayload) {
+    try {
+      await this.emailService.sendOrganizationCreatedAlertEmail(
+        payload.ownerEmail,
+        payload.ownerName,
+        payload.organizationName,
+        payload.organizationSlug,
+        payload.organizationPhone,
+      );
+    } catch (error) {
+      console.error('Failed to send organization created alert email:', error);
     }
   }
 

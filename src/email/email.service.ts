@@ -183,6 +183,55 @@ export class EmailService {
     }
   }
 
+  async sendOrganizationCreatedAlertEmail(
+    ownerEmail: string,
+    ownerName: string,
+    organizationName: string,
+    organizationSlug: string,
+    organizationPhone?: string,
+  ): Promise<void> {
+    const adminEmail = process.env.ADMIN_ALERT_EMAIL || 'admin@parascores.com';
+    const timestamp = new Date().toLocaleString('en-US', {
+      dateStyle: 'full',
+      timeStyle: 'long',
+    });
+
+    const organizationUrl = `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/o/${organizationSlug}`;
+
+    const html = `
+      <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
+        <h2 style="color: #4F46E5;">🏢 New Organization Created</h2>
+        <p>A new organization has been created on ParaScores.</p>
+        <div style="background-color: #F3F4F6; padding: 15px; border-radius: 8px; margin: 20px 0;">
+          <p style="margin: 5px 0;"><strong>Organization:</strong> ${organizationName}</p>
+          <p style="margin: 5px 0;"><strong>Owner Name:</strong> ${ownerName}</p>
+          <p style="margin: 5px 0;"><strong>Owner Email:</strong> ${ownerEmail}</p>
+          ${organizationPhone ? `<p style="margin: 5px 0;"><strong>Phone:</strong> ${organizationPhone}</p>` : ''}
+          <p style="margin: 5px 0;"><strong>Created at:</strong> ${timestamp}</p>
+        </div>
+        <div style="margin-top: 25px;">
+          <a href="${organizationUrl}" style="background-color: #4F46E5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">View Organization</a>
+        </div>
+        <p style="color: #6B7280; font-size: 14px; margin-top: 30px;">This is an automated notification from ParaScores.</p>
+      </div>
+    `;
+
+    const { error } = await this.resend.emails.send({
+      from: this.fromAdminEmail,
+      to: adminEmail,
+      subject: `🏢 New Organization: ${organizationName}`,
+      html,
+    });
+
+    if (error) {
+      console.error('Failed to send organization created alert email:', error);
+    } else {
+      console.log(
+        `Organization created alert email sent to ${adminEmail} for organization: ${organizationName}`,
+      );
+    }
+  }
+
   async sendContactEmail(
     name: string,
     email: string,
