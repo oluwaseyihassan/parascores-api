@@ -10,6 +10,7 @@ export const EmailEvents = {
   ORGANIZATION_MEMBER_ADDED: 'organization.member-added',
   ORGANIZATION_MEMBER_ROLE_UPDATED: 'organization.member-role-updated',
   ORGANIZATION_MEMBER_REMOVED: 'organization.member-removed',
+  ORGANIZATION_CREATED: 'organization.created',
   ORGANIZATION_DELETE_CODE: 'organization.delete-code',
   TOURNAMENT_JOIN_REQUEST: 'tournament.join-request',
   TOURNAMENT_JOIN_APPROVAL: 'tournament.join-approval',
@@ -87,6 +88,14 @@ export interface OrganizationMemberRemovedPayload {
   email: string;
   name: string;
   organizationName: string;
+}
+
+export interface OrganizationCreatedPayload {
+  ownerEmail: string;
+  ownerName: string;
+  organizationName: string;
+  organizationSlug: string;
+  organizationPhone?: string;
 }
 
 export interface OrganizationDeleteCodePayload {

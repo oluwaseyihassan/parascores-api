@@ -15,6 +15,7 @@ import {
   OrganizationMemberAddedPayload,
   OrganizationMemberRoleUpdatedPayload,
   OrganizationMemberRemovedPayload,
+  OrganizationCreatedPayload,
   OrganizationDeleteCodePayload,
 } from 'src/email/email.events';
 
@@ -32,6 +33,13 @@ export class OrganizationsService {
   ) {}
 
   async create(userId: string, dto: CreateOrganizationDto) {
+    const user = await this.db.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     let slug = this.generateSlug(dto.name);
     let isUnique = false;
 
@@ -73,6 +81,14 @@ export class OrganizationsService {
 
       return org;
     });
+
+    this.eventEmitter.emit(EmailEvents.ORGANIZATION_CREATED, {
+      ownerEmail: user.email,
+      ownerName: user.name,
+      organizationName: organization.name,
+      organizationSlug: organization.slug,
+      organizationPhone: dto.phone,
+    } as OrganizationCreatedPayload);
 
     return ResponseUtil.success(
       organization,
