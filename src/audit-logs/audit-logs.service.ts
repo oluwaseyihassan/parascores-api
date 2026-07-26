@@ -37,7 +37,7 @@ export class AuditLogsService {
   async create(input: CreateAuditLogInput) {
     const log = await this.db.auditLog.create({
       data: {
-        actorId: input.actorId,
+        actor: { connect: { id: input.actorId } },
         action: input.action,
         entityType: input.entityType,
         entityId: input.entityId,
