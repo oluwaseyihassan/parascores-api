@@ -4,19 +4,27 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import * as os from 'os';
+import * as fs from 'fs';
 import { DatabaseService } from 'src/database/database.service';
+import { RedisService } from 'src/redis/redis.service';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
   Prisma,
   SubscriptionPlan,
   SubscriptionStatus,
+  Visibility,
+  TournamentType,
 } from 'prisma/generated/client';
 
 @Injectable()
 export class AdminService {
   private readonly logger = new Logger(AdminService.name);
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly redisService: RedisService,
+  ) {}
 
   // ─── Platform Stats ────────────────────────────────────────
 
@@ -290,6 +298,117 @@ export class AdminService {
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
+  async getTournament(id: string) {
+    const tournament = await this.db.tournament.findUnique({
+      where: { id },
+      include: {
+        organization: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            isVerified: true,
+          },
+        },
+        participants: {
+          orderBy: { created_at: 'desc' },
+          select: {
+            id: true,
+            customName: true,
+            customShortName: true,
+            status: true,
+            seed: true,
+            logoUrl: true,
+            created_at: true,
+            team: { select: { id: true, name: true, shortName: true } },
+            user: { select: { id: true, name: true, email: true } },
+          },
+        },
+        fixtures: {
+          orderBy: [
+            { round: 'asc' },
+            { matchNumber: 'asc' },
+          ],
+          include: {
+            homeTeam: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+            awayTeam: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+          },
+        },
+        standings: {
+          orderBy: [
+            { group: 'asc' },
+            { points: 'desc' },
+          ],
+          include: {
+            participant: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+          },
+        },
+        groups: {
+          orderBy: { created_at: 'asc' },
+          select: { id: true, name: true },
+        },
+        socials: {
+          select: { id: true, platform: true, url: true },
+        },
+        sponsors: {
+          select: { id: true, name: true, logoUrl: true, description: true },
+        },
+        payments: {
+          take: 20,
+          orderBy: { created_at: 'desc' },
+          select: {
+            id: true,
+            amount: true,
+            currency: true,
+            status: true,
+            type: true,
+            created_at: true,
+          },
+        },
+        _count: {
+          select: {
+            participants: true,
+            fixtures: true,
+            followers: true,
+          },
+        },
+      },
+    });
+
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const normalized = {
+      ...tournament,
+      payments: tournament.payments.map((p: any) => ({
+        ...p,
+        amount: p.amount / 100,
+      })),
+    };
+
+    return ResponseUtil.success(normalized);
+  }
+
   async deleteTournament(id: string) {
     const tournament = await this.db.tournament.findUnique({ where: { id } });
     if (!tournament) throw new NotFoundException('Tournament not found');
@@ -325,6 +444,130 @@ export class AdminService {
     });
 
     return ResponseUtil.success(updated, 'Tournament pricing updated');
+  }
+
+  async updateTournament(
+    id: string,
+    data: {
+      name?: string;
+      customName?: string | null;
+      description?: string | null;
+      visibility?: 'PUBLIC' | 'PRIVATE' | 'UNLISTED';
+      isPremium?: boolean;
+      isPinned?: boolean;
+      isPaidRegistration?: boolean;
+      registrationFee?: number;
+      tournamentPrice?: number;
+      paymentPerTeam?: number;
+      startDate?: string;
+      endDate?: string;
+      location?: string | null;
+      timezone?: string;
+      maxParticipants?: number | null;
+      sport?: string;
+      type?: 'LEAGUE' | 'KNOCKOUT' | 'ROUND_ROBIN' | 'GROUP' | 'HYBRID' | 'FRIENDLY';
+      autoApprove?: boolean;
+      thirdPlaceMatch?: boolean;
+      twoLegsKnockout?: boolean;
+      doubleRoundRobin?: boolean;
+    },
+  ) {
+    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const updateData: any = {};
+
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.customName !== undefined) updateData.customName = data.customName;
+    if (data.description !== undefined)
+      updateData.description = data.description;
+    if (data.visibility !== undefined) {
+      const validVisibilities = Object.values(Visibility);
+      if (!validVisibilities.includes(data.visibility)) {
+        throw new BadRequestException(
+          `Invalid visibility. Valid values: ${validVisibilities.join(', ')}`,
+        );
+      }
+      updateData.visibility = data.visibility;
+    }
+    if (data.isPremium !== undefined) updateData.isPremium = data.isPremium;
+    if (data.isPinned !== undefined) updateData.isPinned = data.isPinned;
+    if (data.isPaidRegistration !== undefined)
+      updateData.isPaidRegistration = data.isPaidRegistration;
+    if (data.registrationFee !== undefined)
+      updateData.registrationFee = Math.round(data.registrationFee * 100);
+    if (data.tournamentPrice !== undefined)
+      updateData.tournamentPrice = Math.round(data.tournamentPrice * 100);
+    if (data.paymentPerTeam !== undefined)
+      updateData.paymentPerTeam = Math.round(data.paymentPerTeam * 100);
+    if (data.startDate !== undefined) {
+      const startDate = new Date(data.startDate);
+      if (isNaN(startDate.getTime())) {
+        throw new BadRequestException('Invalid startDate');
+      }
+      updateData.start_date = startDate;
+    }
+    if (data.endDate !== undefined) {
+      const endDate = new Date(data.endDate);
+      if (isNaN(endDate.getTime())) {
+        throw new BadRequestException('Invalid endDate');
+      }
+      updateData.end_date = endDate;
+    }
+    if (data.location !== undefined) updateData.location = data.location;
+    if (data.timezone !== undefined) updateData.timezone = data.timezone;
+    if (data.maxParticipants !== undefined)
+      updateData.maxParticipants = data.maxParticipants;
+    if (data.sport !== undefined) updateData.sport = data.sport;
+    if (data.type !== undefined) {
+      const validTypes = Object.values(TournamentType);
+      if (!validTypes.includes(data.type)) {
+        throw new BadRequestException(
+          `Invalid tournament type. Valid values: ${validTypes.join(', ')}`,
+        );
+      }
+      updateData.type = data.type;
+    }
+    if (data.autoApprove !== undefined)
+      updateData.autoApprove = data.autoApprove;
+    if (data.thirdPlaceMatch !== undefined)
+      updateData.thirdPlaceMatch = data.thirdPlaceMatch;
+    if (data.twoLegsKnockout !== undefined)
+      updateData.twoLegsKnockout = data.twoLegsKnockout;
+    if (data.doubleRoundRobin !== undefined)
+      updateData.doubleRoundRobin = data.doubleRoundRobin;
+
+    const updated = await this.db.tournament.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        description: true,
+        visibility: true,
+        isPremium: true,
+        isPinned: true,
+        isPaidRegistration: true,
+        registrationFee: true,
+        tournamentPrice: true,
+        paymentPerTeam: true,
+        start_date: true,
+        end_date: true,
+        location: true,
+        timezone: true,
+        maxParticipants: true,
+        sport: true,
+        type: true,
+        autoApprove: true,
+        thirdPlaceMatch: true,
+        twoLegsKnockout: true,
+        doubleRoundRobin: true,
+        updated_at: true,
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Tournament updated successfully');
   }
 
   // ─── Organizations ─────────────────────────────────────────
@@ -654,33 +897,124 @@ export class AdminService {
   // ─── Health ────────────────────────────────────────────────
 
   async getHealth() {
-    const startTime = Date.now();
-    let dbStatus = 'up';
-    let dbLatency = 0;
+    const checks = await Promise.all([
+      this.checkDatabase(),
+      this.checkRedis(),
+      this.checkPaystack(),
+      this.checkResend(),
+    ]);
 
+    const [database, redis, paystack, resend] = checks;
+
+    const overallStatus = checks.every((c) => c.status === 'up')
+      ? 'healthy'
+      : checks.some((c) => c.status === 'up')
+        ? 'degraded'
+        : 'down';
+
+    const nodeMemory = process.memoryUsage();
+    const systemMemory = {
+      free: os.freemem(),
+      total: os.totalmem(),
+    };
+
+    let disk = null as { free: number; total: number; usedPercent: number } | null;
     try {
-      const dbStart = Date.now();
-      await this.db.$queryRaw`SELECT 1`;
-      dbLatency = Date.now() - dbStart;
+      const stats = (fs as any).statfsSync(process.cwd());
+      if (stats) {
+        const total = stats.blocks * stats.bsize;
+        const free = stats.bfree * stats.bsize;
+        disk = {
+          free,
+          total,
+          usedPercent: total > 0 ? Math.round(((total - free) / total) * 100) : 0,
+        };
+      }
     } catch {
-      dbStatus = 'down';
+      disk = null;
     }
 
     return ResponseUtil.success({
-      status: dbStatus === 'up' ? 'healthy' : 'degraded',
+      status: overallStatus,
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
-      database: {
-        status: dbStatus,
-        latency: `${dbLatency}ms`,
-      },
-      memory: {
-        rss: `${Math.round(process.memoryUsage().rss / 1024 / 1024)}MB`,
-        heapUsed: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`,
-        heapTotal: `${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)}MB`,
-      },
       node: process.version,
       environment: process.env.NODE_ENV || 'development',
+      platform: `${os.platform()} ${os.arch()}`,
+      loadAverage: os.loadavg(),
+      cpuCount: os.cpus().length,
+      memory: {
+        rss: nodeMemory.rss,
+        heapUsed: nodeMemory.heapUsed,
+        heapTotal: nodeMemory.heapTotal,
+        external: nodeMemory.external || 0,
+        systemFree: systemMemory.free,
+        systemTotal: systemMemory.total,
+        systemUsedPercent:
+          systemMemory.total > 0
+            ? Math.round(
+                ((systemMemory.total - systemMemory.free) / systemMemory.total) *
+                  100,
+              )
+            : 0,
+      },
+      disk,
+      dependencies: {
+        database,
+        redis,
+        paystack,
+        resend,
+      },
     });
+  }
+
+  private async checkDatabase() {
+    const start = Date.now();
+    try {
+      await this.db.$queryRaw`SELECT 1`;
+      return { status: 'up' as const, latency: Date.now() - start };
+    } catch (err) {
+      this.logger.error('Health check database failed:', err);
+      return { status: 'down' as const, latency: Date.now() - start };
+    }
+  }
+
+  private async checkRedis() {
+    return this.redisService.ping();
+  }
+
+  private async checkPaystack() {
+    const start = Date.now();
+    const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!secretKey) {
+      return { status: 'down' as const, message: 'PAYSTACK_SECRET_KEY not set' };
+    }
+    try {
+      const res = await fetch('https://api.paystack.co/bank', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+        },
+      });
+      if (res.ok) {
+        return { status: 'up' as const, latency: Date.now() - start };
+      }
+      return {
+        status: 'down' as const,
+        latency: Date.now() - start,
+        message: `Paystack returned ${res.status}`,
+      };
+    } catch (err) {
+      this.logger.error('Health check Paystack failed:', err);
+      return { status: 'down' as const, latency: Date.now() - start };
+    }
+  }
+
+  private async checkResend() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return { status: 'down' as const, message: 'RESEND_API_KEY not set' };
+    }
+    return { status: 'up' as const, message: 'API key configured' };
   }
 }

@@ -99,6 +99,20 @@ export class RedisService implements OnModuleInit, OnModuleDestroy {
     }
   }
 
+  async ping(): Promise<{ status: 'up' | 'down'; latency?: number }> {
+    if (!this.client || !this.isConnected) {
+      return { status: 'down' };
+    }
+    const start = Date.now();
+    try {
+      await this.client.ping();
+      return { status: 'up', latency: Date.now() - start };
+    } catch (err) {
+      this.logger.error('Redis ping failed:', err);
+      return { status: 'down' };
+    }
+  }
+
   onModuleDestroy() {
     if (this.client) {
       this.client.disconnect();

@@ -117,6 +117,12 @@ export class AdminController {
     );
   }
 
+  @Get('tournaments/:id')
+  @ApiOperation({ summary: 'Get tournament details' })
+  getTournament(@Param('id') id: string) {
+    return this.adminService.getTournament(id);
+  }
+
   @Delete('tournaments/:id')
   @ApiOperation({ summary: 'Delete a tournament' })
   async deleteTournament(
@@ -130,6 +136,49 @@ export class AdminController {
       action: AuditAction.TOURNAMENT_DELETE,
       entityType: AuditEntityType.TOURNAMENT,
       entityId: id,
+      ipAddress: req?.ip,
+    });
+    return result;
+  }
+
+  @Patch('tournaments/:id')
+  @ApiOperation({ summary: 'Update tournament details' })
+  async updateTournament(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      name?: string;
+      customName?: string | null;
+      description?: string | null;
+      visibility?: 'PUBLIC' | 'PRIVATE' | 'UNLISTED';
+      isPremium?: boolean;
+      isPinned?: boolean;
+      isPaidRegistration?: boolean;
+      registrationFee?: number;
+      tournamentPrice?: number;
+      paymentPerTeam?: number;
+      startDate?: string;
+      endDate?: string;
+      location?: string | null;
+      timezone?: string;
+      maxParticipants?: number | null;
+      sport?: string;
+      type?: 'LEAGUE' | 'KNOCKOUT' | 'ROUND_ROBIN' | 'GROUP' | 'HYBRID' | 'FRIENDLY';
+      autoApprove?: boolean;
+      thirdPlaceMatch?: boolean;
+      twoLegsKnockout?: boolean;
+      doubleRoundRobin?: boolean;
+    },
+    @User() user: { id: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.updateTournament(id, body);
+    await this.auditLogsService.create({
+      actorId: user.id,
+      action: AuditAction.TOURNAMENT_UPDATE,
+      entityType: AuditEntityType.TOURNAMENT,
+      entityId: id,
+      metadata: { ...body },
       ipAddress: req?.ip,
     });
     return result;
