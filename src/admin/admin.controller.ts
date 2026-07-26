@@ -65,12 +65,12 @@ export class AdminController {
   @ApiOperation({ summary: 'Delete a user' })
   async deleteUser(
     @Param('id') id: string,
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.deleteUser(id);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.USER_DELETE,
       entityType: AuditEntityType.USER,
       entityId: id,
@@ -84,12 +84,12 @@ export class AdminController {
   async updateUserRole(
     @Param('id') id: string,
     @Body('role') role: string,
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updateUserRole(id, role);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.USER_ROLE_UPDATE,
       entityType: AuditEntityType.USER,
       entityId: id,
@@ -127,12 +127,12 @@ export class AdminController {
   @ApiOperation({ summary: 'Delete a tournament' })
   async deleteTournament(
     @Param('id') id: string,
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.deleteTournament(id);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.TOURNAMENT_DELETE,
       entityType: AuditEntityType.TOURNAMENT,
       entityId: id,
@@ -169,12 +169,12 @@ export class AdminController {
       twoLegsKnockout?: boolean;
       doubleRoundRobin?: boolean;
     },
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updateTournament(id, body);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.TOURNAMENT_UPDATE,
       entityType: AuditEntityType.TOURNAMENT,
       entityId: id,
@@ -190,12 +190,12 @@ export class AdminController {
     @Param('id') id: string,
     @Body()
     body: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updateTournamentPricing(id, body);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.TOURNAMENT_PRICING_UPDATE,
       entityType: AuditEntityType.TOURNAMENT,
       entityId: id,
@@ -232,7 +232,7 @@ export class AdminController {
   async updateOrganizationVerification(
     @Param('id') id: string,
     @Body('isVerified') isVerified: boolean,
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updateOrganizationVerification(
@@ -240,7 +240,7 @@ export class AdminController {
       isVerified,
     );
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.ORGANIZATION_VERIFY,
       entityType: AuditEntityType.ORGANIZATION,
       entityId: id,
@@ -260,7 +260,7 @@ export class AdminController {
       status?: SubscriptionStatus;
       currentPeriodEnd?: string;
     },
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updateOrganizationSubscription(
@@ -268,7 +268,7 @@ export class AdminController {
       body,
     );
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.ORGANIZATION_SUBSCRIPTION_UPDATE,
       entityType: AuditEntityType.ORGANIZATION,
       entityId: id,
@@ -321,12 +321,12 @@ export class AdminController {
   async updatePlayerStatus(
     @Param('id') id: string,
     @Body('status') status: 'APPROVED' | 'REJECTED',
-    @User() user: { id: string },
+    @User() user: { sub: string },
     @Req() req: { ip?: string },
   ) {
     const result = await this.adminService.updatePlayerStatus(id, status);
     await this.auditLogsService.create({
-      actorId: user.id,
+      actorId: user.sub,
       action: AuditAction.PLAYER_STATUS_UPDATE,
       entityType: AuditEntityType.PLAYER,
       entityId: id,
