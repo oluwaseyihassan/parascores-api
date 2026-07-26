@@ -4,7 +4,10 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import * as os from 'os';
+import * as fs from 'fs';
 import { DatabaseService } from 'src/database/database.service';
+import { RedisService } from 'src/redis/redis.service';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
   Prisma,
@@ -18,7 +21,10 @@ import {
 export class AdminService {
   private readonly logger = new Logger(AdminService.name);
 
-  constructor(private readonly db: DatabaseService) {}
+  constructor(
+    private readonly db: DatabaseService,
+    private readonly redisService: RedisService,
+  ) {}
 
   // ─── Platform Stats ────────────────────────────────────────
 
@@ -891,33 +897,124 @@ export class AdminService {
   // ─── Health ────────────────────────────────────────────────
 
   async getHealth() {
-    const startTime = Date.now();
-    let dbStatus = 'up';
-    let dbLatency = 0;
+    const checks = await Promise.all([
+      this.checkDatabase(),
+      this.checkRedis(),
+      this.checkPaystack(),
+      this.checkResend(),
+    ]);
 
+    const [database, redis, paystack, resend] = checks;
+
+    const overallStatus = checks.every((c) => c.status === 'up')
+      ? 'healthy'
+      : checks.some((c) => c.status === 'up')
+        ? 'degraded'
+        : 'down';
+
+    const nodeMemory = process.memoryUsage();
+    const systemMemory = {
+      free: os.freemem(),
+      total: os.totalmem(),
+    };
+
+    let disk = null as { free: number; total: number; usedPercent: number } | null;
     try {
-      const dbStart = Date.now();
-      await this.db.$queryRaw`SELECT 1`;
-      dbLatency = Date.now() - dbStart;
+      const stats = (fs as any).statfsSync(process.cwd());
+      if (stats) {
+        const total = stats.blocks * stats.bsize;
+        const free = stats.bfree * stats.bsize;
+        disk = {
+          free,
+          total,
+          usedPercent: total > 0 ? Math.round(((total - free) / total) * 100) : 0,
+        };
+      }
     } catch {
-      dbStatus = 'down';
+      disk = null;
     }
 
     return ResponseUtil.success({
-      status: dbStatus === 'up' ? 'healthy' : 'degraded',
+      status: overallStatus,
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
-      database: {
-        status: dbStatus,
-        latency: `${dbLatency}ms`,
-      },
-      memory: {
-        rss: `${Math.round(process.memoryUsage().rss / 1024 / 1024)}MB`,
-        heapUsed: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)}MB`,
-        heapTotal: `${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)}MB`,
-      },
       node: process.version,
       environment: process.env.NODE_ENV || 'development',
+      platform: `${os.platform()} ${os.arch()}`,
+      loadAverage: os.loadavg(),
+      cpuCount: os.cpus().length,
+      memory: {
+        rss: nodeMemory.rss,
+        heapUsed: nodeMemory.heapUsed,
+        heapTotal: nodeMemory.heapTotal,
+        external: nodeMemory.external || 0,
+        systemFree: systemMemory.free,
+        systemTotal: systemMemory.total,
+        systemUsedPercent:
+          systemMemory.total > 0
+            ? Math.round(
+                ((systemMemory.total - systemMemory.free) / systemMemory.total) *
+                  100,
+              )
+            : 0,
+      },
+      disk,
+      dependencies: {
+        database,
+        redis,
+        paystack,
+        resend,
+      },
     });
+  }
+
+  private async checkDatabase() {
+    const start = Date.now();
+    try {
+      await this.db.$queryRaw`SELECT 1`;
+      return { status: 'up' as const, latency: Date.now() - start };
+    } catch (err) {
+      this.logger.error('Health check database failed:', err);
+      return { status: 'down' as const, latency: Date.now() - start };
+    }
+  }
+
+  private async checkRedis() {
+    return this.redisService.ping();
+  }
+
+  private async checkPaystack() {
+    const start = Date.now();
+    const secretKey = process.env.PAYSTACK_SECRET_KEY;
+    if (!secretKey) {
+      return { status: 'down' as const, message: 'PAYSTACK_SECRET_KEY not set' };
+    }
+    try {
+      const res = await fetch('https://api.paystack.co/bank', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${secretKey}`,
+        },
+      });
+      if (res.ok) {
+        return { status: 'up' as const, latency: Date.now() - start };
+      }
+      return {
+        status: 'down' as const,
+        latency: Date.now() - start,
+        message: `Paystack returned ${res.status}`,
+      };
+    } catch (err) {
+      this.logger.error('Health check Paystack failed:', err);
+      return { status: 'down' as const, latency: Date.now() - start };
+    }
+  }
+
+  private async checkResend() {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      return { status: 'down' as const, message: 'RESEND_API_KEY not set' };
+    }
+    return { status: 'up' as const, message: 'API key configured' };
   }
 }
