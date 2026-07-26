@@ -10,6 +10,8 @@ import {
   Prisma,
   SubscriptionPlan,
   SubscriptionStatus,
+  Visibility,
+  TournamentType,
 } from 'prisma/generated/client';
 
 @Injectable()
@@ -290,6 +292,117 @@ export class AdminService {
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
+  async getTournament(id: string) {
+    const tournament = await this.db.tournament.findUnique({
+      where: { id },
+      include: {
+        organization: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            isVerified: true,
+          },
+        },
+        participants: {
+          orderBy: { created_at: 'desc' },
+          select: {
+            id: true,
+            customName: true,
+            customShortName: true,
+            status: true,
+            seed: true,
+            logoUrl: true,
+            created_at: true,
+            team: { select: { id: true, name: true, shortName: true } },
+            user: { select: { id: true, name: true, email: true } },
+          },
+        },
+        fixtures: {
+          orderBy: [
+            { round: 'asc' },
+            { matchNumber: 'asc' },
+          ],
+          include: {
+            homeTeam: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+            awayTeam: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+          },
+        },
+        standings: {
+          orderBy: [
+            { group: 'asc' },
+            { points: 'desc' },
+          ],
+          include: {
+            participant: {
+              select: {
+                id: true,
+                customName: true,
+                customShortName: true,
+                logoUrl: true,
+              },
+            },
+          },
+        },
+        groups: {
+          orderBy: { created_at: 'asc' },
+          select: { id: true, name: true },
+        },
+        socials: {
+          select: { id: true, platform: true, url: true },
+        },
+        sponsors: {
+          select: { id: true, name: true, logoUrl: true, description: true },
+        },
+        payments: {
+          take: 20,
+          orderBy: { created_at: 'desc' },
+          select: {
+            id: true,
+            amount: true,
+            currency: true,
+            status: true,
+            type: true,
+            created_at: true,
+          },
+        },
+        _count: {
+          select: {
+            participants: true,
+            fixtures: true,
+            followers: true,
+          },
+        },
+      },
+    });
+
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const normalized = {
+      ...tournament,
+      payments: tournament.payments.map((p: any) => ({
+        ...p,
+        amount: p.amount / 100,
+      })),
+    };
+
+    return ResponseUtil.success(normalized);
+  }
+
   async deleteTournament(id: string) {
     const tournament = await this.db.tournament.findUnique({ where: { id } });
     if (!tournament) throw new NotFoundException('Tournament not found');
@@ -325,6 +438,130 @@ export class AdminService {
     });
 
     return ResponseUtil.success(updated, 'Tournament pricing updated');
+  }
+
+  async updateTournament(
+    id: string,
+    data: {
+      name?: string;
+      customName?: string | null;
+      description?: string | null;
+      visibility?: 'PUBLIC' | 'PRIVATE' | 'UNLISTED';
+      isPremium?: boolean;
+      isPinned?: boolean;
+      isPaidRegistration?: boolean;
+      registrationFee?: number;
+      tournamentPrice?: number;
+      paymentPerTeam?: number;
+      startDate?: string;
+      endDate?: string;
+      location?: string | null;
+      timezone?: string;
+      maxParticipants?: number | null;
+      sport?: string;
+      type?: 'LEAGUE' | 'KNOCKOUT' | 'ROUND_ROBIN' | 'GROUP' | 'HYBRID' | 'FRIENDLY';
+      autoApprove?: boolean;
+      thirdPlaceMatch?: boolean;
+      twoLegsKnockout?: boolean;
+      doubleRoundRobin?: boolean;
+    },
+  ) {
+    const tournament = await this.db.tournament.findUnique({ where: { id } });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const updateData: any = {};
+
+    if (data.name !== undefined) updateData.name = data.name;
+    if (data.customName !== undefined) updateData.customName = data.customName;
+    if (data.description !== undefined)
+      updateData.description = data.description;
+    if (data.visibility !== undefined) {
+      const validVisibilities = Object.values(Visibility);
+      if (!validVisibilities.includes(data.visibility)) {
+        throw new BadRequestException(
+          `Invalid visibility. Valid values: ${validVisibilities.join(', ')}`,
+        );
+      }
+      updateData.visibility = data.visibility;
+    }
+    if (data.isPremium !== undefined) updateData.isPremium = data.isPremium;
+    if (data.isPinned !== undefined) updateData.isPinned = data.isPinned;
+    if (data.isPaidRegistration !== undefined)
+      updateData.isPaidRegistration = data.isPaidRegistration;
+    if (data.registrationFee !== undefined)
+      updateData.registrationFee = Math.round(data.registrationFee * 100);
+    if (data.tournamentPrice !== undefined)
+      updateData.tournamentPrice = Math.round(data.tournamentPrice * 100);
+    if (data.paymentPerTeam !== undefined)
+      updateData.paymentPerTeam = Math.round(data.paymentPerTeam * 100);
+    if (data.startDate !== undefined) {
+      const startDate = new Date(data.startDate);
+      if (isNaN(startDate.getTime())) {
+        throw new BadRequestException('Invalid startDate');
+      }
+      updateData.start_date = startDate;
+    }
+    if (data.endDate !== undefined) {
+      const endDate = new Date(data.endDate);
+      if (isNaN(endDate.getTime())) {
+        throw new BadRequestException('Invalid endDate');
+      }
+      updateData.end_date = endDate;
+    }
+    if (data.location !== undefined) updateData.location = data.location;
+    if (data.timezone !== undefined) updateData.timezone = data.timezone;
+    if (data.maxParticipants !== undefined)
+      updateData.maxParticipants = data.maxParticipants;
+    if (data.sport !== undefined) updateData.sport = data.sport;
+    if (data.type !== undefined) {
+      const validTypes = Object.values(TournamentType);
+      if (!validTypes.includes(data.type)) {
+        throw new BadRequestException(
+          `Invalid tournament type. Valid values: ${validTypes.join(', ')}`,
+        );
+      }
+      updateData.type = data.type;
+    }
+    if (data.autoApprove !== undefined)
+      updateData.autoApprove = data.autoApprove;
+    if (data.thirdPlaceMatch !== undefined)
+      updateData.thirdPlaceMatch = data.thirdPlaceMatch;
+    if (data.twoLegsKnockout !== undefined)
+      updateData.twoLegsKnockout = data.twoLegsKnockout;
+    if (data.doubleRoundRobin !== undefined)
+      updateData.doubleRoundRobin = data.doubleRoundRobin;
+
+    const updated = await this.db.tournament.update({
+      where: { id },
+      data: updateData,
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        description: true,
+        visibility: true,
+        isPremium: true,
+        isPinned: true,
+        isPaidRegistration: true,
+        registrationFee: true,
+        tournamentPrice: true,
+        paymentPerTeam: true,
+        start_date: true,
+        end_date: true,
+        location: true,
+        timezone: true,
+        maxParticipants: true,
+        sport: true,
+        type: true,
+        autoApprove: true,
+        thirdPlaceMatch: true,
+        twoLegsKnockout: true,
+        doubleRoundRobin: true,
+        updated_at: true,
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Tournament updated successfully');
   }
 
   // ─── Organizations ─────────────────────────────────────────
