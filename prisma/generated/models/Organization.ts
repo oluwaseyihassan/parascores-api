@@ -35,6 +35,11 @@ export type OrganizationMinAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   description: string | null
+  paystackSubaccountCode: string | null
+  settlementBankCode: string | null
+  settlementAccountNumber: string | null
+  settlementAccountName: string | null
+  payoutAccountCreatedAt: Date | null
 }
 
 export type OrganizationMaxAggregateOutputType = {
@@ -48,6 +53,11 @@ export type OrganizationMaxAggregateOutputType = {
   created_at: Date | null
   updated_at: Date | null
   description: string | null
+  paystackSubaccountCode: string | null
+  settlementBankCode: string | null
+  settlementAccountNumber: string | null
+  settlementAccountName: string | null
+  payoutAccountCreatedAt: Date | null
 }
 
 export type OrganizationCountAggregateOutputType = {
@@ -61,6 +71,11 @@ export type OrganizationCountAggregateOutputType = {
   created_at: number
   updated_at: number
   description: number
+  paystackSubaccountCode: number
+  settlementBankCode: number
+  settlementAccountNumber: number
+  settlementAccountName: number
+  payoutAccountCreatedAt: number
   _all: number
 }
 
@@ -76,6 +91,11 @@ export type OrganizationMinAggregateInputType = {
   created_at?: true
   updated_at?: true
   description?: true
+  paystackSubaccountCode?: true
+  settlementBankCode?: true
+  settlementAccountNumber?: true
+  settlementAccountName?: true
+  payoutAccountCreatedAt?: true
 }
 
 export type OrganizationMaxAggregateInputType = {
@@ -89,6 +109,11 @@ export type OrganizationMaxAggregateInputType = {
   created_at?: true
   updated_at?: true
   description?: true
+  paystackSubaccountCode?: true
+  settlementBankCode?: true
+  settlementAccountNumber?: true
+  settlementAccountName?: true
+  payoutAccountCreatedAt?: true
 }
 
 export type OrganizationCountAggregateInputType = {
@@ -102,6 +127,11 @@ export type OrganizationCountAggregateInputType = {
   created_at?: true
   updated_at?: true
   description?: true
+  paystackSubaccountCode?: true
+  settlementBankCode?: true
+  settlementAccountNumber?: true
+  settlementAccountName?: true
+  payoutAccountCreatedAt?: true
   _all?: true
 }
 
@@ -188,6 +218,11 @@ export type OrganizationGroupByOutputType = {
   created_at: Date
   updated_at: Date
   description: string | null
+  paystackSubaccountCode: string | null
+  settlementBankCode: string | null
+  settlementAccountNumber: string | null
+  settlementAccountName: string | null
+  payoutAccountCreatedAt: Date | null
   _count: OrganizationCountAggregateOutputType | null
   _min: OrganizationMinAggregateOutputType | null
   _max: OrganizationMaxAggregateOutputType | null
@@ -222,6 +257,11 @@ export type OrganizationWhereInput = {
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   description?: Prisma.StringNullableFilter<"Organization"> | string | null
+  paystackSubaccountCode?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementBankCode?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementAccountNumber?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementAccountName?: Prisma.StringNullableFilter<"Organization"> | string | null
+  payoutAccountCreatedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
   socials?: Prisma.SocialListRelationFilter
   tournaments?: Prisma.TournamentListRelationFilter
@@ -240,6 +280,11 @@ export type OrganizationOrderByWithRelationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  paystackSubaccountCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementBankCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementAccountName?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutAccountCreatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   members?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   socials?: Prisma.SocialOrderByRelationAggregateInput
   tournaments?: Prisma.TournamentOrderByRelationAggregateInput
@@ -261,6 +306,11 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   created_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeFilter<"Organization"> | Date | string
   description?: Prisma.StringNullableFilter<"Organization"> | string | null
+  paystackSubaccountCode?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementBankCode?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementAccountNumber?: Prisma.StringNullableFilter<"Organization"> | string | null
+  settlementAccountName?: Prisma.StringNullableFilter<"Organization"> | string | null
+  payoutAccountCreatedAt?: Prisma.DateTimeNullableFilter<"Organization"> | Date | string | null
   members?: Prisma.OrganizationMemberListRelationFilter
   socials?: Prisma.SocialListRelationFilter
   tournaments?: Prisma.TournamentListRelationFilter
@@ -279,6 +329,11 @@ export type OrganizationOrderByWithAggregationInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  paystackSubaccountCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementBankCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementAccountNumber?: Prisma.SortOrderInput | Prisma.SortOrder
+  settlementAccountName?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutAccountCreatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrganizationCountOrderByAggregateInput
   _max?: Prisma.OrganizationMaxOrderByAggregateInput
   _min?: Prisma.OrganizationMinOrderByAggregateInput
@@ -298,6 +353,11 @@ export type OrganizationScalarWhereWithAggregatesInput = {
   created_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Organization"> | Date | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  paystackSubaccountCode?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  settlementBankCode?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  settlementAccountNumber?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  settlementAccountName?: Prisma.StringNullableWithAggregatesFilter<"Organization"> | string | null
+  payoutAccountCreatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Organization"> | Date | string | null
 }
 
 export type OrganizationCreateInput = {
@@ -311,6 +371,11 @@ export type OrganizationCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
@@ -329,6 +394,11 @@ export type OrganizationUncheckedCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -347,6 +417,11 @@ export type OrganizationUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
@@ -365,6 +440,11 @@ export type OrganizationUncheckedUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -383,6 +463,11 @@ export type OrganizationCreateManyInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
 }
 
 export type OrganizationUpdateManyMutationInput = {
@@ -396,6 +481,11 @@ export type OrganizationUpdateManyMutationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type OrganizationUncheckedUpdateManyInput = {
@@ -409,6 +499,11 @@ export type OrganizationUncheckedUpdateManyInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type OrganizationCountOrderByAggregateInput = {
@@ -422,6 +517,11 @@ export type OrganizationCountOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  paystackSubaccountCode?: Prisma.SortOrder
+  settlementBankCode?: Prisma.SortOrder
+  settlementAccountNumber?: Prisma.SortOrder
+  settlementAccountName?: Prisma.SortOrder
+  payoutAccountCreatedAt?: Prisma.SortOrder
 }
 
 export type OrganizationMaxOrderByAggregateInput = {
@@ -435,6 +535,11 @@ export type OrganizationMaxOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  paystackSubaccountCode?: Prisma.SortOrder
+  settlementBankCode?: Prisma.SortOrder
+  settlementAccountNumber?: Prisma.SortOrder
+  settlementAccountName?: Prisma.SortOrder
+  payoutAccountCreatedAt?: Prisma.SortOrder
 }
 
 export type OrganizationMinOrderByAggregateInput = {
@@ -448,6 +553,11 @@ export type OrganizationMinOrderByAggregateInput = {
   created_at?: Prisma.SortOrder
   updated_at?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  paystackSubaccountCode?: Prisma.SortOrder
+  settlementBankCode?: Prisma.SortOrder
+  settlementAccountNumber?: Prisma.SortOrder
+  settlementAccountName?: Prisma.SortOrder
+  payoutAccountCreatedAt?: Prisma.SortOrder
 }
 
 export type OrganizationScalarRelationFilter = {
@@ -547,6 +657,11 @@ export type OrganizationCreateWithoutMembersInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -564,6 +679,11 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -597,6 +717,11 @@ export type OrganizationUpdateWithoutMembersInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -614,6 +739,11 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -631,6 +761,11 @@ export type OrganizationCreateWithoutTournamentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -648,6 +783,11 @@ export type OrganizationUncheckedCreateWithoutTournamentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -681,6 +821,11 @@ export type OrganizationUpdateWithoutTournamentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -698,6 +843,11 @@ export type OrganizationUncheckedUpdateWithoutTournamentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -715,6 +865,11 @@ export type OrganizationCreateWithoutSocialsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -732,6 +887,11 @@ export type OrganizationUncheckedCreateWithoutSocialsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -765,6 +925,11 @@ export type OrganizationUpdateWithoutSocialsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -782,6 +947,11 @@ export type OrganizationUncheckedUpdateWithoutSocialsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -799,6 +969,11 @@ export type OrganizationCreateWithoutSubscriptionInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
@@ -816,6 +991,11 @@ export type OrganizationUncheckedCreateWithoutSubscriptionInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -849,6 +1029,11 @@ export type OrganizationUpdateWithoutSubscriptionInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
@@ -866,6 +1051,11 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -883,6 +1073,11 @@ export type OrganizationCreateWithoutPaymentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
@@ -900,6 +1095,11 @@ export type OrganizationUncheckedCreateWithoutPaymentsInput = {
   created_at?: Date | string
   updated_at?: Date | string
   description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -933,6 +1133,11 @@ export type OrganizationUpdateWithoutPaymentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
@@ -950,6 +1155,11 @@ export type OrganizationUncheckedUpdateWithoutPaymentsInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1025,6 +1235,11 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   created_at?: boolean
   updated_at?: boolean
   description?: boolean
+  paystackSubaccountCode?: boolean
+  settlementBankCode?: boolean
+  settlementAccountNumber?: boolean
+  settlementAccountName?: boolean
+  payoutAccountCreatedAt?: boolean
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
   tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
@@ -1044,6 +1259,11 @@ export type OrganizationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   created_at?: boolean
   updated_at?: boolean
   description?: boolean
+  paystackSubaccountCode?: boolean
+  settlementBankCode?: boolean
+  settlementAccountNumber?: boolean
+  settlementAccountName?: boolean
+  payoutAccountCreatedAt?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1057,6 +1277,11 @@ export type OrganizationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   created_at?: boolean
   updated_at?: boolean
   description?: boolean
+  paystackSubaccountCode?: boolean
+  settlementBankCode?: boolean
+  settlementAccountNumber?: boolean
+  settlementAccountName?: boolean
+  payoutAccountCreatedAt?: boolean
 }, ExtArgs["result"]["organization"]>
 
 export type OrganizationSelectScalar = {
@@ -1070,9 +1295,14 @@ export type OrganizationSelectScalar = {
   created_at?: boolean
   updated_at?: boolean
   description?: boolean
+  paystackSubaccountCode?: boolean
+  settlementBankCode?: boolean
+  settlementAccountNumber?: boolean
+  settlementAccountName?: boolean
+  payoutAccountCreatedAt?: boolean
 }
 
-export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "color" | "phone" | "isVerified" | "created_at" | "updated_at" | "description", ExtArgs["result"]["organization"]>
+export type OrganizationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "logoUrl" | "color" | "phone" | "isVerified" | "created_at" | "updated_at" | "description" | "paystackSubaccountCode" | "settlementBankCode" | "settlementAccountNumber" | "settlementAccountName" | "payoutAccountCreatedAt", ExtArgs["result"]["organization"]>
 export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
@@ -1104,6 +1334,11 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     created_at: Date
     updated_at: Date
     description: string | null
+    paystackSubaccountCode: string | null
+    settlementBankCode: string | null
+    settlementAccountNumber: string | null
+    settlementAccountName: string | null
+    payoutAccountCreatedAt: Date | null
   }, ExtArgs["result"]["organization"]>
   composites: {}
 }
@@ -1542,6 +1777,11 @@ export interface OrganizationFieldRefs {
   readonly created_at: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly updated_at: Prisma.FieldRef<"Organization", 'DateTime'>
   readonly description: Prisma.FieldRef<"Organization", 'String'>
+  readonly paystackSubaccountCode: Prisma.FieldRef<"Organization", 'String'>
+  readonly settlementBankCode: Prisma.FieldRef<"Organization", 'String'>
+  readonly settlementAccountNumber: Prisma.FieldRef<"Organization", 'String'>
+  readonly settlementAccountName: Prisma.FieldRef<"Organization", 'String'>
+  readonly payoutAccountCreatedAt: Prisma.FieldRef<"Organization", 'DateTime'>
 }
     
 

@@ -2122,7 +2122,12 @@ export const OrganizationScalarFieldEnum = {
   isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  description: 'description'
+  description: 'description',
+  paystackSubaccountCode: 'paystackSubaccountCode',
+  settlementBankCode: 'settlementBankCode',
+  settlementAccountNumber: 'settlementAccountNumber',
+  settlementAccountName: 'settlementAccountName',
+  payoutAccountCreatedAt: 'payoutAccountCreatedAt'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]

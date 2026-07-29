@@ -35,21 +35,26 @@ model User {
 }
 
 model Organization {
-  id          String               @id @default(cuid())
-  name        String
-  slug        String               @unique
-  logoUrl     String?
-  color       String?
-  phone       String?
-  isVerified  Boolean              @default(false)
-  created_at  DateTime             @default(now())
-  updated_at  DateTime             @updatedAt
-  description String?
-  members     OrganizationMember[]
-  socials      Social[]
-  tournaments  Tournament[]
-  subscription Subscription?
-  payments     Payment[]
+  id                      String               @id @default(cuid())
+  name                    String
+  slug                    String               @unique
+  logoUrl                 String?
+  color                   String?
+  phone                   String?
+  isVerified              Boolean              @default(false)
+  created_at              DateTime             @default(now())
+  updated_at              DateTime             @updatedAt
+  description             String?
+  paystackSubaccountCode  String?
+  settlementBankCode      String?
+  settlementAccountNumber String?
+  settlementAccountName   String?
+  payoutAccountCreatedAt  DateTime?
+  members                 OrganizationMember[]
+  socials                 Social[]
+  tournaments             Tournament[]
+  subscription            Subscription?
+  payments                Payment[]
 }
 
 model OrganizationMember {

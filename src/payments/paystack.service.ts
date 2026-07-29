@@ -30,7 +30,7 @@ export class PaystackService {
   }
 
   private async request<T = any>(
-    method: 'GET' | 'POST',
+    method: 'GET' | 'POST' | 'PUT',
     path: string,
     body?: Record<string, any>,
   ): Promise<T> {
@@ -68,6 +68,9 @@ export class PaystackService {
     plan?: string; // Plan code (e.g. PLN_xxx) — overrides amount
     metadata?: Record<string, any>;
     callback_url?: string;
+    subaccount?: string; // Subaccount code — splits the payment at settlement
+    bearer?: 'account' | 'subaccount' | 'transaction' | 'all'; // Who bears Paystack fees
+    transaction_charge?: number; // Flat fee (kobo) the main account keeps
   }) {
     return this.request<{
       status: boolean;
@@ -190,6 +193,90 @@ export class PaystackService {
       message: string;
       data: any;
     }>('POST', '/refund', params);
+  }
+
+  // ─── Banks & Subaccounts ────────────────────────────────
+
+  /**
+   * List Nigerian banks supported by Paystack.
+   */
+  async listBanks() {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: { id: number; name: string; code: string; active: boolean }[];
+    }>('GET', '/bank?country=nigeria&perPage=100&use_cursor=false');
+  }
+
+  /**
+   * Resolve an account number to the account holder's name.
+   */
+  async resolveAccountNumber(accountNumber: string, bankCode: string) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: { account_number: string; account_name: string; bank_id: number };
+    }>(
+      'GET',
+      `/bank/resolve?account_number=${encodeURIComponent(accountNumber)}&bank_code=${encodeURIComponent(bankCode)}`,
+    );
+  }
+
+  /**
+   * Create a subaccount so an organizer receives settlements directly.
+   * `percentage_charge` is the percentage the main (platform) account keeps.
+   */
+  async createSubaccount(params: {
+    business_name: string;
+    settlement_bank: string; // bank code
+    account_number: string;
+    percentage_charge: number;
+    description?: string;
+    primary_contact_email?: string;
+    primary_contact_name?: string;
+    primary_contact_phone?: string;
+  }) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: {
+        id: number;
+        subaccount_code: string;
+        business_name: string;
+        account_number: string;
+        account_name: string;
+        settlement_bank: string;
+        percentage_charge: number;
+      };
+    }>('POST', '/subaccount', params);
+  }
+
+  /**
+   * Update an existing subaccount's settlement details.
+   */
+  async updateSubaccount(
+    subaccountCode: string,
+    params: {
+      business_name?: string;
+      settlement_bank?: string;
+      account_number?: string;
+      percentage_charge?: number;
+      description?: string;
+    },
+  ) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: {
+        id: number;
+        subaccount_code: string;
+        business_name: string;
+        account_number: string;
+        account_name: string;
+        settlement_bank: string;
+        percentage_charge: number;
+      };
+    }>('PUT', `/subaccount/${encodeURIComponent(subaccountCode)}`, params);
   }
 
   // ─── Webhooks ────────────────────────────────────────────

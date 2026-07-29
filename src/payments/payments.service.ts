@@ -12,6 +12,7 @@ import { InitializePaymentDto, PlanType } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
+import { SetupPayoutAccountDto } from './dto/setup-payout-account.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
   PaymentStatus,
@@ -31,6 +32,156 @@ export class PaymentsService {
     private readonly organizationsService: OrganizationsService,
     private readonly eventEmitter: EventEmitter2,
   ) {}
+
+  // ─── Payout Accounts (Subaccounts) ──────────────────────
+
+  private get commissionPercent() {
+    const free = Number(process.env.PLATFORM_COMMISSION_PERCENT || 5);
+    const pro = Number(process.env.PLATFORM_COMMISSION_PERCENT_PRO || 3);
+    return { free, pro };
+  }
+
+  async listBanks() {
+    const response = await this.paystack.listBanks();
+    return ResponseUtil.success(response.data);
+  }
+
+  async resolvePayoutAccount(accountNumber: string, bankCode: string) {
+    try {
+      const response = await this.paystack.resolveAccountNumber(
+        accountNumber,
+        bankCode,
+      );
+      return ResponseUtil.success(response.data);
+    } catch (error: any) {
+      throw new BadRequestException(
+        error?.message || 'Could not resolve account number',
+      );
+    }
+  }
+
+  async getPayoutAccount(userId: string, organizationId: string) {
+    await this.organizationsService.validateMemberRole(organizationId, userId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+      select: {
+        paystackSubaccountCode: true,
+        settlementBankCode: true,
+        settlementAccountNumber: true,
+        settlementAccountName: true,
+        payoutAccountCreatedAt: true,
+      },
+    });
+
+    if (!organization) throw new NotFoundException('Organization not found');
+
+    const hasPayoutAccount = !!organization.paystackSubaccountCode;
+
+    return ResponseUtil.success({
+      hasPayoutAccount,
+      bankCode: organization.settlementBankCode,
+      accountNumberMasked: organization.settlementAccountNumber
+        ? `••••••${organization.settlementAccountNumber.slice(-4)}`
+        : null,
+      accountName: organization.settlementAccountName,
+      createdAt: organization.payoutAccountCreatedAt,
+    });
+  }
+
+  async setupPayoutAccount(
+    userId: string,
+    organizationId: string,
+    dto: SetupPayoutAccountDto,
+  ) {
+    await this.organizationsService.validateMemberRole(organizationId, userId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+      include: { subscription: true },
+    });
+    if (!organization) throw new NotFoundException('Organization not found');
+
+    let resolved: Awaited<
+      ReturnType<PaystackService['resolveAccountNumber']>
+    >;
+    try {
+      resolved = await this.paystack.resolveAccountNumber(
+        dto.accountNumber,
+        dto.bankCode,
+      );
+    } catch (error: any) {
+      throw new BadRequestException(
+        error?.message || 'Could not resolve account number',
+      );
+    }
+
+    const commission = this.commissionPercent;
+    const isPro =
+      organization.subscription &&
+      (organization.subscription.status === 'ACTIVE' ||
+        organization.subscription.status === 'TRIALING') &&
+      (organization.subscription.plan === SubscriptionPlan.PRO ||
+        organization.subscription.plan === SubscriptionPlan.ENTERPRISE);
+    const percentageCharge = isPro ? commission.pro : commission.free;
+
+    const businessName = dto.businessName || organization.name;
+
+    let subaccountCode = organization.paystackSubaccountCode;
+
+    try {
+      if (subaccountCode) {
+        await this.paystack.updateSubaccount(subaccountCode, {
+          business_name: businessName,
+          settlement_bank: dto.bankCode,
+          account_number: dto.accountNumber,
+          percentage_charge: percentageCharge,
+        });
+      } else {
+        const created = await this.paystack.createSubaccount({
+          business_name: businessName,
+          settlement_bank: dto.bankCode,
+          account_number: dto.accountNumber,
+          percentage_charge: percentageCharge,
+          description: `Registration fee settlements for ${organization.name}`,
+          primary_contact_email: undefined,
+        });
+        subaccountCode = created.data.subaccount_code;
+      }
+    } catch (error: any) {
+      throw new BadRequestException(
+        error?.message || 'Could not set up payout account with Paystack',
+      );
+    }
+
+    await this.db.organization.update({
+      where: { id: organizationId },
+      data: {
+        paystackSubaccountCode: subaccountCode,
+        settlementBankCode: dto.bankCode,
+        settlementAccountNumber: dto.accountNumber,
+        settlementAccountName: resolved.data.account_name,
+        payoutAccountCreatedAt:
+          organization.payoutAccountCreatedAt ?? new Date(),
+      },
+    });
+
+    return ResponseUtil.success(
+      {
+        hasPayoutAccount: true,
+        accountName: resolved.data.account_name,
+        accountNumberMasked: `••••••${dto.accountNumber.slice(-4)}`,
+        commissionPercent: percentageCharge,
+      },
+      'Payout account saved',
+    );
+  }
 
   // ─── Initialize ──────────────────────────────────────────
 
@@ -197,6 +348,15 @@ export class PaymentsService {
       throw new BadRequestException('Tournament organization is missing');
     }
 
+    const organization = await this.db.organization.findUnique({
+      where: { id: tournament.organization_id },
+    });
+    if (!organization?.paystackSubaccountCode) {
+      throw new BadRequestException(
+        'The organizer has not set up a payout account for this tournament yet, so paid registration is unavailable. Please contact the organizer.',
+      );
+    }
+
     // Check participant limit
     const currentParticipantCount = await this.db.participant.count({
       where: { tournament_id: resolvedTournamentId },
@@ -223,10 +383,13 @@ export class PaymentsService {
       throw new BadRequestException('Invalid registration fee amount');
     }
 
-    // 2. Initialize Paystack transaction
+    // 2. Initialize Paystack transaction (split: organizer's subaccount receives
+    // settlement directly, platform keeps its commission percentage)
     const paystackResponse = await this.paystack.initializeTransaction({
       email: user.email,
       amount: feeAmount,
+      subaccount: organization.paystackSubaccountCode,
+      bearer: 'subaccount',
       metadata: {
         type: 'TOURNAMENT_REGISTRATION',
         userId,
