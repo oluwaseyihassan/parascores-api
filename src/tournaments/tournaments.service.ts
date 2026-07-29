@@ -113,6 +113,19 @@ export class TournamentsService {
       );
     }
 
+    // Paid registration requires the organization to have a payout account
+    if (dto.isPaidRegistration && !tournament.isPaidRegistration) {
+      const organization = await this.db.organization.findUnique({
+        where: { id: tournament.organization_id },
+        select: { paystackSubaccountCode: true },
+      });
+      if (!organization?.paystackSubaccountCode) {
+        throw new BadRequestException(
+          'Set up a payout account in Billing before enabling paid registration',
+        );
+      }
+    }
+
     const { start_date, end_date, ...rest } = dto;
 
     // Check customName uniqueness if it's being updated

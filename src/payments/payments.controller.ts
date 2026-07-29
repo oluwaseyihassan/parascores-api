@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Param,
+  Query,
   Req,
   RawBodyRequest,
   HttpCode,
@@ -17,6 +18,7 @@ import { InitializePaymentDto } from './dto/initialize-payment.dto';
 import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
+import { SetupPayoutAccountDto } from './dto/setup-payout-account.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
@@ -64,6 +66,42 @@ export class PaymentsController {
     @Req() req: any,
   ) {
     return this.paymentsService.initializeTeamJoin(req.user.sub, dto);
+  }
+
+  @Get('payout/banks')
+  @ApiOperation({ summary: 'List banks supported for payout settlements' })
+  async listBanks() {
+    return this.paymentsService.listBanks();
+  }
+
+  @Get('payout/resolve-account')
+  @ApiOperation({ summary: 'Resolve an account number to the account name' })
+  async resolvePayoutAccount(
+    @Query('accountNumber') accountNumber: string,
+    @Query('bankCode') bankCode: string,
+  ) {
+    if (!accountNumber || !bankCode) {
+      throw new BadRequestException('accountNumber and bankCode are required');
+    }
+    return this.paymentsService.resolvePayoutAccount(accountNumber, bankCode);
+  }
+
+  @Get('payout-account/:orgId')
+  @ApiOperation({ summary: 'Get the payout account status for an organization' })
+  async getPayoutAccount(@Param('orgId') orgId: string, @Req() req: any) {
+    return this.paymentsService.getPayoutAccount(req.user.sub, orgId);
+  }
+
+  @Post('payout-account/:orgId')
+  @ApiOperation({
+    summary: 'Create or update the payout account for an organization',
+  })
+  async setupPayoutAccount(
+    @Param('orgId') orgId: string,
+    @Body() dto: SetupPayoutAccountDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.setupPayoutAccount(req.user.sub, orgId, dto);
   }
 
   @Get('verify/:reference')
