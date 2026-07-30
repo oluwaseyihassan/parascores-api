@@ -279,6 +279,79 @@ export class TournamentsService {
     return ResponseUtil.paginated(tournaments, page, limit, total);
   }
 
+  async findNearby(
+    lat: number,
+    lon: number,
+    radiusKm: number = 50,
+    page: number = 1,
+    limit: number = 12,
+  ) {
+    const tournaments = await this.db.tournament.findMany({
+      where: {
+        visibility: Visibility.PUBLIC,
+        latitude: { not: null },
+        longitude: { not: null },
+        end_date: { gte: new Date() },
+      },
+      include: {
+        organization: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            isVerified: true,
+            logoUrl: true,
+            color: true,
+          },
+        },
+        _count: {
+          select: { participants: true },
+        },
+      },
+    });
+
+    const withDistance = tournaments
+      .map((tournament) => ({
+        ...tournament,
+        distanceKm: this.haversineKm(
+          lat,
+          lon,
+          tournament.latitude!,
+          tournament.longitude!,
+        ),
+      }))
+      .filter((tournament) => tournament.distanceKm <= radiusKm)
+      .sort((a, b) => a.distanceKm - b.distanceKm);
+
+    const total = withDistance.length;
+    const skip = (page - 1) * limit;
+    const items = withDistance.slice(skip, skip + limit).map((tournament) => ({
+      ...tournament,
+      distanceKm: Math.round(tournament.distanceKm * 10) / 10,
+    }));
+
+    return ResponseUtil.paginated(items, page, limit, total);
+  }
+
+  private haversineKm(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number {
+    const toRad = (deg: number) => (deg * Math.PI) / 180;
+    const earthRadiusKm = 6371;
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) *
+        Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    return earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
   async findAllMine(
     userId: string,
     page: number = 1,

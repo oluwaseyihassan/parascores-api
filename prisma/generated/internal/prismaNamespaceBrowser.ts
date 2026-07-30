@@ -153,6 +153,8 @@ export const TournamentScalarFieldEnum = {
   autoApprove: 'autoApprove',
   bannerUrl: 'bannerUrl',
   location: 'location',
+  latitude: 'latitude',
+  longitude: 'longitude',
   logoUrl: 'logoUrl',
   maxParticipants: 'maxParticipants',
   participantType: 'participantType',
