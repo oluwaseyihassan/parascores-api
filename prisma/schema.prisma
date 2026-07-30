@@ -79,6 +79,8 @@ model Tournament {
   autoApprove        Boolean              @default(false)
   bannerUrl          String?
   location           String?
+  latitude           Float?
+  longitude          Float?
   logoUrl            String?
   maxParticipants    Int?
   participantType    ParticipantType

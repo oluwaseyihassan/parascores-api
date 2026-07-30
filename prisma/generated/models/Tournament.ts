@@ -27,6 +27,8 @@ export type AggregateTournament = {
 }
 
 export type TournamentAvgAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
   maxParticipants: number | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
@@ -36,6 +38,8 @@ export type TournamentAvgAggregateOutputType = {
 }
 
 export type TournamentSumAggregateOutputType = {
+  latitude: number | null
+  longitude: number | null
   maxParticipants: number | null
   numberOfGroups: number | null
   teamsPerGroup: number | null
@@ -55,6 +59,8 @@ export type TournamentMinAggregateOutputType = {
   autoApprove: boolean | null
   bannerUrl: string | null
   location: string | null
+  latitude: number | null
+  longitude: number | null
   logoUrl: string | null
   maxParticipants: number | null
   participantType: $Enums.ParticipantType | null
@@ -92,6 +98,8 @@ export type TournamentMaxAggregateOutputType = {
   autoApprove: boolean | null
   bannerUrl: string | null
   location: string | null
+  latitude: number | null
+  longitude: number | null
   logoUrl: string | null
   maxParticipants: number | null
   participantType: $Enums.ParticipantType | null
@@ -129,6 +137,8 @@ export type TournamentCountAggregateOutputType = {
   autoApprove: number
   bannerUrl: number
   location: number
+  latitude: number
+  longitude: number
   logoUrl: number
   maxParticipants: number
   participantType: number
@@ -159,6 +169,8 @@ export type TournamentCountAggregateOutputType = {
 
 
 export type TournamentAvgAggregateInputType = {
+  latitude?: true
+  longitude?: true
   maxParticipants?: true
   numberOfGroups?: true
   teamsPerGroup?: true
@@ -168,6 +180,8 @@ export type TournamentAvgAggregateInputType = {
 }
 
 export type TournamentSumAggregateInputType = {
+  latitude?: true
+  longitude?: true
   maxParticipants?: true
   numberOfGroups?: true
   teamsPerGroup?: true
@@ -187,6 +201,8 @@ export type TournamentMinAggregateInputType = {
   autoApprove?: true
   bannerUrl?: true
   location?: true
+  latitude?: true
+  longitude?: true
   logoUrl?: true
   maxParticipants?: true
   participantType?: true
@@ -224,6 +240,8 @@ export type TournamentMaxAggregateInputType = {
   autoApprove?: true
   bannerUrl?: true
   location?: true
+  latitude?: true
+  longitude?: true
   logoUrl?: true
   maxParticipants?: true
   participantType?: true
@@ -261,6 +279,8 @@ export type TournamentCountAggregateInputType = {
   autoApprove?: true
   bannerUrl?: true
   location?: true
+  latitude?: true
+  longitude?: true
   logoUrl?: true
   maxParticipants?: true
   participantType?: true
@@ -386,6 +406,8 @@ export type TournamentGroupByOutputType = {
   autoApprove: boolean
   bannerUrl: string | null
   location: string | null
+  latitude: number | null
+  longitude: number | null
   logoUrl: string | null
   maxParticipants: number | null
   participantType: $Enums.ParticipantType
@@ -447,6 +469,8 @@ export type TournamentWhereInput = {
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
   participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
@@ -499,6 +523,8 @@ export type TournamentOrderByWithRelationInput = {
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
   participantType?: Prisma.SortOrder
@@ -555,6 +581,8 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
   participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
@@ -606,6 +634,8 @@ export type TournamentOrderByWithAggregationInput = {
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
+  latitude?: Prisma.SortOrderInput | Prisma.SortOrder
+  longitude?: Prisma.SortOrderInput | Prisma.SortOrder
   logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   maxParticipants?: Prisma.SortOrderInput | Prisma.SortOrder
   participantType?: Prisma.SortOrder
@@ -652,6 +682,8 @@ export type TournamentScalarWhereWithAggregatesInput = {
   autoApprove?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   location?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  latitude?: Prisma.FloatNullableWithAggregatesFilter<"Tournament"> | number | null
+  longitude?: Prisma.FloatNullableWithAggregatesFilter<"Tournament"> | number | null
   logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   maxParticipants?: Prisma.IntNullableWithAggregatesFilter<"Tournament"> | number | null
   participantType?: Prisma.EnumParticipantTypeWithAggregatesFilter<"Tournament"> | $Enums.ParticipantType
@@ -690,6 +722,8 @@ export type TournamentCreateInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -740,6 +774,8 @@ export type TournamentUncheckedCreateInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -790,6 +826,8 @@ export type TournamentUpdateInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -840,6 +878,8 @@ export type TournamentUncheckedUpdateInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -890,6 +930,8 @@ export type TournamentCreateManyInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -928,6 +970,8 @@ export type TournamentUpdateManyMutationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -964,6 +1008,8 @@ export type TournamentUncheckedUpdateManyInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -1017,6 +1063,8 @@ export type TournamentCountOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   maxParticipants?: Prisma.SortOrder
   participantType?: Prisma.SortOrder
@@ -1045,6 +1093,8 @@ export type TournamentCountOrderByAggregateInput = {
 }
 
 export type TournamentAvgOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   maxParticipants?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
@@ -1064,6 +1114,8 @@ export type TournamentMaxOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   maxParticipants?: Prisma.SortOrder
   participantType?: Prisma.SortOrder
@@ -1101,6 +1153,8 @@ export type TournamentMinOrderByAggregateInput = {
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
   location?: Prisma.SortOrder
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   logoUrl?: Prisma.SortOrder
   maxParticipants?: Prisma.SortOrder
   participantType?: Prisma.SortOrder
@@ -1128,6 +1182,8 @@ export type TournamentMinOrderByAggregateInput = {
 }
 
 export type TournamentSumOrderByAggregateInput = {
+  latitude?: Prisma.SortOrder
+  longitude?: Prisma.SortOrder
   maxParticipants?: Prisma.SortOrder
   numberOfGroups?: Prisma.SortOrder
   teamsPerGroup?: Prisma.SortOrder
@@ -1201,6 +1257,14 @@ export type TournamentUncheckedCreateNestedManyWithoutParentInput = {
   connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutParentInput | Prisma.TournamentCreateOrConnectWithoutParentInput[]
   createMany?: Prisma.TournamentCreateManyParentInputEnvelope
   connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -1438,6 +1502,8 @@ export type TournamentCreateWithoutOrganizationInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1487,6 +1553,8 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1565,6 +1633,8 @@ export type TournamentScalarWhereInput = {
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
+  longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   logoUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
   maxParticipants?: Prisma.IntNullableFilter<"Tournament"> | number | null
   participantType?: Prisma.EnumParticipantTypeFilter<"Tournament"> | $Enums.ParticipantType
@@ -1603,6 +1673,8 @@ export type TournamentCreateWithoutSeasonsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1652,6 +1724,8 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1706,6 +1780,8 @@ export type TournamentCreateWithoutParentInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1755,6 +1831,8 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1825,6 +1903,8 @@ export type TournamentUpdateWithoutSeasonsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -1874,6 +1954,8 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -1939,6 +2021,8 @@ export type TournamentCreateWithoutFollowersInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -1988,6 +2072,8 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2053,6 +2139,8 @@ export type TournamentUpdateWithoutFollowersInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2102,6 +2190,8 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2151,6 +2241,8 @@ export type TournamentCreateWithoutGroupsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2200,6 +2292,8 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2265,6 +2359,8 @@ export type TournamentUpdateWithoutGroupsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2314,6 +2410,8 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2363,6 +2461,8 @@ export type TournamentCreateWithoutParticipantsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2412,6 +2512,8 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2477,6 +2579,8 @@ export type TournamentUpdateWithoutParticipantsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2526,6 +2630,8 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2575,6 +2681,8 @@ export type TournamentCreateWithoutFixturesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2624,6 +2732,8 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2689,6 +2799,8 @@ export type TournamentUpdateWithoutFixturesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2738,6 +2850,8 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2787,6 +2901,8 @@ export type TournamentCreateWithoutStandingsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2836,6 +2952,8 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -2901,6 +3019,8 @@ export type TournamentUpdateWithoutStandingsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2950,6 +3070,8 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -2999,6 +3121,8 @@ export type TournamentCreateWithoutSponsorsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3048,6 +3172,8 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3113,6 +3239,8 @@ export type TournamentUpdateWithoutSponsorsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3162,6 +3290,8 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3211,6 +3341,8 @@ export type TournamentCreateWithoutSocialsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3260,6 +3392,8 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3325,6 +3459,8 @@ export type TournamentUpdateWithoutSocialsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3374,6 +3510,8 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3423,6 +3561,8 @@ export type TournamentCreateWithoutVenuesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3472,6 +3612,8 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3537,6 +3679,8 @@ export type TournamentUpdateWithoutVenuesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3586,6 +3730,8 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3635,6 +3781,8 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3684,6 +3832,8 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3749,6 +3899,8 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3798,6 +3950,8 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -3847,6 +4001,8 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3896,6 +4052,8 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -3961,6 +4119,8 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4010,6 +4170,8 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4059,6 +4221,8 @@ export type TournamentCreateWithoutPaymentsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -4108,6 +4272,8 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -4173,6 +4339,8 @@ export type TournamentUpdateWithoutPaymentsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4222,6 +4390,8 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4271,6 +4441,8 @@ export type TournamentCreateManyOrganizationInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -4308,6 +4480,8 @@ export type TournamentUpdateWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4357,6 +4531,8 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4406,6 +4582,8 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4443,6 +4621,8 @@ export type TournamentCreateManyParentInput = {
   autoApprove?: boolean
   bannerUrl?: string | null
   location?: string | null
+  latitude?: number | null
+  longitude?: number | null
   logoUrl?: string | null
   maxParticipants?: number | null
   participantType: $Enums.ParticipantType
@@ -4480,6 +4660,8 @@ export type TournamentUpdateWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4529,6 +4711,8 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4578,6 +4762,8 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
@@ -4745,6 +4931,8 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   autoApprove?: boolean
   bannerUrl?: boolean
   location?: boolean
+  latitude?: boolean
+  longitude?: boolean
   logoUrl?: boolean
   maxParticipants?: boolean
   participantType?: boolean
@@ -4798,6 +4986,8 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   autoApprove?: boolean
   bannerUrl?: boolean
   location?: boolean
+  latitude?: boolean
+  longitude?: boolean
   logoUrl?: boolean
   maxParticipants?: boolean
   participantType?: boolean
@@ -4838,6 +5028,8 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   autoApprove?: boolean
   bannerUrl?: boolean
   location?: boolean
+  latitude?: boolean
+  longitude?: boolean
   logoUrl?: boolean
   maxParticipants?: boolean
   participantType?: boolean
@@ -4878,6 +5070,8 @@ export type TournamentSelectScalar = {
   autoApprove?: boolean
   bannerUrl?: boolean
   location?: boolean
+  latitude?: boolean
+  longitude?: boolean
   logoUrl?: boolean
   maxParticipants?: boolean
   participantType?: boolean
@@ -4905,7 +5099,7 @@ export type TournamentSelectScalar = {
   paymentPerTeam?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -4961,6 +5155,8 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     autoApprove: boolean
     bannerUrl: string | null
     location: string | null
+    latitude: number | null
+    longitude: number | null
     logoUrl: string | null
     maxParticipants: number | null
     participantType: $Enums.ParticipantType
@@ -5433,6 +5629,8 @@ export interface TournamentFieldRefs {
   readonly autoApprove: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly bannerUrl: Prisma.FieldRef<"Tournament", 'String'>
   readonly location: Prisma.FieldRef<"Tournament", 'String'>
+  readonly latitude: Prisma.FieldRef<"Tournament", 'Float'>
+  readonly longitude: Prisma.FieldRef<"Tournament", 'Float'>
   readonly logoUrl: Prisma.FieldRef<"Tournament", 'String'>
   readonly maxParticipants: Prisma.FieldRef<"Tournament", 'Int'>
   readonly participantType: Prisma.FieldRef<"Tournament", 'ParticipantType'>

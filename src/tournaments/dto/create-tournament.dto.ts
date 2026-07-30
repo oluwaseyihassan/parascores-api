@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsObject,
   IsOptional,
   IsString,
@@ -109,6 +110,22 @@ export class CreateTournamentDto {
   @IsString()
   @IsOptional()
   location?: string;
+
+  @ApiPropertyOptional({
+    description: 'Latitude of the tournament location',
+    example: 7.3775,
+  })
+  @IsNumber()
+  @IsOptional()
+  latitude?: number;
+
+  @ApiPropertyOptional({
+    description: 'Longitude of the tournament location',
+    example: 3.947,
+  })
+  @IsNumber()
+  @IsOptional()
+  longitude?: number;
 
   @ApiPropertyOptional({
     description: 'Number of groups for group stage',

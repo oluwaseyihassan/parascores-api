@@ -27,6 +27,7 @@ import { GroupsModule } from './groups/groups.module';
 import { TournamentInvitesModule } from './tournament-invites/tournament-invites.module';
 import { TeamsModule } from './teams/teams.module';
 import { PaymentsModule } from './payments/payments.module';
+import { LocationsModule } from './locations/locations.module';
 import { AdminModule } from './admin/admin.module';
 import { RedisModule } from './redis/redis.module';
 import { NotificationsModule } from './notifications/notifications.module';
@@ -66,6 +67,7 @@ import { APP_FILTER } from '@nestjs/core';
     TournamentInvitesModule,
     TeamsModule,
     PaymentsModule,
+    LocationsModule,
     AdminModule,
     RedisModule,
     NotificationsModule,
