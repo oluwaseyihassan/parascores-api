@@ -1644,6 +1644,30 @@ export class PaymentsService {
       },
     });
 
-    return ResponseUtil.success(payments, 'Payment history retrieved');
+    // Enrich registration payments with the paying team's name
+    const teamIds = payments
+      .filter((p) => p.type === 'TOURNAMENT_REGISTRATION')
+      .map((p) => (p.metadata as any)?.teamId)
+      .filter((id): id is string => !!id);
+
+    const teams = teamIds.length
+      ? await this.db.team.findMany({
+          where: { id: { in: teamIds } },
+          select: { id: true, name: true },
+        })
+      : [];
+    const teamNameMap = new Map(teams.map((t) => [t.id, t.name]));
+
+    const enriched = payments.map((p) => {
+      if (p.type !== 'TOURNAMENT_REGISTRATION') return p;
+      const metadata = p.metadata as any;
+      const teamName =
+        metadata?.customName ||
+        (metadata?.teamId ? teamNameMap.get(metadata.teamId) : null) ||
+        null;
+      return { ...p, teamName };
+    });
+
+    return ResponseUtil.success(enriched, 'Payment history retrieved');
   }
 }
