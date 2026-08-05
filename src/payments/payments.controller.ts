@@ -92,6 +92,14 @@ export class PaymentsController {
     return this.paymentsService.getPayoutAccount(req.user.sub, orgId);
   }
 
+  @Get('payout-summary/:orgId')
+  @ApiOperation({
+    summary: 'Get registration earnings summary for an organization',
+  })
+  async getPayoutSummary(@Param('orgId') orgId: string, @Req() req: any) {
+    return this.paymentsService.getPayoutSummary(req.user.sub, orgId);
+  }
+
   @Post('payout-account/:orgId')
   @ApiOperation({
     summary: 'Create or update the payout account for an organization',
