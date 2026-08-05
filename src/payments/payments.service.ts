@@ -131,7 +131,10 @@ export class PaymentsService {
         organization.subscription.plan === SubscriptionPlan.ENTERPRISE);
     const percentageCharge = isPro ? commission.pro : commission.free;
 
-    const businessName = dto.businessName || organization.name;
+    // Paystack holds settlements when the subaccount business name does not
+    // match the bank-verified account name — default to the resolved name
+    const businessName =
+      dto.businessName || resolved.data.account_name || organization.name;
 
     let subaccountCode = organization.paystackSubaccountCode;
 
