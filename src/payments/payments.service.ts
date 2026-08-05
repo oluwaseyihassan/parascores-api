@@ -60,6 +60,28 @@ export class PaymentsService {
     }
   }
 
+  private banksCache: {
+    at: number;
+    banks: { code: string; name: string }[];
+  } | null = null;
+
+  private async getBankName(bankCode: string | null) {
+    if (!bankCode) return null;
+    try {
+      const cacheFresh =
+        this.banksCache && Date.now() - this.banksCache.at < 86400000;
+      if (!cacheFresh) {
+        const response = await this.paystack.listBanks();
+        this.banksCache = { at: Date.now(), banks: response.data };
+      }
+      return (
+        this.banksCache!.banks.find((b) => b.code === bankCode)?.name ?? null
+      );
+    } catch {
+      return null;
+    }
+  }
+
   async getPayoutAccount(userId: string, organizationId: string) {
     await this.organizationsService.validateMemberRole(organizationId, userId, [
       'OWNER',
@@ -84,6 +106,7 @@ export class PaymentsService {
     return ResponseUtil.success({
       hasPayoutAccount,
       bankCode: organization.settlementBankCode,
+      bankName: await this.getBankName(organization.settlementBankCode),
       accountNumberMasked: organization.settlementAccountNumber
         ? `••••••${organization.settlementAccountNumber.slice(-4)}`
         : null,
@@ -184,6 +207,75 @@ export class PaymentsService {
       },
       'Payout account saved',
     );
+  }
+
+  async getPayoutSummary(userId: string, organizationId: string) {
+    await this.organizationsService.validateMemberRole(organizationId, userId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+      include: { subscription: true },
+    });
+    if (!organization) throw new NotFoundException('Organization not found');
+
+    const payments = await this.db.payment.findMany({
+      where: {
+        organizationId,
+        type: 'TOURNAMENT_REGISTRATION',
+        status: PaymentStatus.SUCCESS,
+      },
+      include: {
+        tournament: { select: { id: true, name: true } },
+      },
+    });
+
+    const commission = this.commissionPercent;
+    const isPro =
+      organization.subscription &&
+      (organization.subscription.status === 'ACTIVE' ||
+        organization.subscription.status === 'TRIALING') &&
+      (organization.subscription.plan === SubscriptionPlan.PRO ||
+        organization.subscription.plan === SubscriptionPlan.ENTERPRISE);
+    const commissionPercent = isPro ? commission.pro : commission.free;
+    const netOf = (gross: number) =>
+      Math.round((gross * (100 - commissionPercent)) / 100);
+
+    const totalGross = payments.reduce((sum, p) => sum + p.amount, 0);
+
+    const byTournament = new Map<
+      string,
+      { id: string; name: string; count: number; gross: number }
+    >();
+    for (const p of payments) {
+      const key = p.tournamentId || 'unknown';
+      const existing = byTournament.get(key);
+      if (existing) {
+        existing.count++;
+        existing.gross += p.amount;
+      } else {
+        byTournament.set(key, {
+          id: key,
+          name: p.tournament?.name || 'Unknown tournament',
+          count: 1,
+          gross: p.amount,
+        });
+      }
+    }
+
+    const tournaments = [...byTournament.values()]
+      .map((t) => ({ ...t, net: netOf(t.gross) }))
+      .sort((a, b) => b.gross - a.gross);
+
+    return ResponseUtil.success({
+      totalGross,
+      totalNet: netOf(totalGross),
+      paymentCount: payments.length,
+      commissionPercent,
+      tournaments,
+    });
   }
 
   // ─── Initialize ──────────────────────────────────────────
@@ -1656,10 +1748,11 @@ export class PaymentsService {
     const teams = teamIds.length
       ? await this.db.team.findMany({
           where: { id: { in: teamIds } },
-          select: { id: true, name: true },
+          select: { id: true, name: true, logoUrl: true },
         })
       : [];
     const teamNameMap = new Map(teams.map((t) => [t.id, t.name]));
+    const teamLogoMap = new Map(teams.map((t) => [t.id, t.logoUrl]));
 
     const enriched = payments.map((p) => {
       if (p.type !== 'TOURNAMENT_REGISTRATION') return p;
@@ -1668,7 +1761,11 @@ export class PaymentsService {
         metadata?.customName ||
         (metadata?.teamId ? teamNameMap.get(metadata.teamId) : null) ||
         null;
-      return { ...p, teamName };
+      const teamLogoUrl =
+        metadata?.logoUrl ||
+        (metadata?.teamId ? teamLogoMap.get(metadata.teamId) : null) ||
+        null;
+      return { ...p, teamName, teamLogoUrl };
     });
 
     return ResponseUtil.success(enriched, 'Payment history retrieved');
