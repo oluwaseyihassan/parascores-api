@@ -124,6 +124,34 @@ export class TournamentsController {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
   }
 
+  @Post('practice')
+  @ApiOperation({
+    summary: 'Create a practice (sandbox) tournament for training',
+  })
+  async createPractice(
+    @Body('organizationId') organizationId: string,
+    @Req() req: any,
+  ) {
+    if (!organizationId) {
+      throw new BadRequestException('organizationId is required');
+    }
+    return this.tournamentsService.createPractice(req.user.sub, organizationId);
+  }
+
+  @Post(':id/practice-reset')
+  @ApiOperation({ summary: 'Reset a practice tournament to its initial state' })
+  async resetPractice(@Param('id') id: string, @Req() req: any) {
+    return this.tournamentsService.resetPractice(req.user.sub, id);
+  }
+
+  @Post(':id/practice-autofill')
+  @ApiOperation({
+    summary: 'Fill a practice tournament with sample results',
+  })
+  async autofillPractice(@Param('id') id: string, @Req() req: any) {
+    return this.tournamentsService.autofillPractice(req.user.sub, id);
+  }
+
   @Post(':id/season')
   @ApiOperation({ summary: 'Start a new season from an existing tournament' })
   async startSeason(

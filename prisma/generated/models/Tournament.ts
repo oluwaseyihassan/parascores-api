@@ -58,6 +58,7 @@ export type TournamentMinAggregateOutputType = {
   updated_at: Date | null
   autoApprove: boolean | null
   bannerUrl: string | null
+  isPractice: boolean | null
   location: string | null
   latitude: number | null
   longitude: number | null
@@ -97,6 +98,7 @@ export type TournamentMaxAggregateOutputType = {
   updated_at: Date | null
   autoApprove: boolean | null
   bannerUrl: string | null
+  isPractice: boolean | null
   location: string | null
   latitude: number | null
   longitude: number | null
@@ -136,6 +138,7 @@ export type TournamentCountAggregateOutputType = {
   updated_at: number
   autoApprove: number
   bannerUrl: number
+  isPractice: number
   location: number
   latitude: number
   longitude: number
@@ -200,6 +203,7 @@ export type TournamentMinAggregateInputType = {
   updated_at?: true
   autoApprove?: true
   bannerUrl?: true
+  isPractice?: true
   location?: true
   latitude?: true
   longitude?: true
@@ -239,6 +243,7 @@ export type TournamentMaxAggregateInputType = {
   updated_at?: true
   autoApprove?: true
   bannerUrl?: true
+  isPractice?: true
   location?: true
   latitude?: true
   longitude?: true
@@ -278,6 +283,7 @@ export type TournamentCountAggregateInputType = {
   updated_at?: true
   autoApprove?: true
   bannerUrl?: true
+  isPractice?: true
   location?: true
   latitude?: true
   longitude?: true
@@ -405,6 +411,7 @@ export type TournamentGroupByOutputType = {
   updated_at: Date
   autoApprove: boolean
   bannerUrl: string | null
+  isPractice: boolean
   location: string | null
   latitude: number | null
   longitude: number | null
@@ -468,6 +475,7 @@ export type TournamentWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isPractice?: Prisma.BoolFilter<"Tournament"> | boolean
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
@@ -522,6 +530,7 @@ export type TournamentOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPractice?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -580,6 +589,7 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isPractice?: Prisma.BoolFilter<"Tournament"> | boolean
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
@@ -633,6 +643,7 @@ export type TournamentOrderByWithAggregationInput = {
   updated_at?: Prisma.SortOrder
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isPractice?: Prisma.SortOrder
   location?: Prisma.SortOrderInput | Prisma.SortOrder
   latitude?: Prisma.SortOrderInput | Prisma.SortOrder
   longitude?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -681,6 +692,7 @@ export type TournamentScalarWhereWithAggregatesInput = {
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Tournament"> | Date | string
   autoApprove?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  isPractice?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   location?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   latitude?: Prisma.FloatNullableWithAggregatesFilter<"Tournament"> | number | null
   longitude?: Prisma.FloatNullableWithAggregatesFilter<"Tournament"> | number | null
@@ -721,6 +733,7 @@ export type TournamentCreateInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -773,6 +786,7 @@ export type TournamentUncheckedCreateInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -825,6 +839,7 @@ export type TournamentUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -877,6 +892,7 @@ export type TournamentUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -929,6 +945,7 @@ export type TournamentCreateManyInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -969,6 +986,7 @@ export type TournamentUpdateManyMutationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1007,6 +1025,7 @@ export type TournamentUncheckedUpdateManyInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1062,6 +1081,7 @@ export type TournamentCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
+  isPractice?: Prisma.SortOrder
   location?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
@@ -1113,6 +1133,7 @@ export type TournamentMaxOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
+  isPractice?: Prisma.SortOrder
   location?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
@@ -1152,6 +1173,7 @@ export type TournamentMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   autoApprove?: Prisma.SortOrder
   bannerUrl?: Prisma.SortOrder
+  isPractice?: Prisma.SortOrder
   location?: Prisma.SortOrder
   latitude?: Prisma.SortOrder
   longitude?: Prisma.SortOrder
@@ -1501,6 +1523,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1552,6 +1575,7 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1632,6 +1656,7 @@ export type TournamentScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Tournament"> | Date | string
   autoApprove?: Prisma.BoolFilter<"Tournament"> | boolean
   bannerUrl?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isPractice?: Prisma.BoolFilter<"Tournament"> | boolean
   location?: Prisma.StringNullableFilter<"Tournament"> | string | null
   latitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
   longitude?: Prisma.FloatNullableFilter<"Tournament"> | number | null
@@ -1672,6 +1697,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1723,6 +1749,7 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1779,6 +1806,7 @@ export type TournamentCreateWithoutParentInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1830,6 +1858,7 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -1902,6 +1931,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -1953,6 +1983,7 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2020,6 +2051,7 @@ export type TournamentCreateWithoutFollowersInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2071,6 +2103,7 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2138,6 +2171,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2189,6 +2223,7 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2240,6 +2275,7 @@ export type TournamentCreateWithoutGroupsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2291,6 +2327,7 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2358,6 +2395,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2409,6 +2447,7 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2460,6 +2499,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2511,6 +2551,7 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2578,6 +2619,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2629,6 +2671,7 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2680,6 +2723,7 @@ export type TournamentCreateWithoutFixturesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2731,6 +2775,7 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2798,6 +2843,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2849,6 +2895,7 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -2900,6 +2947,7 @@ export type TournamentCreateWithoutStandingsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -2951,6 +2999,7 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3018,6 +3067,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3069,6 +3119,7 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3120,6 +3171,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3171,6 +3223,7 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3238,6 +3291,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3289,6 +3343,7 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3340,6 +3395,7 @@ export type TournamentCreateWithoutSocialsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3391,6 +3447,7 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3458,6 +3515,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3509,6 +3567,7 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3560,6 +3619,7 @@ export type TournamentCreateWithoutVenuesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3611,6 +3671,7 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3678,6 +3739,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3729,6 +3791,7 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3780,6 +3843,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3831,6 +3895,7 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -3898,6 +3963,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -3949,6 +4015,7 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4000,6 +4067,7 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4051,6 +4119,7 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4118,6 +4187,7 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4169,6 +4239,7 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4220,6 +4291,7 @@ export type TournamentCreateWithoutPaymentsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4271,6 +4343,7 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4338,6 +4411,7 @@ export type TournamentUpdateWithoutPaymentsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4389,6 +4463,7 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4440,6 +4515,7 @@ export type TournamentCreateManyOrganizationInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4479,6 +4555,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4530,6 +4607,7 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4581,6 +4659,7 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4620,6 +4699,7 @@ export type TournamentCreateManyParentInput = {
   updated_at?: Date | string
   autoApprove?: boolean
   bannerUrl?: string | null
+  isPractice?: boolean
   location?: string | null
   latitude?: number | null
   longitude?: number | null
@@ -4659,6 +4739,7 @@ export type TournamentUpdateWithoutParentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4710,6 +4791,7 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4761,6 +4843,7 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
   bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
@@ -4930,6 +5013,7 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   updated_at?: boolean
   autoApprove?: boolean
   bannerUrl?: boolean
+  isPractice?: boolean
   location?: boolean
   latitude?: boolean
   longitude?: boolean
@@ -4985,6 +5069,7 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updated_at?: boolean
   autoApprove?: boolean
   bannerUrl?: boolean
+  isPractice?: boolean
   location?: boolean
   latitude?: boolean
   longitude?: boolean
@@ -5027,6 +5112,7 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   updated_at?: boolean
   autoApprove?: boolean
   bannerUrl?: boolean
+  isPractice?: boolean
   location?: boolean
   latitude?: boolean
   longitude?: boolean
@@ -5069,6 +5155,7 @@ export type TournamentSelectScalar = {
   updated_at?: boolean
   autoApprove?: boolean
   bannerUrl?: boolean
+  isPractice?: boolean
   location?: boolean
   latitude?: boolean
   longitude?: boolean
@@ -5099,7 +5186,7 @@ export type TournamentSelectScalar = {
   paymentPerTeam?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -5154,6 +5241,7 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     updated_at: Date
     autoApprove: boolean
     bannerUrl: string | null
+    isPractice: boolean
     location: string | null
     latitude: number | null
     longitude: number | null
@@ -5628,6 +5716,7 @@ export interface TournamentFieldRefs {
   readonly updated_at: Prisma.FieldRef<"Tournament", 'DateTime'>
   readonly autoApprove: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly bannerUrl: Prisma.FieldRef<"Tournament", 'String'>
+  readonly isPractice: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly location: Prisma.FieldRef<"Tournament", 'String'>
   readonly latitude: Prisma.FieldRef<"Tournament", 'Float'>
   readonly longitude: Prisma.FieldRef<"Tournament", 'Float'>

@@ -126,7 +126,9 @@ export const OrganizationScalarFieldEnum = {
   settlementBankCode: 'settlementBankCode',
   settlementAccountNumber: 'settlementAccountNumber',
   settlementAccountName: 'settlementAccountName',
-  payoutAccountCreatedAt: 'payoutAccountCreatedAt'
+  payoutAccountCreatedAt: 'payoutAccountCreatedAt',
+  subdomain: 'subdomain',
+  brandConfig: 'brandConfig'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -152,6 +154,7 @@ export const TournamentScalarFieldEnum = {
   updated_at: 'updated_at',
   autoApprove: 'autoApprove',
   bannerUrl: 'bannerUrl',
+  isPractice: 'isPractice',
   location: 'location',
   latitude: 'latitude',
   longitude: 'longitude',
