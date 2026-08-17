@@ -125,6 +125,109 @@ export class OrganizationsService {
     );
   }
 
+  async listRoster(orgId: string) {
+    const roster = await this.db.rosterEntry.findMany({
+      where: { organizationId: orgId },
+      include: {
+        _count: { select: { entries: true } },
+      },
+      orderBy: { name: 'asc' },
+    });
+
+    return ResponseUtil.success(roster, 'Roster retrieved successfully');
+  }
+
+  private async validateRosterAccess(orgId: string, userId: string) {
+    const user = await this.db.user.findUnique({ where: { id: userId } });
+    if (user?.role === 'SUPER_ADMIN') return;
+    await this.validateMemberRole(orgId, userId, ['OWNER', 'ADMIN']);
+  }
+
+  async addRosterEntry(
+    orgId: string,
+    userId: string,
+    dto: { name: string; shortName?: string; logoUrl?: string },
+  ) {
+    const org = await this.db.organization.findUnique({ where: { id: orgId } });
+    if (!org) throw new NotFoundException('Organization not found');
+    await this.validateRosterAccess(orgId, userId);
+
+    const existing = await this.db.rosterEntry.findUnique({
+      where: {
+        organizationId_name: { organizationId: orgId, name: dto.name },
+      },
+    });
+    if (existing) {
+      throw new ConflictException(
+        `"${dto.name}" is already on this organization's roster`,
+      );
+    }
+
+    const entry = await this.db.rosterEntry.create({
+      data: {
+        organizationId: orgId,
+        name: dto.name,
+        shortName: dto.shortName,
+        logoUrl: dto.logoUrl,
+      },
+    });
+
+    return ResponseUtil.success(entry, 'Roster entry added successfully');
+  }
+
+  async updateRosterEntry(
+    orgId: string,
+    entryId: string,
+    userId: string,
+    dto: { name?: string; shortName?: string; logoUrl?: string | null },
+  ) {
+    const entry = await this.db.rosterEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!entry || entry.organizationId !== orgId) {
+      throw new NotFoundException('Roster entry not found');
+    }
+    await this.validateRosterAccess(orgId, userId);
+
+    if (dto.name && dto.name !== entry.name) {
+      const existing = await this.db.rosterEntry.findUnique({
+        where: {
+          organizationId_name: { organizationId: orgId, name: dto.name },
+        },
+      });
+      if (existing) {
+        throw new ConflictException(
+          `"${dto.name}" is already on this organization's roster`,
+        );
+      }
+    }
+
+    const updated = await this.db.rosterEntry.update({
+      where: { id: entryId },
+      data: {
+        name: dto.name,
+        shortName: dto.shortName,
+        logoUrl: dto.logoUrl,
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Roster entry updated successfully');
+  }
+
+  async removeRosterEntry(orgId: string, entryId: string, userId: string) {
+    const entry = await this.db.rosterEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!entry || entry.organizationId !== orgId) {
+      throw new NotFoundException('Roster entry not found');
+    }
+    await this.validateRosterAccess(orgId, userId);
+
+    await this.db.rosterEntry.delete({ where: { id: entryId } });
+
+    return ResponseUtil.success(null, 'Roster entry removed successfully');
+  }
+
   async update(id: string, dto: any) {
     const org = await this.db.organization.findUnique({ where: { id } });
     if (!org) {
@@ -394,6 +497,339 @@ export class OrganizationsService {
     return ResponseUtil.success(
       organization,
       'Organization public profile retrieved successfully',
+    );
+  }
+
+  async getEventHubBySubdomain(subdomain: string) {
+    const organization = await this.db.organization.findUnique({
+      where: { subdomain },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        subdomain: true,
+        description: true,
+        logoUrl: true,
+        color: true,
+        brandConfig: true,
+        isVerified: true,
+        socials: {
+          select: {
+            id: true,
+            platform: true,
+            url: true,
+            handle: true,
+          },
+          orderBy: { created_at: 'asc' },
+        },
+        tournaments: {
+          where: { visibility: 'PUBLIC' },
+          select: {
+            id: true,
+            name: true,
+            customName: true,
+            sport: true,
+            type: true,
+            start_date: true,
+            end_date: true,
+            logoUrl: true,
+            location: true,
+          },
+          orderBy: { start_date: 'asc' },
+        },
+      },
+    });
+
+    if (!organization) {
+      throw new NotFoundException('Event hub not found');
+    }
+
+    return ResponseUtil.success(
+      organization,
+      'Event hub retrieved successfully',
+    );
+  }
+
+  async getEventHubLive(subdomain: string) {
+    const organization = await this.db.organization.findUnique({
+      where: { subdomain },
+      select: {
+        id: true,
+        tournaments: {
+          where: { visibility: 'PUBLIC' },
+          select: {
+            id: true,
+            name: true,
+            customName: true,
+            sport: true,
+            logoUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!organization) {
+      throw new NotFoundException('Event hub not found');
+    }
+
+    const tournamentIds = organization.tournaments.map((t) => t.id);
+
+    const fixtureSelect = {
+      id: true,
+      tournament_id: true,
+      round: true,
+      roundName: true,
+      stage: true,
+      status: true,
+      startTime: true,
+      venue: true,
+      homeScore: true,
+      awayScore: true,
+      homePenaltyScore: true,
+      awayPenaltyScore: true,
+      homeTeamPlaceholder: true,
+      awayTeamPlaceholder: true,
+      timerStartedAt: true,
+      timerElapsedSeconds: true,
+      timerIsRunning: true,
+      matchDuration: true,
+      half: true,
+      updated_at: true,
+      matchEvents: {
+        orderBy: { created_at: 'desc' as const },
+        take: 15,
+        select: {
+          id: true,
+          type: true,
+          minute: true,
+          description: true,
+          metadata: true,
+          created_at: true,
+          participant: {
+            select: { customName: true, customShortName: true },
+          },
+          player: { select: { name: true } },
+        },
+      },
+      homeTeam: {
+        select: {
+          customName: true,
+          customShortName: true,
+          logoUrl: true,
+          team: { select: { name: true } },
+        },
+      },
+      awayTeam: {
+        select: {
+          customName: true,
+          customShortName: true,
+          logoUrl: true,
+          team: { select: { name: true } },
+        },
+      },
+      tournament: {
+        select: { id: true, name: true, customName: true, sport: true },
+      },
+    } as const;
+
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
+
+    const [live, upcoming, results] = await Promise.all([
+      this.db.fixture.findMany({
+        where: {
+          tournament_id: { in: tournamentIds },
+          status: { in: ['LIVE', 'EXTRATIME', 'NORMAL_TIME_ENDED'] },
+        },
+        select: fixtureSelect,
+        orderBy: { updated_at: 'desc' },
+      }),
+      this.db.fixture.findMany({
+        where: {
+          tournament_id: { in: tournamentIds },
+          status: 'SCHEDULED',
+          OR: [{ startTime: { gte: startOfToday } }, { startTime: null }],
+        },
+        select: fixtureSelect,
+        orderBy: { startTime: { sort: 'asc', nulls: 'last' } },
+        take: 30,
+      }),
+      this.db.fixture.findMany({
+        where: {
+          tournament_id: { in: tournamentIds },
+          status: 'COMPLETED',
+        },
+        select: fixtureSelect,
+        orderBy: { updated_at: 'desc' },
+        take: 20,
+      }),
+    ]);
+
+    const sports = organization.tournaments.map((t) => {
+      const liveCount = live.filter((f) => f.tournament_id === t.id).length;
+      const next = upcoming.find((f) => f.tournament_id === t.id);
+      const hasResults = results.some((f) => f.tournament_id === t.id);
+      return {
+        tournamentId: t.id,
+        name: t.name,
+        customName: t.customName,
+        sport: t.sport,
+        logoUrl: t.logoUrl,
+        liveCount,
+        nextStart: next?.startTime ?? null,
+        hasResults,
+      };
+    });
+
+    return ResponseUtil.success(
+      { live, upcoming, results, sports },
+      'Event hub live data retrieved successfully',
+    );
+  }
+
+  async getEventHubMedalTable(subdomain: string) {
+    const organization = await this.db.organization.findUnique({
+      where: { subdomain },
+      select: { id: true },
+    });
+
+    if (!organization) {
+      throw new NotFoundException('Event hub not found');
+    }
+
+    // Medal-deciding fixtures: finals (gold/silver) + third-place matches (bronze)
+    // across all the org's PUBLIC tournaments.
+    const medalFixtures = await this.db.fixture.findMany({
+      where: {
+        tournament: { organization_id: organization.id, visibility: 'PUBLIC' },
+        status: 'COMPLETED',
+        roundName: { in: ['Final', 'Third Place Match'] },
+      },
+      select: {
+        roundName: true,
+        homeTeamId: true,
+        awayTeamId: true,
+        homeScore: true,
+        awayScore: true,
+        homePenaltyScore: true,
+        awayPenaltyScore: true,
+      },
+    });
+
+    const participantIds = [
+      ...new Set(
+        medalFixtures.flatMap((f) =>
+          [f.homeTeamId, f.awayTeamId].filter((id): id is string => !!id),
+        ),
+      ),
+    ];
+
+    const entries = await this.db.tournamentEntry.findMany({
+      where: { participantId: { in: participantIds } },
+      include: {
+        rosterEntry: {
+          select: { id: true, name: true, shortName: true, logoUrl: true },
+        },
+      },
+    });
+
+    const rosterByParticipant = new Map(
+      entries.map((e) => [e.participantId, e.rosterEntry]),
+    );
+
+    type RosterRef = {
+      id: string;
+      name: string;
+      shortName: string | null;
+      logoUrl: string | null;
+    };
+    const table = new Map<
+      string,
+      { rosterEntry: RosterRef; gold: number; silver: number; bronze: number }
+    >();
+
+    // Seed with every roster entry at zero — the table lists all
+    // institutions from day one and fills in as medals are won.
+    const roster = await this.db.rosterEntry.findMany({
+      where: { organizationId: organization.id },
+      select: { id: true, name: true, shortName: true, logoUrl: true },
+    });
+    for (const rosterEntry of roster) {
+      table.set(rosterEntry.id, { rosterEntry, gold: 0, silver: 0, bronze: 0 });
+    }
+
+    const award = (participantId: string | null, medal: 'gold' | 'silver' | 'bronze') => {
+      if (!participantId) return;
+      const rosterEntry = rosterByParticipant.get(participantId);
+      if (!rosterEntry) return; // not roster-linked: excluded from aggregation
+      const row = table.get(rosterEntry.id) ?? {
+        rosterEntry,
+        gold: 0,
+        silver: 0,
+        bronze: 0,
+      };
+      row[medal]++;
+      table.set(rosterEntry.id, row);
+    };
+
+    const decideWinner = (f: {
+      homeTeamId: string | null;
+      awayTeamId: string | null;
+      homeScore: number | null;
+      awayScore: number | null;
+      homePenaltyScore: number | null;
+      awayPenaltyScore: number | null;
+    }): { winnerId: string | null; loserId: string | null } => {
+      const { homeTeamId, awayTeamId, homeScore, awayScore } = f;
+      if (!homeTeamId || !awayTeamId || homeScore == null || awayScore == null) {
+        return { winnerId: null, loserId: null };
+      }
+      if (homeScore !== awayScore) {
+        return homeScore > awayScore
+          ? { winnerId: homeTeamId, loserId: awayTeamId }
+          : { winnerId: awayTeamId, loserId: homeTeamId };
+      }
+      const hp = f.homePenaltyScore;
+      const ap = f.awayPenaltyScore;
+      if (hp != null && ap != null && hp !== ap) {
+        return hp > ap
+          ? { winnerId: homeTeamId, loserId: awayTeamId }
+          : { winnerId: awayTeamId, loserId: homeTeamId };
+      }
+      return { winnerId: null, loserId: null }; // unresolved draw: skip
+    };
+
+    for (const fixture of medalFixtures) {
+      const { winnerId, loserId } = decideWinner(fixture);
+      if (fixture.roundName === 'Final') {
+        award(winnerId, 'gold');
+        award(loserId, 'silver');
+      } else {
+        // Third Place Match
+        award(winnerId, 'bronze');
+      }
+    }
+
+    const rows = [...table.values()]
+      .map((r) => ({
+        rosterEntryId: r.rosterEntry.id,
+        name: r.rosterEntry.name,
+        shortName: r.rosterEntry.shortName,
+        logoUrl: r.rosterEntry.logoUrl,
+        gold: r.gold,
+        silver: r.silver,
+        bronze: r.bronze,
+        total: r.gold + r.silver + r.bronze,
+      }))
+      .sort(
+        (a, b) =>
+          b.gold - a.gold || b.silver - a.silver || b.bronze - a.bronze ||
+          a.name.localeCompare(b.name),
+      );
+
+    return ResponseUtil.success(
+      rows,
+      'Event hub medal table retrieved successfully',
     );
   }
 

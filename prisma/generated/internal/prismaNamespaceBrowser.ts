@@ -58,6 +58,8 @@ export const ModelName = {
   TournamentFollower: 'TournamentFollower',
   Group: 'Group',
   Participant: 'Participant',
+  RosterEntry: 'RosterEntry',
+  TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
@@ -226,6 +228,29 @@ export const ParticipantScalarFieldEnum = {
 } as const
 
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
+
+
+export const RosterEntryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  name: 'name',
+  shortName: 'shortName',
+  logoUrl: 'logoUrl',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RosterEntryScalarFieldEnum = (typeof RosterEntryScalarFieldEnum)[keyof typeof RosterEntryScalarFieldEnum]
+
+
+export const TournamentEntryScalarFieldEnum = {
+  id: 'id',
+  rosterEntryId: 'rosterEntryId',
+  participantId: 'participantId',
+  created_at: 'created_at'
+} as const
+
+export type TournamentEntryScalarFieldEnum = (typeof TournamentEntryScalarFieldEnum)[keyof typeof TournamentEntryScalarFieldEnum]
 
 
 export const FixtureScalarFieldEnum = {

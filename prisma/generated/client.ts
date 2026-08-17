@@ -73,6 +73,16 @@ export type Group = Prisma.GroupModel
  */
 export type Participant = Prisma.ParticipantModel
 /**
+ * Model RosterEntry
+ * 
+ */
+export type RosterEntry = Prisma.RosterEntryModel
+/**
+ * Model TournamentEntry
+ * 
+ */
+export type TournamentEntry = Prisma.TournamentEntryModel
+/**
  * Model Fixture
  * 
  */

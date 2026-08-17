@@ -3,6 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
   ForbiddenException,
+  ConflictException,
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import {
@@ -90,17 +91,59 @@ export class ParticipantsService {
       );
     }
 
-    const participant = await this.db.participant.create({
-      data: {
-        tournament_id: tournament.id,
-        user_id: dto.userId,
-        customName: dto.customName,
-        customShortName: dto.customShortName,
-        team_id: dto.teamId,
-        seed: dto.seed,
-        logoUrl: dto.logoUrl,
-        status: 'CONFIRMED', // Assuming manual add means confirmed
-      },
+    let rosterEntry: {
+      id: string;
+      organizationId: string;
+      name: string;
+      shortName: string | null;
+      logoUrl: string | null;
+    } | null = null;
+    if (dto.rosterEntryId) {
+      rosterEntry = await this.db.rosterEntry.findUnique({
+        where: { id: dto.rosterEntryId },
+      });
+      if (!rosterEntry || rosterEntry.organizationId !== tournament.organization_id) {
+        throw new NotFoundException(
+          'Roster entry not found in this organization',
+        );
+      }
+      const existingEntry = await this.db.tournamentEntry.findFirst({
+        where: {
+          rosterEntryId: rosterEntry.id,
+          participant: { tournament_id: tournament.id },
+        },
+      });
+      if (existingEntry) {
+        throw new ConflictException(
+          `"${rosterEntry.name}" is already entered in this tournament`,
+        );
+      }
+    }
+
+    const participant = await this.db.$transaction(async (tx) => {
+      const created = await tx.participant.create({
+        data: {
+          tournament_id: tournament.id,
+          user_id: dto.userId,
+          customName: dto.customName ?? rosterEntry?.name,
+          customShortName: dto.customShortName ?? rosterEntry?.shortName ?? undefined,
+          team_id: dto.teamId,
+          seed: dto.seed,
+          logoUrl: dto.logoUrl ?? rosterEntry?.logoUrl,
+          status: 'CONFIRMED', // Assuming manual add means confirmed
+        },
+      });
+
+      if (rosterEntry) {
+        await tx.tournamentEntry.create({
+          data: {
+            rosterEntryId: rosterEntry.id,
+            participantId: created.id,
+          },
+        });
+      }
+
+      return created;
     });
     return ResponseUtil.success(participant);
   }
@@ -174,19 +217,70 @@ export class ParticipantsService {
       );
     }
 
-    const participantsData = dto.participants.map((p) => ({
-      tournament_id: tournament.id,
-      user_id: p.userId,
-      customName: p.customName,
-      customShortName: p.customShortName,
-      team_id: p.teamId,
-      seed: p.seed,
-      logoUrl: p.logoUrl,
-      status: 'CONFIRMED' as any, // assuming manual means confirmed
-    }));
+    const rosterEntryIds = dto.participants
+      .map((p) => p.rosterEntryId)
+      .filter((id): id is string => !!id);
 
-    await this.db.participant.createMany({
-      data: participantsData,
+    const rosterEntries = rosterEntryIds.length
+      ? await this.db.rosterEntry.findMany({
+          where: {
+            id: { in: rosterEntryIds },
+            organizationId: tournament.organization_id,
+          },
+        })
+      : [];
+
+    if (rosterEntries.length !== new Set(rosterEntryIds).size) {
+      throw new NotFoundException(
+        'One or more roster entries not found in this organization',
+      );
+    }
+
+    const rosterById = new Map(rosterEntries.map((r) => [r.id, r]));
+
+    if (rosterEntryIds.length) {
+      const existingEntries = await this.db.tournamentEntry.findMany({
+        where: {
+          rosterEntryId: { in: rosterEntryIds },
+          participant: { tournament_id: tournament.id },
+        },
+      });
+      if (existingEntries.length > 0) {
+        throw new ConflictException(
+          'One or more roster entries are already entered in this tournament',
+        );
+      }
+    }
+
+    await this.db.$transaction(async (tx) => {
+      for (const p of dto.participants) {
+        const rosterEntry = p.rosterEntryId
+          ? rosterById.get(p.rosterEntryId)
+          : undefined;
+
+        const created = await tx.participant.create({
+          data: {
+            tournament_id: tournament.id,
+            user_id: p.userId,
+            customName: p.customName ?? rosterEntry?.name,
+            customShortName:
+              p.customShortName ?? rosterEntry?.shortName ?? undefined,
+            team_id: p.teamId,
+            seed: p.seed,
+            logoUrl: p.logoUrl ?? rosterEntry?.logoUrl,
+            status: 'CONFIRMED' as any, // assuming manual means confirmed
+          },
+        });
+
+        if (rosterEntry) {
+          await tx.tournamentEntry.create({
+            data: {
+              rosterEntryId: rosterEntry.id,
+              participantId: created.id,
+            },
+          });
+        }
+      }
     });
 
     return this.getParticipants(tournament.id);

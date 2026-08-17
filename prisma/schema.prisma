@@ -50,9 +50,12 @@ model Organization {
   settlementAccountNumber String?
   settlementAccountName   String?
   payoutAccountCreatedAt  DateTime?
+  subdomain               String?              @unique
+  brandConfig             Json?
   members                 OrganizationMember[]
   socials                 Social[]
   tournaments             Tournament[]
+  roster                  RosterEntry[]
   subscription            Subscription?
   payments                Payment[]
 }
@@ -78,6 +81,7 @@ model Tournament {
   updated_at         DateTime             @updatedAt
   autoApprove        Boolean              @default(false)
   bannerUrl          String?
+  isPractice         Boolean              @default(false)
   location           String?
   latitude           Float?
   longitude          Float?
@@ -169,6 +173,35 @@ model Participant {
   players            Player[]
   standings          Standing[]
   invites            TeamInvite[]
+  tournamentEntry    TournamentEntry?
+}
+
+// An institution/team on an organization's roster (e.g. a university at WAUG).
+// The shared identity used for cross-tournament aggregation like medal tables.
+model RosterEntry {
+  id             String            @id @default(cuid())
+  organizationId String
+  name           String
+  shortName      String?
+  logoUrl        String?
+  created_at     DateTime          @default(now())
+  updated_at     DateTime          @updatedAt
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  entries        TournamentEntry[]
+
+  @@unique([organizationId, name])
+}
+
+// Links a roster entry into a specific tournament via its tournament-scoped Participant.
+model TournamentEntry {
+  id            String      @id @default(cuid())
+  rosterEntryId String
+  participantId String      @unique
+  created_at    DateTime    @default(now())
+  rosterEntry   RosterEntry @relation(fields: [rosterEntryId], references: [id], onDelete: Cascade)
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([rosterEntryId, participantId])
 }
 
 model Fixture {
