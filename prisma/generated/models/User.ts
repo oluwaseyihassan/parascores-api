@@ -727,10 +727,12 @@ export type UserCreateNestedOneWithoutPush_subscriptionsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutPush_subscriptionsNestedInput = {
+export type UserUpdateOneWithoutPush_subscriptionsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutPush_subscriptionsInput, Prisma.UserUncheckedCreateWithoutPush_subscriptionsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutPush_subscriptionsInput
   upsert?: Prisma.UserUpsertWithoutPush_subscriptionsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPush_subscriptionsInput, Prisma.UserUpdateWithoutPush_subscriptionsInput>, Prisma.UserUncheckedUpdateWithoutPush_subscriptionsInput>
 }

@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit, Logger } from '@nestjs/common';
+import { Injectable, OnModuleInit, Logger, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { DatabaseService } from 'src/database/database.service';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
@@ -52,6 +52,41 @@ export class NotificationsService implements OnModuleInit {
         auth: dto.auth,
       },
     });
+  }
+
+  async subscribeAnonymous(
+    dto: CreateSubscriptionDto & { subdomain: string },
+  ) {
+    const org = await this.db.organization.findUnique({
+      where: { subdomain: dto.subdomain },
+      select: { id: true },
+    });
+    if (!org) throw new NotFoundException('Event hub not found');
+
+    return this.db.pushSubscription.upsert({
+      where: { endpoint: dto.endpoint },
+      create: {
+        endpoint: dto.endpoint,
+        p256dh: dto.p256dh,
+        auth: dto.auth,
+        orgId: org.id,
+      },
+      update: {
+        p256dh: dto.p256dh,
+        auth: dto.auth,
+        orgId: org.id,
+      },
+    });
+  }
+
+  async unsubscribeAnonymous(endpoint: string) {
+    try {
+      return await this.db.pushSubscription.delete({
+        where: { endpoint },
+      });
+    } catch (err: any) {
+      this.logger.warn(`Failed to unsubscribe: ${err.message}`);
+    }
   }
 
   async unsubscribe(userId: string, endpoint: string) {

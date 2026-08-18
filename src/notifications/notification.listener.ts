@@ -27,6 +27,17 @@ export class NotificationListener {
         },
       });
 
+      // Anonymous event-hub subscriptions (fans following the org's subdomain)
+      const tournament = await this.db.tournament.findUnique({
+        where: { id: payload.tournamentId },
+        select: { organization_id: true },
+      });
+      const anonymousSubs = tournament?.organization_id
+        ? await this.db.pushSubscription.findMany({
+            where: { orgId: tournament.organization_id, userId: null },
+          })
+        : [];
+
       const pushPayload = JSON.stringify({
         title: payload.title,
         body: payload.body,
@@ -35,41 +46,50 @@ export class NotificationListener {
         icon: payload.icon,
       });
 
-      // Fire all push notifications concurrently instead of sequentially
-      const notificationPromises = followers.flatMap((follower) =>
-        follower.user.push_subscriptions.map((sub) =>
-          webpush
-            .sendNotification(
-              {
-                endpoint: sub.endpoint,
-                keys: {
-                  p256dh: sub.p256dh,
-                  auth: sub.auth,
-                },
+      const sendTo = (sub: {
+        id: string;
+        endpoint: string;
+        p256dh: string;
+        auth: string;
+      }) =>
+        webpush
+          .sendNotification(
+            {
+              endpoint: sub.endpoint,
+              keys: {
+                p256dh: sub.p256dh,
+                auth: sub.auth,
               },
-              pushPayload,
-              {
-                TTL: 24 * 60 * 60, // 24 hours (86400 seconds)
-                urgency: 'high',
-              },
-            )
-            .catch(async (err: any) => {
-              const statusCode =
-                err.statusCode || err.status || (err.res && err.res.statusCode);
-              const responseBody = err.body || '';
-              this.logger.error(
-                `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`,
-              );
+            },
+            pushPayload,
+            {
+              TTL: 24 * 60 * 60, // 24 hours (86400 seconds)
+              urgency: 'high',
+            },
+          )
+          .catch(async (err: any) => {
+            const statusCode =
+              err.statusCode || err.status || (err.res && err.res.statusCode);
+            const responseBody = err.body || '';
+            this.logger.error(
+              `Failed to send push notification to sub ${sub.id}: ${err.message} (Status: ${statusCode}, Body: ${responseBody})`,
+            );
 
-              if (statusCode === 410 || statusCode === 404) {
-                this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
-                await this.db.pushSubscription
-                  .delete({ where: { id: sub.id } })
-                  .catch(() => {});
-              }
-            }),
+            if (statusCode === 410 || statusCode === 404) {
+              this.logger.log(`Cleaning up expired subscription: ${sub.id}`);
+              await this.db.pushSubscription
+                .delete({ where: { id: sub.id } })
+                .catch(() => {});
+            }
+          });
+
+      // Fire all push notifications concurrently instead of sequentially
+      const notificationPromises = [
+        ...followers.flatMap((follower) =>
+          follower.user.push_subscriptions.map(sendTo),
         ),
-      );
+        ...anonymousSubs.map(sendTo),
+      ];
 
       if (notificationPromises.length > 0) {
         const results = await Promise.allSettled(notificationPromises);
