@@ -519,6 +519,10 @@ export class FixturesService {
         ...(dto.awayPenaltyScore !== undefined && {
           awayPenaltyScore: dto.awayPenaltyScore,
         }),
+        ...(dto.periodScores !== undefined && {
+          periodScores: dto.periodScores,
+        }),
+        ...(dto.config !== undefined && { config: dto.config }),
         ...(dto.homeTeamId !== undefined && { homeTeamId: dto.homeTeamId }),
         ...(dto.awayTeamId !== undefined && { awayTeamId: dto.awayTeamId }),
         ...(dto.venue !== undefined && { venue: dto.venue }),
@@ -757,6 +761,45 @@ export class FixturesService {
           `fixture-${updatedFixture.id}-completion`,
         )
         .catch(() => {});
+
+      // Medal notification: finals (gold/silver) and third-place matches (bronze)
+      const roundName = updatedFixture.roundName;
+      if (roundName === 'Final' || roundName === 'Third Place Match') {
+        // Winner: score first, penalty shootout as tiebreak
+        let winnerName: string | null = null;
+        let loserName: string | null = null;
+        if (homeScore !== awayScore) {
+          winnerName = homeScore > awayScore ? homeName : awayName;
+          loserName = homeScore > awayScore ? awayName : homeName;
+        } else {
+          const hp = updatedFixture.homePenaltyScore;
+          const ap = updatedFixture.awayPenaltyScore;
+          if (hp != null && ap != null && hp !== ap) {
+            winnerName = hp > ap ? homeName : awayName;
+            loserName = hp > ap ? awayName : homeName;
+          }
+        }
+
+        if (winnerName && loserName) {
+          const isFinal = roundName === 'Final';
+          const medalTitle = isFinal
+            ? `🥇 GOLD: ${winnerName} are champions!`
+            : `🥉 BRONZE: ${winnerName} take third place!`;
+          const medalBody = isFinal
+            ? `${winnerName} beat ${loserName} ${homeScore} - ${awayScore} in the final. ${loserName} take silver.`
+            : `${winnerName} beat ${loserName} ${homeScore} - ${awayScore} in the third-place match.`;
+          const medalUrl = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
+          this.notificationsService
+            .sendNotificationToTournamentFollowers(
+              updatedFixture.tournament_id,
+              medalTitle,
+              medalBody,
+              medalUrl,
+              `fixture-${updatedFixture.id}-medal`,
+            )
+            .catch(() => {});
+        }
+      }
     }
 
     return ResponseUtil.success(updatedFixture);

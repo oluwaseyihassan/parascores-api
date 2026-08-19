@@ -283,6 +283,8 @@ export const FixtureScalarFieldEnum = {
   timerIsRunning: 'timerIsRunning',
   matchDuration: 'matchDuration',
   half: 'half',
+  periodScores: 'periodScores',
+  config: 'config',
   manOfTheMatchPlayerId: 'manOfTheMatchPlayerId',
   livestreamUrl: 'livestreamUrl',
   livestreamPlatform: 'livestreamPlatform'

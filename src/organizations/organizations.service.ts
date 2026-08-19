@@ -594,6 +594,7 @@ export class OrganizationsService {
       timerIsRunning: true,
       matchDuration: true,
       half: true,
+      periodScores: true,
       updated_at: true,
       matchEvents: {
         orderBy: { created_at: 'desc' as const },

@@ -236,6 +236,7 @@ model Fixture {
   matchDuration       Int           @default(90)
   half                MatchHalf?
   periodScores        Json?
+  config              Json?
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
