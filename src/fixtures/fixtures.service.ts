@@ -373,6 +373,7 @@ export class FixturesService {
         'timerIsRunning',
         'matchDuration',
         'manOfTheMatchPlayerId',
+        'periodScores',
       ];
       const attemptedFields = Object.keys(dto).filter(
         (key) => dto[key] !== undefined,

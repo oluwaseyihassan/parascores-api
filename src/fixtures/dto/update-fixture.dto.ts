@@ -175,6 +175,14 @@ export class UpdateFixtureDto {
 
   @ApiPropertyOptional({
     description:
+      'Per-period scores for set/period sports (tennis sets, basketball quarters). Shape: { home: number[], away: number[] }',
+    example: { home: [6, 3], away: [4, 6] },
+  })
+  @IsOptional()
+  periodScores?: { home: number[]; away: number[] };
+
+  @ApiPropertyOptional({
+    description:
       'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
     example: 'https://youtube.com/watch?v=abc123',
   })
