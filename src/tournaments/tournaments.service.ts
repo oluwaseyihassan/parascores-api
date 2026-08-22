@@ -16,8 +16,6 @@ import {
   MatchHalf,
   ParticipantStatus,
   ParticipantType,
-  SubscriptionPlan,
-  SubscriptionStatus,
   TournamentType,
 } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -39,32 +37,8 @@ export class TournamentsService {
       ['OWNER', 'ADMIN'],
     );
 
-    // 2. Enforce Free plan tournament count limit (max 3)
-    const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: dto.organization_id },
-    });
-
-    const isPremiumOrg =
-      subscription &&
-      (subscription.status === SubscriptionStatus.ACTIVE ||
-        subscription.status === SubscriptionStatus.TRIALING) &&
-      (subscription.plan === SubscriptionPlan.PRO ||
-        subscription.plan === SubscriptionPlan.ENTERPRISE);
-
-    if (!isPremiumOrg && dto.type !== 'FRIENDLY') {
-      const count = await this.db.tournament.count({
-        where: {
-          organization_id: dto.organization_id,
-          type: { not: 'FRIENDLY' },
-          isPractice: false,
-        },
-      });
-      if (count >= 3) {
-        throw new BadRequestException(
-          'Free plan is limited to 3 tournaments. Please upgrade to Pro.',
-        );
-      }
-    }
+    // NOTE: plan-based tournament limits removed — a new billing model will
+    // replace this later.
 
     // 3. Check customName uniqueness
     if (dto.customName) {

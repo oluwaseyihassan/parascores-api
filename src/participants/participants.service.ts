@@ -62,21 +62,8 @@ export class ParticipantsService {
       );
     }
 
-    const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: tournament.organization_id },
-    });
-    const isPremium =
-      tournament.isPremium ||
-      (subscription &&
-        (subscription.status === 'ACTIVE' ||
-          subscription.status === 'TRIALING') &&
-        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE'));
-
-    if (!isPremium && tournament.participants.length >= 32) {
-      throw new BadRequestException(
-        'Free tournaments are limited to 32 participants. Please upgrade to Premium or Pro.',
-      );
-    }
+    // NOTE: plan-based participant limits removed — a new billing model will
+    // replace this later.
 
     if (
       tournament.maxParticipants &&
@@ -182,24 +169,8 @@ export class ParticipantsService {
       );
     }
 
-    const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: tournament.organization_id },
-    });
-    const isPremium =
-      tournament.isPremium ||
-      (subscription &&
-        (subscription.status === 'ACTIVE' ||
-          subscription.status === 'TRIALING') &&
-        (subscription.plan === 'PRO' || subscription.plan === 'ENTERPRISE'));
-
-    if (
-      !isPremium &&
-      tournament.participants.length + dto.participants.length > 32
-    ) {
-      throw new BadRequestException(
-        'Free tournaments are limited to a maximum of 32 participants. Please upgrade to Premium or Pro.',
-      );
-    }
+    // NOTE: plan-based participant limits removed — a new billing model will
+    // replace this later.
 
     if (
       tournament.maxParticipants &&
