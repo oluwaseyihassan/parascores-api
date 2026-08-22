@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
+import { SetResultsDto } from './dto/set-results.dto';
 import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
@@ -56,19 +57,24 @@ export class FixturesService {
       );
     }
 
+    // Race events have no head-to-head teams — skip team validation
+    const isRaceEvent = !dto.homeTeamId && !dto.awayTeamId;
+
     // Validate that home and away are different
-    if (dto.homeTeamId === dto.awayTeamId) {
+    if (!isRaceEvent && dto.homeTeamId === dto.awayTeamId) {
       throw new BadRequestException('Home and Away teams must be different');
     }
 
     // Check for duplicates and matchday limits across the entire round
-    const existingFixturesInRound = await this.db.fixture.findMany({
-      where: {
-        tournament_id: tournament.id,
-        round: dto.round,
-      },
-      select: { homeTeamId: true, awayTeamId: true },
-    });
+    const existingFixturesInRound = isRaceEvent
+      ? []
+      : await this.db.fixture.findMany({
+          where: {
+            tournament_id: tournament.id,
+            round: dto.round,
+          },
+          select: { homeTeamId: true, awayTeamId: true },
+        });
 
     // 1. Duplicate check (Teams already playing in this round)
     const teamsInRound = new Set<string>();
@@ -89,12 +95,12 @@ export class FixturesService {
       if (f.awayTeamId) teamsInRound.add(f.awayTeamId);
     }
 
-    if (teamsInRound.has(dto.homeTeamId)) {
+    if (dto.homeTeamId && teamsInRound.has(dto.homeTeamId)) {
       throw new BadRequestException(
         `Home team is already scheduled for a match in this round`,
       );
     }
-    if (teamsInRound.has(dto.awayTeamId)) {
+    if (dto.awayTeamId && teamsInRound.has(dto.awayTeamId)) {
       throw new BadRequestException(
         `Away team is already scheduled for a match in this round`,
       );
@@ -204,6 +210,14 @@ export class FixturesService {
         tournament: {
           select: { id: true, name: true, sport: true },
         },
+        resultEntries: {
+          orderBy: { rank: 'asc' },
+          include: {
+            participant: {
+              select: { customName: true, customShortName: true, logoUrl: true },
+            },
+          },
+        },
         group: true,
         lineupPlayers: true,
         manOfTheMatchPlayer: {
@@ -279,6 +293,14 @@ export class FixturesService {
         group: true,
         manOfTheMatchPlayer: {
           select: { id: true, name: true, number: true },
+        },
+        resultEntries: {
+          orderBy: { rank: 'asc' },
+          include: {
+            participant: {
+              select: { customName: true, customShortName: true, logoUrl: true },
+            },
+          },
         },
       },
       orderBy: [{ round: 'asc' }, { startTime: 'asc' }, { matchNumber: 'asc' }],
@@ -389,6 +411,12 @@ export class FixturesService {
       }
     }
 
+    // Race fixtures (or fixtures with result entries) are ranked by
+    // placement — completion behaves differently (no FT push, no winner check)
+    const raceEntryCount = await this.db.resultEntry.count({
+      where: { fixtureId },
+    });
+
     // Validate penalty scores for knockout matches being completed for the first time
     if (dto.status === 'COMPLETED') {
       const homeScore = dto.homeScore ?? fixture.homeScore ?? 0;
@@ -402,9 +430,13 @@ export class FixturesService {
         select: { type: true, twoLegsKnockout: true },
       });
 
+      // Race fixtures are ranked by result entries, not head-to-head winner
+      const isRace = tournament?.type === 'RACE' || raceEntryCount > 0;
+
       const isKnockoutStage =
-        tournament?.type === 'KNOCKOUT' ||
-        (tournament?.type === 'HYBRID' && fixture.stage === 'KNOCKOUT');
+        !isRace &&
+        (tournament?.type === 'KNOCKOUT' ||
+          (tournament?.type === 'HYBRID' && fixture.stage === 'KNOCKOUT'));
 
       if (isKnockoutStage) {
         let isTie = homeScore === awayScore;
@@ -734,8 +766,44 @@ export class FixturesService {
         .catch(() => {});
     }
 
-    // Full-time completion notification
+    // Race completion: official result notification with medalists,
+    // no football-style FT/medal behaviors
+    const isRaceCompletion =
+      updatedFixture.status === 'COMPLETED' &&
+      fixture.status !== 'COMPLETED' &&
+      raceEntryCount > 0;
+
+    if (isRaceCompletion) {
+      const topThree = await this.db.resultEntry.findMany({
+        where: { fixtureId, rank: { in: [1, 2, 3] } },
+        orderBy: { rank: 'asc' },
+        include: { participant: { select: { customName: true, customShortName: true } } },
+      });
+      if (topThree.length > 0) {
+        const medals = ['🥇', '🥈', '🥉'];
+        const podiumText = topThree
+          .map(
+            (e) =>
+              `${medals[(e.rank ?? 1) - 1]} ${e.participant.customShortName ?? e.participant.customName}${e.value ? ` (${e.value})` : ''}`,
+          )
+          .join(' · ');
+        const title = `🏁 Official Result: ${fixture.tournament?.name ?? 'Race'}${updatedFixture.roundName ? ` ${updatedFixture.roundName}` : ''}`;
+        const url = `/t/${updatedFixture.tournament_id}/fixture/${updatedFixture.id}`;
+        this.notificationsService
+          .sendNotificationToTournamentFollowers(
+            updatedFixture.tournament_id,
+            title,
+            podiumText,
+            url,
+            `fixture-${updatedFixture.id}-result`,
+          )
+          .catch(() => {});
+      }
+    }
+
+    // Full-time completion notification (match sports only)
     if (
+      !isRaceCompletion &&
       updatedFixture.status === 'COMPLETED' &&
       fixture.status !== 'COMPLETED'
     ) {
@@ -803,6 +871,124 @@ export class FixturesService {
     }
 
     return ResponseUtil.success(updatedFixture);
+  }
+
+  // Set placement results for a race fixture (athletics, swimming).
+  // Bulk-upserts entries and computes ranks (lowest numeric value wins).
+  async setResults(fixtureId: string, userId: string, dto: SetResultsDto) {
+    const fixture = await this.db.fixture.findUnique({
+      where: { id: fixtureId },
+      include: { tournament: true },
+    });
+
+    if (!fixture) {
+      throw new NotFoundException('Fixture not found');
+    }
+
+    if (!fixture.tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+
+    // Scoring officials (MEMBER) may set results — same policy as scores
+    await this.organizationsService.validateMemberRole(
+      fixture.tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN', 'MEMBER'],
+    );
+
+    // Ranks: parse "10.42" / "2:03.44" numerically; lowest wins.
+    // Entries with an explicit rank (manual placement, no time) keep it.
+    const toSeconds = (v: string): number => {
+      const parts = v.split(':');
+      if (parts.length === 2) {
+        return Number(parts[0]) * 60 + Number(parts[1]);
+      }
+      return Number(v);
+    };
+
+    const explicitRanked = dto.results.filter((r) => r.rank != null);
+    const timed = dto.results
+      .filter((r) => r.rank == null && r.value)
+      .map((r) => ({ ...r, seconds: toSeconds(r.value!) }))
+      .filter((r) => !Number.isNaN(r.seconds))
+      .sort((a, b) => a.seconds - b.seconds);
+
+    // Timed entries fill the ranks not taken by explicit placements
+    const takenRanks = new Set(explicitRanked.map((r) => r.rank as number));
+    const rankByParticipant = new Map<string, number>();
+    for (const r of explicitRanked) {
+      rankByParticipant.set(r.participantId, r.rank as number);
+    }
+    let nextRank = 1;
+    for (const r of timed) {
+      while (takenRanks.has(nextRank)) nextRank++;
+      rankByParticipant.set(r.participantId, nextRank);
+      takenRanks.add(nextRank);
+      nextRank++;
+    }
+
+    await this.db.$transaction(async (tx) => {
+      for (const r of dto.results) {
+        await tx.resultEntry.upsert({
+          where: {
+            fixtureId_participantId: {
+              fixtureId,
+              participantId: r.participantId,
+            },
+          },
+          create: {
+            fixtureId,
+            participantId: r.participantId,
+            value: r.value,
+            lane: r.lane,
+            note: r.note,
+            rank: rankByParticipant.get(r.participantId),
+          },
+          update: {
+            value: r.value,
+            lane: r.lane,
+            note: r.note,
+            rank: rankByParticipant.get(r.participantId),
+          },
+        });
+      }
+
+      // Full replace: athletes not in the payload are removed from the event
+      // (not every institution enters every event)
+      await tx.resultEntry.deleteMany({
+        where: {
+          fixtureId,
+          participantId: {
+            notIn: dto.results.map((r) => r.participantId),
+          },
+        },
+      });
+    });
+
+    const updated = await this.db.fixture.findUnique({
+      where: { id: fixtureId },
+      include: {
+        resultEntries: {
+          orderBy: { rank: 'asc' },
+          include: {
+            participant: {
+              select: { customName: true, customShortName: true, logoUrl: true },
+            },
+          },
+        },
+      },
+    });
+
+    // Invalidate caches so result entries are fresh everywhere
+    await this.redisService.delPattern(`fixtures:tournament:${fixture.tournament_id}:*`);
+    await this.redisService.del(`fixtures:single:${fixtureId}`);
+
+    this.liveFixturesSubject.next({
+      type: 'fixture_updated',
+      data: updated,
+    });
+
+    return ResponseUtil.success(updated, 'Results saved successfully');
   }
 
   // Knockout Progression: Move winner to next round

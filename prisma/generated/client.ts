@@ -88,6 +88,11 @@ export type TournamentEntry = Prisma.TournamentEntryModel
  */
 export type Fixture = Prisma.FixtureModel
 /**
+ * Model ResultEntry
+ * 
+ */
+export type ResultEntry = Prisma.ResultEntryModel
+/**
  * Model Team
  * 
  */

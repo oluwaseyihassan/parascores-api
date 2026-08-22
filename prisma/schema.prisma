@@ -175,6 +175,7 @@ model Participant {
   standings          Standing[]
   invites            TeamInvite[]
   tournamentEntry    TournamentEntry?
+  resultEntries      ResultEntry[]
 }
 
 // An institution/team on an organization's roster (e.g. a university at WAUG).
@@ -237,6 +238,7 @@ model Fixture {
   half                MatchHalf?
   periodScores        Json?
   config              Json?
+  resultEntries       ResultEntry[]
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
@@ -250,6 +252,25 @@ model Fixture {
   livestreamUrl         String?
   livestreamPlatform    String?
   highlights            Highlight[]
+}
+
+// Placement-based results for race/timed sports (athletics, swimming).
+// A race fixture has N participants each with a value (time/distance);
+// rank is derived, medals aggregate from rank 1-3 in Finals.
+model ResultEntry {
+  id            String      @id @default(cuid())
+  fixtureId     String
+  participantId String
+  value         String?
+  lane          Int?
+  note          String?
+  rank          Int?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  fixture       Fixture     @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([fixtureId, participantId])
 }
 
 model Team {
@@ -419,6 +440,7 @@ enum TournamentType {
   GROUP
   FRIENDLY
   HYBRID
+  RACE
 }
 
 enum ParticipantType {

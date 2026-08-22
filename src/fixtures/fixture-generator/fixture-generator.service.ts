@@ -13,6 +13,7 @@ import {
   Tournament,
   Group,
   FixtureStage,
+  FixtureStatus,
   TournamentType,
 } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
@@ -93,7 +94,8 @@ export class FixtureGeneratorService {
     // Validate minimum participants
     const minParticipants =
       tournament.type === TournamentType.KNOCKOUT ||
-      tournament.type === TournamentType.FRIENDLY
+      tournament.type === TournamentType.FRIENDLY ||
+      tournament.type === TournamentType.RACE
         ? 2
         : 3;
     if (participants.length < minParticipants) {
@@ -152,6 +154,9 @@ export class FixtureGeneratorService {
           options,
         );
         break;
+      case TournamentType.RACE:
+        rounds = await this.generateRaceFixtures(tournament);
+        break;
       case TournamentType.HYBRID:
       case TournamentType.GROUP:
         let numGroups = dto.numberOfGroups ?? tournament.numberOfGroups;
@@ -199,10 +204,11 @@ export class FixtureGeneratorService {
         );
     }
 
-    // Initialize standings for non-knockout and non-friendly tournaments
+    // Initialize standings for non-knockout, non-friendly, non-race tournaments
     if (
       tournament.type !== TournamentType.KNOCKOUT &&
-      tournament.type !== TournamentType.FRIENDLY
+      tournament.type !== TournamentType.FRIENDLY &&
+      tournament.type !== TournamentType.RACE
     ) {
       await this.initializeStandings(tournament);
     }
@@ -1349,6 +1355,32 @@ export class FixtureGeneratorService {
         });
       }
     }
+  }
+
+  // Race generation — one fixture ("Final") holding no head-to-head teams;
+  // all tournament participants get ranked via result entries instead.
+  private async generateRaceFixtures(tournament: Tournament) {
+    const fixtureData = {
+      id: crypto.randomUUID(),
+      tournament_id: tournament.id,
+      round: 1,
+      roundName: 'Final',
+      matchNumber: 1,
+      startTime: null,
+      homeTeamId: null,
+      awayTeamId: null,
+      status: FixtureStatus.SCHEDULED,
+    };
+
+    await this.db.fixture.create({ data: fixtureData });
+
+    return [
+      {
+        round: 1,
+        roundName: 'Final',
+        fixtures: [fixtureData as unknown as Fixture],
+      },
+    ];
   }
 
   // Friendly match generation - Pair up participants for single matches

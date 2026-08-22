@@ -61,6 +61,7 @@ export const ModelName = {
   RosterEntry: 'RosterEntry',
   TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
+  ResultEntry: 'ResultEntry',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
@@ -291,6 +292,21 @@ export const FixtureScalarFieldEnum = {
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
+
+
+export const ResultEntryScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  value: 'value',
+  lane: 'lane',
+  note: 'note',
+  rank: 'rank',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResultEntryScalarFieldEnum = (typeof ResultEntryScalarFieldEnum)[keyof typeof ResultEntryScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {

@@ -595,6 +595,20 @@ export class OrganizationsService {
       matchDuration: true,
       half: true,
       periodScores: true,
+      resultEntries: {
+        orderBy: { rank: 'asc' as const },
+        select: {
+          id: true,
+          participantId: true,
+          value: true,
+          lane: true,
+          note: true,
+          rank: true,
+          participant: {
+            select: { customName: true, customShortName: true, logoUrl: true },
+          },
+        },
+      },
       updated_at: true,
       matchEvents: {
         orderBy: { created_at: 'desc' as const },
@@ -699,12 +713,16 @@ export class OrganizationsService {
     }
 
     // Medal-deciding fixtures: finals (gold/silver) + third-place matches (bronze)
-    // across all the org's PUBLIC tournaments.
+    // across all the org's PUBLIC tournaments — plus any completed race event
+    // with placements (named events like "Men's 100m" award by rank).
     const medalFixtures = await this.db.fixture.findMany({
       where: {
         tournament: { organization_id: organization.id, visibility: 'PUBLIC' },
         status: 'COMPLETED',
-        roundName: { in: ['Final', 'Third Place Match'] },
+        OR: [
+          { roundName: { in: ['Final', 'Third Place Match'] } },
+          { resultEntries: { some: { rank: { in: [1, 2, 3] } } } },
+        ],
       },
       select: {
         roundName: true,
@@ -714,13 +732,22 @@ export class OrganizationsService {
         awayScore: true,
         homePenaltyScore: true,
         awayPenaltyScore: true,
+        // Race finals: placements award medals by rank
+        resultEntries: {
+          where: { rank: { in: [1, 2, 3] } },
+          select: { participantId: true, rank: true },
+        },
       },
     });
 
     const participantIds = [
       ...new Set(
         medalFixtures.flatMap((f) =>
-          [f.homeTeamId, f.awayTeamId].filter((id): id is string => !!id),
+          [
+            f.homeTeamId,
+            f.awayTeamId,
+            ...((f as any).resultEntries?.map((r: any) => r.participantId) ?? []),
+          ].filter((id): id is string => !!id),
         ),
       ),
     ];
@@ -801,6 +828,20 @@ export class OrganizationsService {
     };
 
     for (const fixture of medalFixtures) {
+      const raceEntries = (fixture as any).resultEntries as
+        | { participantId: string; rank: number | null }[]
+        | undefined;
+
+      // Race events award by placement: rank 1 → gold, 2 → silver, 3 → bronze
+      if (raceEntries && raceEntries.length > 0) {
+        for (const entry of raceEntries) {
+          if (entry.rank === 1) award(entry.participantId, 'gold');
+          else if (entry.rank === 2) award(entry.participantId, 'silver');
+          else if (entry.rank === 3) award(entry.participantId, 'bronze');
+        }
+        continue; // race fixtures don't use head-to-head winner logic
+      }
+
       const { winnerId, loserId } = decideWinner(fixture);
       if (fixture.roundName === 'Final') {
         award(winnerId, 'gold');

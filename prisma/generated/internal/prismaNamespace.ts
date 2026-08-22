@@ -394,6 +394,7 @@ export const ModelName = {
   RosterEntry: 'RosterEntry',
   TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
+  ResultEntry: 'ResultEntry',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
@@ -423,7 +424,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "subscription" | "payment" | "pushSubscription" | "auditLog"
+    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "resultEntry" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "subscription" | "payment" | "pushSubscription" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1164,6 +1165,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.FixtureCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FixtureCountAggregateOutputType> | number
+        }
+      }
+    }
+    ResultEntry: {
+      payload: Prisma.$ResultEntryPayload<ExtArgs>
+      fields: Prisma.ResultEntryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ResultEntryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ResultEntryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        findFirst: {
+          args: Prisma.ResultEntryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ResultEntryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        findMany: {
+          args: Prisma.ResultEntryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>[]
+        }
+        create: {
+          args: Prisma.ResultEntryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        createMany: {
+          args: Prisma.ResultEntryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ResultEntryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>[]
+        }
+        delete: {
+          args: Prisma.ResultEntryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        update: {
+          args: Prisma.ResultEntryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        deleteMany: {
+          args: Prisma.ResultEntryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ResultEntryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ResultEntryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>[]
+        }
+        upsert: {
+          args: Prisma.ResultEntryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ResultEntryPayload>
+        }
+        aggregate: {
+          args: Prisma.ResultEntryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateResultEntry>
+        }
+        groupBy: {
+          args: Prisma.ResultEntryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResultEntryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ResultEntryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ResultEntryCountAggregateOutputType> | number
         }
       }
     }
@@ -2442,6 +2517,21 @@ export const FixtureScalarFieldEnum = {
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
 
 
+export const ResultEntryScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  value: 'value',
+  lane: 'lane',
+  note: 'note',
+  rank: 'rank',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResultEntryScalarFieldEnum = (typeof ResultEntryScalarFieldEnum)[keyof typeof ResultEntryScalarFieldEnum]
+
+
 export const TeamScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -3115,6 +3205,7 @@ export type GlobalOmitConfig = {
   rosterEntry?: Prisma.RosterEntryOmit
   tournamentEntry?: Prisma.TournamentEntryOmit
   fixture?: Prisma.FixtureOmit
+  resultEntry?: Prisma.ResultEntryOmit
   team?: Prisma.TeamOmit
   matchEvent?: Prisma.MatchEventOmit
   standing?: Prisma.StandingOmit
