@@ -715,40 +715,97 @@ export class OrganizationsService {
     // Medal-deciding fixtures: finals (gold/silver) + third-place matches (bronze)
     // across all the org's PUBLIC tournaments — plus any completed race event
     // with placements (named events like "Men's 100m" award by rank).
-    const medalFixtures = await this.db.fixture.findMany({
-      where: {
-        tournament: { organization_id: organization.id, visibility: 'PUBLIC' },
-        status: 'COMPLETED',
-        OR: [
-          { roundName: { in: ['Final', 'Third Place Match'] } },
-          { resultEntries: { some: { rank: { in: [1, 2, 3] } } } },
-        ],
-      },
-      select: {
-        roundName: true,
-        homeTeamId: true,
-        awayTeamId: true,
-        homeScore: true,
-        awayScore: true,
-        homePenaltyScore: true,
-        awayPenaltyScore: true,
-        // Race finals: placements award medals by rank
-        resultEntries: {
-          where: { rank: { in: [1, 2, 3] } },
-          select: { participantId: true, rank: true },
+    const [medalFixtures, leagueCandidates, knockoutCandidates] = await Promise.all([
+      this.db.fixture.findMany({
+        where: {
+          tournament: { organization_id: organization.id, visibility: 'PUBLIC' },
+          status: 'COMPLETED',
+          OR: [
+            { roundName: { in: ['Final', 'Third Place Match'] } },
+            { resultEntries: { some: { rank: { in: [1, 2, 3] } } } },
+          ],
         },
-      },
-    });
+        select: {
+          roundName: true,
+          homeTeamId: true,
+          awayTeamId: true,
+          homeScore: true,
+          awayScore: true,
+          homePenaltyScore: true,
+          awayPenaltyScore: true,
+          // Race finals: placements award medals by rank
+          resultEntries: {
+            where: { rank: { in: [1, 2, 3] } },
+            select: { participantId: true, rank: true },
+          },
+        },
+      }),
+      // All-play-all tournaments: medals derived from final standings once
+      // every fixture is played (no Final exists in these formats).
+      this.db.tournament.findMany({
+        where: {
+          organization_id: organization.id,
+          visibility: 'PUBLIC',
+          type: { in: ['LEAGUE', 'ROUND_ROBIN'] },
+        },
+        select: {
+          id: true,
+          fixtures: { select: { status: true } },
+          standings: {
+            select: {
+              participant_id: true,
+              points: true,
+              goalDiff: true,
+              goalsFor: true,
+              position: true,
+            },
+          },
+        },
+      }),
+      // Knockout brackets: combat sports award bronze to BOTH losing
+      // semifinalists when there is no third-place match.
+      this.db.tournament.findMany({
+        where: {
+          organization_id: organization.id,
+          visibility: 'PUBLIC',
+          type: { in: ['KNOCKOUT', 'HYBRID'] },
+        },
+        select: {
+          id: true,
+          sport: true,
+          scoringRules: true,
+          fixtures: {
+            where: { roundName: { in: ['Semi Final', 'Third Place Match'] } },
+            select: {
+              roundName: true,
+              status: true,
+              homeTeamId: true,
+              awayTeamId: true,
+              homeScore: true,
+              awayScore: true,
+              homePenaltyScore: true,
+              awayPenaltyScore: true,
+            },
+          },
+        },
+      }),
+    ]);
 
     const participantIds = [
       ...new Set(
-        medalFixtures.flatMap((f) =>
-          [
+        [
+          ...medalFixtures.flatMap((f) => [
             f.homeTeamId,
             f.awayTeamId,
             ...((f as any).resultEntries?.map((r: any) => r.participantId) ?? []),
-          ].filter((id): id is string => !!id),
-        ),
+          ]),
+          ...leagueCandidates.flatMap((t) =>
+            t.standings.map((s) => s.participant_id),
+          ),
+          ...knockoutCandidates.flatMap((t) =>
+            t.fixtures.flatMap((f) => [f.homeTeamId, f.awayTeamId]),
+          ),
+        ].filter((id): id is string => !!id),
       ),
     ];
 
@@ -849,6 +906,51 @@ export class OrganizationsService {
       } else {
         // Third Place Match
         award(winnerId, 'bronze');
+      }
+    }
+
+    // League / round-robin medals: once every fixture is played, final
+    // standings decide gold/silver/bronze (position → points → GD → GF).
+    for (const t of leagueCandidates) {
+      const played = t.fixtures.some((f) => f.status === 'COMPLETED');
+      const allDone = t.fixtures.every(
+        (f) => f.status === 'COMPLETED' || f.status === 'CANCELLED',
+      );
+      if (!played || !allDone || t.standings.length < 3) continue;
+      const ordered = [...t.standings].sort(
+        (a, b) =>
+          (a.position ?? 9999) - (b.position ?? 9999) ||
+          b.points - a.points ||
+          b.goalDiff - a.goalDiff ||
+          b.goalsFor - a.goalsFor,
+      );
+      award(ordered[0].participant_id, 'gold');
+      award(ordered[1].participant_id, 'silver');
+      award(ordered[2].participant_id, 'bronze');
+    }
+
+    // Combat double-bronze: knockout with no third-place match → both losing
+    // semifinalists take bronze. Default on for combat sports, overridable
+    // per tournament via scoringRules.doubleBronze.
+    const COMBAT_SPORTS = new Set([
+      'boxing', 'judo', 'taekwondo', 'wrestling',
+      'karate', 'kickboxing', 'mma', 'muay thai', 'muaythai',
+    ]);
+    for (const t of knockoutCandidates) {
+      const hasThirdPlace = t.fixtures.some(
+        (f) => f.roundName === 'Third Place Match',
+      );
+      if (hasThirdPlace) continue; // bronze decided by a match instead
+      const rules = (t.scoringRules ?? {}) as Record<string, any>;
+      const doubleBronze =
+        typeof rules.doubleBronze === 'boolean'
+          ? rules.doubleBronze
+          : COMBAT_SPORTS.has((t.sport ?? '').toLowerCase().trim());
+      if (!doubleBronze) continue;
+      for (const sf of t.fixtures) {
+        if (sf.roundName !== 'Semi Final' || sf.status !== 'COMPLETED') continue;
+        const { loserId } = decideWinner(sf);
+        award(loserId, 'bronze');
       }
     }
 
