@@ -32,6 +32,7 @@ model User {
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
   payments                   Payment[]
   audit_logs                 AuditLog[]
+  created_discount_codes     DiscountCode[]         @relation("DiscountCodeCreator")
 }
 
 model Organization {
@@ -125,6 +126,7 @@ model Tournament {
   tournament_invites TournamentInvite[]
   venues             Venue[]
   payments           Payment[]
+  discountCodes      DiscountCode[]
 }
 
 model TournamentFollower {
@@ -535,6 +537,34 @@ enum PaymentStatus {
   PENDING
   SUCCESS
   FAILED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+  WAIVER
+}
+
+// Organizer-created codes that discount or waive a tournament's registration fee.
+model DiscountCode {
+  id            String       @id @default(cuid())
+  code          String
+  tournament_id String
+  type          DiscountType
+  value         Int          @default(0) // PERCENT: 1-100; FIXED: amount in kobo; WAIVER: ignored
+  maxUses       Int?
+  usedCount     Int          @default(0)
+  expiresAt     DateTime?
+  isActive      Boolean      @default(true)
+  createdById   String
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  tournament    Tournament   @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  createdBy     User         @relation("DiscountCodeCreator", fields: [createdById], references: [id])
+
+  @@unique([tournament_id, code])
+  @@index([code])
 }
 
 model Subscription {

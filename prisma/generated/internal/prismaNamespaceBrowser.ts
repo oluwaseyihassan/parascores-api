@@ -72,6 +72,7 @@ export const ModelName = {
   TeamInvite: 'TeamInvite',
   TournamentInvite: 'TournamentInvite',
   Highlight: 'Highlight',
+  DiscountCode: 'DiscountCode',
   Subscription: 'Subscription',
   Payment: 'Payment',
   PushSubscription: 'PushSubscription',
@@ -467,6 +468,24 @@ export const HighlightScalarFieldEnum = {
 } as const
 
 export type HighlightScalarFieldEnum = (typeof HighlightScalarFieldEnum)[keyof typeof HighlightScalarFieldEnum]
+
+
+export const DiscountCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  tournament_id: 'tournament_id',
+  type: 'type',
+  value: 'value',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type DiscountCodeScalarFieldEnum = (typeof DiscountCodeScalarFieldEnum)[keyof typeof DiscountCodeScalarFieldEnum]
 
 
 export const SubscriptionScalarFieldEnum = {

@@ -143,6 +143,11 @@ export type TournamentInvite = Prisma.TournamentInviteModel
  */
 export type Highlight = Prisma.HighlightModel
 /**
+ * Model DiscountCode
+ * 
+ */
+export type DiscountCode = Prisma.DiscountCodeModel
+/**
  * Model Subscription
  * 
  */

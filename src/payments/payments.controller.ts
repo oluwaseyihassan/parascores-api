@@ -2,10 +2,13 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
+  Delete,
   Body,
   Param,
   Query,
   Req,
+  Res,
   RawBodyRequest,
   HttpCode,
   HttpStatus,
@@ -19,9 +22,16 @@ import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
 import { SetupPayoutAccountDto } from './dto/setup-payout-account.dto';
+import { RecordOfflinePaymentDto } from './dto/record-offline-payment.dto';
+import {
+  CreateDiscountCodeDto,
+  UpdateDiscountCodeDto,
+  ValidateDiscountCodeDto,
+} from './dto/discount-code.dto';
+import { RefundPaymentDto } from './dto/refund-payment.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 
 @ApiTags('Payments')
 @Controller('payments')
@@ -168,5 +178,105 @@ export class PaymentsController {
   @ApiOperation({ summary: 'Get payment history for an organization' })
   async getPaymentHistory(@Param('orgId') orgId: string) {
     return this.paymentsService.getPaymentHistory(orgId);
+  }
+
+  // ─── Offline Payments ──────────────────────────────────
+
+  @Post('offline')
+  @ApiOperation({
+    summary: 'Record a registration payment collected off-platform (cash/transfer)',
+  })
+  async recordOfflinePayment(
+    @Body() dto: RecordOfflinePaymentDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.recordOfflinePayment(req.user.sub, dto);
+  }
+
+  // ─── Settlement Report ─────────────────────────────────
+
+  @Get('export/:orgId')
+  @ApiOperation({
+    summary: 'Download registration earnings as a CSV settlement report',
+  })
+  async exportPayments(
+    @Param('orgId') orgId: string,
+    @Req() req: any,
+    @Res({ passthrough: true }) res: Response,
+    @Query('tournamentId') tournamentId?: string,
+  ) {
+    const csv = await this.paymentsService.exportPaymentsCsv(
+      req.user.sub,
+      orgId,
+      tournamentId,
+    );
+    res.set({
+      'Content-Type': 'text/csv; charset=utf-8',
+      'Content-Disposition': `attachment; filename="parascores-settlements-${orgId}${tournamentId ? `-${tournamentId}` : ''}.csv"`,
+    });
+    return csv;
+  }
+
+  // ─── Discount Codes ────────────────────────────────────
+
+  @Get('tournaments/:tournamentId/discount-codes')
+  @ApiOperation({ summary: 'List discount codes for a tournament' })
+  async listDiscountCodes(
+    @Param('tournamentId') tournamentId: string,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.listDiscountCodes(req.user.sub, tournamentId);
+  }
+
+  @Post('tournaments/:tournamentId/discount-codes')
+  @ApiOperation({ summary: 'Create a discount code for a tournament' })
+  async createDiscountCode(
+    @Param('tournamentId') tournamentId: string,
+    @Body() dto: CreateDiscountCodeDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.createDiscountCode(
+      req.user.sub,
+      tournamentId,
+      dto,
+    );
+  }
+
+  @Patch('discount-codes/:id')
+  @ApiOperation({ summary: 'Update a discount code (activate/deactivate, limits)' })
+  async updateDiscountCode(
+    @Param('id') id: string,
+    @Body() dto: UpdateDiscountCodeDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.updateDiscountCode(req.user.sub, id, dto);
+  }
+
+  @Delete('discount-codes/:id')
+  @ApiOperation({ summary: 'Delete a discount code' })
+  async deleteDiscountCode(@Param('id') id: string, @Req() req: any) {
+    return this.paymentsService.deleteDiscountCode(req.user.sub, id);
+  }
+
+  @Post('discount-codes/validate')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Preview a discount code for the join page' })
+  async validateDiscountCode(
+    @Body() dto: ValidateDiscountCodeDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.validateDiscountCode(req.user.sub, dto);
+  }
+
+  // ─── Refunds ───────────────────────────────────────────
+
+  @Post('refund/:paymentId')
+  @ApiOperation({ summary: 'Refund a registration payment (OWNER only)' })
+  async refundPayment(
+    @Param('paymentId') paymentId: string,
+    @Body() dto: RefundPaymentDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.refundPayment(req.user.sub, paymentId, dto);
   }
 }

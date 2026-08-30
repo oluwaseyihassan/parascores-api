@@ -153,7 +153,17 @@ export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof Subscr
 export const PaymentStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const DiscountType = {
+  PERCENT: 'PERCENT',
+  FIXED: 'FIXED',
+  WAIVER: 'WAIVER'
+} as const
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
