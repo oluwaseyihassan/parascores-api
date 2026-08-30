@@ -146,6 +146,8 @@ export type FixtureCountAggregateOutputType = {
   timerIsRunning: number
   matchDuration: number
   half: number
+  periodScores: number
+  config: number
   manOfTheMatchPlayerId: number
   livestreamUrl: number
   livestreamPlatform: number
@@ -273,6 +275,8 @@ export type FixtureCountAggregateInputType = {
   timerIsRunning?: true
   matchDuration?: true
   half?: true
+  periodScores?: true
+  config?: true
   manOfTheMatchPlayerId?: true
   livestreamUrl?: true
   livestreamPlatform?: true
@@ -395,6 +399,8 @@ export type FixtureGroupByOutputType = {
   timerIsRunning: boolean
   matchDuration: number
   half: $Enums.MatchHalf | null
+  periodScores: runtime.JsonValue | null
+  config: runtime.JsonValue | null
   manOfTheMatchPlayerId: string | null
   livestreamUrl: string | null
   livestreamPlatform: string | null
@@ -453,9 +459,12 @@ export type FixtureWhereInput = {
   timerIsRunning?: Prisma.BoolFilter<"Fixture"> | boolean
   matchDuration?: Prisma.IntFilter<"Fixture"> | number
   half?: Prisma.EnumMatchHalfNullableFilter<"Fixture"> | $Enums.MatchHalf | null
+  periodScores?: Prisma.JsonNullableFilter<"Fixture">
+  config?: Prisma.JsonNullableFilter<"Fixture">
   manOfTheMatchPlayerId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamUrl?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamPlatform?: Prisma.StringNullableFilter<"Fixture"> | string | null
+  resultEntries?: Prisma.ResultEntryListRelationFilter
   awayTeam?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
   homeTeam?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
@@ -498,9 +507,12 @@ export type FixtureOrderByWithRelationInput = {
   timerIsRunning?: Prisma.SortOrder
   matchDuration?: Prisma.SortOrder
   half?: Prisma.SortOrderInput | Prisma.SortOrder
+  periodScores?: Prisma.SortOrderInput | Prisma.SortOrder
+  config?: Prisma.SortOrderInput | Prisma.SortOrder
   manOfTheMatchPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   livestreamUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   livestreamPlatform?: Prisma.SortOrderInput | Prisma.SortOrder
+  resultEntries?: Prisma.ResultEntryOrderByRelationAggregateInput
   awayTeam?: Prisma.ParticipantOrderByWithRelationInput
   group?: Prisma.GroupOrderByWithRelationInput
   homeTeam?: Prisma.ParticipantOrderByWithRelationInput
@@ -546,9 +558,12 @@ export type FixtureWhereUniqueInput = Prisma.AtLeast<{
   timerIsRunning?: Prisma.BoolFilter<"Fixture"> | boolean
   matchDuration?: Prisma.IntFilter<"Fixture"> | number
   half?: Prisma.EnumMatchHalfNullableFilter<"Fixture"> | $Enums.MatchHalf | null
+  periodScores?: Prisma.JsonNullableFilter<"Fixture">
+  config?: Prisma.JsonNullableFilter<"Fixture">
   manOfTheMatchPlayerId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamUrl?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamPlatform?: Prisma.StringNullableFilter<"Fixture"> | string | null
+  resultEntries?: Prisma.ResultEntryListRelationFilter
   awayTeam?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
   group?: Prisma.XOR<Prisma.GroupNullableScalarRelationFilter, Prisma.GroupWhereInput> | null
   homeTeam?: Prisma.XOR<Prisma.ParticipantNullableScalarRelationFilter, Prisma.ParticipantWhereInput> | null
@@ -591,6 +606,8 @@ export type FixtureOrderByWithAggregationInput = {
   timerIsRunning?: Prisma.SortOrder
   matchDuration?: Prisma.SortOrder
   half?: Prisma.SortOrderInput | Prisma.SortOrder
+  periodScores?: Prisma.SortOrderInput | Prisma.SortOrder
+  config?: Prisma.SortOrderInput | Prisma.SortOrder
   manOfTheMatchPlayerId?: Prisma.SortOrderInput | Prisma.SortOrder
   livestreamUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   livestreamPlatform?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -634,6 +651,8 @@ export type FixtureScalarWhereWithAggregatesInput = {
   timerIsRunning?: Prisma.BoolWithAggregatesFilter<"Fixture"> | boolean
   matchDuration?: Prisma.IntWithAggregatesFilter<"Fixture"> | number
   half?: Prisma.EnumMatchHalfNullableWithAggregatesFilter<"Fixture"> | $Enums.MatchHalf | null
+  periodScores?: Prisma.JsonNullableWithAggregatesFilter<"Fixture">
+  config?: Prisma.JsonNullableWithAggregatesFilter<"Fixture">
   manOfTheMatchPlayerId?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   livestreamUrl?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
   livestreamPlatform?: Prisma.StringNullableWithAggregatesFilter<"Fixture"> | string | null
@@ -664,8 +683,11 @@ export type FixtureCreateInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -708,9 +730,12 @@ export type FixtureUncheckedCreateInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -742,8 +767,11 @@ export type FixtureUpdateInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -786,9 +814,12 @@ export type FixtureUncheckedUpdateInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -825,6 +856,8 @@ export type FixtureCreateManyInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -855,6 +888,8 @@ export type FixtureUpdateManyMutationInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -889,6 +924,8 @@ export type FixtureUncheckedUpdateManyInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -939,6 +976,8 @@ export type FixtureCountOrderByAggregateInput = {
   timerIsRunning?: Prisma.SortOrder
   matchDuration?: Prisma.SortOrder
   half?: Prisma.SortOrder
+  periodScores?: Prisma.SortOrder
+  config?: Prisma.SortOrder
   manOfTheMatchPlayerId?: Prisma.SortOrder
   livestreamUrl?: Prisma.SortOrder
   livestreamPlatform?: Prisma.SortOrder
@@ -1277,6 +1316,20 @@ export type FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput = {
   deleteMany?: Prisma.FixtureScalarWhereInput | Prisma.FixtureScalarWhereInput[]
 }
 
+export type FixtureCreateNestedOneWithoutResultEntriesInput = {
+  create?: Prisma.XOR<Prisma.FixtureCreateWithoutResultEntriesInput, Prisma.FixtureUncheckedCreateWithoutResultEntriesInput>
+  connectOrCreate?: Prisma.FixtureCreateOrConnectWithoutResultEntriesInput
+  connect?: Prisma.FixtureWhereUniqueInput
+}
+
+export type FixtureUpdateOneRequiredWithoutResultEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.FixtureCreateWithoutResultEntriesInput, Prisma.FixtureUncheckedCreateWithoutResultEntriesInput>
+  connectOrCreate?: Prisma.FixtureCreateOrConnectWithoutResultEntriesInput
+  upsert?: Prisma.FixtureUpsertWithoutResultEntriesInput
+  connect?: Prisma.FixtureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FixtureUpdateToOneWithWhereWithoutResultEntriesInput, Prisma.FixtureUpdateWithoutResultEntriesInput>, Prisma.FixtureUncheckedUpdateWithoutResultEntriesInput>
+}
+
 export type FixtureCreateNestedOneWithoutMatchEventsInput = {
   create?: Prisma.XOR<Prisma.FixtureCreateWithoutMatchEventsInput, Prisma.FixtureUncheckedCreateWithoutMatchEventsInput>
   connectOrCreate?: Prisma.FixtureCreateOrConnectWithoutMatchEventsInput
@@ -1410,8 +1463,11 @@ export type FixtureCreateWithoutTournamentInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -1452,9 +1508,12 @@ export type FixtureUncheckedCreateWithoutTournamentInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -1520,6 +1579,8 @@ export type FixtureScalarWhereInput = {
   timerIsRunning?: Prisma.BoolFilter<"Fixture"> | boolean
   matchDuration?: Prisma.IntFilter<"Fixture"> | number
   half?: Prisma.EnumMatchHalfNullableFilter<"Fixture"> | $Enums.MatchHalf | null
+  periodScores?: Prisma.JsonNullableFilter<"Fixture">
+  config?: Prisma.JsonNullableFilter<"Fixture">
   manOfTheMatchPlayerId?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamUrl?: Prisma.StringNullableFilter<"Fixture"> | string | null
   livestreamPlatform?: Prisma.StringNullableFilter<"Fixture"> | string | null
@@ -1550,8 +1611,11 @@ export type FixtureCreateWithoutGroupInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
   nextFixture?: Prisma.FixtureCreateNestedOneWithoutSourceFixturesInput
@@ -1592,9 +1656,12 @@ export type FixtureUncheckedCreateWithoutGroupInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -1652,8 +1719,11 @@ export type FixtureCreateWithoutAwayTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
   nextFixture?: Prisma.FixtureCreateNestedOneWithoutSourceFixturesInput
@@ -1694,9 +1764,12 @@ export type FixtureUncheckedCreateWithoutAwayTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -1738,8 +1811,11 @@ export type FixtureCreateWithoutHomeTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   nextFixture?: Prisma.FixtureCreateNestedOneWithoutSourceFixturesInput
@@ -1780,9 +1856,12 @@ export type FixtureUncheckedCreateWithoutHomeTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -1856,8 +1935,11 @@ export type FixtureCreateWithoutSourceFixturesInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -1899,9 +1981,12 @@ export type FixtureUncheckedCreateWithoutSourceFixturesInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
@@ -1937,8 +2022,11 @@ export type FixtureCreateWithoutNextFixtureInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -1979,9 +2067,12 @@ export type FixtureUncheckedCreateWithoutNextFixtureInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -2034,8 +2125,11 @@ export type FixtureUpdateWithoutSourceFixturesInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -2077,9 +2171,12 @@ export type FixtureUncheckedUpdateWithoutSourceFixturesInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
@@ -2099,6 +2196,186 @@ export type FixtureUpdateWithWhereUniqueWithoutNextFixtureInput = {
 export type FixtureUpdateManyWithWhereWithoutNextFixtureInput = {
   where: Prisma.FixtureScalarWhereInput
   data: Prisma.XOR<Prisma.FixtureUpdateManyMutationInput, Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureInput>
+}
+
+export type FixtureCreateWithoutResultEntriesInput = {
+  id?: string
+  round: number
+  matchNumber: number
+  startTime?: Date | string | null
+  homeScore?: number | null
+  awayScore?: number | null
+  status?: $Enums.FixtureStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  awayPenaltyScore?: number | null
+  awayTeamPlaceholder?: string | null
+  homePenaltyScore?: number | null
+  homeTeamPlaceholder?: string | null
+  roundName?: string | null
+  stage?: $Enums.FixtureStage | null
+  venue?: string | null
+  homeFormation?: string | null
+  awayFormation?: string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Date | string | null
+  timerElapsedSeconds?: number
+  timerIsRunning?: boolean
+  matchDuration?: number
+  half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  livestreamUrl?: string | null
+  livestreamPlatform?: string | null
+  awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
+  group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
+  homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
+  nextFixture?: Prisma.FixtureCreateNestedOneWithoutSourceFixturesInput
+  sourceFixtures?: Prisma.FixtureCreateNestedManyWithoutNextFixtureInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutFixturesInput
+  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutFixtureInput
+  lineupPlayers?: Prisma.PlayerCreateNestedManyWithoutLineupsInput
+  manOfTheMatchPlayer?: Prisma.PlayerCreateNestedOneWithoutManOfTheMatchFixturesInput
+  highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
+}
+
+export type FixtureUncheckedCreateWithoutResultEntriesInput = {
+  id?: string
+  tournament_id: string
+  round: number
+  matchNumber: number
+  startTime?: Date | string | null
+  homeTeamId?: string | null
+  awayTeamId?: string | null
+  homeScore?: number | null
+  awayScore?: number | null
+  status?: $Enums.FixtureStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  awayPenaltyScore?: number | null
+  awayTeamPlaceholder?: string | null
+  groupId?: string | null
+  homePenaltyScore?: number | null
+  homeTeamPlaceholder?: string | null
+  nextFixtureId?: string | null
+  roundName?: string | null
+  stage?: $Enums.FixtureStage | null
+  venue?: string | null
+  homeFormation?: string | null
+  awayFormation?: string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Date | string | null
+  timerElapsedSeconds?: number
+  timerIsRunning?: boolean
+  matchDuration?: number
+  half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  manOfTheMatchPlayerId?: string | null
+  livestreamUrl?: string | null
+  livestreamPlatform?: string | null
+  sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
+  matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
+  lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
+  highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
+}
+
+export type FixtureCreateOrConnectWithoutResultEntriesInput = {
+  where: Prisma.FixtureWhereUniqueInput
+  create: Prisma.XOR<Prisma.FixtureCreateWithoutResultEntriesInput, Prisma.FixtureUncheckedCreateWithoutResultEntriesInput>
+}
+
+export type FixtureUpsertWithoutResultEntriesInput = {
+  update: Prisma.XOR<Prisma.FixtureUpdateWithoutResultEntriesInput, Prisma.FixtureUncheckedUpdateWithoutResultEntriesInput>
+  create: Prisma.XOR<Prisma.FixtureCreateWithoutResultEntriesInput, Prisma.FixtureUncheckedCreateWithoutResultEntriesInput>
+  where?: Prisma.FixtureWhereInput
+}
+
+export type FixtureUpdateToOneWithWhereWithoutResultEntriesInput = {
+  where?: Prisma.FixtureWhereInput
+  data: Prisma.XOR<Prisma.FixtureUpdateWithoutResultEntriesInput, Prisma.FixtureUncheckedUpdateWithoutResultEntriesInput>
+}
+
+export type FixtureUpdateWithoutResultEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFixtureStatusFieldUpdateOperationsInput | $Enums.FixtureStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awayPenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timerElapsedSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
+  group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
+  homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
+  nextFixture?: Prisma.FixtureUpdateOneWithoutSourceFixturesNestedInput
+  sourceFixtures?: Prisma.FixtureUpdateManyWithoutNextFixtureNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutFixturesNestedInput
+  matchEvents?: Prisma.MatchEventUpdateManyWithoutFixtureNestedInput
+  lineupPlayers?: Prisma.PlayerUpdateManyWithoutLineupsNestedInput
+  manOfTheMatchPlayer?: Prisma.PlayerUpdateOneWithoutManOfTheMatchFixturesNestedInput
+  highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
+}
+
+export type FixtureUncheckedUpdateWithoutResultEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFixtureStatusFieldUpdateOperationsInput | $Enums.FixtureStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awayPenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFixtureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timerElapsedSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
+  matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
+  lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
+  highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateWithoutMatchEventsInput = {
@@ -2126,8 +2403,11 @@ export type FixtureCreateWithoutMatchEventsInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -2169,9 +2449,12 @@ export type FixtureUncheckedCreateWithoutMatchEventsInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
@@ -2218,8 +2501,11 @@ export type FixtureUpdateWithoutMatchEventsInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -2261,9 +2547,12 @@ export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
@@ -2294,8 +2583,11 @@ export type FixtureCreateWithoutLineupPlayersInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -2337,9 +2629,12 @@ export type FixtureUncheckedCreateWithoutLineupPlayersInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
@@ -2375,8 +2670,11 @@ export type FixtureCreateWithoutManOfTheMatchPlayerInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -2418,8 +2716,11 @@ export type FixtureUncheckedCreateWithoutManOfTheMatchPlayerInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -2493,8 +2794,11 @@ export type FixtureCreateWithoutHighlightsInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
   awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
   group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
   homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
@@ -2536,9 +2840,12 @@ export type FixtureUncheckedCreateWithoutHighlightsInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
   sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
   matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
@@ -2585,8 +2892,11 @@ export type FixtureUpdateWithoutHighlightsInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -2628,9 +2938,12 @@ export type FixtureUncheckedUpdateWithoutHighlightsInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -2665,6 +2978,8 @@ export type FixtureCreateManyTournamentInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -2695,8 +3010,11 @@ export type FixtureUpdateWithoutTournamentInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -2737,9 +3055,12 @@ export type FixtureUncheckedUpdateWithoutTournamentInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -2775,6 +3096,8 @@ export type FixtureUncheckedUpdateManyWithoutTournamentInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2809,6 +3132,8 @@ export type FixtureCreateManyGroupInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -2839,8 +3164,11 @@ export type FixtureUpdateWithoutGroupInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
   nextFixture?: Prisma.FixtureUpdateOneWithoutSourceFixturesNestedInput
@@ -2881,9 +3209,12 @@ export type FixtureUncheckedUpdateWithoutGroupInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -2919,6 +3250,8 @@ export type FixtureUncheckedUpdateManyWithoutGroupInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2953,6 +3286,8 @@ export type FixtureCreateManyAwayTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -2987,6 +3322,8 @@ export type FixtureCreateManyHomeTeamInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -3017,8 +3354,11 @@ export type FixtureUpdateWithoutAwayTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
   nextFixture?: Prisma.FixtureUpdateOneWithoutSourceFixturesNestedInput
@@ -3059,9 +3399,12 @@ export type FixtureUncheckedUpdateWithoutAwayTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -3097,6 +3440,8 @@ export type FixtureUncheckedUpdateManyWithoutAwayTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3127,8 +3472,11 @@ export type FixtureUpdateWithoutHomeTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   nextFixture?: Prisma.FixtureUpdateOneWithoutSourceFixturesNestedInput
@@ -3169,9 +3517,12 @@ export type FixtureUncheckedUpdateWithoutHomeTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -3207,6 +3558,8 @@ export type FixtureUncheckedUpdateManyWithoutHomeTeamInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3241,6 +3594,8 @@ export type FixtureCreateManyNextFixtureInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: string | null
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
@@ -3271,8 +3626,11 @@ export type FixtureUpdateWithoutNextFixtureInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -3313,9 +3671,12 @@ export type FixtureUncheckedUpdateWithoutNextFixtureInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -3351,6 +3712,8 @@ export type FixtureUncheckedUpdateManyWithoutNextFixtureInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3386,6 +3749,8 @@ export type FixtureCreateManyManOfTheMatchPlayerInput = {
   timerIsRunning?: boolean
   matchDuration?: number
   half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: string | null
   livestreamPlatform?: string | null
 }
@@ -3415,8 +3780,11 @@ export type FixtureUpdateWithoutLineupPlayersInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -3458,9 +3826,12 @@ export type FixtureUncheckedUpdateWithoutLineupPlayersInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
@@ -3496,6 +3867,8 @@ export type FixtureUncheckedUpdateManyWithoutLineupPlayersInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -3526,8 +3899,11 @@ export type FixtureUpdateWithoutManOfTheMatchPlayerInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
   awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
   group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
   homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
@@ -3569,8 +3945,11 @@ export type FixtureUncheckedUpdateWithoutManOfTheMatchPlayerInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
   sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
   matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
@@ -3607,6 +3986,8 @@ export type FixtureUncheckedUpdateManyWithoutManOfTheMatchPlayerInput = {
   timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
   matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
   half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
@@ -3617,6 +3998,7 @@ export type FixtureUncheckedUpdateManyWithoutManOfTheMatchPlayerInput = {
  */
 
 export type FixtureCountOutputType = {
+  resultEntries: number
   sourceFixtures: number
   matchEvents: number
   lineupPlayers: number
@@ -3624,6 +4006,7 @@ export type FixtureCountOutputType = {
 }
 
 export type FixtureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  resultEntries?: boolean | FixtureCountOutputTypeCountResultEntriesArgs
   sourceFixtures?: boolean | FixtureCountOutputTypeCountSourceFixturesArgs
   matchEvents?: boolean | FixtureCountOutputTypeCountMatchEventsArgs
   lineupPlayers?: boolean | FixtureCountOutputTypeCountLineupPlayersArgs
@@ -3638,6 +4021,13 @@ export type FixtureCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
    * Select specific fields to fetch from the FixtureCountOutputType
    */
   select?: Prisma.FixtureCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * FixtureCountOutputType without action
+ */
+export type FixtureCountOutputTypeCountResultEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ResultEntryWhereInput
 }
 
 /**
@@ -3699,9 +4089,12 @@ export type FixtureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   timerIsRunning?: boolean
   matchDuration?: boolean
   half?: boolean
+  periodScores?: boolean
+  config?: boolean
   manOfTheMatchPlayerId?: boolean
   livestreamUrl?: boolean
   livestreamPlatform?: boolean
+  resultEntries?: boolean | Prisma.Fixture$resultEntriesArgs<ExtArgs>
   awayTeam?: boolean | Prisma.Fixture$awayTeamArgs<ExtArgs>
   group?: boolean | Prisma.Fixture$groupArgs<ExtArgs>
   homeTeam?: boolean | Prisma.Fixture$homeTeamArgs<ExtArgs>
@@ -3745,6 +4138,8 @@ export type FixtureSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   timerIsRunning?: boolean
   matchDuration?: boolean
   half?: boolean
+  periodScores?: boolean
+  config?: boolean
   manOfTheMatchPlayerId?: boolean
   livestreamUrl?: boolean
   livestreamPlatform?: boolean
@@ -3786,6 +4181,8 @@ export type FixtureSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   timerIsRunning?: boolean
   matchDuration?: boolean
   half?: boolean
+  periodScores?: boolean
+  config?: boolean
   manOfTheMatchPlayerId?: boolean
   livestreamUrl?: boolean
   livestreamPlatform?: boolean
@@ -3827,13 +4224,16 @@ export type FixtureSelectScalar = {
   timerIsRunning?: boolean
   matchDuration?: boolean
   half?: boolean
+  periodScores?: boolean
+  config?: boolean
   manOfTheMatchPlayerId?: boolean
   livestreamUrl?: boolean
   livestreamPlatform?: boolean
 }
 
-export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "round" | "matchNumber" | "startTime" | "homeTeamId" | "awayTeamId" | "homeScore" | "awayScore" | "status" | "created_at" | "updated_at" | "awayPenaltyScore" | "awayTeamPlaceholder" | "groupId" | "homePenaltyScore" | "homeTeamPlaceholder" | "nextFixtureId" | "roundName" | "stage" | "venue" | "homeFormation" | "awayFormation" | "lineupPositions" | "timerStartedAt" | "timerElapsedSeconds" | "timerIsRunning" | "matchDuration" | "half" | "manOfTheMatchPlayerId" | "livestreamUrl" | "livestreamPlatform", ExtArgs["result"]["fixture"]>
+export type FixtureOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tournament_id" | "round" | "matchNumber" | "startTime" | "homeTeamId" | "awayTeamId" | "homeScore" | "awayScore" | "status" | "created_at" | "updated_at" | "awayPenaltyScore" | "awayTeamPlaceholder" | "groupId" | "homePenaltyScore" | "homeTeamPlaceholder" | "nextFixtureId" | "roundName" | "stage" | "venue" | "homeFormation" | "awayFormation" | "lineupPositions" | "timerStartedAt" | "timerElapsedSeconds" | "timerIsRunning" | "matchDuration" | "half" | "periodScores" | "config" | "manOfTheMatchPlayerId" | "livestreamUrl" | "livestreamPlatform", ExtArgs["result"]["fixture"]>
 export type FixtureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  resultEntries?: boolean | Prisma.Fixture$resultEntriesArgs<ExtArgs>
   awayTeam?: boolean | Prisma.Fixture$awayTeamArgs<ExtArgs>
   group?: boolean | Prisma.Fixture$groupArgs<ExtArgs>
   homeTeam?: boolean | Prisma.Fixture$homeTeamArgs<ExtArgs>
@@ -3866,6 +4266,7 @@ export type FixtureIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $FixturePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Fixture"
   objects: {
+    resultEntries: Prisma.$ResultEntryPayload<ExtArgs>[]
     awayTeam: Prisma.$ParticipantPayload<ExtArgs> | null
     group: Prisma.$GroupPayload<ExtArgs> | null
     homeTeam: Prisma.$ParticipantPayload<ExtArgs> | null
@@ -3907,6 +4308,8 @@ export type $FixturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     timerIsRunning: boolean
     matchDuration: number
     half: $Enums.MatchHalf | null
+    periodScores: runtime.JsonValue | null
+    config: runtime.JsonValue | null
     manOfTheMatchPlayerId: string | null
     livestreamUrl: string | null
     livestreamPlatform: string | null
@@ -4304,6 +4707,7 @@ readonly fields: FixtureFieldRefs;
  */
 export interface Prisma__FixtureClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  resultEntries<T extends Prisma.Fixture$resultEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$resultEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ResultEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   awayTeam<T extends Prisma.Fixture$awayTeamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$awayTeamArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   group<T extends Prisma.Fixture$groupArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$groupArgs<ExtArgs>>): Prisma.Prisma__GroupClient<runtime.Types.Result.GetResult<Prisma.$GroupPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   homeTeam<T extends Prisma.Fixture$homeTeamArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$homeTeamArgs<ExtArgs>>): Prisma.Prisma__ParticipantClient<runtime.Types.Result.GetResult<Prisma.$ParticipantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -4372,6 +4776,8 @@ export interface FixtureFieldRefs {
   readonly timerIsRunning: Prisma.FieldRef<"Fixture", 'Boolean'>
   readonly matchDuration: Prisma.FieldRef<"Fixture", 'Int'>
   readonly half: Prisma.FieldRef<"Fixture", 'MatchHalf'>
+  readonly periodScores: Prisma.FieldRef<"Fixture", 'Json'>
+  readonly config: Prisma.FieldRef<"Fixture", 'Json'>
   readonly manOfTheMatchPlayerId: Prisma.FieldRef<"Fixture", 'String'>
   readonly livestreamUrl: Prisma.FieldRef<"Fixture", 'String'>
   readonly livestreamPlatform: Prisma.FieldRef<"Fixture", 'String'>
@@ -4768,6 +5174,30 @@ export type FixtureDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Fixtures to delete.
    */
   limit?: number
+}
+
+/**
+ * Fixture.resultEntries
+ */
+export type Fixture$resultEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ResultEntry
+   */
+  select?: Prisma.ResultEntrySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ResultEntry
+   */
+  omit?: Prisma.ResultEntryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ResultEntryInclude<ExtArgs> | null
+  where?: Prisma.ResultEntryWhereInput
+  orderBy?: Prisma.ResultEntryOrderByWithRelationInput | Prisma.ResultEntryOrderByWithRelationInput[]
+  cursor?: Prisma.ResultEntryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ResultEntryScalarFieldEnum | Prisma.ResultEntryScalarFieldEnum[]
 }
 
 /**

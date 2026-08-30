@@ -14,8 +14,9 @@ import {
   Visibility,
   MatchEventType,
   MatchHalf,
-  SubscriptionPlan,
-  SubscriptionStatus,
+  ParticipantStatus,
+  ParticipantType,
+  TournamentType,
 } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
 
@@ -36,31 +37,8 @@ export class TournamentsService {
       ['OWNER', 'ADMIN'],
     );
 
-    // 2. Enforce Free plan tournament count limit (max 3)
-    const subscription = await this.db.subscription.findUnique({
-      where: { organizationId: dto.organization_id },
-    });
-
-    const isPremiumOrg =
-      subscription &&
-      (subscription.status === SubscriptionStatus.ACTIVE ||
-        subscription.status === SubscriptionStatus.TRIALING) &&
-      (subscription.plan === SubscriptionPlan.PRO ||
-        subscription.plan === SubscriptionPlan.ENTERPRISE);
-
-    if (!isPremiumOrg && dto.type !== 'FRIENDLY') {
-      const count = await this.db.tournament.count({
-        where: {
-          organization_id: dto.organization_id,
-          type: { not: 'FRIENDLY' },
-        },
-      });
-      if (count >= 3) {
-        throw new BadRequestException(
-          'Free plan is limited to 3 tournaments. Please upgrade to Pro.',
-        );
-      }
-    }
+    // NOTE: plan-based tournament limits removed — a new billing model will
+    // replace this later.
 
     // 3. Check customName uniqueness
     if (dto.customName) {
@@ -83,6 +61,352 @@ export class TournamentsService {
       },
     });
     return ResponseUtil.success(tournament);
+  }
+
+  async createPractice(userId: string, organizationId: string) {
+    await this.organizationsService.validateMemberRole(organizationId, userId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    // Limit to 3 active practice tournaments per org
+    const practiceCount = await this.db.tournament.count({
+      where: {
+        organization_id: organizationId,
+        isPractice: true,
+        end_date: { gte: new Date() },
+      },
+    });
+    if (practiceCount >= 3) {
+      throw new BadRequestException(
+        'You already have 3 active practice tournaments. Delete or let one expire first.',
+      );
+    }
+
+    const now = new Date();
+    const endDate = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    const suffix = Math.random().toString(36).slice(2, 8);
+
+    const tournament = await this.db.tournament.create({
+      data: {
+        name: `Practice Tournament ${suffix.toUpperCase()}`,
+        customName: `practice-${suffix}`,
+        description:
+          'Sandbox tournament for training editors. Data here is temporary.',
+        sport: 'Football',
+        type: TournamentType.ROUND_ROBIN,
+        participantType: ParticipantType.TEAM,
+        visibility: Visibility.PRIVATE,
+        isPractice: true,
+        maxParticipants: 4,
+        start_date: now,
+        end_date: endDate,
+        timezone: 'Africa/Lagos',
+        scoringRules: { win: 3, draw: 1, loss: 0 },
+        autoApprove: true,
+        organization_id: organizationId,
+      },
+    });
+
+    const teamNames = [
+      { name: 'Practice United', short: 'PUN' },
+      { name: 'Demo City', short: 'DEM' },
+      { name: 'Sample FC', short: 'SAM' },
+      { name: 'Training Athletic', short: 'TRA' },
+    ];
+
+    const participants = await Promise.all(
+      teamNames.map((team, index) =>
+        this.db.participant.create({
+          data: {
+            tournament_id: tournament.id,
+            customName: team.name,
+            customShortName: team.short,
+            seed: index + 1,
+            status: ParticipantStatus.CONFIRMED,
+          },
+        }),
+      ),
+    );
+
+    // Seed fake players so editors can practice lineups, scorers, subs and MOTM
+    const squadTemplate = [
+      { number: 1, position: 'GK' },
+      { number: 2, position: 'DEF' },
+      { number: 3, position: 'DEF' },
+      { number: 4, position: 'DEF' },
+      { number: 5, position: 'DEF' },
+      { number: 6, position: 'MID' },
+      { number: 7, position: 'MID' },
+      { number: 8, position: 'MID' },
+      { number: 9, position: 'FWD' },
+      { number: 10, position: 'MID' },
+      { number: 11, position: 'FWD' },
+    ];
+
+    await this.db.player.createMany({
+      data: participants.flatMap((participant) =>
+        squadTemplate.map((slot) => ({
+          participantId: participant.id,
+          name: `${participant.customShortName} Player ${slot.number}`,
+          number: slot.number,
+          position: slot.position,
+        })),
+      ),
+    });
+
+    const pairings = [
+      [[0, 1], [2, 3]],
+      [[0, 2], [1, 3]],
+      [[0, 3], [1, 2]],
+    ];
+
+    const fixturesData = pairings.flatMap((round, roundIndex) =>
+      round.map(([home, away], matchIndex) => ({
+        tournament_id: tournament.id,
+        round: roundIndex + 1,
+        matchNumber: matchIndex + 1,
+        homeTeamId: participants[home]!.id,
+        awayTeamId: participants[away]!.id,
+        startTime: now,
+      })),
+    );
+
+    await this.db.fixture.createMany({ data: fixturesData });
+
+    return ResponseUtil.success(tournament);
+  }
+
+  async resetPractice(userId: string, id: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id }, { customName: id }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (!tournament.isPractice) {
+      throw new BadRequestException('Only practice tournaments can be reset');
+    }
+    if (!tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    // Wipe events, fixtures and standings
+    await this.db.matchEvent.deleteMany({
+      where: { fixture: { tournament_id: tournament.id } },
+    });
+    await this.db.fixture.deleteMany({
+      where: { tournament_id: tournament.id },
+    });
+    await this.db.standing.deleteMany({
+      where: { tournament_id: tournament.id },
+    });
+
+    // Recreate the initial round-robin fixtures
+    const participants = await this.db.participant.findMany({
+      where: { tournament_id: tournament.id },
+      orderBy: { seed: 'asc' },
+    });
+
+    if (participants.length >= 2) {
+      const pairings = [
+        [[0, 1], [2, 3]],
+        [[0, 2], [1, 3]],
+        [[0, 3], [1, 2]],
+      ];
+      const now = new Date();
+      const fixturesData = pairings.flatMap((round, roundIndex) =>
+        round
+          .filter(
+            ([home, away]) => participants[home] && participants[away],
+          )
+          .map(([home, away], matchIndex) => ({
+            tournament_id: tournament.id,
+            round: roundIndex + 1,
+            matchNumber: matchIndex + 1,
+            homeTeamId: participants[home]!.id,
+            awayTeamId: participants[away]!.id,
+            startTime: now,
+          })),
+      );
+      await this.db.fixture.createMany({ data: fixturesData });
+    }
+
+    return ResponseUtil.success({ message: 'Practice tournament reset' });
+  }
+
+  async autofillPractice(userId: string, id: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id }, { customName: id }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (!tournament.isPractice) {
+      throw new BadRequestException(
+        'Only practice tournaments can be auto-filled',
+      );
+    }
+    if (!tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const fixtures = await this.db.fixture.findMany({
+      where: { tournament_id: tournament.id, status: 'SCHEDULED' },
+    });
+
+    const participants = await this.db.participant.findMany({
+      where: { tournament_id: tournament.id },
+      include: { players: true, group: true },
+    });
+
+    const randomScore = () => Math.floor(Math.random() * 4);
+    const pickPlayer = (participantId: string) => {
+      const team = participants.find((p) => p.id === participantId);
+      if (!team || team.players.length === 0) return null;
+      return team.players[Math.floor(Math.random() * team.players.length)]!;
+    };
+
+    for (const fixture of fixtures) {
+      const homeScore = randomScore();
+      const awayScore = randomScore();
+
+      await this.db.fixture.update({
+        where: { id: fixture.id },
+        data: {
+          homeScore,
+          awayScore,
+          status: 'COMPLETED',
+          timerIsRunning: false,
+        },
+      });
+
+      // Create goal events with random scorers
+      const goals: {
+        participantId: string;
+        count: number;
+      }[] = [
+        { participantId: fixture.homeTeamId!, count: homeScore },
+        { participantId: fixture.awayTeamId!, count: awayScore },
+      ];
+
+      for (const side of goals) {
+        for (let i = 0; i < side.count; i++) {
+          const scorer = pickPlayer(side.participantId);
+          const minute = 1 + Math.floor(Math.random() * 90);
+          await this.db.matchEvent.create({
+            data: {
+              fixture_id: fixture.id,
+              participant_id: side.participantId,
+              playerId: scorer?.id ?? null,
+              type: MatchEventType.GOAL,
+              minute,
+              half:
+                minute > 45 ? MatchHalf.SECOND_HALF : MatchHalf.FIRST_HALF,
+              description: scorer
+                ? `Goal by ${scorer.name}`
+                : 'Goal',
+            },
+          });
+        }
+      }
+    }
+
+    // Recalculate standings from completed fixtures
+    const completedFixtures = await this.db.fixture.findMany({
+      where: { tournament_id: tournament.id, status: 'COMPLETED' },
+    });
+
+    const stats = new Map<
+      string,
+      {
+        played: number;
+        wins: number;
+        draws: number;
+        losses: number;
+        goalsFor: number;
+        goalsAgainst: number;
+        points: number;
+      }
+    >();
+
+    for (const p of participants) {
+      stats.set(p.id, {
+        played: 0,
+        wins: 0,
+        draws: 0,
+        losses: 0,
+        goalsFor: 0,
+        goalsAgainst: 0,
+        points: 0,
+      });
+    }
+
+    for (const f of completedFixtures) {
+      if (!f.homeTeamId || !f.awayTeamId) continue;
+      const home = stats.get(f.homeTeamId);
+      const away = stats.get(f.awayTeamId);
+      if (!home || !away) continue;
+
+      const hScore = f.homeScore ?? 0;
+      const aScore = f.awayScore ?? 0;
+
+      home.played++;
+      away.played++;
+      home.goalsFor += hScore;
+      home.goalsAgainst += aScore;
+      away.goalsFor += aScore;
+      away.goalsAgainst += hScore;
+
+      if (hScore > aScore) {
+        home.wins++;
+        home.points += 3;
+        away.losses++;
+      } else if (aScore > hScore) {
+        away.wins++;
+        away.points += 3;
+        home.losses++;
+      } else {
+        home.draws++;
+        home.points += 1;
+        away.draws++;
+        away.points += 1;
+      }
+    }
+
+    for (const [participantId, s] of stats.entries()) {
+      const participant = participants.find((p) => p.id === participantId);
+      await this.db.standing.upsert({
+        where: {
+          tournament_id_participant_id: {
+            tournament_id: tournament.id,
+            participant_id: participantId,
+          },
+        },
+        create: {
+          tournament_id: tournament.id,
+          participant_id: participantId,
+          group: participant?.group?.name || null,
+          ...s,
+          goalDiff: s.goalsFor - s.goalsAgainst,
+        },
+        update: {
+          group: participant?.group?.name || null,
+          ...s,
+          goalDiff: s.goalsFor - s.goalsAgainst,
+        },
+      });
+    }
+
+    return ResponseUtil.success({
+      message: 'Practice tournament filled with sample results',
+    });
   }
 
   async update(id: string, userId: string, dto: UpdateTournamentDto) {

@@ -42,7 +42,8 @@ export const TournamentType = {
   ROUND_ROBIN: 'ROUND_ROBIN',
   GROUP: 'GROUP',
   FRIENDLY: 'FRIENDLY',
-  HYBRID: 'HYBRID'
+  HYBRID: 'HYBRID',
+  RACE: 'RACE'
 } as const
 
 export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]
@@ -152,7 +153,17 @@ export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof Subscr
 export const PaymentStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const DiscountType = {
+  PERCENT: 'PERCENT',
+  FIXED: 'FIXED',
+  WAIVER: 'WAIVER'
+} as const
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]

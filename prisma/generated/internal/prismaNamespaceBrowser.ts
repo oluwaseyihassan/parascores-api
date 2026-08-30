@@ -58,7 +58,10 @@ export const ModelName = {
   TournamentFollower: 'TournamentFollower',
   Group: 'Group',
   Participant: 'Participant',
+  RosterEntry: 'RosterEntry',
+  TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
+  ResultEntry: 'ResultEntry',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
@@ -69,6 +72,7 @@ export const ModelName = {
   TeamInvite: 'TeamInvite',
   TournamentInvite: 'TournamentInvite',
   Highlight: 'Highlight',
+  DiscountCode: 'DiscountCode',
   Subscription: 'Subscription',
   Payment: 'Payment',
   PushSubscription: 'PushSubscription',
@@ -126,7 +130,9 @@ export const OrganizationScalarFieldEnum = {
   settlementBankCode: 'settlementBankCode',
   settlementAccountNumber: 'settlementAccountNumber',
   settlementAccountName: 'settlementAccountName',
-  payoutAccountCreatedAt: 'payoutAccountCreatedAt'
+  payoutAccountCreatedAt: 'payoutAccountCreatedAt',
+  subdomain: 'subdomain',
+  brandConfig: 'brandConfig'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -152,6 +158,7 @@ export const TournamentScalarFieldEnum = {
   updated_at: 'updated_at',
   autoApprove: 'autoApprove',
   bannerUrl: 'bannerUrl',
+  isPractice: 'isPractice',
   location: 'location',
   latitude: 'latitude',
   longitude: 'longitude',
@@ -225,6 +232,29 @@ export const ParticipantScalarFieldEnum = {
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
 
 
+export const RosterEntryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  name: 'name',
+  shortName: 'shortName',
+  logoUrl: 'logoUrl',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RosterEntryScalarFieldEnum = (typeof RosterEntryScalarFieldEnum)[keyof typeof RosterEntryScalarFieldEnum]
+
+
+export const TournamentEntryScalarFieldEnum = {
+  id: 'id',
+  rosterEntryId: 'rosterEntryId',
+  participantId: 'participantId',
+  created_at: 'created_at'
+} as const
+
+export type TournamentEntryScalarFieldEnum = (typeof TournamentEntryScalarFieldEnum)[keyof typeof TournamentEntryScalarFieldEnum]
+
+
 export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
@@ -255,12 +285,29 @@ export const FixtureScalarFieldEnum = {
   timerIsRunning: 'timerIsRunning',
   matchDuration: 'matchDuration',
   half: 'half',
+  periodScores: 'periodScores',
+  config: 'config',
   manOfTheMatchPlayerId: 'manOfTheMatchPlayerId',
   livestreamUrl: 'livestreamUrl',
   livestreamPlatform: 'livestreamPlatform'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
+
+
+export const ResultEntryScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  value: 'value',
+  lane: 'lane',
+  note: 'note',
+  rank: 'rank',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResultEntryScalarFieldEnum = (typeof ResultEntryScalarFieldEnum)[keyof typeof ResultEntryScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {
@@ -423,6 +470,24 @@ export const HighlightScalarFieldEnum = {
 export type HighlightScalarFieldEnum = (typeof HighlightScalarFieldEnum)[keyof typeof HighlightScalarFieldEnum]
 
 
+export const DiscountCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  tournament_id: 'tournament_id',
+  type: 'type',
+  value: 'value',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type DiscountCodeScalarFieldEnum = (typeof DiscountCodeScalarFieldEnum)[keyof typeof DiscountCodeScalarFieldEnum]
+
+
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -468,6 +533,7 @@ export const PushSubscriptionScalarFieldEnum = {
   endpoint: 'endpoint',
   p256dh: 'p256dh',
   auth: 'auth',
+  orgId: 'orgId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -63,6 +63,15 @@ export class AddParticipantDto {
   @IsString()
   @IsOptional()
   logoUrl?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Organization roster entry ID. When set, the participant is created from the roster identity and linked via a TournamentEntry, so the same institution can be tracked across tournaments (e.g. medal tables).',
+    example: 'roster-entry-uuid',
+  })
+  @IsString()
+  @IsOptional()
+  rosterEntryId?: string;
 }
 
 export class BulkAddParticipantDto {

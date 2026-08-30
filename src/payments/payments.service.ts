@@ -1,10 +1,12 @@
 import {
   BadRequestException,
+  ConflictException,
   ForbiddenException,
   Injectable,
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { randomUUID } from 'crypto';
 import { DatabaseService } from 'src/database/database.service';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { PaystackService } from './paystack.service';
@@ -13,8 +15,16 @@ import { InitializeRegistrationDto } from './dto/initialize-registration.dto';
 import { InitializePlayerClaimDto } from './dto/initialize-player-claim.dto';
 import { InitializeTeamJoinDto } from './dto/initialize-team-join.dto';
 import { SetupPayoutAccountDto } from './dto/setup-payout-account.dto';
+import { RecordOfflinePaymentDto } from './dto/record-offline-payment.dto';
+import {
+  CreateDiscountCodeDto,
+  UpdateDiscountCodeDto,
+  ValidateDiscountCodeDto,
+} from './dto/discount-code.dto';
+import { RefundPaymentDto } from './dto/refund-payment.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import {
+  DiscountCode,
   PaymentStatus,
   SubscriptionPlan,
   SubscriptionStatus,
@@ -224,12 +234,22 @@ export class PaymentsService {
     const payments = await this.db.payment.findMany({
       where: {
         organizationId,
-        type: 'TOURNAMENT_REGISTRATION',
+        type: { in: ['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'] },
         status: PaymentStatus.SUCCESS,
       },
       include: {
         tournament: { select: { id: true, name: true } },
       },
+    });
+
+    const refunds = await this.db.payment.aggregate({
+      where: {
+        organizationId,
+        type: { in: ['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'] },
+        status: PaymentStatus.REFUNDED,
+      },
+      _sum: { amount: true },
+      _count: { _all: true },
     });
 
     const commission = this.commissionPercent;
@@ -240,14 +260,23 @@ export class PaymentsService {
       (organization.subscription.plan === SubscriptionPlan.PRO ||
         organization.subscription.plan === SubscriptionPlan.ENTERPRISE);
     const commissionPercent = isPro ? commission.pro : commission.free;
-    const netOf = (gross: number) =>
-      Math.round((gross * (100 - commissionPercent)) / 100);
+    // Commission applies only to online (split-settlement) payments —
+    // offline collections never pass through the platform.
+    const netOf = (p: { amount: number; type: string }) =>
+      p.type === 'OFFLINE_REGISTRATION'
+        ? p.amount
+        : Math.round((p.amount * (100 - commissionPercent)) / 100);
 
     const totalGross = payments.reduce((sum, p) => sum + p.amount, 0);
+    const totalNet = payments.reduce((sum, p) => sum + netOf(p), 0);
+    const offlinePayments = payments.filter(
+      (p) => p.type === 'OFFLINE_REGISTRATION',
+    );
+    const offlineGross = offlinePayments.reduce((sum, p) => sum + p.amount, 0);
 
     const byTournament = new Map<
       string,
-      { id: string; name: string; count: number; gross: number }
+      { id: string; name: string; count: number; gross: number; net: number }
     >();
     for (const p of payments) {
       const key = p.tournamentId || 'unknown';
@@ -255,25 +284,31 @@ export class PaymentsService {
       if (existing) {
         existing.count++;
         existing.gross += p.amount;
+        existing.net += netOf(p);
       } else {
         byTournament.set(key, {
           id: key,
           name: p.tournament?.name || 'Unknown tournament',
           count: 1,
           gross: p.amount,
+          net: netOf(p),
         });
       }
     }
 
-    const tournaments = [...byTournament.values()]
-      .map((t) => ({ ...t, net: netOf(t.gross) }))
-      .sort((a, b) => b.gross - a.gross);
+    const tournaments = [...byTournament.values()].sort(
+      (a, b) => b.gross - a.gross,
+    );
 
     return ResponseUtil.success({
       totalGross,
-      totalNet: netOf(totalGross),
+      totalNet,
       paymentCount: payments.length,
       commissionPercent,
+      offlineGross,
+      offlineCount: offlinePayments.length,
+      refundedAmount: refunds._sum.amount ?? 0,
+      refundCount: refunds._count._all,
       tournaments,
     });
   }
@@ -395,8 +430,15 @@ export class PaymentsService {
    * Creates a PENDING Payment record and returns the Paystack checkout URL.
    */
   async initializeRegistration(userId: string, dto: InitializeRegistrationDto) {
-    const { tournamentId, teamId, customName, logoUrl, token, callbackUrl } =
-      dto;
+    const {
+      tournamentId,
+      teamId,
+      customName,
+      logoUrl,
+      token,
+      callbackUrl,
+      discountCode: rawDiscountCode,
+    } = dto;
 
     // 1. Fetch details and validate
     const [tournament, user, invite] = await Promise.all([
@@ -478,11 +520,125 @@ export class PaymentsService {
       throw new BadRequestException('Invalid registration fee amount');
     }
 
-    // 2. Initialize Paystack transaction (split: organizer's subaccount receives
+    // Resolve an optional discount/waiver code
+    let discountCode: DiscountCode | null = null;
+    let finalAmount = feeAmount;
+    if (rawDiscountCode) {
+      const resolved = await this.resolveDiscountCode(
+        resolvedTournamentId,
+        rawDiscountCode,
+      );
+      if (!resolved.valid) {
+        throw new BadRequestException(resolved.reason);
+      }
+      discountCode = resolved.code;
+      finalAmount = this.applyDiscount(feeAmount, discountCode);
+    }
+
+    // 2a. Full waiver — register immediately without a Paystack checkout
+    if (finalAmount <= 0) {
+      const participant = await this.db.$transaction(async (tx) => {
+        let participant = await tx.participant.findFirst({
+          where: {
+            tournament_id: resolvedTournamentId,
+            ...(teamId ? { team_id: teamId } : { user_id: userId }),
+          },
+          include: { user: true, team: true },
+        });
+
+        if (participant) return participant; // Already registered — nothing to charge
+
+        let teamName = customName;
+        let teamLogo = logoUrl;
+        if (teamId) {
+          const team = await tx.team.findUnique({ where: { id: teamId } });
+          if (team) {
+            teamName = teamName || team.name;
+            teamLogo = teamLogo || team.logoUrl || undefined;
+          }
+        }
+
+        participant = await tx.participant.create({
+          data: {
+            tournament_id: resolvedTournamentId,
+            user_id: userId,
+            team_id: teamId || null,
+            customName: teamName,
+            logoUrl: teamLogo,
+            status: 'CONFIRMED',
+          },
+          include: { user: true, team: true },
+        });
+
+        await tx.tournamentInvite.update({
+          where: { token },
+          data: { usedCount: { increment: 1 } },
+        });
+
+        // Zero-value audit record so the registration appears in payment history
+        await tx.payment.create({
+          data: {
+            organizationId: tournament.organization_id,
+            tournamentId: resolvedTournamentId,
+            amount: 0,
+            currency: 'NGN',
+            status: PaymentStatus.SUCCESS,
+            paystackReference: `waiver_${randomUUID()}`,
+            type: 'TOURNAMENT_REGISTRATION',
+            userId,
+            metadata: {
+              type: 'TOURNAMENT_REGISTRATION',
+              userId,
+              tournamentId: resolvedTournamentId,
+              teamId,
+              customName,
+              logoUrl,
+              token,
+              waived: true,
+              discountCode: discountCode?.code || null,
+              discountCodeId: discountCode?.id || null,
+            },
+          },
+        });
+
+        if (discountCode) {
+          await tx.discountCode.updateMany({
+            where: { id: discountCode.id },
+            data: { usedCount: { increment: 1 } },
+          });
+        }
+
+        return participant;
+      });
+
+      // Confirmation email (same event as the paid flow)
+      if (participant.user?.email) {
+        try {
+          this.eventEmitter.emit(EmailEvents.TOURNAMENT_JOIN_APPROVAL, {
+            userEmail: participant.user.email,
+            userName: participant.user.name,
+            teamName:
+              participant.customName || participant.team?.name || 'your team',
+            tournamentName: tournament.name,
+            tournamentUrl: `${process.env.CLIENT_URL || 'http://lvh.me:3001'}/t/${tournament.customName || tournament.id}`,
+            tournamentLogoUrl: tournament.logoUrl || undefined,
+          });
+        } catch (err) {
+          this.logger.error('Failed to emit join approval event:', err);
+        }
+      }
+
+      return ResponseUtil.success(
+        { waived: true, participant },
+        'Registration fee waived — registration complete',
+      );
+    }
+
+    // 2b. Initialize Paystack transaction (split: organizer's subaccount receives
     // settlement directly, platform keeps its commission percentage)
     const paystackResponse = await this.paystack.initializeTransaction({
       email: user.email,
-      amount: feeAmount,
+      amount: finalAmount,
       subaccount: organization.paystackSubaccountCode,
       bearer: 'subaccount',
       metadata: {
@@ -504,6 +660,15 @@ export class PaymentsService {
             variable_name: 'payment_type',
             value: 'Tournament Registration Fee',
           },
+          ...(discountCode
+            ? [
+                {
+                  display_name: 'Discount Code',
+                  variable_name: 'discount_code',
+                  value: discountCode.code,
+                },
+              ]
+            : []),
         ],
       },
       callback_url: callbackUrl,
@@ -514,7 +679,7 @@ export class PaymentsService {
       data: {
         organizationId: tournament.organization_id,
         tournamentId: resolvedTournamentId,
-        amount: feeAmount,
+        amount: finalAmount,
         currency: 'NGN',
         status: PaymentStatus.PENDING,
         paystackReference: paystackResponse.data.reference,
@@ -529,6 +694,11 @@ export class PaymentsService {
           logoUrl,
           token,
           accessCode: paystackResponse.data.access_code,
+          ...(discountCode && {
+            discountCode: discountCode.code,
+            discountCodeId: discountCode.id,
+            originalFee: feeAmount,
+          }),
         },
       },
     });
@@ -1062,6 +1232,14 @@ export class PaymentsService {
               data: { usedCount: { increment: 1 } },
             });
 
+            const discountCodeId = (payment.metadata as any)?.discountCodeId;
+            if (discountCodeId) {
+              await tx.discountCode.updateMany({
+                where: { id: discountCodeId },
+                data: { usedCount: { increment: 1 } },
+              });
+            }
+
             const fullTournament = await tx.tournament.findUnique({
               where: { id: tournamentId },
             });
@@ -1228,9 +1406,73 @@ export class PaymentsService {
         await this.handlePaymentFailed(event.data);
         break;
 
+      case 'refund.processed':
+        await this.handleRefundProcessed(event.data);
+        break;
+
+      case 'refund.failed':
+        await this.handleRefundFailed(event.data);
+        break;
+
       default:
         this.logger.debug(`Unhandled webhook event: ${eventType}`);
     }
+  }
+
+  /**
+   * refund.processed — Paystack completed the refund. The payment was already
+   * marked REFUNDED at initiation; record the final confirmation.
+   */
+  private async handleRefundProcessed(data: any) {
+    const reference = data?.transaction_reference;
+    if (!reference) return;
+
+    const payment = await this.db.payment.findUnique({
+      where: { paystackReference: reference },
+    });
+    if (!payment || payment.status !== PaymentStatus.REFUNDED) return;
+
+    await this.db.payment.update({
+      where: { id: payment.id },
+      data: {
+        metadata: {
+          ...((payment.metadata as any) || {}),
+          refundStatus: 'processed',
+          refundProcessedAt: new Date().toISOString(),
+        },
+      },
+    });
+    this.logger.log(`Refund processed for ${reference}`);
+  }
+
+  /**
+   * refund.failed — Paystack could not complete the refund (e.g. insufficient
+   * pending payout on the subaccount). Restore the payment to SUCCESS so it
+   * counts in earnings again and can be retried or refunded manually.
+   */
+  private async handleRefundFailed(data: any) {
+    const reference = data?.transaction_reference;
+    if (!reference) return;
+
+    const payment = await this.db.payment.findUnique({
+      where: { paystackReference: reference },
+    });
+    if (!payment || payment.status !== PaymentStatus.REFUNDED) return;
+
+    await this.db.payment.update({
+      where: { id: payment.id },
+      data: {
+        status: PaymentStatus.SUCCESS,
+        metadata: {
+          ...((payment.metadata as any) || {}),
+          refundStatus: 'failed',
+          refundFailedAt: new Date().toISOString(),
+        },
+      },
+    });
+    this.logger.warn(
+      `Refund failed for ${reference} — payment restored to SUCCESS`,
+    );
   }
 
   // ─── Get Subscription ────────────────────────────────────
@@ -1532,6 +1774,14 @@ export class PaymentsService {
             data: { usedCount: { increment: 1 } },
           });
 
+          const discountCodeId = (payment.metadata as any)?.discountCodeId;
+          if (discountCodeId) {
+            await tx.discountCode.updateMany({
+              where: { id: discountCodeId },
+              data: { usedCount: { increment: 1 } },
+            });
+          }
+
           const fullTournament = await tx.tournament.findUnique({
             where: { id: tournamentId },
           });
@@ -1728,6 +1978,511 @@ export class PaymentsService {
     }
   }
 
+  // ─── Offline Payments ─────────────────────────────────
+
+  /**
+   * Record a registration payment collected outside the platform
+   * (cash / direct bank transfer) so the dashboard reconciles all income.
+   */
+  async recordOfflinePayment(userId: string, dto: RecordOfflinePaymentDto) {
+    const tournament = await this.db.tournament.findFirst({
+      where: {
+        OR: [{ id: dto.tournamentId }, { customName: dto.tournamentId }],
+      },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (!tournament.organization_id) {
+      throw new BadRequestException('Tournament has no organization');
+    }
+
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    // Optionally link an existing participant
+    let participant: any = null;
+    if (dto.participantId) {
+      participant = await this.db.participant.findUnique({
+        where: { id: dto.participantId },
+        include: { team: true },
+      });
+      if (!participant || participant.tournament_id !== tournament.id) {
+        throw new BadRequestException(
+          'Participant does not belong to this tournament',
+        );
+      }
+    }
+
+    const amount = dto.amount ?? tournament.registrationFee;
+    if (!amount || amount <= 0) {
+      throw new BadRequestException('Amount must be greater than zero');
+    }
+
+    const payerName =
+      dto.payerName ||
+      participant?.customName ||
+      participant?.team?.name ||
+      null;
+
+    const payment = await this.db.payment.create({
+      data: {
+        organizationId: tournament.organization_id,
+        tournamentId: tournament.id,
+        userId: participant?.user_id || null,
+        amount,
+        currency: 'NGN',
+        status: PaymentStatus.SUCCESS,
+        paystackReference: `offline_${randomUUID()}`,
+        type: 'OFFLINE_REGISTRATION',
+        metadata: {
+          channel: 'OFFLINE',
+          method: dto.method,
+          note: dto.note || null,
+          payerName,
+          participantId: participant?.id || null,
+          recordedBy: userId,
+        },
+      },
+    });
+
+    return ResponseUtil.success(payment, 'Offline payment recorded');
+  }
+
+  // ─── Settlement Report (CSV) ───────────────────────────
+
+  /**
+   * Export registration earnings (online + offline) as a CSV settlement report.
+   * Returns the CSV as a string; the controller sets the file headers.
+   */
+  async exportPaymentsCsv(
+    userId: string,
+    organizationId: string,
+    tournamentId?: string,
+  ) {
+    await this.organizationsService.validateMemberRole(
+      organizationId,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const organization = await this.db.organization.findUnique({
+      where: { id: organizationId },
+      include: { subscription: true },
+    });
+    if (!organization) throw new NotFoundException('Organization not found');
+
+    const payments = await this.db.payment.findMany({
+      where: {
+        organizationId,
+        type: { in: ['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'] },
+        status: { in: [PaymentStatus.SUCCESS, PaymentStatus.REFUNDED] },
+        ...(tournamentId && { tournamentId }),
+      },
+      include: {
+        tournament: { select: { id: true, name: true } },
+      },
+      orderBy: { created_at: 'asc' },
+    });
+
+    // Enrich online registration payments with the paying team's name
+    const teamIds = payments
+      .map((p) => (p.metadata as any)?.teamId)
+      .filter((id): id is string => !!id);
+    const teams = teamIds.length
+      ? await this.db.team.findMany({
+          where: { id: { in: teamIds } },
+          select: { id: true, name: true },
+        })
+      : [];
+    const teamNameMap = new Map(teams.map((t) => [t.id, t.name]));
+
+    const commissionPercent = this.commissionPercentForOrg(organization);
+    const naira = (kobo: number) => (kobo / 100).toFixed(2);
+    const escape = (v: string | number | null | undefined) => {
+      const s = v == null ? '' : String(v);
+      return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+
+    const header = [
+      'Date',
+      'Tournament',
+      'Payer / Team',
+      'Channel',
+      'Method / Detail',
+      'Status',
+      'Gross (NGN)',
+      'Commission (NGN)',
+      'Net (NGN)',
+      'Reference',
+    ];
+
+    let totalGross = 0;
+    let totalNet = 0;
+
+    const rows = payments.map((p) => {
+      const metadata = (p.metadata as any) || {};
+      const isOffline = p.type === 'OFFLINE_REGISTRATION';
+      const payer =
+        metadata.payerName ||
+        metadata.customName ||
+        (metadata.teamId ? teamNameMap.get(metadata.teamId) : null) ||
+        '';
+      const commission = isOffline
+        ? 0
+        : p.amount - Math.round((p.amount * (100 - commissionPercent)) / 100);
+      const net = p.status === PaymentStatus.REFUNDED ? 0 : p.amount - commission;
+
+      if (p.status !== PaymentStatus.REFUNDED) {
+        totalGross += p.amount;
+        totalNet += net;
+      }
+
+      return [
+        p.created_at.toISOString().slice(0, 10),
+        p.tournament?.name || '',
+        payer,
+        isOffline ? 'Offline' : 'Online',
+        isOffline ? metadata.method || '' : 'Paystack',
+        p.status,
+        naira(p.amount),
+        naira(p.status === PaymentStatus.REFUNDED ? 0 : commission),
+        naira(net),
+        p.paystackReference,
+      ].map(escape).join(',');
+    });
+
+    const totals = [
+      '',
+      '',
+      '',
+      '',
+      '',
+      'TOTALS',
+      naira(totalGross),
+      naira(totalGross - totalNet),
+      naira(totalNet),
+      '',
+    ].join(',');
+
+    return [header.join(','), ...rows, totals].join('\n');
+  }
+
+  // ─── Discount Codes ────────────────────────────────────
+
+  async createDiscountCode(
+    userId: string,
+    tournamentId: string,
+    dto: CreateDiscountCodeDto,
+  ) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (!tournament.organization_id) {
+      throw new BadRequestException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    if (dto.type === 'PERCENT' && (dto.value == null || dto.value < 1 || dto.value > 100)) {
+      throw new BadRequestException(
+        'Percent discount must be between 1 and 100',
+      );
+    }
+    if (dto.type === 'FIXED' && (dto.value == null || dto.value <= 0)) {
+      throw new BadRequestException('Fixed discount must be greater than zero');
+    }
+
+    const code = dto.code.trim().toUpperCase();
+    const existing = await this.db.discountCode.findUnique({
+      where: {
+        tournament_id_code: { tournament_id: tournament.id, code },
+      },
+    });
+    if (existing) {
+      throw new ConflictException(
+        `Code "${code}" already exists for this tournament`,
+      );
+    }
+
+    const discountCode = await this.db.discountCode.create({
+      data: {
+        code,
+        tournament_id: tournament.id,
+        type: dto.type,
+        value: dto.type === 'WAIVER' ? 0 : dto.value!,
+        maxUses: dto.maxUses,
+        expiresAt: dto.expiresAt ? new Date(dto.expiresAt) : undefined,
+        createdById: userId,
+      },
+    });
+
+    return ResponseUtil.success(discountCode, 'Discount code created');
+  }
+
+  async listDiscountCodes(userId: string, tournamentId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+    if (!tournament.organization_id) {
+      throw new BadRequestException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const codes = await this.db.discountCode.findMany({
+      where: { tournament_id: tournament.id },
+      orderBy: { created_at: 'desc' },
+    });
+
+    return ResponseUtil.success(codes, 'Discount codes retrieved');
+  }
+
+  async updateDiscountCode(
+    userId: string,
+    id: string,
+    dto: UpdateDiscountCodeDto,
+  ) {
+    const discountCode = await this.db.discountCode.findUnique({
+      where: { id },
+      include: { tournament: true },
+    });
+    if (!discountCode) throw new NotFoundException('Discount code not found');
+    if (!discountCode.tournament.organization_id) {
+      throw new BadRequestException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      discountCode.tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const updated = await this.db.discountCode.update({
+      where: { id },
+      data: {
+        ...(dto.isActive !== undefined && { isActive: dto.isActive }),
+        ...(dto.maxUses !== undefined && { maxUses: dto.maxUses }),
+        ...(dto.expiresAt !== undefined && {
+          expiresAt: dto.expiresAt ? new Date(dto.expiresAt) : null,
+        }),
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Discount code updated');
+  }
+
+  async deleteDiscountCode(userId: string, id: string) {
+    const discountCode = await this.db.discountCode.findUnique({
+      where: { id },
+      include: { tournament: true },
+    });
+    if (!discountCode) throw new NotFoundException('Discount code not found');
+    if (!discountCode.tournament.organization_id) {
+      throw new BadRequestException('Tournament has no organization');
+    }
+    await this.organizationsService.validateMemberRole(
+      discountCode.tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    await this.db.discountCode.delete({ where: { id } });
+
+    return ResponseUtil.success(null, 'Discount code deleted');
+  }
+
+  /**
+   * Preview a discount code for the join page. Any authenticated user may
+   * validate — redemption limits are enforced again at registration time.
+   */
+  async validateDiscountCode(userId: string, dto: ValidateDiscountCodeDto) {
+    void userId; // Authentication is enforced by the global AuthGuard
+    const tournament = await this.db.tournament.findFirst({
+      where: {
+        OR: [{ id: dto.tournamentId }, { customName: dto.tournamentId }],
+      },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const resolved = await this.resolveDiscountCode(tournament.id, dto.code);
+    if (!resolved.valid) {
+      return ResponseUtil.success({ valid: false, reason: resolved.reason });
+    }
+
+    const fee = tournament.registrationFee ?? 0;
+    const finalAmount = this.applyDiscount(fee, resolved.code);
+
+    return ResponseUtil.success({
+      valid: true,
+      type: resolved.code.type,
+      value: resolved.code.value,
+      originalAmount: fee,
+      finalAmount,
+    });
+  }
+
+  private async resolveDiscountCode(
+    tournamentId: string,
+    rawCode: string,
+  ): Promise<
+    | { valid: true; code: DiscountCode }
+    | { valid: false; reason: string }
+  > {
+    const code = rawCode?.trim().toUpperCase();
+    if (!code) return { valid: false, reason: 'No discount code provided' };
+
+    const discountCode = await this.db.discountCode.findUnique({
+      where: { tournament_id_code: { tournament_id: tournamentId, code } },
+    });
+
+    if (!discountCode || !discountCode.isActive) {
+      return { valid: false, reason: 'Invalid discount code' };
+    }
+    if (discountCode.expiresAt && discountCode.expiresAt < new Date()) {
+      return { valid: false, reason: 'Discount code has expired' };
+    }
+    if (discountCode.maxUses && discountCode.usedCount >= discountCode.maxUses) {
+      return {
+        valid: false,
+        reason: 'Discount code has reached its maximum uses',
+      };
+    }
+
+    return { valid: true, code: discountCode };
+  }
+
+  private applyDiscount(
+    fee: number,
+    code: Pick<DiscountCode, 'type' | 'value'>,
+  ): number {
+    switch (code.type) {
+      case 'WAIVER':
+        return 0;
+      case 'PERCENT':
+        return Math.round((fee * (100 - code.value)) / 100);
+      case 'FIXED':
+        return Math.max(0, fee - code.value);
+      default:
+        return fee;
+    }
+  }
+
+  // ─── Refunds ───────────────────────────────────────────
+
+  /**
+   * Refund a registration payment. Online payments are refunded via Paystack;
+   * offline payments are only marked refunded (money moves off-platform).
+   * Money out is OWNER-only.
+   */
+  async refundPayment(userId: string, paymentId: string, dto: RefundPaymentDto) {
+    const payment = await this.db.payment.findUnique({
+      where: { id: paymentId },
+    });
+    if (!payment) throw new NotFoundException('Payment not found');
+
+    if (!['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'].includes(payment.type)) {
+      throw new BadRequestException(
+        'Only registration payments can be refunded',
+      );
+    }
+    if (payment.status === PaymentStatus.REFUNDED) {
+      throw new BadRequestException('This payment has already been refunded');
+    }
+    if (payment.status !== PaymentStatus.SUCCESS) {
+      throw new BadRequestException('Only successful payments can be refunded');
+    }
+    if (!payment.organizationId) {
+      throw new BadRequestException('Payment is not linked to an organization');
+    }
+
+    await this.organizationsService.validateMemberRole(
+      payment.organizationId,
+      userId,
+      ['OWNER'],
+    );
+
+    // Offline collections and zero-value waivers never touched Paystack
+    const offPlatform =
+      payment.type === 'OFFLINE_REGISTRATION' ||
+      !payment.paystackTransactionId;
+
+    // Manual refunds record the refund without calling Paystack — the
+    // organizer returns the money themselves. This is the fallback when the
+    // subaccount's pending payout can't cover an automatic refund (Paystack
+    // deducts refunds from pending payouts first).
+    const viaPaystack = !offPlatform && dto.manual !== true;
+
+    if (viaPaystack) {
+      try {
+        await this.paystack.refundTransaction({
+          transaction: payment.paystackReference,
+          merchant_note: dto.reason
+            ? `Organizer refund: ${dto.reason}`
+            : 'Organizer-initiated refund',
+          customer_note:
+            dto.reason ||
+            'Your registration fee has been refunded by the organizer.',
+        });
+      } catch (error: any) {
+        this.logger.error(
+          `Paystack refund failed for ${payment.paystackReference}:`,
+          error?.message,
+        );
+        throw new BadRequestException(
+          `${error?.message || 'Refund failed at the payment processor'}. If the payout balance is empty, wait for new registrations or refund manually instead.`,
+        );
+      }
+    }
+
+    const updated = await this.db.payment.update({
+      where: { id: payment.id },
+      data: {
+        status: PaymentStatus.REFUNDED,
+        metadata: {
+          ...((payment.metadata as any) || {}),
+          refundedBy: userId,
+          refundedAt: new Date().toISOString(),
+          refundReason: dto.reason || null,
+          refundChannel: viaPaystack
+            ? 'paystack'
+            : offPlatform
+              ? 'offline'
+              : 'manual',
+          refundStatus: viaPaystack ? 'pending' : 'manual',
+        },
+      },
+    });
+
+    return ResponseUtil.success(
+      updated,
+      viaPaystack
+        ? 'Refund initiated with Paystack. The payer is typically credited within 3–10 business days.'
+        : 'Payment marked as refunded — return the funds to the payer directly.',
+    );
+  }
+
+  private commissionPercentForOrg(
+    organization: { subscription?: any } | null,
+  ): number {
+    const commission = this.commissionPercent;
+    const sub = organization?.subscription;
+    const isPro =
+      sub &&
+      (sub.status === 'ACTIVE' || sub.status === 'TRIALING') &&
+      (sub.plan === SubscriptionPlan.PRO ||
+        sub.plan === SubscriptionPlan.ENTERPRISE);
+    return isPro ? commission.pro : commission.free;
+  }
+
   async getPaymentHistory(orgId: string) {
     const payments = await this.db.payment.findMany({
       where: { organizationId: orgId },
@@ -1741,7 +2496,9 @@ export class PaymentsService {
 
     // Enrich registration payments with the paying team's name
     const teamIds = payments
-      .filter((p) => p.type === 'TOURNAMENT_REGISTRATION')
+      .filter((p) =>
+        ['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'].includes(p.type),
+      )
       .map((p) => (p.metadata as any)?.teamId)
       .filter((id): id is string => !!id);
 
@@ -1755,9 +2512,11 @@ export class PaymentsService {
     const teamLogoMap = new Map(teams.map((t) => [t.id, t.logoUrl]));
 
     const enriched = payments.map((p) => {
-      if (p.type !== 'TOURNAMENT_REGISTRATION') return p;
+      if (!['TOURNAMENT_REGISTRATION', 'OFFLINE_REGISTRATION'].includes(p.type))
+        return p;
       const metadata = p.metadata as any;
       const teamName =
+        metadata?.payerName ||
         metadata?.customName ||
         (metadata?.teamId ? teamNameMap.get(metadata.teamId) : null) ||
         null;

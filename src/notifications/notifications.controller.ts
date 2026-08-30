@@ -27,6 +27,26 @@ export class NotificationsController {
     return { success: true, data: subscription };
   }
 
+  @Public()
+  @Post('subscribe-event')
+  @ApiOperation({
+    summary: 'Subscribe to event hub push notifications (no account needed)',
+  })
+  async subscribeEvent(
+    @Body() dto: CreateSubscriptionDto & { subdomain: string },
+  ) {
+    const subscription = await this.notificationsService.subscribeAnonymous(dto);
+    return { success: true, data: subscription };
+  }
+
+  @Public()
+  @Post('unsubscribe-event')
+  @ApiOperation({ summary: 'Unsubscribe an anonymous event subscription' })
+  async unsubscribeEvent(@Body('endpoint') endpoint: string) {
+    await this.notificationsService.unsubscribeAnonymous(endpoint);
+    return { success: true };
+  }
+
   @Post('unsubscribe')
   @ApiOperation({ summary: 'Unsubscribe from web push notifications' })
   async unsubscribe(@Req() req: any, @Body('endpoint') endpoint: string) {

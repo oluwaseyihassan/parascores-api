@@ -32,6 +32,7 @@ model User {
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
   payments                   Payment[]
   audit_logs                 AuditLog[]
+  created_discount_codes     DiscountCode[]         @relation("DiscountCodeCreator")
 }
 
 model Organization {
@@ -50,9 +51,13 @@ model Organization {
   settlementAccountNumber String?
   settlementAccountName   String?
   payoutAccountCreatedAt  DateTime?
+  subdomain               String?              @unique
+  brandConfig             Json?
   members                 OrganizationMember[]
   socials                 Social[]
   tournaments             Tournament[]
+  roster                  RosterEntry[]
+  pushSubscriptions       PushSubscription[]
   subscription            Subscription?
   payments                Payment[]
 }
@@ -78,6 +83,7 @@ model Tournament {
   updated_at         DateTime             @updatedAt
   autoApprove        Boolean              @default(false)
   bannerUrl          String?
+  isPractice         Boolean              @default(false)
   location           String?
   latitude           Float?
   longitude          Float?
@@ -120,6 +126,7 @@ model Tournament {
   tournament_invites TournamentInvite[]
   venues             Venue[]
   payments           Payment[]
+  discountCodes      DiscountCode[]
 }
 
 model TournamentFollower {
@@ -169,6 +176,36 @@ model Participant {
   players            Player[]
   standings          Standing[]
   invites            TeamInvite[]
+  tournamentEntry    TournamentEntry?
+  resultEntries      ResultEntry[]
+}
+
+// An institution/team on an organization's roster (e.g. a university at WAUG).
+// The shared identity used for cross-tournament aggregation like medal tables.
+model RosterEntry {
+  id             String            @id @default(cuid())
+  organizationId String
+  name           String
+  shortName      String?
+  logoUrl        String?
+  created_at     DateTime          @default(now())
+  updated_at     DateTime          @updatedAt
+  organization   Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  entries        TournamentEntry[]
+
+  @@unique([organizationId, name])
+}
+
+// Links a roster entry into a specific tournament via its tournament-scoped Participant.
+model TournamentEntry {
+  id            String      @id @default(cuid())
+  rosterEntryId String
+  participantId String      @unique
+  created_at    DateTime    @default(now())
+  rosterEntry   RosterEntry @relation(fields: [rosterEntryId], references: [id], onDelete: Cascade)
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([rosterEntryId, participantId])
 }
 
 model Fixture {
@@ -201,6 +238,9 @@ model Fixture {
   timerIsRunning      Boolean       @default(false)
   matchDuration       Int           @default(90)
   half                MatchHalf?
+  periodScores        Json?
+  config              Json?
+  resultEntries       ResultEntry[]
   awayTeam            Participant?  @relation("AwayTeam", fields: [awayTeamId], references: [id])
   group               Group?        @relation(fields: [groupId], references: [id])
   homeTeam            Participant?  @relation("HomeTeam", fields: [homeTeamId], references: [id])
@@ -214,6 +254,25 @@ model Fixture {
   livestreamUrl         String?
   livestreamPlatform    String?
   highlights            Highlight[]
+}
+
+// Placement-based results for race/timed sports (athletics, swimming).
+// A race fixture has N participants each with a value (time/distance);
+// rank is derived, medals aggregate from rank 1-3 in Finals.
+model ResultEntry {
+  id            String      @id @default(cuid())
+  fixtureId     String
+  participantId String
+  value         String?
+  lane          Int?
+  note          String?
+  rank          Int?
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+  fixture       Fixture     @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([fixtureId, participantId])
 }
 
 model Team {
@@ -383,6 +442,7 @@ enum TournamentType {
   GROUP
   FRIENDLY
   HYBRID
+  RACE
 }
 
 enum ParticipantType {
@@ -477,6 +537,34 @@ enum PaymentStatus {
   PENDING
   SUCCESS
   FAILED
+  REFUNDED
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+  WAIVER
+}
+
+// Organizer-created codes that discount or waive a tournament's registration fee.
+model DiscountCode {
+  id            String       @id @default(cuid())
+  code          String
+  tournament_id String
+  type          DiscountType
+  value         Int          @default(0) // PERCENT: 1-100; FIXED: amount in kobo; WAIVER: ignored
+  maxUses       Int?
+  usedCount     Int          @default(0)
+  expiresAt     DateTime?
+  isActive      Boolean      @default(true)
+  createdById   String
+  created_at    DateTime     @default(now())
+  updated_at    DateTime     @updatedAt
+  tournament    Tournament   @relation(fields: [tournament_id], references: [id], onDelete: Cascade)
+  createdBy     User         @relation("DiscountCodeCreator", fields: [createdById], references: [id])
+
+  @@unique([tournament_id, code])
+  @@index([code])
 }
 
 model Subscription {
@@ -519,14 +607,16 @@ model Payment {
 }
 
 model PushSubscription {
-  id        String   @id @default(cuid())
-  userId    String
-  endpoint  String   @unique
-  p256dh    String
-  auth      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String        @id @default(cuid())
+  userId       String?
+  endpoint     String        @unique
+  p256dh       String
+  auth         String
+  orgId        String?
+  organization Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model AuditLog {

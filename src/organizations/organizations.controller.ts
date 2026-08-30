@@ -68,6 +68,48 @@ export class OrganizationsController {
     return this.organizationsService.removeMember(id, userId);
   }
 
+  // Roster Routes
+  @Get(':id/roster')
+  @ApiOperation({ summary: 'List the organization roster' })
+  async listRoster(@Param('id') id: string) {
+    return this.organizationsService.listRoster(id);
+  }
+
+  @Post(':id/roster')
+  @ApiOperation({ summary: 'Add an entry to the organization roster' })
+  @ApiResponse({ status: 201, description: 'Roster entry added successfully' })
+  @ApiResponse({ status: 409, description: 'Entry already on roster' })
+  async addRosterEntry(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body() dto: { name: string; shortName?: string; logoUrl?: string },
+  ) {
+    return this.organizationsService.addRosterEntry(id, req.user.sub, dto);
+  }
+
+  @Patch(':id/roster/:entryId')
+  @ApiOperation({ summary: 'Update an organization roster entry' })
+  @ApiResponse({ status: 200, description: 'Roster entry updated successfully' })
+  @ApiResponse({ status: 409, description: 'Name already on roster' })
+  async updateRosterEntry(
+    @Param('id') id: string,
+    @Param('entryId') entryId: string,
+    @Req() req: any,
+    @Body() dto: { name?: string; shortName?: string; logoUrl?: string | null },
+  ) {
+    return this.organizationsService.updateRosterEntry(id, entryId, req.user.sub, dto);
+  }
+
+  @Delete(':id/roster/:entryId')
+  @ApiOperation({ summary: 'Remove an entry from the organization roster' })
+  async removeRosterEntry(
+    @Param('id') id: string,
+    @Param('entryId') entryId: string,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.removeRosterEntry(id, entryId, req.user.sub);
+  }
+
   // Public Routes
   @Public()
   @Get('public/:slug')
@@ -78,6 +120,48 @@ export class OrganizationsController {
   })
   async getPublicProfile(@Param('slug') slug: string) {
     return this.organizationsService.getPublicProfile(slug);
+  }
+
+  @Public()
+  @Get('event-hub/:subdomain')
+  @ApiOperation({ summary: 'Get an event hub organization by its subdomain' })
+  @ApiResponse({
+    status: 200,
+    description: 'Event hub retrieved successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Event hub not found' })
+  async getEventHubBySubdomain(@Param('subdomain') subdomain: string) {
+    return this.organizationsService.getEventHubBySubdomain(subdomain);
+  }
+
+  @Public()
+  @Get('event-hub/:subdomain/live')
+  @ApiOperation({
+    summary:
+      'Get live hub data for an event organization (live/upcoming/recent fixtures + per-sport status)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Event hub live data retrieved successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Event hub not found' })
+  async getEventHubLive(@Param('subdomain') subdomain: string) {
+    return this.organizationsService.getEventHubLive(subdomain);
+  }
+
+  @Public()
+  @Get('event-hub/:subdomain/medals')
+  @ApiOperation({
+    summary:
+      'Get the medal table for an event organization (aggregated from finals and third-place matches across its tournaments)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Medal table retrieved successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Event hub not found' })
+  async getEventHubMedalTable(@Param('subdomain') subdomain: string) {
+    return this.organizationsService.getEventHubMedalTable(subdomain);
   }
 
   // Entity Management Routes

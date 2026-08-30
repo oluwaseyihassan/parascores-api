@@ -175,6 +175,22 @@ export class UpdateFixtureDto {
 
   @ApiPropertyOptional({
     description:
+      'Per-period scores for set/period sports (tennis sets, basketball quarters). Shape: { home: number[], away: number[] }',
+    example: { home: [6, 3], away: [4, 6] },
+  })
+  @IsOptional()
+  periodScores?: { home: number[]; away: number[] };
+
+  @ApiPropertyOptional({
+    description:
+      'Per-fixture engine config overrides (e.g. { setsToWin: 3 } for a best-of-5 final). Falls back to tournament scoringRules then engine defaults.',
+    example: { setsToWin: 3 },
+  })
+  @IsOptional()
+  config?: Record<string, any>;
+
+  @ApiPropertyOptional({
+    description:
       'Livestream URL for the match (YouTube, Twitch, Facebook, etc.)',
     example: 'https://youtube.com/watch?v=abc123',
   })

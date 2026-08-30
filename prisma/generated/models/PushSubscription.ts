@@ -30,6 +30,7 @@ export type PushSubscriptionMinAggregateOutputType = {
   endpoint: string | null
   p256dh: string | null
   auth: string | null
+  orgId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +41,7 @@ export type PushSubscriptionMaxAggregateOutputType = {
   endpoint: string | null
   p256dh: string | null
   auth: string | null
+  orgId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,7 @@ export type PushSubscriptionCountAggregateOutputType = {
   endpoint: number
   p256dh: number
   auth: number
+  orgId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +65,7 @@ export type PushSubscriptionMinAggregateInputType = {
   endpoint?: true
   p256dh?: true
   auth?: true
+  orgId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +76,7 @@ export type PushSubscriptionMaxAggregateInputType = {
   endpoint?: true
   p256dh?: true
   auth?: true
+  orgId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +87,7 @@ export type PushSubscriptionCountAggregateInputType = {
   endpoint?: true
   p256dh?: true
   auth?: true
+  orgId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -161,10 +167,11 @@ export type PushSubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions
 
 export type PushSubscriptionGroupByOutputType = {
   id: string
-  userId: string
+  userId: string | null
   endpoint: string
   p256dh: string
   auth: string
+  orgId: string | null
   createdAt: Date
   updatedAt: Date
   _count: PushSubscriptionCountAggregateOutputType | null
@@ -192,23 +199,27 @@ export type PushSubscriptionWhereInput = {
   OR?: Prisma.PushSubscriptionWhereInput[]
   NOT?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   id?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.StringFilter<"PushSubscription"> | string
+  userId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   endpoint?: Prisma.StringFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
+  orgId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type PushSubscriptionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   endpoint?: Prisma.SortOrder
   p256dh?: Prisma.SortOrder
   auth?: Prisma.SortOrder
+  orgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  organization?: Prisma.OrganizationOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
@@ -218,20 +229,23 @@ export type PushSubscriptionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   OR?: Prisma.PushSubscriptionWhereInput[]
   NOT?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
-  userId?: Prisma.StringFilter<"PushSubscription"> | string
+  userId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
+  orgId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }, "id" | "endpoint">
 
 export type PushSubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
+  userId?: Prisma.SortOrderInput | Prisma.SortOrder
   endpoint?: Prisma.SortOrder
   p256dh?: Prisma.SortOrder
   auth?: Prisma.SortOrder
+  orgId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PushSubscriptionCountOrderByAggregateInput
@@ -244,10 +258,11 @@ export type PushSubscriptionScalarWhereWithAggregatesInput = {
   OR?: Prisma.PushSubscriptionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PushSubscriptionScalarWhereWithAggregatesInput | Prisma.PushSubscriptionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
+  userId?: Prisma.StringNullableWithAggregatesFilter<"PushSubscription"> | string | null
   endpoint?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   auth?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
+  orgId?: Prisma.StringNullableWithAggregatesFilter<"PushSubscription"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
 }
@@ -259,15 +274,17 @@ export type PushSubscriptionCreateInput = {
   auth: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPush_subscriptionsInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPushSubscriptionsInput
+  user?: Prisma.UserCreateNestedOneWithoutPush_subscriptionsInput
 }
 
 export type PushSubscriptionUncheckedCreateInput = {
   id?: string
-  userId: string
+  userId?: string | null
   endpoint: string
   p256dh: string
   auth: string
+  orgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -279,25 +296,28 @@ export type PushSubscriptionUpdateInput = {
   auth?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPush_subscriptionsNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutPushSubscriptionsNestedInput
+  user?: Prisma.UserUpdateOneWithoutPush_subscriptionsNestedInput
 }
 
 export type PushSubscriptionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
+  orgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PushSubscriptionCreateManyInput = {
   id?: string
-  userId: string
+  userId?: string | null
   endpoint: string
   p256dh: string
   auth: string
+  orgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -313,10 +333,11 @@ export type PushSubscriptionUpdateManyMutationInput = {
 
 export type PushSubscriptionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
+  orgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -337,6 +358,7 @@ export type PushSubscriptionCountOrderByAggregateInput = {
   endpoint?: Prisma.SortOrder
   p256dh?: Prisma.SortOrder
   auth?: Prisma.SortOrder
+  orgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -347,6 +369,7 @@ export type PushSubscriptionMaxOrderByAggregateInput = {
   endpoint?: Prisma.SortOrder
   p256dh?: Prisma.SortOrder
   auth?: Prisma.SortOrder
+  orgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -357,6 +380,7 @@ export type PushSubscriptionMinOrderByAggregateInput = {
   endpoint?: Prisma.SortOrder
   p256dh?: Prisma.SortOrder
   auth?: Prisma.SortOrder
+  orgId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -403,6 +427,48 @@ export type PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
 }
 
+export type PushSubscriptionCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput> | Prisma.PushSubscriptionCreateWithoutOrganizationInput[] | Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput | Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.PushSubscriptionCreateManyOrganizationInputEnvelope
+  connect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+}
+
+export type PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput = {
+  create?: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput> | Prisma.PushSubscriptionCreateWithoutOrganizationInput[] | Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput | Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput[]
+  createMany?: Prisma.PushSubscriptionCreateManyOrganizationInputEnvelope
+  connect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+}
+
+export type PushSubscriptionUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput> | Prisma.PushSubscriptionCreateWithoutOrganizationInput[] | Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput | Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.PushSubscriptionUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.PushSubscriptionUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.PushSubscriptionCreateManyOrganizationInputEnvelope
+  set?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  delete?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  connect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  update?: Prisma.PushSubscriptionUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.PushSubscriptionUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.PushSubscriptionUpdateManyWithWhereWithoutOrganizationInput | Prisma.PushSubscriptionUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
+}
+
+export type PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput> | Prisma.PushSubscriptionCreateWithoutOrganizationInput[] | Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput[]
+  connectOrCreate?: Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput | Prisma.PushSubscriptionCreateOrConnectWithoutOrganizationInput[]
+  upsert?: Prisma.PushSubscriptionUpsertWithWhereUniqueWithoutOrganizationInput | Prisma.PushSubscriptionUpsertWithWhereUniqueWithoutOrganizationInput[]
+  createMany?: Prisma.PushSubscriptionCreateManyOrganizationInputEnvelope
+  set?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  disconnect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  delete?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  connect?: Prisma.PushSubscriptionWhereUniqueInput | Prisma.PushSubscriptionWhereUniqueInput[]
+  update?: Prisma.PushSubscriptionUpdateWithWhereUniqueWithoutOrganizationInput | Prisma.PushSubscriptionUpdateWithWhereUniqueWithoutOrganizationInput[]
+  updateMany?: Prisma.PushSubscriptionUpdateManyWithWhereWithoutOrganizationInput | Prisma.PushSubscriptionUpdateManyWithWhereWithoutOrganizationInput[]
+  deleteMany?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
+}
+
 export type PushSubscriptionCreateWithoutUserInput = {
   id?: string
   endpoint: string
@@ -410,6 +476,7 @@ export type PushSubscriptionCreateWithoutUserInput = {
   auth: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  organization?: Prisma.OrganizationCreateNestedOneWithoutPushSubscriptionsInput
 }
 
 export type PushSubscriptionUncheckedCreateWithoutUserInput = {
@@ -417,6 +484,7 @@ export type PushSubscriptionUncheckedCreateWithoutUserInput = {
   endpoint: string
   p256dh: string
   auth: string
+  orgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -452,12 +520,59 @@ export type PushSubscriptionScalarWhereInput = {
   OR?: Prisma.PushSubscriptionScalarWhereInput[]
   NOT?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
   id?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.StringFilter<"PushSubscription"> | string
+  userId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   endpoint?: Prisma.StringFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
+  orgId?: Prisma.StringNullableFilter<"PushSubscription"> | string | null
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
+}
+
+export type PushSubscriptionCreateWithoutOrganizationInput = {
+  id?: string
+  endpoint: string
+  p256dh: string
+  auth: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user?: Prisma.UserCreateNestedOneWithoutPush_subscriptionsInput
+}
+
+export type PushSubscriptionUncheckedCreateWithoutOrganizationInput = {
+  id?: string
+  userId?: string | null
+  endpoint: string
+  p256dh: string
+  auth: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PushSubscriptionCreateOrConnectWithoutOrganizationInput = {
+  where: Prisma.PushSubscriptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput>
+}
+
+export type PushSubscriptionCreateManyOrganizationInputEnvelope = {
+  data: Prisma.PushSubscriptionCreateManyOrganizationInput | Prisma.PushSubscriptionCreateManyOrganizationInput[]
+  skipDuplicates?: boolean
+}
+
+export type PushSubscriptionUpsertWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.PushSubscriptionWhereUniqueInput
+  update: Prisma.XOR<Prisma.PushSubscriptionUpdateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedUpdateWithoutOrganizationInput>
+  create: Prisma.XOR<Prisma.PushSubscriptionCreateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedCreateWithoutOrganizationInput>
+}
+
+export type PushSubscriptionUpdateWithWhereUniqueWithoutOrganizationInput = {
+  where: Prisma.PushSubscriptionWhereUniqueInput
+  data: Prisma.XOR<Prisma.PushSubscriptionUpdateWithoutOrganizationInput, Prisma.PushSubscriptionUncheckedUpdateWithoutOrganizationInput>
+}
+
+export type PushSubscriptionUpdateManyWithWhereWithoutOrganizationInput = {
+  where: Prisma.PushSubscriptionScalarWhereInput
+  data: Prisma.XOR<Prisma.PushSubscriptionUpdateManyMutationInput, Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationInput>
 }
 
 export type PushSubscriptionCreateManyUserInput = {
@@ -465,6 +580,7 @@ export type PushSubscriptionCreateManyUserInput = {
   endpoint: string
   p256dh: string
   auth: string
+  orgId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -476,6 +592,7 @@ export type PushSubscriptionUpdateWithoutUserInput = {
   auth?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  organization?: Prisma.OrganizationUpdateOneWithoutPushSubscriptionsNestedInput
 }
 
 export type PushSubscriptionUncheckedUpdateWithoutUserInput = {
@@ -483,12 +600,54 @@ export type PushSubscriptionUncheckedUpdateWithoutUserInput = {
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
+  orgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PushSubscriptionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  endpoint?: Prisma.StringFieldUpdateOperationsInput | string
+  p256dh?: Prisma.StringFieldUpdateOperationsInput | string
+  auth?: Prisma.StringFieldUpdateOperationsInput | string
+  orgId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PushSubscriptionCreateManyOrganizationInput = {
+  id?: string
+  userId?: string | null
+  endpoint: string
+  p256dh: string
+  auth: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type PushSubscriptionUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  endpoint?: Prisma.StringFieldUpdateOperationsInput | string
+  p256dh?: Prisma.StringFieldUpdateOperationsInput | string
+  auth?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneWithoutPush_subscriptionsNestedInput
+}
+
+export type PushSubscriptionUncheckedUpdateWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  endpoint?: Prisma.StringFieldUpdateOperationsInput | string
+  p256dh?: Prisma.StringFieldUpdateOperationsInput | string
+  auth?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PushSubscriptionUncheckedUpdateManyWithoutOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -504,9 +663,11 @@ export type PushSubscriptionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   endpoint?: boolean
   p256dh?: boolean
   auth?: boolean
+  orgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }, ExtArgs["result"]["pushSubscription"]>
 
 export type PushSubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -515,9 +676,11 @@ export type PushSubscriptionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   endpoint?: boolean
   p256dh?: boolean
   auth?: boolean
+  orgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }, ExtArgs["result"]["pushSubscription"]>
 
 export type PushSubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -526,9 +689,11 @@ export type PushSubscriptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   endpoint?: boolean
   p256dh?: boolean
   auth?: boolean
+  orgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }, ExtArgs["result"]["pushSubscription"]>
 
 export type PushSubscriptionSelectScalar = {
@@ -537,32 +702,38 @@ export type PushSubscriptionSelectScalar = {
   endpoint?: boolean
   p256dh?: boolean
   auth?: boolean
+  orgId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PushSubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "endpoint" | "p256dh" | "auth" | "createdAt" | "updatedAt", ExtArgs["result"]["pushSubscription"]>
+export type PushSubscriptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "endpoint" | "p256dh" | "auth" | "orgId" | "createdAt" | "updatedAt", ExtArgs["result"]["pushSubscription"]>
 export type PushSubscriptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }
 export type PushSubscriptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }
 export type PushSubscriptionIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  organization?: boolean | Prisma.PushSubscription$organizationArgs<ExtArgs>
+  user?: boolean | Prisma.PushSubscription$userArgs<ExtArgs>
 }
 
 export type $PushSubscriptionPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PushSubscription"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
+    organization: Prisma.$OrganizationPayload<ExtArgs> | null
+    user: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
+    userId: string | null
     endpoint: string
     p256dh: string
     auth: string
+    orgId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["pushSubscription"]>
@@ -959,7 +1130,8 @@ readonly fields: PushSubscriptionFieldRefs;
  */
 export interface Prisma__PushSubscriptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  organization<T extends Prisma.PushSubscription$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PushSubscription$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.PushSubscription$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PushSubscription$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -994,6 +1166,7 @@ export interface PushSubscriptionFieldRefs {
   readonly endpoint: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly p256dh: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly auth: Prisma.FieldRef<"PushSubscription", 'String'>
+  readonly orgId: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly createdAt: Prisma.FieldRef<"PushSubscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PushSubscription", 'DateTime'>
 }
@@ -1389,6 +1562,44 @@ export type PushSubscriptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many PushSubscriptions to delete.
    */
   limit?: number
+}
+
+/**
+ * PushSubscription.organization
+ */
+export type PushSubscription$organizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Organization
+   */
+  select?: Prisma.OrganizationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Organization
+   */
+  omit?: Prisma.OrganizationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationWhereInput
+}
+
+/**
+ * PushSubscription.user
+ */
+export type PushSubscription$userArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

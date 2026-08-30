@@ -41,4 +41,11 @@ export class InitializeRegistrationDto {
   @IsNotEmpty()
   @IsString()
   callbackUrl: string;
+
+  @ApiPropertyOptional({
+    description: 'Discount or waiver code to apply to the registration fee',
+  })
+  @IsOptional()
+  @IsString()
+  discountCode?: string;
 }
