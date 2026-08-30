@@ -475,6 +475,25 @@ export class PaymentsService {
       );
     }
 
+    // Block duplicate registration BEFORE any payment is initialized —
+    // mirrors the free invite flow (same team, or same user when no team).
+    // A PENDING payment (abandoned checkout) has no participant yet, so
+    // retries stay possible.
+    const existingParticipant = await this.db.participant.findFirst({
+      where: {
+        tournament_id: resolvedTournamentId,
+        ...(teamId ? { team_id: teamId } : { user_id: userId }),
+      },
+    });
+
+    if (existingParticipant) {
+      throw new BadRequestException(
+        existingParticipant.status === 'PENDING'
+          ? 'You have already sent a request to join this tournament. Please wait for the organizer to approve it.'
+          : 'This team is already registered in this tournament',
+      );
+    }
+
     if (!tournament.isPaidRegistration) {
       throw new BadRequestException(
         'This tournament does not require a registration fee',
