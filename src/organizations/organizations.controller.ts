@@ -48,8 +48,12 @@ export class OrganizationsController {
 
   @Post(':id/members')
   @ApiOperation({ summary: 'Add a member to an organization' })
-  async addMember(@Param('id') id: string, @Body() dto: AddMemberDto) {
-    return this.organizationsService.addMember(id, dto.email, dto.role);
+  async addMember(
+    @Param('id') id: string,
+    @Body() dto: AddMemberDto,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.addMember(id, dto.email, dto.role, req.user.sub);
   }
 
   @Patch(':id/members/:userId')
@@ -58,14 +62,19 @@ export class OrganizationsController {
     @Param('id') id: string,
     @Param('userId') userId: string,
     @Body() dto: UpdateMemberRoleDto,
+    @Req() req: any,
   ) {
-    return this.organizationsService.updateMemberRole(id, userId, dto.role);
+    return this.organizationsService.updateMemberRole(id, userId, dto.role, req.user.sub);
   }
 
   @Delete(':id/members/:userId')
   @ApiOperation({ summary: 'Remove a member from an organization' })
-  async removeMember(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.organizationsService.removeMember(id, userId);
+  async removeMember(
+    @Param('id') id: string,
+    @Param('userId') userId: string,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.removeMember(id, userId, req.user.sub);
   }
 
   // Roster Routes
@@ -181,8 +190,12 @@ export class OrganizationsController {
     status: 200,
     description: 'Organization updated successfully',
   })
-  async update(@Param('id') id: string, @Body() dto: UpdateOrganizationDto) {
-    return this.organizationsService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateOrganizationDto,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.update(id, dto, req.user.sub);
   }
 
   @Post(':id/request-delete')

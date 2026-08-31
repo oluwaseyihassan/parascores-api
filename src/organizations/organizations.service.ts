@@ -228,7 +228,10 @@ export class OrganizationsService {
     return ResponseUtil.success(null, 'Roster entry removed successfully');
   }
 
-  async update(id: string, dto: any) {
+  async update(id: string, dto: any, callerId: string) {
+    // Only OWNER/ADMIN may update organization details
+    await this.validateMemberRole(id, callerId, ['OWNER', 'ADMIN']);
+
     const org = await this.db.organization.findUnique({ where: { id } });
     if (!org) {
       throw new NotFoundException('Organization not found');
@@ -265,7 +268,20 @@ export class OrganizationsService {
     organizationId: string,
     email: string,
     role: OrganizationRole,
+    callerId: string,
   ) {
+    // Caller must be OWNER/ADMIN; ADMINs can only add MEMBERs —
+    // adding ADMIN/OWNER is reserved for OWNERs (matches dashboard UI).
+    const caller = await this.validateMemberRole(organizationId, callerId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+    if (caller.role !== 'OWNER' && role !== 'MEMBER') {
+      throw new ForbiddenException(
+        'Only owners can add admin or owner members.',
+      );
+    }
+
     // Find user by email
     const user = await this.db.user.findUnique({ where: { email } });
     if (!user) {
@@ -334,7 +350,15 @@ export class OrganizationsService {
     organizationId: string,
     userId: string,
     role: OrganizationRole,
+    callerId: string,
   ) {
+    // Role changes are owner-only (matches dashboard UI)
+    await this.validateMemberRole(organizationId, callerId, ['OWNER']);
+
+    if (userId === callerId) {
+      throw new BadRequestException('You cannot change your own role.');
+    }
+
     // If demoting an owner, ensure there is at least one other owner
     if (role !== 'OWNER') {
       const owners = await this.db.organizationMember.count({
@@ -387,7 +411,19 @@ export class OrganizationsService {
     return ResponseUtil.success(updated, 'Member role updated successfully');
   }
 
-  async removeMember(organizationId: string, userId: string) {
+  async removeMember(organizationId: string, userId: string, callerId: string) {
+    // Caller must be OWNER/ADMIN; ADMINs can only remove MEMBERs
+    const caller = await this.validateMemberRole(organizationId, callerId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    if (userId === callerId) {
+      throw new BadRequestException(
+        'You cannot remove yourself from the organization.',
+      );
+    }
+
     const member = await this.db.organizationMember.findUnique({
       where: {
         organizationId_userId: {
@@ -399,6 +435,12 @@ export class OrganizationsService {
 
     if (!member) {
       throw new NotFoundException('Member not found');
+    }
+
+    if (caller.role !== 'OWNER' && member.role !== 'MEMBER') {
+      throw new ForbiddenException(
+        'Only owners can remove admin or owner members.',
+      );
     }
 
     // Ensure we don't remove the last owner
@@ -500,6 +542,19 @@ export class OrganizationsService {
     );
   }
 
+  /** Event hubs are public only when published (brandConfig.published !== false). */
+  private assertEventHubPublished(
+    organization: { brandConfig: any } | null,
+  ): asserts organization is { brandConfig: any } {
+    if (!organization) {
+      throw new NotFoundException('Event hub not found');
+    }
+    const brand = (organization.brandConfig ?? {}) as Record<string, any>;
+    if (brand.published === false) {
+      throw new NotFoundException('Event hub not found');
+    }
+  }
+
   async getEventHubBySubdomain(subdomain: string) {
     const organization = await this.db.organization.findUnique({
       where: { subdomain },
@@ -540,9 +595,7 @@ export class OrganizationsService {
       },
     });
 
-    if (!organization) {
-      throw new NotFoundException('Event hub not found');
-    }
+    this.assertEventHubPublished(organization);
 
     return ResponseUtil.success(
       organization,
@@ -555,6 +608,7 @@ export class OrganizationsService {
       where: { subdomain },
       select: {
         id: true,
+        brandConfig: true,
         tournaments: {
           where: { visibility: 'PUBLIC' },
           select: {
@@ -568,9 +622,7 @@ export class OrganizationsService {
       },
     });
 
-    if (!organization) {
-      throw new NotFoundException('Event hub not found');
-    }
+    this.assertEventHubPublished(organization);
 
     const tournamentIds = organization.tournaments.map((t) => t.id);
 
@@ -705,12 +757,10 @@ export class OrganizationsService {
   async getEventHubMedalTable(subdomain: string) {
     const organization = await this.db.organization.findUnique({
       where: { subdomain },
-      select: { id: true },
+      select: { id: true, brandConfig: true },
     });
 
-    if (!organization) {
-      throw new NotFoundException('Event hub not found');
-    }
+    this.assertEventHubPublished(organization);
 
     // Medal-deciding fixtures: finals (gold/silver) + third-place matches (bronze)
     // across all the org's PUBLIC tournaments — plus any completed race event

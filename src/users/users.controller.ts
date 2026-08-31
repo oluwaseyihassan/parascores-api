@@ -72,9 +72,10 @@ export class UsersController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   deleteUser(@Param('id') id: string, @User() user: any) {
-    // if (user.role !== Role.SUPER_ADMIN && user.sub !== id) {
-    //     throw new UnauthorizedException('Unauthorized')
-    // }
+    // SUPER_ADMIN may delete anyone; anyone else may only delete themselves
+    if (user.role !== Role.SUPER_ADMIN && user.sub !== id) {
+      throw new UnauthorizedException('Unauthorized');
+    }
     return this.usersService.delete(id);
   }
 
