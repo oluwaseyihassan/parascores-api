@@ -139,6 +139,14 @@ export class PaymentsController {
     );
   }
 
+  @Post('payout/:paymentId/retry')
+  @ApiOperation({
+    summary: 'Retry a failed/stuck instant payout — OWNER only',
+  })
+  async retryPayout(@Param('paymentId') paymentId: string, @Req() req: any) {
+    return this.paymentsService.retryPayout(req.user.sub, paymentId);
+  }
+
   @Get('verify/:reference')
   @ApiOperation({ summary: 'Verify a payment after Paystack redirect' })
   async verify(@Param('reference') reference: string) {

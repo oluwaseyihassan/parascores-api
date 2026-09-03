@@ -26,6 +26,7 @@ describe('Instant payouts (e2e, mocked Paystack)', () => {
   let ownerId: string;
   let adminId: string;
   let captainId: string;
+  let captain2Id: string;
   let orgInstant: any;
   let orgSplit: any;
   let tournamentId: string;
@@ -79,6 +80,7 @@ describe('Instant payouts (e2e, mocked Paystack)', () => {
     ownerId = (await mkUser('owner', 'ORGANIZER')).id;
     adminId = (await mkUser('admin', 'ORGANIZER')).id;
     captainId = (await mkUser('captain')).id;
+    captain2Id = (await mkUser('captain2')).id;
 
     // Org with instant payouts ON (settlement account present, no subaccount needed)
     orgInstant = await db.organization.create({
@@ -281,5 +283,69 @@ describe('Instant payouts (e2e, mocked Paystack)', () => {
 
     await payments.verifyPayment(`ref_split_${suffix}`);
     expect(paystack.initiateTransfer).not.toHaveBeenCalled();
+  });
+
+  it('retryPayout re-fires failed payouts, with double-pay guard on split payments', async () => {
+    // New instant-mode payment whose transfer fails once (insufficient balance)
+    paystack.initializeTransaction.mockResolvedValue({
+      data: {
+        authorization_url: 'https://checkout.test/z',
+        access_code: 'ac',
+        reference: `ref_retry_${suffix}`,
+      },
+    });
+    await payments.initializeRegistration(captain2Id, {
+      tournamentId,
+      customName: 'Retry FC',
+      token: inviteToken,
+      callbackUrl: 'http://localhost/z',
+    });
+
+    paystack.verifyTransaction.mockResolvedValue({
+      data: {
+        id: 777,
+        status: 'success',
+        reference: `ref_retry_${suffix}`,
+        amount: 100000,
+        currency: 'NGN',
+        customer: { id: 1, email: 'r@test.dev', customer_code: 'CUS_r' },
+      },
+    });
+    paystack.initiateTransfer.mockRejectedValueOnce(
+      new Error('Your balance is not enough to fulfil this request'),
+    );
+
+    await payments.verifyPayment(`ref_retry_${suffix}`);
+
+    const payment = await db.payment.findUnique({
+      where: { paystackReference: `ref_retry_${suffix}` },
+    });
+    expect(payment?.payoutStatus).toBe('FAILED');
+
+    // Non-owner cannot retry
+    await expect(payments.retryPayout(adminId, payment!.id)).rejects.toThrow(
+      'required permissions',
+    );
+
+    // Owner retries — succeeds (recipient already saved from the earlier test)
+    paystack.initiateTransfer.mockResolvedValue({
+      data: {
+        id: 2,
+        transfer_code: 'TRF_retry',
+        reference: `ref_retry_${suffix}`,
+        status: 'pending',
+      },
+    });
+    const res = await payments.retryPayout(ownerId, payment!.id);
+    expect(res.data?.payoutStatus).toBe('PROCESSING');
+    expect(res.data?.payoutTransferCode).toBe('TRF_retry');
+
+    // Split-mode payment can never be retried (double-pay guard)
+    const splitPayment = await db.payment.findUnique({
+      where: { paystackReference: `ref_split_${suffix}` },
+    });
+    await expect(payments.retryPayout(ownerId, splitPayment!.id)).rejects.toThrow(
+      'split account',
+    );
   });
 });

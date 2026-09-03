@@ -173,6 +173,27 @@ export class PaymentsService {
       data: { instantPayouts: enabled },
     });
 
+    // Re-fire any payouts that previously failed (e.g. unfunded balance)
+    if (enabled) {
+      const stuck = await this.db.payment.findMany({
+        where: {
+          organizationId: orgId,
+          type: 'TOURNAMENT_REGISTRATION',
+          status: PaymentStatus.SUCCESS,
+          payoutStatus: { in: ['FAILED', 'REVERSED'] },
+        },
+        select: { id: true },
+      });
+      for (const p of stuck) {
+        await this.maybeInitiateInstantPayout(p.id);
+      }
+      if (stuck.length > 0) {
+        this.logger.log(
+          `Re-triggered ${stuck.length} failed payout(s) for org ${orgId}`,
+        );
+      }
+    }
+
     return ResponseUtil.success(
       { instantPayouts: updated.instantPayouts },
       enabled
@@ -2636,6 +2657,10 @@ export class PaymentsService {
       const org = payment.organization;
       if (!org?.instantPayouts) return;
 
+      // Only payments initialized in instant mode are payout-eligible —
+      // split-mode payments already settled to the subaccount.
+      if ((payment.metadata as any)?.instantPayout !== true) return;
+
       // Already underway or completed (e.g. webhook + callback both fired)
       if (payment.payoutStatus === 'PROCESSING' || payment.payoutStatus === 'SUCCESS') {
         return;
@@ -2707,6 +2732,66 @@ export class PaymentsService {
         })
         .catch(() => {});
     }
+  }
+
+  /**
+   * Retry a failed/reversed instant payout (or one that never fired, e.g. it
+   * completed before instant payouts existed). OWNER-only. The underlying
+   * method re-checks eligibility and uses the payment reference as the
+   * transfer idempotency key, so retries can't double-pay.
+   */
+  async retryPayout(userId: string, paymentId: string) {
+    const payment = await this.db.payment.findUnique({
+      where: { id: paymentId },
+    });
+    if (!payment) throw new NotFoundException('Payment not found');
+    if (payment.type !== 'TOURNAMENT_REGISTRATION') {
+      throw new BadRequestException('Only registration payments have payouts');
+    }
+    if (payment.status !== PaymentStatus.SUCCESS) {
+      throw new BadRequestException(
+        'Payouts can only be retried for successful payments',
+      );
+    }
+    if (!payment.organizationId) {
+      throw new BadRequestException('Payment is not linked to an organization');
+    }
+    if (
+      payment.payoutStatus === 'PROCESSING' ||
+      payment.payoutStatus === 'SUCCESS'
+    ) {
+      throw new BadRequestException(
+        'This payout is already underway or completed',
+      );
+    }
+
+    // Never pay out for payments that were initialized in split mode —
+    // those already settled to the subaccount. Retrying them would
+    // double-pay the organizer.
+    if ((payment.metadata as any)?.instantPayout !== true) {
+      throw new BadRequestException(
+        'This payment was settled via the split account — no payout is due',
+      );
+    }
+
+    await this.organizationsService.validateMemberRole(
+      payment.organizationId,
+      userId,
+      ['OWNER'],
+    );
+
+    await this.maybeInitiateInstantPayout(payment.id);
+
+    const refreshed = await this.db.payment.findUnique({
+      where: { id: payment.id },
+    });
+
+    return ResponseUtil.success(
+      refreshed,
+      refreshed?.payoutStatus === 'PROCESSING'
+        ? 'Payout initiated — funds typically arrive within minutes'
+        : 'Payout could not be initiated — check the platform balance and try again',
+    );
   }
 
   async getPaymentHistory(orgId: string) {
