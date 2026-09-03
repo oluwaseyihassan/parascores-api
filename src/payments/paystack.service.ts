@@ -195,6 +195,52 @@ export class PaystackService {
     }>('POST', '/refund', params);
   }
 
+  // ─── Transfers (instant payouts) ───────────────────────
+
+  /**
+   * Create a transfer recipient (a bank account we can pay out to).
+   */
+  async createTransferRecipient(params: {
+    type: 'nuban';
+    name: string;
+    account_number: string;
+    bank_code: string;
+    currency?: string;
+  }) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: {
+        id: number;
+        recipient_code: string;
+        name: string;
+      };
+    }>('POST', '/transferrecipient', { currency: 'NGN', ...params });
+  }
+
+  /**
+   * Initiate a transfer from the platform balance.
+   * `reference` is an idempotency key — Paystack rejects duplicates,
+   * so reuse the payment reference to make retries safe.
+   */
+  async initiateTransfer(params: {
+    amount: number; // kobo
+    recipient: string; // recipient_code
+    reason?: string;
+    reference: string;
+  }) {
+    return this.request<{
+      status: boolean;
+      message: string;
+      data: {
+        id: number;
+        transfer_code: string;
+        reference: string;
+        status: string; // 'pending' | 'otp' | 'success' ...
+      };
+    }>('POST', '/transfer', { source: 'balance', ...params });
+  }
+
   // ─── Banks & Subaccounts ────────────────────────────────
 
   /**

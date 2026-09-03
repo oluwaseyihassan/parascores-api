@@ -28,10 +28,12 @@ export type AggregatePayment = {
 
 export type PaymentAvgAggregateOutputType = {
   amount: number | null
+  payoutAmount: number | null
 }
 
 export type PaymentSumAggregateOutputType = {
   amount: number | null
+  payoutAmount: number | null
 }
 
 export type PaymentMinAggregateOutputType = {
@@ -48,6 +50,10 @@ export type PaymentMinAggregateOutputType = {
   updated_at: Date | null
   userId: string | null
   type: string | null
+  payoutStatus: string | null
+  payoutTransferCode: string | null
+  payoutAmount: number | null
+  payoutInitiatedAt: Date | null
 }
 
 export type PaymentMaxAggregateOutputType = {
@@ -64,6 +70,10 @@ export type PaymentMaxAggregateOutputType = {
   updated_at: Date | null
   userId: string | null
   type: string | null
+  payoutStatus: string | null
+  payoutTransferCode: string | null
+  payoutAmount: number | null
+  payoutInitiatedAt: Date | null
 }
 
 export type PaymentCountAggregateOutputType = {
@@ -81,16 +91,22 @@ export type PaymentCountAggregateOutputType = {
   updated_at: number
   userId: number
   type: number
+  payoutStatus: number
+  payoutTransferCode: number
+  payoutAmount: number
+  payoutInitiatedAt: number
   _all: number
 }
 
 
 export type PaymentAvgAggregateInputType = {
   amount?: true
+  payoutAmount?: true
 }
 
 export type PaymentSumAggregateInputType = {
   amount?: true
+  payoutAmount?: true
 }
 
 export type PaymentMinAggregateInputType = {
@@ -107,6 +123,10 @@ export type PaymentMinAggregateInputType = {
   updated_at?: true
   userId?: true
   type?: true
+  payoutStatus?: true
+  payoutTransferCode?: true
+  payoutAmount?: true
+  payoutInitiatedAt?: true
 }
 
 export type PaymentMaxAggregateInputType = {
@@ -123,6 +143,10 @@ export type PaymentMaxAggregateInputType = {
   updated_at?: true
   userId?: true
   type?: true
+  payoutStatus?: true
+  payoutTransferCode?: true
+  payoutAmount?: true
+  payoutInitiatedAt?: true
 }
 
 export type PaymentCountAggregateInputType = {
@@ -140,6 +164,10 @@ export type PaymentCountAggregateInputType = {
   updated_at?: true
   userId?: true
   type?: true
+  payoutStatus?: true
+  payoutTransferCode?: true
+  payoutAmount?: true
+  payoutInitiatedAt?: true
   _all?: true
 }
 
@@ -244,6 +272,10 @@ export type PaymentGroupByOutputType = {
   updated_at: Date
   userId: string | null
   type: string
+  payoutStatus: string | null
+  payoutTransferCode: string | null
+  payoutAmount: number | null
+  payoutInitiatedAt: Date | null
   _count: PaymentCountAggregateOutputType | null
   _avg: PaymentAvgAggregateOutputType | null
   _sum: PaymentSumAggregateOutputType | null
@@ -284,6 +316,10 @@ export type PaymentWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Payment"> | string | null
   type?: Prisma.StringFilter<"Payment"> | string
+  payoutStatus?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutTransferCode?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutAmount?: Prisma.IntNullableFilter<"Payment"> | number | null
+  payoutInitiatedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -304,6 +340,10 @@ export type PaymentOrderByWithRelationInput = {
   updated_at?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutTransferCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutInitiatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   organization?: Prisma.OrganizationOrderByWithRelationInput
   tournament?: Prisma.TournamentOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
@@ -327,6 +367,10 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   updated_at?: Prisma.DateTimeFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Payment"> | string | null
   type?: Prisma.StringFilter<"Payment"> | string
+  payoutStatus?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutTransferCode?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutAmount?: Prisma.IntNullableFilter<"Payment"> | number | null
+  payoutInitiatedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
   tournament?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -347,6 +391,10 @@ export type PaymentOrderByWithAggregationInput = {
   updated_at?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutTransferCode?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  payoutInitiatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
   _avg?: Prisma.PaymentAvgOrderByAggregateInput
   _max?: Prisma.PaymentMaxOrderByAggregateInput
@@ -372,6 +420,10 @@ export type PaymentScalarWhereWithAggregatesInput = {
   updated_at?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   type?: Prisma.StringWithAggregatesFilter<"Payment"> | string
+  payoutStatus?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  payoutTransferCode?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  payoutAmount?: Prisma.IntNullableWithAggregatesFilter<"Payment"> | number | null
+  payoutInitiatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
 }
 
 export type PaymentCreateInput = {
@@ -386,6 +438,10 @@ export type PaymentCreateInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
   organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutPaymentsInput
   user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
@@ -406,6 +462,10 @@ export type PaymentUncheckedCreateInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentUpdateInput = {
@@ -420,6 +480,10 @@ export type PaymentUpdateInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutPaymentsNestedInput
   user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
@@ -440,6 +504,10 @@ export type PaymentUncheckedUpdateInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentCreateManyInput = {
@@ -457,6 +525,10 @@ export type PaymentCreateManyInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentUpdateManyMutationInput = {
@@ -471,6 +543,10 @@ export type PaymentUpdateManyMutationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentUncheckedUpdateManyInput = {
@@ -488,6 +564,10 @@ export type PaymentUncheckedUpdateManyInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentListRelationFilter = {
@@ -515,10 +595,15 @@ export type PaymentCountOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  payoutTransferCode?: Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrder
+  payoutInitiatedAt?: Prisma.SortOrder
 }
 
 export type PaymentAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrder
 }
 
 export type PaymentMaxOrderByAggregateInput = {
@@ -535,6 +620,10 @@ export type PaymentMaxOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  payoutTransferCode?: Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrder
+  payoutInitiatedAt?: Prisma.SortOrder
 }
 
 export type PaymentMinOrderByAggregateInput = {
@@ -551,10 +640,15 @@ export type PaymentMinOrderByAggregateInput = {
   updated_at?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   type?: Prisma.SortOrder
+  payoutStatus?: Prisma.SortOrder
+  payoutTransferCode?: Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrder
+  payoutInitiatedAt?: Prisma.SortOrder
 }
 
 export type PaymentSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
+  payoutAmount?: Prisma.SortOrder
 }
 
 export type PaymentCreateNestedManyWithoutUserInput = {
@@ -703,6 +797,10 @@ export type PaymentCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
   organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   tournament?: Prisma.TournamentCreateNestedOneWithoutPaymentsInput
 }
@@ -721,6 +819,10 @@ export type PaymentUncheckedCreateWithoutUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentCreateOrConnectWithoutUserInput = {
@@ -767,6 +869,10 @@ export type PaymentScalarWhereInput = {
   updated_at?: Prisma.DateTimeFilter<"Payment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Payment"> | string | null
   type?: Prisma.StringFilter<"Payment"> | string
+  payoutStatus?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutTransferCode?: Prisma.StringNullableFilter<"Payment"> | string | null
+  payoutAmount?: Prisma.IntNullableFilter<"Payment"> | number | null
+  payoutInitiatedAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
 }
 
 export type PaymentCreateWithoutOrganizationInput = {
@@ -781,6 +887,10 @@ export type PaymentCreateWithoutOrganizationInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
   tournament?: Prisma.TournamentCreateNestedOneWithoutPaymentsInput
   user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
 }
@@ -799,6 +909,10 @@ export type PaymentUncheckedCreateWithoutOrganizationInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentCreateOrConnectWithoutOrganizationInput = {
@@ -839,6 +953,10 @@ export type PaymentCreateWithoutTournamentInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
   organization?: Prisma.OrganizationCreateNestedOneWithoutPaymentsInput
   user?: Prisma.UserCreateNestedOneWithoutPaymentsInput
 }
@@ -857,6 +975,10 @@ export type PaymentUncheckedCreateWithoutTournamentInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentCreateOrConnectWithoutTournamentInput = {
@@ -899,6 +1021,10 @@ export type PaymentCreateManyUserInput = {
   created_at?: Date | string
   updated_at?: Date | string
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentUpdateWithoutUserInput = {
@@ -913,6 +1039,10 @@ export type PaymentUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   tournament?: Prisma.TournamentUpdateOneWithoutPaymentsNestedInput
 }
@@ -931,6 +1061,10 @@ export type PaymentUncheckedUpdateWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentUncheckedUpdateManyWithoutUserInput = {
@@ -947,6 +1081,10 @@ export type PaymentUncheckedUpdateManyWithoutUserInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentCreateManyOrganizationInput = {
@@ -963,6 +1101,10 @@ export type PaymentCreateManyOrganizationInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentUpdateWithoutOrganizationInput = {
@@ -977,6 +1119,10 @@ export type PaymentUpdateWithoutOrganizationInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   tournament?: Prisma.TournamentUpdateOneWithoutPaymentsNestedInput
   user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
 }
@@ -995,6 +1141,10 @@ export type PaymentUncheckedUpdateWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1011,6 +1161,10 @@ export type PaymentUncheckedUpdateManyWithoutOrganizationInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentCreateManyTournamentInput = {
@@ -1027,6 +1181,10 @@ export type PaymentCreateManyTournamentInput = {
   updated_at?: Date | string
   userId?: string | null
   type?: string
+  payoutStatus?: string | null
+  payoutTransferCode?: string | null
+  payoutAmount?: number | null
+  payoutInitiatedAt?: Date | string | null
 }
 
 export type PaymentUpdateWithoutTournamentInput = {
@@ -1041,6 +1199,10 @@ export type PaymentUpdateWithoutTournamentInput = {
   created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   organization?: Prisma.OrganizationUpdateOneWithoutPaymentsNestedInput
   user?: Prisma.UserUpdateOneWithoutPaymentsNestedInput
 }
@@ -1059,6 +1221,10 @@ export type PaymentUncheckedUpdateWithoutTournamentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type PaymentUncheckedUpdateManyWithoutTournamentInput = {
@@ -1075,6 +1241,10 @@ export type PaymentUncheckedUpdateManyWithoutTournamentInput = {
   updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.StringFieldUpdateOperationsInput | string
+  payoutStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutTransferCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAmount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  payoutInitiatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -1094,6 +1264,10 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updated_at?: boolean
   userId?: boolean
   type?: boolean
+  payoutStatus?: boolean
+  payoutTransferCode?: boolean
+  payoutAmount?: boolean
+  payoutInitiatedAt?: boolean
   organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
@@ -1114,6 +1288,10 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   userId?: boolean
   type?: boolean
+  payoutStatus?: boolean
+  payoutTransferCode?: boolean
+  payoutAmount?: boolean
+  payoutInitiatedAt?: boolean
   organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
@@ -1134,6 +1312,10 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   updated_at?: boolean
   userId?: boolean
   type?: boolean
+  payoutStatus?: boolean
+  payoutTransferCode?: boolean
+  payoutAmount?: boolean
+  payoutInitiatedAt?: boolean
   organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
   user?: boolean | Prisma.Payment$userArgs<ExtArgs>
@@ -1154,9 +1336,13 @@ export type PaymentSelectScalar = {
   updated_at?: boolean
   userId?: boolean
   type?: boolean
+  payoutStatus?: boolean
+  payoutTransferCode?: boolean
+  payoutAmount?: boolean
+  payoutInitiatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "tournamentId" | "amount" | "currency" | "status" | "paystackReference" | "paystackTransactionId" | "plan" | "metadata" | "created_at" | "updated_at" | "userId" | "type", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "tournamentId" | "amount" | "currency" | "status" | "paystackReference" | "paystackTransactionId" | "plan" | "metadata" | "created_at" | "updated_at" | "userId" | "type" | "payoutStatus" | "payoutTransferCode" | "payoutAmount" | "payoutInitiatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.Payment$organizationArgs<ExtArgs>
   tournament?: boolean | Prisma.Payment$tournamentArgs<ExtArgs>
@@ -1195,6 +1381,10 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     updated_at: Date
     userId: string | null
     type: string
+    payoutStatus: string | null
+    payoutTransferCode: string | null
+    payoutAmount: number | null
+    payoutInitiatedAt: Date | null
   }, ExtArgs["result"]["payment"]>
   composites: {}
 }
@@ -1635,6 +1825,10 @@ export interface PaymentFieldRefs {
   readonly updated_at: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly userId: Prisma.FieldRef<"Payment", 'String'>
   readonly type: Prisma.FieldRef<"Payment", 'String'>
+  readonly payoutStatus: Prisma.FieldRef<"Payment", 'String'>
+  readonly payoutTransferCode: Prisma.FieldRef<"Payment", 'String'>
+  readonly payoutAmount: Prisma.FieldRef<"Payment", 'Int'>
+  readonly payoutInitiatedAt: Prisma.FieldRef<"Payment", 'DateTime'>
 }
     
 

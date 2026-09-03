@@ -2428,6 +2428,8 @@ export const OrganizationScalarFieldEnum = {
   settlementAccountNumber: 'settlementAccountNumber',
   settlementAccountName: 'settlementAccountName',
   payoutAccountCreatedAt: 'payoutAccountCreatedAt',
+  instantPayouts: 'instantPayouts',
+  paystackRecipientCode: 'paystackRecipientCode',
   subdomain: 'subdomain',
   brandConfig: 'brandConfig'
 } as const
@@ -2818,7 +2820,11 @@ export const PaymentScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   userId: 'userId',
-  type: 'type'
+  type: 'type',
+  payoutStatus: 'payoutStatus',
+  payoutTransferCode: 'payoutTransferCode',
+  payoutAmount: 'payoutAmount',
+  payoutInitiatedAt: 'payoutInitiatedAt'
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
