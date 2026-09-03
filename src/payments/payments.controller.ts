@@ -29,6 +29,7 @@ import {
   ValidateDiscountCodeDto,
 } from './dto/discount-code.dto';
 import { RefundPaymentDto } from './dto/refund-payment.dto';
+import { InstantPayoutsDto } from './dto/instant-payouts.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
@@ -120,6 +121,22 @@ export class PaymentsController {
     @Req() req: any,
   ) {
     return this.paymentsService.setupPayoutAccount(req.user.sub, orgId, dto);
+  }
+
+  @Post('payout-account/:orgId/instant-payouts')
+  @ApiOperation({
+    summary: 'Enable/disable instant payouts (Transfers API) — OWNER only',
+  })
+  async setInstantPayouts(
+    @Param('orgId') orgId: string,
+    @Body() dto: InstantPayoutsDto,
+    @Req() req: any,
+  ) {
+    return this.paymentsService.setInstantPayouts(
+      req.user.sub,
+      orgId,
+      dto.enabled,
+    );
   }
 
   @Get('verify/:reference')

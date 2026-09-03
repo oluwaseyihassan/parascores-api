@@ -106,6 +106,7 @@ export class PaymentsService {
         settlementAccountNumber: true,
         settlementAccountName: true,
         payoutAccountCreatedAt: true,
+        instantPayouts: true,
       },
     });
 
@@ -122,7 +123,62 @@ export class PaymentsService {
         : null,
       accountName: organization.settlementAccountName,
       createdAt: organization.payoutAccountCreatedAt,
+      instantPayouts: organization.instantPayouts,
     });
+  }
+
+  /**
+   * Opt an organization into instant payouts. Money-routing config → OWNER only.
+   * When enabled, registration payments skip the subaccount split (full amount
+   * to the platform balance) and the organizer's share is pushed to their bank
+   * via the Transfers API within minutes of payment.
+   */
+  async setInstantPayouts(userId: string, orgId: string, enabled: boolean) {
+    await this.organizationsService.validateMemberRole(orgId, userId, [
+      'OWNER',
+    ]);
+
+    const organization = await this.db.organization.findUnique({
+      where: { id: orgId },
+    });
+    if (!organization) throw new NotFoundException('Organization not found');
+
+    if (enabled) {
+      if (
+        !organization.settlementBankCode ||
+        !organization.settlementAccountNumber
+      ) {
+        throw new BadRequestException(
+          'Set up a payout account before enabling instant payouts',
+        );
+      }
+
+      // Create the Paystack transfer recipient once, then reuse it
+      if (!organization.paystackRecipientCode) {
+        const recipient = await this.paystack.createTransferRecipient({
+          type: 'nuban',
+          name: organization.settlementAccountName || organization.name,
+          account_number: organization.settlementAccountNumber,
+          bank_code: organization.settlementBankCode,
+        });
+        await this.db.organization.update({
+          where: { id: orgId },
+          data: { paystackRecipientCode: recipient.data.recipient_code },
+        });
+      }
+    }
+
+    const updated = await this.db.organization.update({
+      where: { id: orgId },
+      data: { instantPayouts: enabled },
+    });
+
+    return ResponseUtil.success(
+      { instantPayouts: updated.instantPayouts },
+      enabled
+        ? 'Instant payouts enabled — registration fees arrive within minutes'
+        : 'Instant payouts disabled — settlements return to next business day',
+    );
   }
 
   async setupPayoutAccount(
@@ -653,13 +709,19 @@ export class PaymentsService {
       );
     }
 
-    // 2b. Initialize Paystack transaction (split: organizer's subaccount receives
-    // settlement directly, platform keeps its commission percentage)
+    // 2b. Initialize Paystack transaction. Default: split at settlement via
+    // the organizer's subaccount (platform keeps its commission percentage).
+    // Instant-payout orgs skip the split — the full amount lands in the
+    // platform balance and the organizer's share is transferred out on success.
+    const split = !organization.instantPayouts;
+
     const paystackResponse = await this.paystack.initializeTransaction({
       email: user.email,
       amount: finalAmount,
-      subaccount: organization.paystackSubaccountCode,
-      bearer: 'subaccount',
+      ...(split && {
+        subaccount: organization.paystackSubaccountCode!,
+        bearer: 'subaccount' as const,
+      }),
       metadata: {
         type: 'TOURNAMENT_REGISTRATION',
         userId,
@@ -668,6 +730,7 @@ export class PaymentsService {
         customName,
         logoUrl,
         token,
+        instantPayout: organization.instantPayouts,
         custom_fields: [
           {
             display_name: 'Tournament Name',
@@ -713,6 +776,7 @@ export class PaymentsService {
           logoUrl,
           token,
           accessCode: paystackResponse.data.access_code,
+          instantPayout: organization.instantPayouts,
           ...(discountCode && {
             discountCode: discountCode.code,
             discountCodeId: discountCode.id,
@@ -1039,6 +1103,7 @@ export class PaymentsService {
     let notifyPayload: any = null;
 
     if (txData.status === 'success') {
+      let justTransitioned = false;
       // 3. Atomic transaction: update payment + activate subscription/tournament
       const result = await this.db.$transaction(async (tx) => {
         // Conditional update: only transitions PENDING → SUCCESS (race-safe)
@@ -1128,6 +1193,7 @@ export class PaymentsService {
           });
         }
 
+        justTransitioned = true;
         const updatedPayment = await tx.payment.findUnique({
           where: { id: payment.id },
         });
@@ -1346,6 +1412,11 @@ export class PaymentsService {
         return ResponseUtil.success({ payment: updatedPayment, subscription });
       });
 
+      // Instant payout (opt-in orgs): push the organizer's share out now
+      if (justTransitioned) {
+        await this.maybeInitiateInstantPayout(payment.id);
+      }
+
       if (notifyPayload) {
         try {
           this.eventEmitter.emit(
@@ -1431,6 +1502,12 @@ export class PaymentsService {
 
       case 'refund.failed':
         await this.handleRefundFailed(event.data);
+        break;
+
+      case 'transfer.success':
+      case 'transfer.failed':
+      case 'transfer.reversed':
+        await this.handleTransferUpdate(eventType, event.data);
         break;
 
       default:
@@ -1664,6 +1741,7 @@ export class PaymentsService {
     if (payment.status === PaymentStatus.SUCCESS) return;
 
     let notifyPayload: any = null;
+    let didTransition = false;
 
     // Atomic transaction: update payment + activate subscription/tournament
     await this.db.$transaction(async (tx) => {
@@ -1683,6 +1761,7 @@ export class PaymentsService {
 
       // Another process already handled this
       if (updateResult.count === 0) return;
+      didTransition = true;
 
       // Handle player claim payment
       if (payment.type === 'PLAYER_CLAIM') {
@@ -1881,6 +1960,11 @@ export class PaymentsService {
         `Subscription activated via webhook for org: ${payment.organizationId}`,
       );
     });
+
+    // Instant payout (opt-in orgs): push the organizer's share out now
+    if (didTransition) {
+      await this.maybeInitiateInstantPayout(payment.id);
+    }
 
     if (notifyPayload) {
       try {
@@ -2500,6 +2584,129 @@ export class PaymentsService {
       (sub.plan === SubscriptionPlan.PRO ||
         sub.plan === SubscriptionPlan.ENTERPRISE);
     return isPro ? commission.pro : commission.free;
+  }
+
+  /**
+   * transfer.* — final state of an instant payout. transfer.failed/reversed
+   * mark the payout FAILED/REVERSED for manual follow-up (the organizer's
+   * money is still in the platform balance; the registration itself stands).
+   */
+  private async handleTransferUpdate(eventType: string, data: any) {
+    const reference = data?.reference;
+    if (!reference) return;
+
+    const payment = await this.db.payment.findUnique({
+      where: { paystackReference: reference },
+    });
+    if (!payment || !payment.payoutStatus) return;
+
+    const status =
+      eventType === 'transfer.success'
+        ? 'SUCCESS'
+        : eventType === 'transfer.failed'
+          ? 'FAILED'
+          : 'REVERSED';
+
+    await this.db.payment.update({
+      where: { id: payment.id },
+      data: { payoutStatus: status },
+    });
+    this.logger.log(
+      `Instant payout ${status} for payment ${payment.id} (${reference})`,
+    );
+  }
+
+  /**
+   * For instant-payout orgs, transfer the organizer's share (gross minus
+   * platform commission) to their settlement bank account via Paystack
+   * Transfers. Runs after the payment's PENDING → SUCCESS transition, exactly
+   * once per payment (guarded by payoutStatus + Paystack's reference dedupe).
+   */
+  private async maybeInitiateInstantPayout(paymentId: string) {
+    try {
+      const payment = await this.db.payment.findUnique({
+        where: { id: paymentId },
+        include: { organization: { include: { subscription: true } } },
+      });
+
+      if (!payment || payment.type !== 'TOURNAMENT_REGISTRATION') return;
+      if (payment.status !== PaymentStatus.SUCCESS) return;
+      if (payment.amount <= 0) return; // waived registration — nothing to pay out
+
+      const org = payment.organization;
+      if (!org?.instantPayouts) return;
+
+      // Already underway or completed (e.g. webhook + callback both fired)
+      if (payment.payoutStatus === 'PROCESSING' || payment.payoutStatus === 'SUCCESS') {
+        return;
+      }
+
+      if (!org.settlementBankCode || !org.settlementAccountNumber) {
+        this.logger.warn(
+          `Instant payout skipped: org ${org.id} has no settlement account`,
+        );
+        return;
+      }
+
+      // Create/reuse the Paystack transfer recipient
+      let recipientCode = org.paystackRecipientCode;
+      if (!recipientCode) {
+        const recipient = await this.paystack.createTransferRecipient({
+          type: 'nuban',
+          name: org.settlementAccountName || org.name,
+          account_number: org.settlementAccountNumber,
+          bank_code: org.settlementBankCode,
+        });
+        recipientCode = recipient.data.recipient_code;
+        await this.db.organization.update({
+          where: { id: org.id },
+          data: { paystackRecipientCode: recipientCode },
+        });
+      }
+
+      const commissionPercent = this.commissionPercentForOrg(org);
+      const payoutAmount = Math.round(
+        (payment.amount * (100 - commissionPercent)) / 100,
+      );
+
+      await this.db.payment.update({
+        where: { id: payment.id },
+        data: {
+          payoutStatus: 'PROCESSING',
+          payoutAmount,
+          payoutInitiatedAt: new Date(),
+        },
+      });
+
+      // reference = payment reference → Paystack rejects duplicate transfers,
+      // making callback/webhook double-fires and retries safe.
+      const transfer = await this.paystack.initiateTransfer({
+        amount: payoutAmount,
+        recipient: recipientCode,
+        reason: `Registration payout — ${payment.paystackReference}`,
+        reference: payment.paystackReference,
+      });
+
+      await this.db.payment.update({
+        where: { id: payment.id },
+        data: { payoutTransferCode: transfer.data.transfer_code },
+      });
+
+      this.logger.log(
+        `Instant payout initiated: ₦${payoutAmount / 100} → org ${org.id} (payment ${payment.id})`,
+      );
+    } catch (error: any) {
+      this.logger.error(
+        `Instant payout failed to initiate for payment ${paymentId}:`,
+        error?.message,
+      );
+      await this.db.payment
+        .update({
+          where: { id: paymentId },
+          data: { payoutStatus: 'FAILED' },
+        })
+        .catch(() => {});
+    }
   }
 
   async getPaymentHistory(orgId: string) {
