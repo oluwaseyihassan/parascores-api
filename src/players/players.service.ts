@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
@@ -213,7 +214,46 @@ export class PlayersService {
     });
   }
 
-  async claimPlayer(code: string, userId: string) {
+  async claimPlayer(userId: string, code?: string, playerId?: string) {
+    // Codeless claim (from the public player page): link immediately but mark
+    // PENDING — the organizer reviews it before the profile goes live.
+    if (!code && playerId) {
+      const player = await this.db.player.findUnique({
+        where: { id: playerId },
+        include: { participant: { include: { tournament: true } } },
+      });
+      if (!player) throw new NotFoundException('Player not found');
+      if (player.userId) {
+        throw new ForbiddenException(
+          'This player profile is already linked to a user',
+        );
+      }
+
+      const existing = await this.db.player.findFirst({
+        where: {
+          userId,
+          participant: { tournament_id: player.participant.tournament_id },
+        },
+      });
+      if (existing) {
+        throw new ForbiddenException(
+          'You already have a linked player profile in this tournament',
+        );
+      }
+
+      const updated = await this.db.player.update({
+        where: { id: player.id },
+        data: { userId, status: 'PENDING' },
+        include: { participant: { include: { tournament: true } } },
+      });
+      return ResponseUtil.success(
+        updated,
+        'Claim submitted — the organizer will review it',
+      );
+    }
+
+    if (!code) throw new BadRequestException('A claim code is required');
+
     const player = await this.db.player.findFirst({
       where: { linkCode: code.toUpperCase() },
     });

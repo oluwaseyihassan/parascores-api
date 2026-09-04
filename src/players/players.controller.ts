@@ -82,9 +82,12 @@ export class PlayersController {
   }
 
   @Post('claim')
-  @ApiOperation({ summary: 'Claim/link a player profile using code' })
-  claimPlayer(@Body('code') code: string, @Req() req: any) {
-    return this.playersService.claimPlayer(code, req.user.sub);
+  @ApiOperation({ summary: 'Claim/link a player profile (code, or playerId for review-gated claim)' })
+  claimPlayer(
+    @Body() body: { code?: string; playerId?: string },
+    @Req() req: any,
+  ) {
+    return this.playersService.claimPlayer(req.user.sub, body.code, body.playerId);
   }
 
   @Delete(':id')

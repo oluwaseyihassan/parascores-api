@@ -278,15 +278,8 @@ export class ParticipantsService {
   }
 
   // Add player to participant
-  async addPlayer(participantId: string, dto: AddPlayerDto) {
-    const participant = await this.db.participant.findUnique({
-      where: { id: participantId },
-      include: { tournament: true },
-    });
-
-    if (!participant) {
-      throw new NotFoundException('Participant not found');
-    }
+  async addPlayer(participantId: string, dto: AddPlayerDto, userId: string) {
+    const participant = await this.assertCanManageRoster(participantId, userId);
 
     if (participant.tournament.participantType === 'INDIVIDUAL') {
       throw new BadRequestException(
@@ -300,21 +293,21 @@ export class ParticipantsService {
         name: dto.name,
         number: dto.number,
         position: dto.position,
+        // Same rule as self-join: instant in auto-approve tournaments,
+        // otherwise the organizer approves the roster addition
+        status: participant.tournament.autoApprove ? 'APPROVED' : 'PENDING',
       },
     });
     return ResponseUtil.success(player);
   }
 
   // Add players in bulk
-  async addPlayersBulk(participantId: string, dto: BulkAddPlayerDto) {
-    const participant = await this.db.participant.findUnique({
-      where: { id: participantId },
-      include: { tournament: true },
-    });
-
-    if (!participant) {
-      throw new NotFoundException('Participant not found');
-    }
+  async addPlayersBulk(
+    participantId: string,
+    dto: BulkAddPlayerDto,
+    userId: string,
+  ) {
+    const participant = await this.assertCanManageRoster(participantId, userId);
 
     if (participant.tournament.participantType === 'INDIVIDUAL') {
       throw new BadRequestException(
@@ -322,11 +315,13 @@ export class ParticipantsService {
       );
     }
 
+    const status = participant.tournament.autoApprove ? 'APPROVED' : 'PENDING';
     const playersData = dto.players.map((p) => ({
       participantId: participant.id,
       name: p.name,
       number: p.number,
       position: p.position,
+      status: status as any,
     }));
 
     await this.db.player.createMany({
@@ -334,6 +329,40 @@ export class ParticipantsService {
     });
 
     return this.getPlayers(participant.id);
+  }
+
+  /**
+   * Roster management permission: the team account (owner of the linked team
+   * profile, or the user who registered the team) OR any member of the
+   * organization that owns the tournament.
+   */
+  private async assertCanManageRoster(participantId: string, userId: string) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: { tournament: true, team: true },
+    });
+
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+
+    const isTeamAccount =
+      participant.team?.ownerId === userId || participant.user_id === userId;
+    if (isTeamAccount) return participant;
+
+    if (participant.tournament.organization_id) {
+      const membership = await this.db.organizationMember.findFirst({
+        where: {
+          organizationId: participant.tournament.organization_id,
+          userId,
+        },
+      });
+      if (membership) return participant;
+    }
+
+    throw new ForbiddenException(
+      'You do not have permission to manage this roster',
+    );
   }
 
   // Get players of participant
@@ -474,12 +503,36 @@ export class ParticipantsService {
     });
   }
 
-  // Update player status (approve/reject)
+  // Update player status (approve/reject) — organizer-only: approval is the
+  // organization's job, team accounts can't approve their own players
   async updatePlayerStatus(
     participantId: string,
     playerId: string,
     status: string,
+    userId: string,
   ) {
+    const participant = await this.db.participant.findUnique({
+      where: { id: participantId },
+      include: { tournament: true },
+    });
+    if (!participant) {
+      throw new NotFoundException('Participant not found');
+    }
+    if (!participant.tournament.organization_id) {
+      throw new ForbiddenException('Tournament has no organization');
+    }
+    const membership = await this.db.organizationMember.findFirst({
+      where: {
+        organizationId: participant.tournament.organization_id,
+        userId,
+      },
+    });
+    if (!membership) {
+      throw new ForbiddenException(
+        'Only organization members can approve or reject players',
+      );
+    }
+
     const player = await this.db.player.findUnique({
       where: { id: playerId },
     });
@@ -628,7 +681,9 @@ export class ParticipantsService {
   }
 
   // Remove player
-  async removePlayer(participantId: string, playerId: string) {
+  async removePlayer(participantId: string, playerId: string, userId: string) {
+    await this.assertCanManageRoster(participantId, userId);
+
     const player = await this.db.player.findUnique({
       where: { id: playerId },
     });
