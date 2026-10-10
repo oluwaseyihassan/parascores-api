@@ -61,6 +61,8 @@ export const ModelName = {
   RosterEntry: 'RosterEntry',
   TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
+  PulseItem: 'PulseItem',
+  PulseReaction: 'PulseReaction',
   ResultEntry: 'ResultEntry',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
@@ -76,7 +78,10 @@ export const ModelName = {
   Subscription: 'Subscription',
   Payment: 'Payment',
   PushSubscription: 'PushSubscription',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  ChatMessage: 'ChatMessage',
+  ChatReaction: 'ChatReaction',
+  ScoreSubmission: 'ScoreSubmission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -188,7 +193,12 @@ export const TournamentScalarFieldEnum = {
   isPaidRegistration: 'isPaidRegistration',
   registrationFee: 'registrationFee',
   tournamentPrice: 'tournamentPrice',
-  paymentPerTeam: 'paymentPerTeam'
+  paymentPerTeam: 'paymentPerTeam',
+  chatEnabled: 'chatEnabled',
+  chatRules: 'chatRules',
+  parageeBot: 'parageeBot',
+  botCalls: 'botCalls',
+  requiresScoreEvidence: 'requiresScoreEvidence'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
@@ -295,6 +305,32 @@ export const FixtureScalarFieldEnum = {
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
+
+
+export const PulseItemScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  fixtureId: 'fixtureId',
+  type: 'type',
+  payload: 'payload',
+  pinned: 'pinned',
+  sortAt: 'sortAt',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PulseItemScalarFieldEnum = (typeof PulseItemScalarFieldEnum)[keyof typeof PulseItemScalarFieldEnum]
+
+
+export const PulseReactionScalarFieldEnum = {
+  id: 'id',
+  pulseItemId: 'pulseItemId',
+  deviceId: 'deviceId',
+  emoji: 'emoji',
+  created_at: 'created_at'
+} as const
+
+export type PulseReactionScalarFieldEnum = (typeof PulseReactionScalarFieldEnum)[keyof typeof PulseReactionScalarFieldEnum]
 
 
 export const ResultEntryScalarFieldEnum = {
@@ -560,6 +596,54 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const ChatMessageScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  authorType: 'authorType',
+  authorUserId: 'authorUserId',
+  participantId: 'participantId',
+  text: 'text',
+  cardType: 'cardType',
+  cardPayload: 'cardPayload',
+  pinnedAt: 'pinnedAt',
+  deletedAt: 'deletedAt',
+  replyToId: 'replyToId',
+  createdAt: 'createdAt'
+} as const
+
+export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
+
+
+export const ChatReactionScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  userId: 'userId',
+  emoji: 'emoji',
+  createdAt: 'createdAt'
+} as const
+
+export type ChatReactionScalarFieldEnum = (typeof ChatReactionScalarFieldEnum)[keyof typeof ChatReactionScalarFieldEnum]
+
+
+export const ScoreSubmissionScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  legs: 'legs',
+  evidenceUrl: 'evidenceUrl',
+  note: 'note',
+  status: 'status',
+  resolvedById: 'resolvedById',
+  verdictNote: 'verdictNote',
+  createdAt: 'createdAt',
+  resolvedAt: 'resolvedAt'
+} as const
+
+export type ScoreSubmissionScalarFieldEnum = (typeof ScoreSubmissionScalarFieldEnum)[keyof typeof ScoreSubmissionScalarFieldEnum]
 
 
 export const SortOrder = {

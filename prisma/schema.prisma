@@ -62,6 +62,7 @@ model Organization {
   pushSubscriptions       PushSubscription[]
   subscription            Subscription?
   payments                Payment[]
+  pulseItems              PulseItem[]
 }
 
 model OrganizationMember {
@@ -129,6 +130,14 @@ model Tournament {
   venues             Venue[]
   payments           Payment[]
   discountCodes      DiscountCode[]
+  chatMessages       ChatMessage[]
+
+  // Esports package: tournament chat + Paragee (AI bot) + score submissions
+  chatEnabled            Boolean  @default(false)
+  chatRules              String?  @db.Text
+  parageeBot             Json?    // { enabled, fixtures, standings, rules, quickChips, llm }
+  botCalls               Int      @default(0) // Paragee call count (answered mentions)
+  requiresScoreEvidence  Boolean  @default(false)
 }
 
 model TournamentFollower {
@@ -180,6 +189,11 @@ model Participant {
   invites            TeamInvite[]
   tournamentEntry    TournamentEntry?
   resultEntries      ResultEntry[]
+  scoreSubmissions   ScoreSubmission[]
+  chatMessages       ChatMessage[]
+
+  // Chat auth + typing relay look up by (tournament, user)
+  @@index([tournament_id, user_id])
 }
 
 // An institution/team on an organization's roster (e.g. a university at WAUG).
@@ -256,6 +270,46 @@ model Fixture {
   livestreamUrl         String?
   livestreamPlatform    String?
   highlights            Highlight[]
+  pulseItems            PulseItem[]
+  scoreSubmissions      ScoreSubmission[]
+
+  // Fixture lists + Paragee intents filter by tournament (+ status)
+  @@index([tournament_id, status])
+}
+
+// Auto-generated fan feed cards for an event hub (the "Pulse" tab).
+// Written by scoring hooks (match events, kickoff, full time, race results,
+// medals) or manually by organizers (announcements). One row per
+// (type, fixtureId): in-match events upsert a single per-match card.
+model PulseItem {
+  id             String          @id @default(cuid())
+  organizationId String
+  fixtureId      String?
+  type           String
+  payload        Json
+  pinned         Boolean         @default(false)
+  sortAt         DateTime        @default(now())
+  created_at     DateTime        @default(now())
+  updated_at     DateTime        @updatedAt
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  fixture        Fixture?        @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  reactions      PulseReaction[]
+
+  @@unique([type, fixtureId])
+  @@index([organizationId, sortAt])
+}
+
+// Anonymous fan reactions on pulse cards — one per device per emoji.
+model PulseReaction {
+  id          String    @id @default(cuid())
+  pulseItemId String
+  deviceId    String
+  emoji       String
+  created_at  DateTime  @default(now())
+  pulseItem   PulseItem @relation(fields: [pulseItemId], references: [id], onDelete: Cascade)
+
+  @@unique([pulseItemId, deviceId, emoji])
+  @@index([pulseItemId])
 }
 
 // Placement-based results for race/timed sports (athletics, swimming).
@@ -641,4 +695,94 @@ model AuditLog {
   @@index([createdAt])
   @@index([entityType, entityId])
   @@index([action])
+}
+
+// ─── Esports package ──────────────────────────────────────
+
+enum ChatAuthorType {
+  USER
+  ORGANIZER
+  BOT
+  SYSTEM
+}
+
+enum ChatCardType {
+  FIXTURE
+  TABLE
+  STATS
+  LINK
+  SCORE_SUBMITTED
+  SCORE_CONFIRMED
+  SCORE_CONFLICT
+}
+
+// Tournament chat room messages. Public read (per tournament visibility);
+// posting restricted to confirmed participants + org members; BOT/SYSTEM
+// rows carry structured cards (fixture cards, score reports).
+model ChatMessage {
+  id            String          @id @default(cuid())
+  tournamentId  String
+  authorType    ChatAuthorType
+  authorUserId  String?
+  participantId String?
+  text          String          @db.Text
+  cardType      ChatCardType?
+  cardPayload   Json?
+  pinnedAt      DateTime?
+  deletedAt     DateTime? // soft delete — organizer moderation
+  replyToId     String? // quoted reply target
+  createdAt     DateTime        @default(now())
+  tournament    Tournament      @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  participant   Participant?    @relation(fields: [participantId], references: [id], onDelete: SetNull)
+  replyTo       ChatMessage?    @relation("ChatReplies", fields: [replyToId], references: [id], onDelete: SetNull)
+  replies       ChatMessage[]   @relation("ChatReplies")
+  reactions     ChatReaction[]
+
+  @@index([tournamentId, createdAt])
+  @@index([replyToId])
+}
+
+// Emoji reactions on chat messages — one row per (message, user, emoji);
+// toggled via POST /chat-messages/:id/react
+model ChatReaction {
+  id        String      @id @default(cuid())
+  messageId String
+  userId    String // plain FK-less reference to User (identity from JWT)
+  emoji     String // from the fixed quick set
+  createdAt DateTime    @default(now())
+  message   ChatMessage @relation(fields: [messageId], references: [id], onDelete: Cascade)
+
+  @@unique([messageId, userId, emoji])
+  @@index([messageId])
+}
+
+enum SubmissionStatus {
+  PENDING // waiting for the opponent's entry
+  MATCHED // both entries agree — auto-applied
+  CONFLICT // entries disagree — organizer decides
+  APPLIED // organizer verdict applied
+  DISMISSED // organizer voided both entries
+}
+
+// Double-entry score reporting: each participant in a fixture submits their
+// own score (with evidence for esports); matching entries auto-apply.
+model ScoreSubmission {
+  id            String           @id @default(cuid())
+  fixtureId     String
+  participantId String
+  homeScore     Int
+  awayScore     Int
+  legs          Json? // per-leg scores for two-legged ties
+  evidenceUrl   String?
+  note          String?
+  status        SubmissionStatus @default(PENDING)
+  resolvedById  String?
+  verdictNote   String?
+  createdAt     DateTime         @default(now())
+  resolvedAt    DateTime?
+  fixture       Fixture          @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  participant   Participant      @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  @@unique([fixtureId, participantId])
+  @@index([fixtureId, status])
 }

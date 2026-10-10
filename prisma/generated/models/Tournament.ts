@@ -35,6 +35,7 @@ export type TournamentAvgAggregateOutputType = {
   registrationFee: number | null
   tournamentPrice: number | null
   paymentPerTeam: number | null
+  botCalls: number | null
 }
 
 export type TournamentSumAggregateOutputType = {
@@ -46,6 +47,7 @@ export type TournamentSumAggregateOutputType = {
   registrationFee: number | null
   tournamentPrice: number | null
   paymentPerTeam: number | null
+  botCalls: number | null
 }
 
 export type TournamentMinAggregateOutputType = {
@@ -86,6 +88,10 @@ export type TournamentMinAggregateOutputType = {
   registrationFee: number | null
   tournamentPrice: number | null
   paymentPerTeam: number | null
+  chatEnabled: boolean | null
+  chatRules: string | null
+  botCalls: number | null
+  requiresScoreEvidence: boolean | null
 }
 
 export type TournamentMaxAggregateOutputType = {
@@ -126,6 +132,10 @@ export type TournamentMaxAggregateOutputType = {
   registrationFee: number | null
   tournamentPrice: number | null
   paymentPerTeam: number | null
+  chatEnabled: boolean | null
+  chatRules: string | null
+  botCalls: number | null
+  requiresScoreEvidence: boolean | null
 }
 
 export type TournamentCountAggregateOutputType = {
@@ -167,6 +177,11 @@ export type TournamentCountAggregateOutputType = {
   registrationFee: number
   tournamentPrice: number
   paymentPerTeam: number
+  chatEnabled: number
+  chatRules: number
+  parageeBot: number
+  botCalls: number
+  requiresScoreEvidence: number
   _all: number
 }
 
@@ -180,6 +195,7 @@ export type TournamentAvgAggregateInputType = {
   registrationFee?: true
   tournamentPrice?: true
   paymentPerTeam?: true
+  botCalls?: true
 }
 
 export type TournamentSumAggregateInputType = {
@@ -191,6 +207,7 @@ export type TournamentSumAggregateInputType = {
   registrationFee?: true
   tournamentPrice?: true
   paymentPerTeam?: true
+  botCalls?: true
 }
 
 export type TournamentMinAggregateInputType = {
@@ -231,6 +248,10 @@ export type TournamentMinAggregateInputType = {
   registrationFee?: true
   tournamentPrice?: true
   paymentPerTeam?: true
+  chatEnabled?: true
+  chatRules?: true
+  botCalls?: true
+  requiresScoreEvidence?: true
 }
 
 export type TournamentMaxAggregateInputType = {
@@ -271,6 +292,10 @@ export type TournamentMaxAggregateInputType = {
   registrationFee?: true
   tournamentPrice?: true
   paymentPerTeam?: true
+  chatEnabled?: true
+  chatRules?: true
+  botCalls?: true
+  requiresScoreEvidence?: true
 }
 
 export type TournamentCountAggregateInputType = {
@@ -312,6 +337,11 @@ export type TournamentCountAggregateInputType = {
   registrationFee?: true
   tournamentPrice?: true
   paymentPerTeam?: true
+  chatEnabled?: true
+  chatRules?: true
+  parageeBot?: true
+  botCalls?: true
+  requiresScoreEvidence?: true
   _all?: true
 }
 
@@ -440,6 +470,11 @@ export type TournamentGroupByOutputType = {
   registrationFee: number
   tournamentPrice: number
   paymentPerTeam: number
+  chatEnabled: boolean
+  chatRules: string | null
+  parageeBot: runtime.JsonValue | null
+  botCalls: number
+  requiresScoreEvidence: boolean
   _count: TournamentCountAggregateOutputType | null
   _avg: TournamentAvgAggregateOutputType | null
   _sum: TournamentSumAggregateOutputType | null
@@ -504,6 +539,11 @@ export type TournamentWhereInput = {
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
   tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
   paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
+  chatEnabled?: Prisma.BoolFilter<"Tournament"> | boolean
+  chatRules?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  parageeBot?: Prisma.JsonNullableFilter<"Tournament">
+  botCalls?: Prisma.IntFilter<"Tournament"> | number
+  requiresScoreEvidence?: Prisma.BoolFilter<"Tournament"> | boolean
   fixtures?: Prisma.FixtureListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   participants?: Prisma.ParticipantListRelationFilter
@@ -519,6 +559,7 @@ export type TournamentWhereInput = {
   venues?: Prisma.VenueListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   discountCodes?: Prisma.DiscountCodeListRelationFilter
+  chatMessages?: Prisma.ChatMessageListRelationFilter
 }
 
 export type TournamentOrderByWithRelationInput = {
@@ -560,6 +601,11 @@ export type TournamentOrderByWithRelationInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  chatEnabled?: Prisma.SortOrder
+  chatRules?: Prisma.SortOrderInput | Prisma.SortOrder
+  parageeBot?: Prisma.SortOrderInput | Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
+  requiresScoreEvidence?: Prisma.SortOrder
   fixtures?: Prisma.FixtureOrderByRelationAggregateInput
   groups?: Prisma.GroupOrderByRelationAggregateInput
   participants?: Prisma.ParticipantOrderByRelationAggregateInput
@@ -575,6 +621,7 @@ export type TournamentOrderByWithRelationInput = {
   venues?: Prisma.VenueOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   discountCodes?: Prisma.DiscountCodeOrderByRelationAggregateInput
+  chatMessages?: Prisma.ChatMessageOrderByRelationAggregateInput
 }
 
 export type TournamentWhereUniqueInput = Prisma.AtLeast<{
@@ -619,6 +666,11 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
   tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
   paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
+  chatEnabled?: Prisma.BoolFilter<"Tournament"> | boolean
+  chatRules?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  parageeBot?: Prisma.JsonNullableFilter<"Tournament">
+  botCalls?: Prisma.IntFilter<"Tournament"> | number
+  requiresScoreEvidence?: Prisma.BoolFilter<"Tournament"> | boolean
   fixtures?: Prisma.FixtureListRelationFilter
   groups?: Prisma.GroupListRelationFilter
   participants?: Prisma.ParticipantListRelationFilter
@@ -634,6 +686,7 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   venues?: Prisma.VenueListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   discountCodes?: Prisma.DiscountCodeListRelationFilter
+  chatMessages?: Prisma.ChatMessageListRelationFilter
 }, "id" | "customName">
 
 export type TournamentOrderByWithAggregationInput = {
@@ -675,6 +728,11 @@ export type TournamentOrderByWithAggregationInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  chatEnabled?: Prisma.SortOrder
+  chatRules?: Prisma.SortOrderInput | Prisma.SortOrder
+  parageeBot?: Prisma.SortOrderInput | Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
+  requiresScoreEvidence?: Prisma.SortOrder
   _count?: Prisma.TournamentCountOrderByAggregateInput
   _avg?: Prisma.TournamentAvgOrderByAggregateInput
   _max?: Prisma.TournamentMaxOrderByAggregateInput
@@ -724,6 +782,11 @@ export type TournamentScalarWhereWithAggregatesInput = {
   registrationFee?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
   tournamentPrice?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
   paymentPerTeam?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
+  chatEnabled?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  chatRules?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  parageeBot?: Prisma.JsonNullableWithAggregatesFilter<"Tournament">
+  botCalls?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
+  requiresScoreEvidence?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
 }
 
 export type TournamentCreateInput = {
@@ -763,6 +826,11 @@ export type TournamentCreateInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -778,6 +846,7 @@ export type TournamentCreateInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateInput = {
@@ -819,6 +888,11 @@ export type TournamentUncheckedCreateInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -832,6 +906,7 @@ export type TournamentUncheckedCreateInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUpdateInput = {
@@ -871,6 +946,11 @@ export type TournamentUpdateInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -886,6 +966,7 @@ export type TournamentUpdateInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateInput = {
@@ -927,6 +1008,11 @@ export type TournamentUncheckedUpdateInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -940,6 +1026,7 @@ export type TournamentUncheckedUpdateInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateManyInput = {
@@ -981,6 +1068,11 @@ export type TournamentCreateManyInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
 }
 
 export type TournamentUpdateManyMutationInput = {
@@ -1020,6 +1112,11 @@ export type TournamentUpdateManyMutationInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TournamentUncheckedUpdateManyInput = {
@@ -1061,6 +1158,11 @@ export type TournamentUncheckedUpdateManyInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TournamentListRelationFilter = {
@@ -1117,6 +1219,11 @@ export type TournamentCountOrderByAggregateInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  chatEnabled?: Prisma.SortOrder
+  chatRules?: Prisma.SortOrder
+  parageeBot?: Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
+  requiresScoreEvidence?: Prisma.SortOrder
 }
 
 export type TournamentAvgOrderByAggregateInput = {
@@ -1128,6 +1235,7 @@ export type TournamentAvgOrderByAggregateInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
 }
 
 export type TournamentMaxOrderByAggregateInput = {
@@ -1168,6 +1276,10 @@ export type TournamentMaxOrderByAggregateInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  chatEnabled?: Prisma.SortOrder
+  chatRules?: Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
+  requiresScoreEvidence?: Prisma.SortOrder
 }
 
 export type TournamentMinOrderByAggregateInput = {
@@ -1208,6 +1320,10 @@ export type TournamentMinOrderByAggregateInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  chatEnabled?: Prisma.SortOrder
+  chatRules?: Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
+  requiresScoreEvidence?: Prisma.SortOrder
 }
 
 export type TournamentSumOrderByAggregateInput = {
@@ -1219,6 +1335,7 @@ export type TournamentSumOrderByAggregateInput = {
   registrationFee?: Prisma.SortOrder
   tournamentPrice?: Prisma.SortOrder
   paymentPerTeam?: Prisma.SortOrder
+  botCalls?: Prisma.SortOrder
 }
 
 export type TournamentScalarRelationFilter = {
@@ -1534,6 +1651,20 @@ export type TournamentUpdateOneWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutPaymentsInput, Prisma.TournamentUpdateWithoutPaymentsInput>, Prisma.TournamentUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type TournamentCreateNestedOneWithoutChatMessagesInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutChatMessagesInput, Prisma.TournamentUncheckedCreateWithoutChatMessagesInput>
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutChatMessagesInput
+  connect?: Prisma.TournamentWhereUniqueInput
+}
+
+export type TournamentUpdateOneRequiredWithoutChatMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutChatMessagesInput, Prisma.TournamentUncheckedCreateWithoutChatMessagesInput>
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutChatMessagesInput
+  upsert?: Prisma.TournamentUpsertWithoutChatMessagesInput
+  connect?: Prisma.TournamentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutChatMessagesInput, Prisma.TournamentUpdateWithoutChatMessagesInput>, Prisma.TournamentUncheckedUpdateWithoutChatMessagesInput>
+}
+
 export type TournamentCreateWithoutOrganizationInput = {
   id?: string
   name: string
@@ -1571,6 +1702,11 @@ export type TournamentCreateWithoutOrganizationInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1585,6 +1721,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutOrganizationInput = {
@@ -1625,6 +1762,11 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1638,6 +1780,7 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutOrganizationInput = {
@@ -1708,6 +1851,11 @@ export type TournamentScalarWhereInput = {
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
   tournamentPrice?: Prisma.IntFilter<"Tournament"> | number
   paymentPerTeam?: Prisma.IntFilter<"Tournament"> | number
+  chatEnabled?: Prisma.BoolFilter<"Tournament"> | boolean
+  chatRules?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  parageeBot?: Prisma.JsonNullableFilter<"Tournament">
+  botCalls?: Prisma.IntFilter<"Tournament"> | number
+  requiresScoreEvidence?: Prisma.BoolFilter<"Tournament"> | boolean
 }
 
 export type TournamentCreateWithoutSeasonsInput = {
@@ -1747,6 +1895,11 @@ export type TournamentCreateWithoutSeasonsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1761,6 +1914,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSeasonsInput = {
@@ -1802,6 +1956,11 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1814,6 +1973,7 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSeasonsInput = {
@@ -1858,6 +2018,11 @@ export type TournamentCreateWithoutParentInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -1872,6 +2037,7 @@ export type TournamentCreateWithoutParentInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutParentInput = {
@@ -1912,6 +2078,11 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -1925,6 +2096,7 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutParentInput = {
@@ -1985,6 +2157,11 @@ export type TournamentUpdateWithoutSeasonsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -1999,6 +2176,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSeasonsInput = {
@@ -2040,6 +2218,11 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2052,6 +2235,7 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUpsertWithWhereUniqueWithoutParentInput = {
@@ -2107,6 +2291,11 @@ export type TournamentCreateWithoutFollowersInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -2121,6 +2310,7 @@ export type TournamentCreateWithoutFollowersInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutFollowersInput = {
@@ -2162,6 +2352,11 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -2174,6 +2369,7 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutFollowersInput = {
@@ -2229,6 +2425,11 @@ export type TournamentUpdateWithoutFollowersInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -2243,6 +2444,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutFollowersInput = {
@@ -2284,6 +2486,11 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2296,6 +2503,7 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutGroupsInput = {
@@ -2335,6 +2543,11 @@ export type TournamentCreateWithoutGroupsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2349,6 +2562,7 @@ export type TournamentCreateWithoutGroupsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutGroupsInput = {
@@ -2390,6 +2604,11 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2402,6 +2621,7 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutGroupsInput = {
@@ -2457,6 +2677,11 @@ export type TournamentUpdateWithoutGroupsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2471,6 +2696,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutGroupsInput = {
@@ -2512,6 +2738,11 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2524,6 +2755,7 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutParticipantsInput = {
@@ -2563,6 +2795,11 @@ export type TournamentCreateWithoutParticipantsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2577,6 +2814,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutParticipantsInput = {
@@ -2618,6 +2856,11 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2630,6 +2873,7 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutParticipantsInput = {
@@ -2685,6 +2929,11 @@ export type TournamentUpdateWithoutParticipantsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2699,6 +2948,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutParticipantsInput = {
@@ -2740,6 +2990,11 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2752,6 +3007,7 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutFixturesInput = {
@@ -2791,6 +3047,11 @@ export type TournamentCreateWithoutFixturesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
@@ -2805,6 +3066,7 @@ export type TournamentCreateWithoutFixturesInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutFixturesInput = {
@@ -2846,6 +3108,11 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
@@ -2858,6 +3125,7 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutFixturesInput = {
@@ -2913,6 +3181,11 @@ export type TournamentUpdateWithoutFixturesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
@@ -2927,6 +3200,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutFixturesInput = {
@@ -2968,6 +3242,11 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
@@ -2980,6 +3259,7 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutStandingsInput = {
@@ -3019,6 +3299,11 @@ export type TournamentCreateWithoutStandingsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3033,6 +3318,7 @@ export type TournamentCreateWithoutStandingsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutStandingsInput = {
@@ -3074,6 +3360,11 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3086,6 +3377,7 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutStandingsInput = {
@@ -3141,6 +3433,11 @@ export type TournamentUpdateWithoutStandingsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3155,6 +3452,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutStandingsInput = {
@@ -3196,6 +3494,11 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3208,6 +3511,7 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutSponsorsInput = {
@@ -3247,6 +3551,11 @@ export type TournamentCreateWithoutSponsorsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3261,6 +3570,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSponsorsInput = {
@@ -3302,6 +3612,11 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3314,6 +3629,7 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSponsorsInput = {
@@ -3369,6 +3685,11 @@ export type TournamentUpdateWithoutSponsorsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3383,6 +3704,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSponsorsInput = {
@@ -3424,6 +3746,11 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3436,6 +3763,7 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutSocialsInput = {
@@ -3475,6 +3803,11 @@ export type TournamentCreateWithoutSocialsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3489,6 +3822,7 @@ export type TournamentCreateWithoutSocialsInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutSocialsInput = {
@@ -3530,6 +3864,11 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3542,6 +3881,7 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutSocialsInput = {
@@ -3597,6 +3937,11 @@ export type TournamentUpdateWithoutSocialsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3611,6 +3956,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutSocialsInput = {
@@ -3652,6 +3998,11 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3664,6 +4015,7 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutVenuesInput = {
@@ -3703,6 +4055,11 @@ export type TournamentCreateWithoutVenuesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3717,6 +4074,7 @@ export type TournamentCreateWithoutVenuesInput = {
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutVenuesInput = {
@@ -3758,6 +4116,11 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3770,6 +4133,7 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutVenuesInput = {
@@ -3825,6 +4189,11 @@ export type TournamentUpdateWithoutVenuesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -3839,6 +4208,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutVenuesInput = {
@@ -3880,6 +4250,11 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -3892,6 +4267,7 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutTeam_invitesInput = {
@@ -3931,6 +4307,11 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -3945,6 +4326,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
@@ -3986,6 +4368,11 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -3998,6 +4385,7 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutTeam_invitesInput = {
@@ -4053,6 +4441,11 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4067,6 +4460,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
@@ -4108,6 +4502,11 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4120,6 +4519,7 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutTournament_invitesInput = {
@@ -4159,6 +4559,11 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -4173,6 +4578,7 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
@@ -4214,6 +4620,11 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -4226,6 +4637,7 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutTournament_invitesInput = {
@@ -4281,6 +4693,11 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4295,6 +4712,7 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
@@ -4336,6 +4754,11 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4348,6 +4771,7 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutDiscountCodesInput = {
@@ -4387,6 +4811,11 @@ export type TournamentCreateWithoutDiscountCodesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -4401,6 +4830,7 @@ export type TournamentCreateWithoutDiscountCodesInput = {
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutDiscountCodesInput = {
@@ -4442,6 +4872,11 @@ export type TournamentUncheckedCreateWithoutDiscountCodesInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -4454,6 +4889,7 @@ export type TournamentUncheckedCreateWithoutDiscountCodesInput = {
   tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutDiscountCodesInput = {
@@ -4509,6 +4945,11 @@ export type TournamentUpdateWithoutDiscountCodesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4523,6 +4964,7 @@ export type TournamentUpdateWithoutDiscountCodesInput = {
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutDiscountCodesInput = {
@@ -4564,6 +5006,11 @@ export type TournamentUncheckedUpdateWithoutDiscountCodesInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4576,6 +5023,7 @@ export type TournamentUncheckedUpdateWithoutDiscountCodesInput = {
   tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentCreateWithoutPaymentsInput = {
@@ -4615,6 +5063,11 @@ export type TournamentCreateWithoutPaymentsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
@@ -4629,6 +5082,7 @@ export type TournamentCreateWithoutPaymentsInput = {
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
   venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentUncheckedCreateWithoutPaymentsInput = {
@@ -4670,6 +5124,11 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
   fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
   groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
   participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
@@ -4682,6 +5141,7 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
   venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
   discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
 }
 
 export type TournamentCreateOrConnectWithoutPaymentsInput = {
@@ -4737,6 +5197,11 @@ export type TournamentUpdateWithoutPaymentsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4751,6 +5216,7 @@ export type TournamentUpdateWithoutPaymentsInput = {
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutPaymentsInput = {
@@ -4792,6 +5258,11 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4803,6 +5274,259 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
   tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentCreateWithoutChatMessagesInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  isPractice?: boolean
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
+  fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
+  seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
+  discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentUncheckedCreateWithoutChatMessagesInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  isPractice?: boolean
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  organization_id?: string | null
+  parent_id?: string | null
+  seasonName?: string | null
+  doubleRoundRobin?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
+  fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
+  seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
+  discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentCreateOrConnectWithoutChatMessagesInput = {
+  where: Prisma.TournamentWhereUniqueInput
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutChatMessagesInput, Prisma.TournamentUncheckedCreateWithoutChatMessagesInput>
+}
+
+export type TournamentUpsertWithoutChatMessagesInput = {
+  update: Prisma.XOR<Prisma.TournamentUpdateWithoutChatMessagesInput, Prisma.TournamentUncheckedUpdateWithoutChatMessagesInput>
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutChatMessagesInput, Prisma.TournamentUncheckedCreateWithoutChatMessagesInput>
+  where?: Prisma.TournamentWhereInput
+}
+
+export type TournamentUpdateToOneWithWhereWithoutChatMessagesInput = {
+  where?: Prisma.TournamentWhereInput
+  data: Prisma.XOR<Prisma.TournamentUpdateWithoutChatMessagesInput, Prisma.TournamentUncheckedUpdateWithoutChatMessagesInput>
+}
+
+export type TournamentUpdateWithoutChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
+  seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
+  discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentUncheckedUpdateWithoutChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
@@ -4844,6 +5568,11 @@ export type TournamentCreateManyOrganizationInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
 }
 
 export type TournamentUpdateWithoutOrganizationInput = {
@@ -4883,6 +5612,11 @@ export type TournamentUpdateWithoutOrganizationInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -4897,6 +5631,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutOrganizationInput = {
@@ -4937,6 +5672,11 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -4950,6 +5690,7 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
@@ -4990,6 +5731,11 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type TournamentCreateManyParentInput = {
@@ -5030,6 +5776,11 @@ export type TournamentCreateManyParentInput = {
   registrationFee?: number
   tournamentPrice?: number
   paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
 }
 
 export type TournamentUpdateWithoutParentInput = {
@@ -5069,6 +5820,11 @@ export type TournamentUpdateWithoutParentInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
@@ -5083,6 +5839,7 @@ export type TournamentUpdateWithoutParentInput = {
   venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateWithoutParentInput = {
@@ -5123,6 +5880,11 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
   fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
   groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
   participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
@@ -5136,6 +5898,7 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
 }
 
 export type TournamentUncheckedUpdateManyWithoutParentInput = {
@@ -5176,6 +5939,11 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
   tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
   paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -5197,6 +5965,7 @@ export type TournamentCountOutputType = {
   venues: number
   payments: number
   discountCodes: number
+  chatMessages: number
 }
 
 export type TournamentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5213,6 +5982,7 @@ export type TournamentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extens
   venues?: boolean | TournamentCountOutputTypeCountVenuesArgs
   payments?: boolean | TournamentCountOutputTypeCountPaymentsArgs
   discountCodes?: boolean | TournamentCountOutputTypeCountDiscountCodesArgs
+  chatMessages?: boolean | TournamentCountOutputTypeCountChatMessagesArgs
 }
 
 /**
@@ -5316,6 +6086,13 @@ export type TournamentCountOutputTypeCountDiscountCodesArgs<ExtArgs extends runt
   where?: Prisma.DiscountCodeWhereInput
 }
 
+/**
+ * TournamentCountOutputType without action
+ */
+export type TournamentCountOutputTypeCountChatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ChatMessageWhereInput
+}
+
 
 export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -5356,6 +6133,11 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   registrationFee?: boolean
   tournamentPrice?: boolean
   paymentPerTeam?: boolean
+  chatEnabled?: boolean
+  chatRules?: boolean
+  parageeBot?: boolean
+  botCalls?: boolean
+  requiresScoreEvidence?: boolean
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
   participants?: boolean | Prisma.Tournament$participantsArgs<ExtArgs>
@@ -5371,6 +6153,7 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
   payments?: boolean | Prisma.Tournament$paymentsArgs<ExtArgs>
   discountCodes?: boolean | Prisma.Tournament$discountCodesArgs<ExtArgs>
+  chatMessages?: boolean | Prisma.Tournament$chatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.TournamentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
 
@@ -5413,6 +6196,11 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   registrationFee?: boolean
   tournamentPrice?: boolean
   paymentPerTeam?: boolean
+  chatEnabled?: boolean
+  chatRules?: boolean
+  parageeBot?: boolean
+  botCalls?: boolean
+  requiresScoreEvidence?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -5456,6 +6244,11 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   registrationFee?: boolean
   tournamentPrice?: boolean
   paymentPerTeam?: boolean
+  chatEnabled?: boolean
+  chatRules?: boolean
+  parageeBot?: boolean
+  botCalls?: boolean
+  requiresScoreEvidence?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
@@ -5499,9 +6292,14 @@ export type TournamentSelectScalar = {
   registrationFee?: boolean
   tournamentPrice?: boolean
   paymentPerTeam?: boolean
+  chatEnabled?: boolean
+  chatRules?: boolean
+  parageeBot?: boolean
+  botCalls?: boolean
+  requiresScoreEvidence?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam" | "chatEnabled" | "chatRules" | "parageeBot" | "botCalls" | "requiresScoreEvidence", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -5518,6 +6316,7 @@ export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   venues?: boolean | Prisma.Tournament$venuesArgs<ExtArgs>
   payments?: boolean | Prisma.Tournament$paymentsArgs<ExtArgs>
   discountCodes?: boolean | Prisma.Tournament$discountCodesArgs<ExtArgs>
+  chatMessages?: boolean | Prisma.Tournament$chatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.TournamentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TournamentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5547,6 +6346,7 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     venues: Prisma.$VenuePayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     discountCodes: Prisma.$DiscountCodePayload<ExtArgs>[]
+    chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5587,6 +6387,11 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     registrationFee: number
     tournamentPrice: number
     paymentPerTeam: number
+    chatEnabled: boolean
+    chatRules: string | null
+    parageeBot: runtime.JsonValue | null
+    botCalls: number
+    requiresScoreEvidence: boolean
   }, ExtArgs["result"]["tournament"]>
   composites: {}
 }
@@ -5996,6 +6801,7 @@ export interface Prisma__TournamentClient<T, Null = never, ExtArgs extends runti
   venues<T extends Prisma.Tournament$venuesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$venuesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VenuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Tournament$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   discountCodes<T extends Prisma.Tournament$discountCodesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$discountCodesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  chatMessages<T extends Prisma.Tournament$chatMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6063,6 +6869,11 @@ export interface TournamentFieldRefs {
   readonly registrationFee: Prisma.FieldRef<"Tournament", 'Int'>
   readonly tournamentPrice: Prisma.FieldRef<"Tournament", 'Int'>
   readonly paymentPerTeam: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly chatEnabled: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly chatRules: Prisma.FieldRef<"Tournament", 'String'>
+  readonly parageeBot: Prisma.FieldRef<"Tournament", 'Json'>
+  readonly botCalls: Prisma.FieldRef<"Tournament", 'Int'>
+  readonly requiresScoreEvidence: Prisma.FieldRef<"Tournament", 'Boolean'>
 }
     
 
@@ -6806,6 +7617,30 @@ export type Tournament$discountCodesArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.DiscountCodeScalarFieldEnum | Prisma.DiscountCodeScalarFieldEnum[]
+}
+
+/**
+ * Tournament.chatMessages
+ */
+export type Tournament$chatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ChatMessage
+   */
+  select?: Prisma.ChatMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ChatMessage
+   */
+  omit?: Prisma.ChatMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ChatMessageInclude<ExtArgs> | null
+  where?: Prisma.ChatMessageWhereInput
+  orderBy?: Prisma.ChatMessageOrderByWithRelationInput | Prisma.ChatMessageOrderByWithRelationInput[]
+  cursor?: Prisma.ChatMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ChatMessageScalarFieldEnum | Prisma.ChatMessageScalarFieldEnum[]
 }
 
 /**

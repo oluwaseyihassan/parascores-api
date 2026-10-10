@@ -620,6 +620,57 @@ export type EnumSubscriptionPlanNullableWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumSubscriptionPlanNullableFilter<$PrismaModel>
 }
 
+export type EnumChatAuthorTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatAuthorType | Prisma.EnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel> | $Enums.ChatAuthorType
+}
+
+export type EnumChatCardTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatCardType | Prisma.EnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel> | $Enums.ChatCardType | null
+}
+
+export type EnumChatAuthorTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatAuthorType | Prisma.EnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChatAuthorTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChatAuthorType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel>
+}
+
+export type EnumChatCardTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatCardType | Prisma.EnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumChatCardTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ChatCardType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel>
+}
+
+export type EnumSubmissionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubmissionStatus | Prisma.EnumSubmissionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel> | $Enums.SubmissionStatus
+}
+
+export type EnumSubmissionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubmissionStatus | Prisma.EnumSubmissionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmissionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel>
+}
+
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -1172,6 +1223,57 @@ export type NestedEnumSubscriptionPlanNullableWithAggregatesFilter<$PrismaModel 
   _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedEnumSubscriptionPlanNullableFilter<$PrismaModel>
   _max?: Prisma.NestedEnumSubscriptionPlanNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumChatAuthorTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatAuthorType | Prisma.EnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel> | $Enums.ChatAuthorType
+}
+
+export type NestedEnumChatCardTypeNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatCardType | Prisma.EnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel> | $Enums.ChatCardType | null
+}
+
+export type NestedEnumChatAuthorTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatAuthorType | Prisma.EnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ChatAuthorType[] | Prisma.ListEnumChatAuthorTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumChatAuthorTypeWithAggregatesFilter<$PrismaModel> | $Enums.ChatAuthorType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChatAuthorTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumChatCardTypeNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ChatCardType | Prisma.EnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  in?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.ChatCardType[] | Prisma.ListEnumChatCardTypeFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumChatCardTypeNullableWithAggregatesFilter<$PrismaModel> | $Enums.ChatCardType | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumChatCardTypeNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumSubmissionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubmissionStatus | Prisma.EnumSubmissionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel> | $Enums.SubmissionStatus
+}
+
+export type NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SubmissionStatus | Prisma.EnumSubmissionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SubmissionStatus[] | Prisma.ListEnumSubmissionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSubmissionStatusWithAggregatesFilter<$PrismaModel> | $Enums.SubmissionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSubmissionStatusFilter<$PrismaModel>
 }
 
 

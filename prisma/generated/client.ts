@@ -88,6 +88,16 @@ export type TournamentEntry = Prisma.TournamentEntryModel
  */
 export type Fixture = Prisma.FixtureModel
 /**
+ * Model PulseItem
+ * 
+ */
+export type PulseItem = Prisma.PulseItemModel
+/**
+ * Model PulseReaction
+ * 
+ */
+export type PulseReaction = Prisma.PulseReactionModel
+/**
  * Model ResultEntry
  * 
  */
@@ -167,3 +177,18 @@ export type PushSubscription = Prisma.PushSubscriptionModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model ChatMessage
+ * 
+ */
+export type ChatMessage = Prisma.ChatMessageModel
+/**
+ * Model ChatReaction
+ * 
+ */
+export type ChatReaction = Prisma.ChatReactionModel
+/**
+ * Model ScoreSubmission
+ * 
+ */
+export type ScoreSubmission = Prisma.ScoreSubmissionModel

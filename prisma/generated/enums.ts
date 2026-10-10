@@ -167,3 +167,37 @@ export const DiscountType = {
 } as const
 
 export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
+
+
+export const ChatAuthorType = {
+  USER: 'USER',
+  ORGANIZER: 'ORGANIZER',
+  BOT: 'BOT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type ChatAuthorType = (typeof ChatAuthorType)[keyof typeof ChatAuthorType]
+
+
+export const ChatCardType = {
+  FIXTURE: 'FIXTURE',
+  TABLE: 'TABLE',
+  STATS: 'STATS',
+  LINK: 'LINK',
+  SCORE_SUBMITTED: 'SCORE_SUBMITTED',
+  SCORE_CONFIRMED: 'SCORE_CONFIRMED',
+  SCORE_CONFLICT: 'SCORE_CONFLICT'
+} as const
+
+export type ChatCardType = (typeof ChatCardType)[keyof typeof ChatCardType]
+
+
+export const SubmissionStatus = {
+  PENDING: 'PENDING',
+  MATCHED: 'MATCHED',
+  CONFLICT: 'CONFLICT',
+  APPLIED: 'APPLIED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]

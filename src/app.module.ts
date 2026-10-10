@@ -31,6 +31,11 @@ import { LocationsModule } from './locations/locations.module';
 import { AdminModule } from './admin/admin.module';
 import { RedisModule } from './redis/redis.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { PulseModule } from './pulse/pulse.module';
+import { ChatModule } from './chat/chat.module';
+import { ParageeModule } from './paragee/paragee.module';
+import { AiModule } from './ai/ai.module';
+import { ScoreSubmissionsModule } from './score-submissions/score-submissions.module';
 // import { SentryModule } from '@sentry/nestjs/setup';
 // import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
@@ -71,6 +76,11 @@ import { APP_FILTER } from '@nestjs/core';
     AdminModule,
     RedisModule,
     NotificationsModule,
+    PulseModule,
+    ChatModule,
+    ParageeModule,
+    AiModule,
+    ScoreSubmissionsModule,
   ],
   controllers: [AppController],
   providers: [

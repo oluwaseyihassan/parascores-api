@@ -793,6 +793,17 @@ export class TournamentsService {
               },
             },
             group: true,
+            // Double-entry score submissions (esports package) — drives
+            // "awaiting opponent" / "score conflict" badges on fixture cards
+            scoreSubmissions: {
+              select: {
+                participantId: true,
+                homeScore: true,
+                awayScore: true,
+                status: true,
+                evidenceUrl: true,
+              },
+            },
             matchEvents: {
               where: {
                 type: { in: ['YELLOW_CARD', 'RED_CARD'] },

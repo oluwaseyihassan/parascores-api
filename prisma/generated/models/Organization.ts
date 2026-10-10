@@ -297,6 +297,7 @@ export type OrganizationWhereInput = {
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
+  pulseItems?: Prisma.PulseItemListRelationFilter
 }
 
 export type OrganizationOrderByWithRelationInput = {
@@ -326,6 +327,7 @@ export type OrganizationOrderByWithRelationInput = {
   pushSubscriptions?: Prisma.PushSubscriptionOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  pulseItems?: Prisma.PulseItemOrderByRelationAggregateInput
 }
 
 export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
@@ -358,6 +360,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
   payments?: Prisma.PaymentListRelationFilter
+  pulseItems?: Prisma.PulseItemListRelationFilter
 }, "id" | "slug" | "subdomain">
 
 export type OrganizationOrderByWithAggregationInput = {
@@ -437,6 +440,7 @@ export type OrganizationCreateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateInput = {
@@ -466,6 +470,7 @@ export type OrganizationUncheckedCreateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUpdateInput = {
@@ -495,6 +500,7 @@ export type OrganizationUpdateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateInput = {
@@ -524,6 +530,7 @@ export type OrganizationUncheckedUpdateInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateManyInput = {
@@ -710,6 +717,20 @@ export type OrganizationUpdateOneRequiredWithoutRosterNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutRosterInput, Prisma.OrganizationUpdateWithoutRosterInput>, Prisma.OrganizationUncheckedUpdateWithoutRosterInput>
 }
 
+export type OrganizationCreateNestedOneWithoutPulseItemsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPulseItemsInput, Prisma.OrganizationUncheckedCreateWithoutPulseItemsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPulseItemsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutPulseItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutPulseItemsInput, Prisma.OrganizationUncheckedCreateWithoutPulseItemsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutPulseItemsInput
+  upsert?: Prisma.OrganizationUpsertWithoutPulseItemsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPulseItemsInput, Prisma.OrganizationUpdateWithoutPulseItemsInput>, Prisma.OrganizationUncheckedUpdateWithoutPulseItemsInput>
+}
+
 export type OrganizationCreateNestedOneWithoutSocialsInput = {
   create?: Prisma.XOR<Prisma.OrganizationCreateWithoutSocialsInput, Prisma.OrganizationUncheckedCreateWithoutSocialsInput>
   connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutSocialsInput
@@ -798,6 +819,7 @@ export type OrganizationCreateWithoutMembersInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutMembersInput = {
@@ -826,6 +848,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutMembersInput = {
@@ -870,6 +893,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutMembersInput = {
@@ -898,6 +922,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutTournamentsInput = {
@@ -926,6 +951,7 @@ export type OrganizationCreateWithoutTournamentsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutTournamentsInput = {
@@ -954,6 +980,7 @@ export type OrganizationUncheckedCreateWithoutTournamentsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutTournamentsInput = {
@@ -998,6 +1025,7 @@ export type OrganizationUpdateWithoutTournamentsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutTournamentsInput = {
@@ -1026,6 +1054,7 @@ export type OrganizationUncheckedUpdateWithoutTournamentsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutRosterInput = {
@@ -1054,6 +1083,7 @@ export type OrganizationCreateWithoutRosterInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutRosterInput = {
@@ -1082,6 +1112,7 @@ export type OrganizationUncheckedCreateWithoutRosterInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutRosterInput = {
@@ -1126,6 +1157,7 @@ export type OrganizationUpdateWithoutRosterInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutRosterInput = {
@@ -1151,6 +1183,139 @@ export type OrganizationUncheckedUpdateWithoutRosterInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutPulseItemsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
+  instantPayouts?: boolean
+  paystackRecipientCode?: string | null
+  subdomain?: string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutPulseItemsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
+  instantPayouts?: boolean
+  paystackRecipientCode?: string | null
+  subdomain?: string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutPulseItemsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPulseItemsInput, Prisma.OrganizationUncheckedCreateWithoutPulseItemsInput>
+}
+
+export type OrganizationUpsertWithoutPulseItemsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutPulseItemsInput, Prisma.OrganizationUncheckedUpdateWithoutPulseItemsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutPulseItemsInput, Prisma.OrganizationUncheckedCreateWithoutPulseItemsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutPulseItemsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutPulseItemsInput, Prisma.OrganizationUncheckedUpdateWithoutPulseItemsInput>
+}
+
+export type OrganizationUpdateWithoutPulseItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  instantPayouts?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paystackRecipientCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutPulseItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  instantPayouts?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paystackRecipientCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1182,6 +1347,7 @@ export type OrganizationCreateWithoutSocialsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSocialsInput = {
@@ -1210,6 +1376,7 @@ export type OrganizationUncheckedCreateWithoutSocialsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSocialsInput = {
@@ -1254,6 +1421,7 @@ export type OrganizationUpdateWithoutSocialsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSocialsInput = {
@@ -1282,6 +1450,7 @@ export type OrganizationUncheckedUpdateWithoutSocialsInput = {
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutSubscriptionInput = {
@@ -1310,6 +1479,7 @@ export type OrganizationCreateWithoutSubscriptionInput = {
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutSubscriptionInput = {
@@ -1338,6 +1508,7 @@ export type OrganizationUncheckedCreateWithoutSubscriptionInput = {
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutSubscriptionInput = {
@@ -1382,6 +1553,7 @@ export type OrganizationUpdateWithoutSubscriptionInput = {
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutSubscriptionInput = {
@@ -1410,6 +1582,7 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionInput = {
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPaymentsInput = {
@@ -1438,6 +1611,7 @@ export type OrganizationCreateWithoutPaymentsInput = {
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPaymentsInput = {
@@ -1466,6 +1640,7 @@ export type OrganizationUncheckedCreateWithoutPaymentsInput = {
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPaymentsInput = {
@@ -1510,6 +1685,7 @@ export type OrganizationUpdateWithoutPaymentsInput = {
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPaymentsInput = {
@@ -1538,6 +1714,7 @@ export type OrganizationUncheckedUpdateWithoutPaymentsInput = {
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationCreateWithoutPushSubscriptionsInput = {
@@ -1566,6 +1743,7 @@ export type OrganizationCreateWithoutPushSubscriptionsInput = {
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationUncheckedCreateWithoutPushSubscriptionsInput = {
@@ -1594,6 +1772,7 @@ export type OrganizationUncheckedCreateWithoutPushSubscriptionsInput = {
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
 }
 
 export type OrganizationCreateOrConnectWithoutPushSubscriptionsInput = {
@@ -1638,6 +1817,7 @@ export type OrganizationUpdateWithoutPushSubscriptionsInput = {
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
 }
 
 export type OrganizationUncheckedUpdateWithoutPushSubscriptionsInput = {
@@ -1666,6 +1846,7 @@ export type OrganizationUncheckedUpdateWithoutPushSubscriptionsInput = {
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
 }
 
 
@@ -1680,6 +1861,7 @@ export type OrganizationCountOutputType = {
   roster: number
   pushSubscriptions: number
   payments: number
+  pulseItems: number
 }
 
 export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1689,6 +1871,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   roster?: boolean | OrganizationCountOutputTypeCountRosterArgs
   pushSubscriptions?: boolean | OrganizationCountOutputTypeCountPushSubscriptionsArgs
   payments?: boolean | OrganizationCountOutputTypeCountPaymentsArgs
+  pulseItems?: boolean | OrganizationCountOutputTypeCountPulseItemsArgs
 }
 
 /**
@@ -1743,6 +1926,13 @@ export type OrganizationCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime
   where?: Prisma.PaymentWhereInput
 }
 
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountPulseItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PulseItemWhereInput
+}
+
 
 export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1771,6 +1961,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   pushSubscriptions?: boolean | Prisma.Organization$pushSubscriptionsArgs<ExtArgs>
   subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
   payments?: boolean | Prisma.Organization$paymentsArgs<ExtArgs>
+  pulseItems?: boolean | Prisma.Organization$pulseItemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["organization"]>
 
@@ -1849,6 +2040,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   pushSubscriptions?: boolean | Prisma.Organization$pushSubscriptionsArgs<ExtArgs>
   subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
   payments?: boolean | Prisma.Organization$paymentsArgs<ExtArgs>
+  pulseItems?: boolean | Prisma.Organization$pulseItemsArgs<ExtArgs>
   _count?: boolean | Prisma.OrganizationCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type OrganizationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1864,6 +2056,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     pushSubscriptions: Prisma.$PushSubscriptionPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    pulseItems: Prisma.$PulseItemPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2286,6 +2479,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   pushSubscriptions<T extends Prisma.Organization$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Organization$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   payments<T extends Prisma.Organization$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  pulseItems<T extends Prisma.Organization$pulseItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$pulseItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PulseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2882,6 +3076,30 @@ export type Organization$paymentsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * Organization.pulseItems
+ */
+export type Organization$pulseItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PulseItem
+   */
+  select?: Prisma.PulseItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PulseItem
+   */
+  omit?: Prisma.PulseItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PulseItemInclude<ExtArgs> | null
+  where?: Prisma.PulseItemWhereInput
+  orderBy?: Prisma.PulseItemOrderByWithRelationInput | Prisma.PulseItemOrderByWithRelationInput[]
+  cursor?: Prisma.PulseItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PulseItemScalarFieldEnum | Prisma.PulseItemScalarFieldEnum[]
 }
 
 /**
