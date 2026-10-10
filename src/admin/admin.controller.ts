@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   Patch,
   Param,
@@ -245,30 +246,6 @@ export class AdminController {
       entityType: AuditEntityType.ORGANIZATION,
       entityId: id,
       metadata: { isVerified },
-      ipAddress: req?.ip,
-    });
-    return result;
-  }
-
-  @Patch('organizations/:id/event-hub')
-  @ApiOperation({ summary: 'Update organization event hub (subdomain, brand config)' })
-  async updateOrganizationEventHub(
-    @Param('id') id: string,
-    @Body()
-    body: {
-      subdomain?: string | null;
-      brandConfig?: Record<string, any>;
-    },
-    @User() user: { sub: string },
-    @Req() req: { ip?: string },
-  ) {
-    const result = await this.adminService.updateOrganizationEventHub(id, body);
-    await this.auditLogsService.create({
-      actorId: user.sub,
-      action: AuditAction.ORGANIZATION_EVENT_HUB_UPDATE,
-      entityType: AuditEntityType.ORGANIZATION,
-      entityId: id,
-      metadata: { subdomain: body.subdomain },
       ipAddress: req?.ip,
     });
     return result;

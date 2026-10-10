@@ -131,48 +131,6 @@ export class OrganizationsController {
     return this.organizationsService.getPublicProfile(slug);
   }
 
-  @Public()
-  @Get('event-hub/:subdomain')
-  @ApiOperation({ summary: 'Get an event hub organization by its subdomain' })
-  @ApiResponse({
-    status: 200,
-    description: 'Event hub retrieved successfully',
-  })
-  @ApiResponse({ status: 404, description: 'Event hub not found' })
-  async getEventHubBySubdomain(@Param('subdomain') subdomain: string) {
-    return this.organizationsService.getEventHubBySubdomain(subdomain);
-  }
-
-  @Public()
-  @Get('event-hub/:subdomain/live')
-  @ApiOperation({
-    summary:
-      'Get live hub data for an event organization (live/upcoming/recent fixtures + per-sport status)',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Event hub live data retrieved successfully',
-  })
-  @ApiResponse({ status: 404, description: 'Event hub not found' })
-  async getEventHubLive(@Param('subdomain') subdomain: string) {
-    return this.organizationsService.getEventHubLive(subdomain);
-  }
-
-  @Public()
-  @Get('event-hub/:subdomain/medals')
-  @ApiOperation({
-    summary:
-      'Get the medal table for an event organization (aggregated from finals and third-place matches across its tournaments)',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Medal table retrieved successfully',
-  })
-  @ApiResponse({ status: 404, description: 'Event hub not found' })
-  async getEventHubMedalTable(@Param('subdomain') subdomain: string) {
-    return this.organizationsService.getEventHubMedalTable(subdomain);
-  }
-
   // Entity Management Routes
   @Get(':id')
   @ApiOperation({ summary: 'Get an organization' })

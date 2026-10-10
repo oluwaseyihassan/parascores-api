@@ -7,6 +7,7 @@ import { ResponseUtil } from 'src/utils/api-response';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 
 import { NotificationsService } from 'src/notifications/notifications.service';
+import { PulseService } from 'src/pulse/pulse.service';
 
 @Injectable()
 export class MatchEventsService {
@@ -15,6 +16,7 @@ export class MatchEventsService {
     private readonly fixturesService: FixturesService,
     private readonly organizationsService: OrganizationsService,
     private readonly notificationsService: NotificationsService,
+    private readonly pulseService: PulseService,
   ) {}
 
   async create(
@@ -71,6 +73,9 @@ export class MatchEventsService {
       type: 'event_added',
       data: event,
     });
+
+    // Event hub pulse card (fire-and-forget; no-op for non-hub tournaments)
+    this.pulseService.recordMatchEvent(fixtureId, event.id).catch(() => {});
 
     // Check if event should trigger a push notification
     const isNotifyType = [

@@ -27,17 +27,6 @@ export class NotificationListener {
         },
       });
 
-      // Anonymous event-hub subscriptions (fans following the org's subdomain)
-      const tournament = await this.db.tournament.findUnique({
-        where: { id: payload.tournamentId },
-        select: { organization_id: true },
-      });
-      const anonymousSubs = tournament?.organization_id
-        ? await this.db.pushSubscription.findMany({
-            where: { orgId: tournament.organization_id, userId: null },
-          })
-        : [];
-
       const pushPayload = JSON.stringify({
         title: payload.title,
         body: payload.body,
@@ -84,12 +73,9 @@ export class NotificationListener {
           });
 
       // Fire all push notifications concurrently instead of sequentially
-      const notificationPromises = [
-        ...followers.flatMap((follower) =>
-          follower.user.push_subscriptions.map(sendTo),
-        ),
-        ...anonymousSubs.map(sendTo),
-      ];
+      const notificationPromises = followers.flatMap((follower) =>
+        follower.user.push_subscriptions.map(sendTo),
+      );
 
       if (notificationPromises.length > 0) {
         const results = await Promise.allSettled(notificationPromises);

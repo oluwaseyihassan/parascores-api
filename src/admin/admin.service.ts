@@ -42,6 +42,7 @@ export class AdminService {
       recentPayments,
       revenueResult,
       monthlyRevenueResult,
+      botCallsResult,
     ] = await Promise.all([
       this.db.user.count(),
       this.db.tournament.count(),
@@ -90,6 +91,10 @@ export class AdminService {
         },
         _sum: { amount: true },
       }),
+      // Paragee (AI bot) calls answered across all tournaments
+      this.db.tournament.aggregate({
+        _sum: { botCalls: true },
+      }),
     ]);
 
     return ResponseUtil.success({
@@ -101,6 +106,7 @@ export class AdminService {
         players: totalPlayers,
         fixtures: totalFixtures,
         pendingPlayers,
+        botCalls: botCallsResult._sum.botCalls || 0,
       },
       revenue: {
         total: revenueResult._sum.amount || 0,
@@ -687,76 +693,6 @@ export class AdminService {
     return ResponseUtil.success(
       updated,
       `Organization ${isVerified ? 'verified' : 'unverified'} successfully`,
-    );
-  }
-
-  async updateOrganizationEventHub(
-    id: string,
-    data: { subdomain?: string | null; brandConfig?: Record<string, any> },
-  ) {
-    const org = await this.db.organization.findUnique({ where: { id } });
-    if (!org) throw new NotFoundException('Organization not found');
-
-    const updateData: { subdomain?: string | null; brandConfig?: any } = {};
-
-    if (data.subdomain !== undefined) {
-      if (data.subdomain === null || data.subdomain === '') {
-        updateData.subdomain = null;
-      } else {
-        const subdomain = data.subdomain.toLowerCase();
-        const slugPattern = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
-        if (!slugPattern.test(subdomain)) {
-          throw new BadRequestException(
-            'Subdomain must be lowercase letters, numbers and hyphens, and not start or end with a hyphen',
-          );
-        }
-        const RESERVED = [
-          'manage',
-          'manage-dev',
-          'admin',
-          'admin-dev',
-          'dev',
-          'www',
-          'api',
-        ];
-        if (RESERVED.includes(subdomain)) {
-          throw new BadRequestException(
-            `"${subdomain}" is a reserved subdomain`,
-          );
-        }
-        const existing = await this.db.organization.findUnique({
-          where: { subdomain },
-        });
-        if (existing && existing.id !== id) {
-          throw new ConflictException(
-            `Subdomain "${subdomain}" is already in use by another organization`,
-          );
-        }
-        updateData.subdomain = subdomain;
-      }
-    }
-
-    if (data.brandConfig !== undefined) {
-      updateData.brandConfig = data.brandConfig;
-    }
-
-    const updated = await this.db.organization.update({
-      where: { id },
-      data: updateData,
-      select: {
-        id: true,
-        name: true,
-        slug: true,
-        subdomain: true,
-        brandConfig: true,
-      },
-    });
-
-    this.logger.log(`Organization ${id} event hub updated by admin`);
-
-    return ResponseUtil.success(
-      updated,
-      'Organization event hub updated successfully',
     );
   }
 
