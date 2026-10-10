@@ -13,25 +13,26 @@ async function bootstrap() {
 
   // Set global cors
   app.enableCors({
-    origin: [
-      'http://localhost:3001', // Localhost Frontend
-      'http://lvh.me:3001', // Main Site Frontend
-      'http://app.lvh.me:3001', // 🟢 Dashboard Frontend (MISSING BEFORE)
-      'https://parascores.com', // Production Main
-      'https://www.parascores.com', // Production Main (www)
-      'https://app.parascores.com', // Production Dashboard
-      'https://parascores-web.vercel.app',
-      'http://manage.lvh.me:3001',
-      'https://manage.parascores.com',
-      'http://manage-dev.lvh.me:3001',
-      'https://manage-dev.parascores.com',
-      'http://admin.lvh.me:3001', // 🔴 Admin Subdomain (Local)
-      'https://admin.parascores.com', // 🔴 Admin Subdomain (Prod)
-      'https://admin-dev.parascores.com',
-      'https://dev.parascores.com',
-      'https://dev.parascores.com:3001',
-      'https://manage-dev.parascores.com:3001',
-    ],
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        'http://localhost:3001', // Localhost Frontend
+        'https://parascores-web.vercel.app',
+      ];
+      // Allow the base domains and ANY subdomain (event hubs are dynamic slugs)
+      const dynamicPatterns = [
+        /^http:\/\/([a-z0-9-]+\.)*lvh\.me:3001$/, // local: lvh.me + subdomains
+        /^https:\/\/([a-z0-9-]+\.)*parascores\.com(:\d+)?$/, // prod + subdomains
+      ];
+      if (
+        !origin || // non-browser clients (curl, server-to-server)
+        allowedOrigins.includes(origin) ||
+        dynamicPatterns.some((re) => re.test(origin))
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error(`Origin ${origin} not allowed by CORS`));
+      }
+    },
     credentials: true, // Required for cookies to work
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept'],

@@ -8,6 +8,7 @@ import {
   Param,
   Query,
   Req,
+  BadRequestException,
 } from '@nestjs/common';
 import { TournamentsService } from './tournaments.service';
 import { CreateTournamentDto } from './dto/create-tournament.dto';
@@ -123,6 +124,34 @@ export class TournamentsController {
     return this.tournamentsService.create(req.user.sub, createTournamentDto);
   }
 
+  @Post('practice')
+  @ApiOperation({
+    summary: 'Create a practice (sandbox) tournament for training',
+  })
+  async createPractice(
+    @Body('organizationId') organizationId: string,
+    @Req() req: any,
+  ) {
+    if (!organizationId) {
+      throw new BadRequestException('organizationId is required');
+    }
+    return this.tournamentsService.createPractice(req.user.sub, organizationId);
+  }
+
+  @Post(':id/practice-reset')
+  @ApiOperation({ summary: 'Reset a practice tournament to its initial state' })
+  async resetPractice(@Param('id') id: string, @Req() req: any) {
+    return this.tournamentsService.resetPractice(req.user.sub, id);
+  }
+
+  @Post(':id/practice-autofill')
+  @ApiOperation({
+    summary: 'Fill a practice tournament with sample results',
+  })
+  async autofillPractice(@Param('id') id: string, @Req() req: any) {
+    return this.tournamentsService.autofillPractice(req.user.sub, id);
+  }
+
   @Post(':id/season')
   @ApiOperation({ summary: 'Start a new season from an existing tournament' })
   async startSeason(
@@ -167,6 +196,35 @@ export class TournamentsController {
   @ApiOperation({ summary: 'Check if a tournament custom name is available' })
   async checkName(@Param('customName') customName: string) {
     return this.tournamentsService.checkCustomName(customName);
+  }
+
+  @Public()
+  @Get('nearby')
+  @ApiOperation({ summary: 'Get public tournaments near a location' })
+  @ApiQuery({ name: 'lat', required: true, type: Number })
+  @ApiQuery({ name: 'lon', required: true, type: Number })
+  @ApiQuery({ name: 'radius', required: false, type: Number, description: 'Radius in km (default 50)' })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  async findNearby(
+    @Query('lat') lat: string,
+    @Query('lon') lon: string,
+    @Query('radius') radius?: string,
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
+    const parsedLat = Number(lat);
+    const parsedLon = Number(lon);
+    if (Number.isNaN(parsedLat) || Number.isNaN(parsedLon)) {
+      throw new BadRequestException('lat and lon must be valid numbers');
+    }
+    return this.tournamentsService.findNearby(
+      parsedLat,
+      parsedLon,
+      radius ? Number(radius) : 50,
+      page ? Number(page) : 1,
+      limit ? Number(limit) : 12,
+    );
   }
 
   @Public()

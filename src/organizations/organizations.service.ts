@@ -15,6 +15,7 @@ import {
   OrganizationMemberAddedPayload,
   OrganizationMemberRoleUpdatedPayload,
   OrganizationMemberRemovedPayload,
+  OrganizationCreatedPayload,
   OrganizationDeleteCodePayload,
 } from 'src/email/email.events';
 
@@ -32,6 +33,13 @@ export class OrganizationsService {
   ) {}
 
   async create(userId: string, dto: CreateOrganizationDto) {
+    const user = await this.db.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
     let slug = this.generateSlug(dto.name);
     let isUnique = false;
 
@@ -74,6 +82,14 @@ export class OrganizationsService {
       return org;
     });
 
+    this.eventEmitter.emit(EmailEvents.ORGANIZATION_CREATED, {
+      ownerEmail: user.email,
+      ownerName: user.name,
+      organizationName: organization.name,
+      organizationSlug: organization.slug,
+      organizationPhone: dto.phone,
+    } as OrganizationCreatedPayload);
+
     return ResponseUtil.success(
       organization,
       'Organization created successfully',
@@ -109,7 +125,113 @@ export class OrganizationsService {
     );
   }
 
-  async update(id: string, dto: any) {
+  async listRoster(orgId: string) {
+    const roster = await this.db.rosterEntry.findMany({
+      where: { organizationId: orgId },
+      include: {
+        _count: { select: { entries: true } },
+      },
+      orderBy: { name: 'asc' },
+    });
+
+    return ResponseUtil.success(roster, 'Roster retrieved successfully');
+  }
+
+  private async validateRosterAccess(orgId: string, userId: string) {
+    const user = await this.db.user.findUnique({ where: { id: userId } });
+    if (user?.role === 'SUPER_ADMIN') return;
+    await this.validateMemberRole(orgId, userId, ['OWNER', 'ADMIN']);
+  }
+
+  async addRosterEntry(
+    orgId: string,
+    userId: string,
+    dto: { name: string; shortName?: string; logoUrl?: string },
+  ) {
+    const org = await this.db.organization.findUnique({ where: { id: orgId } });
+    if (!org) throw new NotFoundException('Organization not found');
+    await this.validateRosterAccess(orgId, userId);
+
+    const existing = await this.db.rosterEntry.findUnique({
+      where: {
+        organizationId_name: { organizationId: orgId, name: dto.name },
+      },
+    });
+    if (existing) {
+      throw new ConflictException(
+        `"${dto.name}" is already on this organization's roster`,
+      );
+    }
+
+    const entry = await this.db.rosterEntry.create({
+      data: {
+        organizationId: orgId,
+        name: dto.name,
+        shortName: dto.shortName,
+        logoUrl: dto.logoUrl,
+      },
+    });
+
+    return ResponseUtil.success(entry, 'Roster entry added successfully');
+  }
+
+  async updateRosterEntry(
+    orgId: string,
+    entryId: string,
+    userId: string,
+    dto: { name?: string; shortName?: string; logoUrl?: string | null },
+  ) {
+    const entry = await this.db.rosterEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!entry || entry.organizationId !== orgId) {
+      throw new NotFoundException('Roster entry not found');
+    }
+    await this.validateRosterAccess(orgId, userId);
+
+    if (dto.name && dto.name !== entry.name) {
+      const existing = await this.db.rosterEntry.findUnique({
+        where: {
+          organizationId_name: { organizationId: orgId, name: dto.name },
+        },
+      });
+      if (existing) {
+        throw new ConflictException(
+          `"${dto.name}" is already on this organization's roster`,
+        );
+      }
+    }
+
+    const updated = await this.db.rosterEntry.update({
+      where: { id: entryId },
+      data: {
+        name: dto.name,
+        shortName: dto.shortName,
+        logoUrl: dto.logoUrl,
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Roster entry updated successfully');
+  }
+
+  async removeRosterEntry(orgId: string, entryId: string, userId: string) {
+    const entry = await this.db.rosterEntry.findUnique({
+      where: { id: entryId },
+    });
+    if (!entry || entry.organizationId !== orgId) {
+      throw new NotFoundException('Roster entry not found');
+    }
+    await this.validateRosterAccess(orgId, userId);
+
+    await this.db.rosterEntry.delete({ where: { id: entryId } });
+
+    return ResponseUtil.success(null, 'Roster entry removed successfully');
+  }
+
+  async update(id: string, dto: any, callerId: string) {
+    // Only OWNER/ADMIN may update organization details
+    await this.validateMemberRole(id, callerId, ['OWNER', 'ADMIN']);
+
     const org = await this.db.organization.findUnique({ where: { id } });
     if (!org) {
       throw new NotFoundException('Organization not found');
@@ -146,7 +268,20 @@ export class OrganizationsService {
     organizationId: string,
     email: string,
     role: OrganizationRole,
+    callerId: string,
   ) {
+    // Caller must be OWNER/ADMIN; ADMINs can only add MEMBERs —
+    // adding ADMIN/OWNER is reserved for OWNERs (matches dashboard UI).
+    const caller = await this.validateMemberRole(organizationId, callerId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+    if (caller.role !== 'OWNER' && role !== 'MEMBER') {
+      throw new ForbiddenException(
+        'Only owners can add admin or owner members.',
+      );
+    }
+
     // Find user by email
     const user = await this.db.user.findUnique({ where: { email } });
     if (!user) {
@@ -215,7 +350,15 @@ export class OrganizationsService {
     organizationId: string,
     userId: string,
     role: OrganizationRole,
+    callerId: string,
   ) {
+    // Role changes are owner-only (matches dashboard UI)
+    await this.validateMemberRole(organizationId, callerId, ['OWNER']);
+
+    if (userId === callerId) {
+      throw new BadRequestException('You cannot change your own role.');
+    }
+
     // If demoting an owner, ensure there is at least one other owner
     if (role !== 'OWNER') {
       const owners = await this.db.organizationMember.count({
@@ -268,7 +411,19 @@ export class OrganizationsService {
     return ResponseUtil.success(updated, 'Member role updated successfully');
   }
 
-  async removeMember(organizationId: string, userId: string) {
+  async removeMember(organizationId: string, userId: string, callerId: string) {
+    // Caller must be OWNER/ADMIN; ADMINs can only remove MEMBERs
+    const caller = await this.validateMemberRole(organizationId, callerId, [
+      'OWNER',
+      'ADMIN',
+    ]);
+
+    if (userId === callerId) {
+      throw new BadRequestException(
+        'You cannot remove yourself from the organization.',
+      );
+    }
+
     const member = await this.db.organizationMember.findUnique({
       where: {
         organizationId_userId: {
@@ -280,6 +435,12 @@ export class OrganizationsService {
 
     if (!member) {
       throw new NotFoundException('Member not found');
+    }
+
+    if (caller.role !== 'OWNER' && member.role !== 'MEMBER') {
+      throw new ForbiddenException(
+        'Only owners can remove admin or owner members.',
+      );
     }
 
     // Ensure we don't remove the last owner
@@ -380,6 +541,7 @@ export class OrganizationsService {
       'Organization public profile retrieved successfully',
     );
   }
+
 
   async requestDeleteCode(orgId: string, userId: string) {
     const org = await this.db.organization.findUnique({ where: { id: orgId } });

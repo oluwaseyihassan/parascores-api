@@ -42,7 +42,8 @@ export const TournamentType = {
   ROUND_ROBIN: 'ROUND_ROBIN',
   GROUP: 'GROUP',
   FRIENDLY: 'FRIENDLY',
-  HYBRID: 'HYBRID'
+  HYBRID: 'HYBRID',
+  RACE: 'RACE'
 } as const
 
 export type TournamentType = (typeof TournamentType)[keyof typeof TournamentType]
@@ -152,7 +153,51 @@ export type SubscriptionStatus = (typeof SubscriptionStatus)[keyof typeof Subscr
 export const PaymentStatus = {
   PENDING: 'PENDING',
   SUCCESS: 'SUCCESS',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
 } as const
 
 export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const DiscountType = {
+  PERCENT: 'PERCENT',
+  FIXED: 'FIXED',
+  WAIVER: 'WAIVER'
+} as const
+
+export type DiscountType = (typeof DiscountType)[keyof typeof DiscountType]
+
+
+export const ChatAuthorType = {
+  USER: 'USER',
+  ORGANIZER: 'ORGANIZER',
+  BOT: 'BOT',
+  SYSTEM: 'SYSTEM'
+} as const
+
+export type ChatAuthorType = (typeof ChatAuthorType)[keyof typeof ChatAuthorType]
+
+
+export const ChatCardType = {
+  FIXTURE: 'FIXTURE',
+  TABLE: 'TABLE',
+  STATS: 'STATS',
+  LINK: 'LINK',
+  SCORE_SUBMITTED: 'SCORE_SUBMITTED',
+  SCORE_CONFIRMED: 'SCORE_CONFIRMED',
+  SCORE_CONFLICT: 'SCORE_CONFLICT'
+} as const
+
+export type ChatCardType = (typeof ChatCardType)[keyof typeof ChatCardType]
+
+
+export const SubmissionStatus = {
+  PENDING: 'PENDING',
+  MATCHED: 'MATCHED',
+  CONFLICT: 'CONFLICT',
+  APPLIED: 'APPLIED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type SubmissionStatus = (typeof SubmissionStatus)[keyof typeof SubmissionStatus]

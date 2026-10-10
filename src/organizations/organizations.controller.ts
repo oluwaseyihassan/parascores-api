@@ -48,8 +48,12 @@ export class OrganizationsController {
 
   @Post(':id/members')
   @ApiOperation({ summary: 'Add a member to an organization' })
-  async addMember(@Param('id') id: string, @Body() dto: AddMemberDto) {
-    return this.organizationsService.addMember(id, dto.email, dto.role);
+  async addMember(
+    @Param('id') id: string,
+    @Body() dto: AddMemberDto,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.addMember(id, dto.email, dto.role, req.user.sub);
   }
 
   @Patch(':id/members/:userId')
@@ -58,14 +62,61 @@ export class OrganizationsController {
     @Param('id') id: string,
     @Param('userId') userId: string,
     @Body() dto: UpdateMemberRoleDto,
+    @Req() req: any,
   ) {
-    return this.organizationsService.updateMemberRole(id, userId, dto.role);
+    return this.organizationsService.updateMemberRole(id, userId, dto.role, req.user.sub);
   }
 
   @Delete(':id/members/:userId')
   @ApiOperation({ summary: 'Remove a member from an organization' })
-  async removeMember(@Param('id') id: string, @Param('userId') userId: string) {
-    return this.organizationsService.removeMember(id, userId);
+  async removeMember(
+    @Param('id') id: string,
+    @Param('userId') userId: string,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.removeMember(id, userId, req.user.sub);
+  }
+
+  // Roster Routes
+  @Get(':id/roster')
+  @ApiOperation({ summary: 'List the organization roster' })
+  async listRoster(@Param('id') id: string) {
+    return this.organizationsService.listRoster(id);
+  }
+
+  @Post(':id/roster')
+  @ApiOperation({ summary: 'Add an entry to the organization roster' })
+  @ApiResponse({ status: 201, description: 'Roster entry added successfully' })
+  @ApiResponse({ status: 409, description: 'Entry already on roster' })
+  async addRosterEntry(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body() dto: { name: string; shortName?: string; logoUrl?: string },
+  ) {
+    return this.organizationsService.addRosterEntry(id, req.user.sub, dto);
+  }
+
+  @Patch(':id/roster/:entryId')
+  @ApiOperation({ summary: 'Update an organization roster entry' })
+  @ApiResponse({ status: 200, description: 'Roster entry updated successfully' })
+  @ApiResponse({ status: 409, description: 'Name already on roster' })
+  async updateRosterEntry(
+    @Param('id') id: string,
+    @Param('entryId') entryId: string,
+    @Req() req: any,
+    @Body() dto: { name?: string; shortName?: string; logoUrl?: string | null },
+  ) {
+    return this.organizationsService.updateRosterEntry(id, entryId, req.user.sub, dto);
+  }
+
+  @Delete(':id/roster/:entryId')
+  @ApiOperation({ summary: 'Remove an entry from the organization roster' })
+  async removeRosterEntry(
+    @Param('id') id: string,
+    @Param('entryId') entryId: string,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.removeRosterEntry(id, entryId, req.user.sub);
   }
 
   // Public Routes
@@ -97,8 +148,12 @@ export class OrganizationsController {
     status: 200,
     description: 'Organization updated successfully',
   })
-  async update(@Param('id') id: string, @Body() dto: UpdateOrganizationDto) {
-    return this.organizationsService.update(id, dto);
+  async update(
+    @Param('id') id: string,
+    @Body() dto: UpdateOrganizationDto,
+    @Req() req: any,
+  ) {
+    return this.organizationsService.update(id, dto, req.user.sub);
   }
 
   @Post(':id/request-delete')

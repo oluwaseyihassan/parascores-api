@@ -14,13 +14,15 @@ export class CreateFixtureDto {
   @IsString()
   tournament_id: string;
 
-  @ApiProperty({ description: 'Home team participant ID' })
+  @ApiPropertyOptional({ description: 'Home team participant ID (omit for race events)' })
   @IsString()
-  homeTeamId: string;
+  @IsOptional()
+  homeTeamId?: string;
 
-  @ApiProperty({ description: 'Away team participant ID' })
+  @ApiPropertyOptional({ description: 'Away team participant ID (omit for race events)' })
   @IsString()
-  awayTeamId: string;
+  @IsOptional()
+  awayTeamId?: string;
 
   @ApiProperty({ description: 'Round number', example: 1 })
   @IsInt()

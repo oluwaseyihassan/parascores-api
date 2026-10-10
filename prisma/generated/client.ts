@@ -73,10 +73,35 @@ export type Group = Prisma.GroupModel
  */
 export type Participant = Prisma.ParticipantModel
 /**
+ * Model RosterEntry
+ * 
+ */
+export type RosterEntry = Prisma.RosterEntryModel
+/**
+ * Model TournamentEntry
+ * 
+ */
+export type TournamentEntry = Prisma.TournamentEntryModel
+/**
  * Model Fixture
  * 
  */
 export type Fixture = Prisma.FixtureModel
+/**
+ * Model PulseItem
+ * 
+ */
+export type PulseItem = Prisma.PulseItemModel
+/**
+ * Model PulseReaction
+ * 
+ */
+export type PulseReaction = Prisma.PulseReactionModel
+/**
+ * Model ResultEntry
+ * 
+ */
+export type ResultEntry = Prisma.ResultEntryModel
 /**
  * Model Team
  * 
@@ -128,6 +153,11 @@ export type TournamentInvite = Prisma.TournamentInviteModel
  */
 export type Highlight = Prisma.HighlightModel
 /**
+ * Model DiscountCode
+ * 
+ */
+export type DiscountCode = Prisma.DiscountCodeModel
+/**
  * Model Subscription
  * 
  */
@@ -142,3 +172,23 @@ export type Payment = Prisma.PaymentModel
  * 
  */
 export type PushSubscription = Prisma.PushSubscriptionModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model ChatMessage
+ * 
+ */
+export type ChatMessage = Prisma.ChatMessageModel
+/**
+ * Model ChatReaction
+ * 
+ */
+export type ChatReaction = Prisma.ChatReactionModel
+/**
+ * Model ScoreSubmission
+ * 
+ */
+export type ScoreSubmission = Prisma.ScoreSubmissionModel

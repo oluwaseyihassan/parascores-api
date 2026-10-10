@@ -58,7 +58,12 @@ export const ModelName = {
   TournamentFollower: 'TournamentFollower',
   Group: 'Group',
   Participant: 'Participant',
+  RosterEntry: 'RosterEntry',
+  TournamentEntry: 'TournamentEntry',
   Fixture: 'Fixture',
+  PulseItem: 'PulseItem',
+  PulseReaction: 'PulseReaction',
+  ResultEntry: 'ResultEntry',
   Team: 'Team',
   MatchEvent: 'MatchEvent',
   Standing: 'Standing',
@@ -69,9 +74,14 @@ export const ModelName = {
   TeamInvite: 'TeamInvite',
   TournamentInvite: 'TournamentInvite',
   Highlight: 'Highlight',
+  DiscountCode: 'DiscountCode',
   Subscription: 'Subscription',
   Payment: 'Payment',
-  PushSubscription: 'PushSubscription'
+  PushSubscription: 'PushSubscription',
+  AuditLog: 'AuditLog',
+  ChatMessage: 'ChatMessage',
+  ChatReaction: 'ChatReaction',
+  ScoreSubmission: 'ScoreSubmission'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -120,7 +130,16 @@ export const OrganizationScalarFieldEnum = {
   isVerified: 'isVerified',
   created_at: 'created_at',
   updated_at: 'updated_at',
-  description: 'description'
+  description: 'description',
+  paystackSubaccountCode: 'paystackSubaccountCode',
+  settlementBankCode: 'settlementBankCode',
+  settlementAccountNumber: 'settlementAccountNumber',
+  settlementAccountName: 'settlementAccountName',
+  payoutAccountCreatedAt: 'payoutAccountCreatedAt',
+  instantPayouts: 'instantPayouts',
+  paystackRecipientCode: 'paystackRecipientCode',
+  subdomain: 'subdomain',
+  brandConfig: 'brandConfig'
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
@@ -146,7 +165,10 @@ export const TournamentScalarFieldEnum = {
   updated_at: 'updated_at',
   autoApprove: 'autoApprove',
   bannerUrl: 'bannerUrl',
+  isPractice: 'isPractice',
   location: 'location',
+  latitude: 'latitude',
+  longitude: 'longitude',
   logoUrl: 'logoUrl',
   maxParticipants: 'maxParticipants',
   participantType: 'participantType',
@@ -171,7 +193,12 @@ export const TournamentScalarFieldEnum = {
   isPaidRegistration: 'isPaidRegistration',
   registrationFee: 'registrationFee',
   tournamentPrice: 'tournamentPrice',
-  paymentPerTeam: 'paymentPerTeam'
+  paymentPerTeam: 'paymentPerTeam',
+  chatEnabled: 'chatEnabled',
+  chatRules: 'chatRules',
+  parageeBot: 'parageeBot',
+  botCalls: 'botCalls',
+  requiresScoreEvidence: 'requiresScoreEvidence'
 } as const
 
 export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
@@ -217,6 +244,29 @@ export const ParticipantScalarFieldEnum = {
 export type ParticipantScalarFieldEnum = (typeof ParticipantScalarFieldEnum)[keyof typeof ParticipantScalarFieldEnum]
 
 
+export const RosterEntryScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  name: 'name',
+  shortName: 'shortName',
+  logoUrl: 'logoUrl',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type RosterEntryScalarFieldEnum = (typeof RosterEntryScalarFieldEnum)[keyof typeof RosterEntryScalarFieldEnum]
+
+
+export const TournamentEntryScalarFieldEnum = {
+  id: 'id',
+  rosterEntryId: 'rosterEntryId',
+  participantId: 'participantId',
+  created_at: 'created_at'
+} as const
+
+export type TournamentEntryScalarFieldEnum = (typeof TournamentEntryScalarFieldEnum)[keyof typeof TournamentEntryScalarFieldEnum]
+
+
 export const FixtureScalarFieldEnum = {
   id: 'id',
   tournament_id: 'tournament_id',
@@ -247,12 +297,55 @@ export const FixtureScalarFieldEnum = {
   timerIsRunning: 'timerIsRunning',
   matchDuration: 'matchDuration',
   half: 'half',
+  periodScores: 'periodScores',
+  config: 'config',
   manOfTheMatchPlayerId: 'manOfTheMatchPlayerId',
   livestreamUrl: 'livestreamUrl',
   livestreamPlatform: 'livestreamPlatform'
 } as const
 
 export type FixtureScalarFieldEnum = (typeof FixtureScalarFieldEnum)[keyof typeof FixtureScalarFieldEnum]
+
+
+export const PulseItemScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  fixtureId: 'fixtureId',
+  type: 'type',
+  payload: 'payload',
+  pinned: 'pinned',
+  sortAt: 'sortAt',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PulseItemScalarFieldEnum = (typeof PulseItemScalarFieldEnum)[keyof typeof PulseItemScalarFieldEnum]
+
+
+export const PulseReactionScalarFieldEnum = {
+  id: 'id',
+  pulseItemId: 'pulseItemId',
+  deviceId: 'deviceId',
+  emoji: 'emoji',
+  created_at: 'created_at'
+} as const
+
+export type PulseReactionScalarFieldEnum = (typeof PulseReactionScalarFieldEnum)[keyof typeof PulseReactionScalarFieldEnum]
+
+
+export const ResultEntryScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  value: 'value',
+  lane: 'lane',
+  note: 'note',
+  rank: 'rank',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type ResultEntryScalarFieldEnum = (typeof ResultEntryScalarFieldEnum)[keyof typeof ResultEntryScalarFieldEnum]
 
 
 export const TeamScalarFieldEnum = {
@@ -415,6 +508,24 @@ export const HighlightScalarFieldEnum = {
 export type HighlightScalarFieldEnum = (typeof HighlightScalarFieldEnum)[keyof typeof HighlightScalarFieldEnum]
 
 
+export const DiscountCodeScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  tournament_id: 'tournament_id',
+  type: 'type',
+  value: 'value',
+  maxUses: 'maxUses',
+  usedCount: 'usedCount',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive',
+  createdById: 'createdById',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type DiscountCodeScalarFieldEnum = (typeof DiscountCodeScalarFieldEnum)[keyof typeof DiscountCodeScalarFieldEnum]
+
+
 export const SubscriptionScalarFieldEnum = {
   id: 'id',
   organizationId: 'organizationId',
@@ -448,7 +559,11 @@ export const PaymentScalarFieldEnum = {
   created_at: 'created_at',
   updated_at: 'updated_at',
   userId: 'userId',
-  type: 'type'
+  type: 'type',
+  payoutStatus: 'payoutStatus',
+  payoutTransferCode: 'payoutTransferCode',
+  payoutAmount: 'payoutAmount',
+  payoutInitiatedAt: 'payoutInitiatedAt'
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
@@ -460,11 +575,75 @@ export const PushSubscriptionScalarFieldEnum = {
   endpoint: 'endpoint',
   p256dh: 'p256dh',
   auth: 'auth',
+  orgId: 'orgId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type PushSubscriptionScalarFieldEnum = (typeof PushSubscriptionScalarFieldEnum)[keyof typeof PushSubscriptionScalarFieldEnum]
+
+
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  actorId: 'actorId',
+  action: 'action',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  metadata: 'metadata',
+  ipAddress: 'ipAddress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const ChatMessageScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  authorType: 'authorType',
+  authorUserId: 'authorUserId',
+  participantId: 'participantId',
+  text: 'text',
+  cardType: 'cardType',
+  cardPayload: 'cardPayload',
+  pinnedAt: 'pinnedAt',
+  deletedAt: 'deletedAt',
+  replyToId: 'replyToId',
+  createdAt: 'createdAt'
+} as const
+
+export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
+
+
+export const ChatReactionScalarFieldEnum = {
+  id: 'id',
+  messageId: 'messageId',
+  userId: 'userId',
+  emoji: 'emoji',
+  createdAt: 'createdAt'
+} as const
+
+export type ChatReactionScalarFieldEnum = (typeof ChatReactionScalarFieldEnum)[keyof typeof ChatReactionScalarFieldEnum]
+
+
+export const ScoreSubmissionScalarFieldEnum = {
+  id: 'id',
+  fixtureId: 'fixtureId',
+  participantId: 'participantId',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  legs: 'legs',
+  evidenceUrl: 'evidenceUrl',
+  note: 'note',
+  status: 'status',
+  resolvedById: 'resolvedById',
+  verdictNote: 'verdictNote',
+  createdAt: 'createdAt',
+  resolvedAt: 'resolvedAt'
+} as const
+
+export type ScoreSubmissionScalarFieldEnum = (typeof ScoreSubmissionScalarFieldEnum)[keyof typeof ScoreSubmissionScalarFieldEnum]
 
 
 export const SortOrder = {

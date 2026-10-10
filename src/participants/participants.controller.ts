@@ -66,9 +66,10 @@ export class ParticipantsController {
   async addPlayer(
     @Param('participantId') participantId: string,
     @Body() dto: AddPlayerDto,
+    @Req() req,
   ) {
     // Note: The original route included :tournamentId, but it isn't strictly necessary since participantId is globally unique.
-    return this.participantsService.addPlayer(participantId, dto);
+    return this.participantsService.addPlayer(participantId, dto, req.user.sub);
   }
 
   @Post(':participantId/players/bulk')
@@ -76,8 +77,9 @@ export class ParticipantsController {
   async addPlayersBulk(
     @Param('participantId') participantId: string,
     @Body() dto: BulkAddPlayerDto,
+    @Req() req,
   ) {
-    return this.participantsService.addPlayersBulk(participantId, dto);
+    return this.participantsService.addPlayersBulk(participantId, dto, req.user.sub);
   }
 
   @Public()
@@ -123,11 +125,13 @@ export class ParticipantsController {
     @Param('participantId') participantId: string,
     @Param('playerId') playerId: string,
     @Body('status') status: string,
+    @Req() req,
   ) {
     return this.participantsService.updatePlayerStatus(
       participantId,
       playerId,
       status,
+      req.user.sub,
     );
   }
 
@@ -136,8 +140,9 @@ export class ParticipantsController {
   async removePlayer(
     @Param('participantId') participantId: string,
     @Param('playerId') playerId: string,
+    @Req() req,
   ) {
-    return this.participantsService.removePlayer(participantId, playerId);
+    return this.participantsService.removePlayer(participantId, playerId, req.user.sub);
   }
 
   @Post(':participantId/generate-link-code')

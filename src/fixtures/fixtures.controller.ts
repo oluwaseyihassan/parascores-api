@@ -3,6 +3,7 @@ import {
   Get,
   Post,
   Patch,
+  Put,
   Delete,
   Body,
   Param,
@@ -14,6 +15,7 @@ import {
 import { FixturesService } from './fixtures.service';
 import { FixtureGeneratorService } from './fixture-generator/fixture-generator.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
+import { SetResultsDto } from './dto/set-results.dto';
 import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
@@ -185,6 +187,20 @@ export class FixturesController {
     @Req() req,
   ) {
     return this.fixturesService.update(id, req.user.sub, dto);
+  }
+
+  // Set placement results for a race fixture (athletics, swimming)
+  @Put(':id/results')
+  @ApiOperation({
+    summary:
+      'Set placement results for a race fixture (bulk upsert; ranks computed, lowest value wins)',
+  })
+  async setResults(
+    @Param('id') id: string,
+    @Body() dto: SetResultsDto,
+    @Req() req,
+  ) {
+    return this.fixturesService.setResults(id, req.user.sub, dto);
   }
 
   // Delete a single fixture

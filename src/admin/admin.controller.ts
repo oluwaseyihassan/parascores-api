@@ -1,22 +1,34 @@
 import {
   Controller,
   Get,
+  Post,
   Delete,
   Patch,
   Param,
   Query,
   Body,
+  Req,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { AdminService } from './admin.service';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { User } from 'src/auth/decorators/user.decorator';
+import { SubscriptionPlan, SubscriptionStatus } from 'prisma/generated/client';
+import {
+  AuditLogsService,
+  AuditAction,
+  AuditEntityType,
+} from 'src/audit-logs/audit-logs.service';
 
 @ApiTags('admin')
 @Controller('admin')
 @Roles(Role.SUPER_ADMIN)
 export class AdminController {
-  constructor(private readonly adminService: AdminService) {}
+  constructor(
+    private readonly adminService: AdminService,
+    private readonly auditLogsService: AuditLogsService,
+  ) {}
 
   // ─── Stats ─────────────────────────────────────────────────
 
@@ -52,14 +64,40 @@ export class AdminController {
 
   @Delete('users/:id')
   @ApiOperation({ summary: 'Delete a user' })
-  deleteUser(@Param('id') id: string) {
-    return this.adminService.deleteUser(id);
+  async deleteUser(
+    @Param('id') id: string,
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.deleteUser(id);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.USER_DELETE,
+      entityType: AuditEntityType.USER,
+      entityId: id,
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   @Patch('users/:id/role')
   @ApiOperation({ summary: 'Update user role' })
-  updateUserRole(@Param('id') id: string, @Body('role') role: string) {
-    return this.adminService.updateUserRole(id, role);
+  async updateUserRole(
+    @Param('id') id: string,
+    @Body('role') role: string,
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.updateUserRole(id, role);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.USER_ROLE_UPDATE,
+      entityType: AuditEntityType.USER,
+      entityId: id,
+      metadata: { role },
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   // ─── Tournaments ───────────────────────────────────────────
@@ -80,20 +118,92 @@ export class AdminController {
     );
   }
 
+  @Get('tournaments/:id')
+  @ApiOperation({ summary: 'Get tournament details' })
+  getTournament(@Param('id') id: string) {
+    return this.adminService.getTournament(id);
+  }
+
   @Delete('tournaments/:id')
   @ApiOperation({ summary: 'Delete a tournament' })
-  deleteTournament(@Param('id') id: string) {
-    return this.adminService.deleteTournament(id);
+  async deleteTournament(
+    @Param('id') id: string,
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.deleteTournament(id);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.TOURNAMENT_DELETE,
+      entityType: AuditEntityType.TOURNAMENT,
+      entityId: id,
+      ipAddress: req?.ip,
+    });
+    return result;
+  }
+
+  @Patch('tournaments/:id')
+  @ApiOperation({ summary: 'Update tournament details' })
+  async updateTournament(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      name?: string;
+      customName?: string | null;
+      description?: string | null;
+      visibility?: 'PUBLIC' | 'PRIVATE' | 'UNLISTED';
+      isPremium?: boolean;
+      isPinned?: boolean;
+      isPaidRegistration?: boolean;
+      registrationFee?: number;
+      tournamentPrice?: number;
+      paymentPerTeam?: number;
+      startDate?: string;
+      endDate?: string;
+      location?: string | null;
+      timezone?: string;
+      maxParticipants?: number | null;
+      sport?: string;
+      type?: 'LEAGUE' | 'KNOCKOUT' | 'ROUND_ROBIN' | 'GROUP' | 'HYBRID' | 'FRIENDLY';
+      autoApprove?: boolean;
+      thirdPlaceMatch?: boolean;
+      twoLegsKnockout?: boolean;
+      doubleRoundRobin?: boolean;
+    },
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.updateTournament(id, body);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.TOURNAMENT_UPDATE,
+      entityType: AuditEntityType.TOURNAMENT,
+      entityId: id,
+      metadata: { ...body },
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   @Patch('tournaments/:id/pricing')
   @ApiOperation({ summary: 'Update tournament pricing' })
-  updateTournamentPricing(
+  async updateTournamentPricing(
     @Param('id') id: string,
     @Body()
     body: { tournamentPrice?: number | null; paymentPerTeam?: number | null },
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
   ) {
-    return this.adminService.updateTournamentPricing(id, body);
+    const result = await this.adminService.updateTournamentPricing(id, body);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.TOURNAMENT_PRICING_UPDATE,
+      entityType: AuditEntityType.TOURNAMENT,
+      entityId: id,
+      metadata: { ...body },
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   // ─── Organizations ─────────────────────────────────────────
@@ -116,6 +226,57 @@ export class AdminController {
   @ApiOperation({ summary: 'Get organization details' })
   getOrganization(@Param('id') id: string) {
     return this.adminService.getOrganization(id);
+  }
+
+  @Patch('organizations/:id/verify')
+  @ApiOperation({ summary: 'Verify or unverify an organization' })
+  async updateOrganizationVerification(
+    @Param('id') id: string,
+    @Body('isVerified') isVerified: boolean,
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.updateOrganizationVerification(
+      id,
+      isVerified,
+    );
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.ORGANIZATION_VERIFY,
+      entityType: AuditEntityType.ORGANIZATION,
+      entityId: id,
+      metadata: { isVerified },
+      ipAddress: req?.ip,
+    });
+    return result;
+  }
+
+  @Patch('organizations/:id/subscription')
+  @ApiOperation({ summary: 'Update organization subscription' })
+  async updateOrganizationSubscription(
+    @Param('id') id: string,
+    @Body()
+    body: {
+      plan?: SubscriptionPlan;
+      status?: SubscriptionStatus;
+      currentPeriodEnd?: string;
+    },
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
+  ) {
+    const result = await this.adminService.updateOrganizationSubscription(
+      id,
+      body,
+    );
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.ORGANIZATION_SUBSCRIPTION_UPDATE,
+      entityType: AuditEntityType.ORGANIZATION,
+      entityId: id,
+      metadata: { ...body },
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   // ─── Payments ──────────────────────────────────────────────
@@ -158,11 +319,22 @@ export class AdminController {
 
   @Patch('players/:id/status')
   @ApiOperation({ summary: 'Approve or reject a player' })
-  updatePlayerStatus(
+  async updatePlayerStatus(
     @Param('id') id: string,
     @Body('status') status: 'APPROVED' | 'REJECTED',
+    @User() user: { sub: string },
+    @Req() req: { ip?: string },
   ) {
-    return this.adminService.updatePlayerStatus(id, status);
+    const result = await this.adminService.updatePlayerStatus(id, status);
+    await this.auditLogsService.create({
+      actorId: user.sub,
+      action: AuditAction.PLAYER_STATUS_UPDATE,
+      entityType: AuditEntityType.PLAYER,
+      entityId: id,
+      metadata: { status },
+      ipAddress: req?.ip,
+    });
+    return result;
   }
 
   // ─── Health ────────────────────────────────────────────────
@@ -171,5 +343,33 @@ export class AdminController {
   @ApiOperation({ summary: 'Get system health status' })
   getHealth() {
     return this.adminService.getHealth();
+  }
+
+  // ─── Audit Logs ────────────────────────────────────────────
+
+  @Get('audit-logs')
+  @ApiOperation({ summary: 'Get admin audit logs' })
+  getAuditLogs(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('action') action?: string,
+    @Query('entityType') entityType?: string,
+    @Query('entityId') entityId?: string,
+    @Query('actorId') actorId?: string,
+  ) {
+    return this.auditLogsService.findAll({
+      page: Number(page) || 1,
+      limit: Number(limit) || 20,
+      action,
+      entityType,
+      entityId,
+      actorId,
+    });
+  }
+
+  @Get('audit-logs/recent')
+  @ApiOperation({ summary: 'Get recent admin audit logs' })
+  getRecentAuditLogs(@Query('limit') limit?: string) {
+    return this.auditLogsService.findRecent(Number(limit) || 10);
   }
 }
