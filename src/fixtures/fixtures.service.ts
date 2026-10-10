@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
 import { RedisService } from 'src/redis/redis.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
+import { PulseService } from 'src/pulse/pulse.service';
 
 @Injectable()
 export class FixturesService {
@@ -23,6 +24,7 @@ export class FixturesService {
     private readonly organizationsService: OrganizationsService,
     private readonly redisService: RedisService,
     private readonly notificationsService: NotificationsService,
+    private readonly pulseService: PulseService,
   ) {}
 
   // Create a single fixture manually
@@ -417,6 +419,11 @@ export class FixturesService {
       where: { fixtureId },
     });
 
+    // Combat engines record an explicit winner in fixture.config (a KO/DQ can
+    // end a bout with the scores level) — that bypasses the knockout tie check
+    const winnerOverride =
+      (dto.config?.winnerId ?? (fixture.config as any)?.winnerId) != null;
+
     // Validate penalty scores for knockout matches being completed for the first time
     if (dto.status === 'COMPLETED') {
       const homeScore = dto.homeScore ?? fixture.homeScore ?? 0;
@@ -439,7 +446,7 @@ export class FixturesService {
           (tournament?.type === 'HYBRID' && fixture.stage === 'KNOCKOUT'));
 
       if (isKnockoutStage) {
-        let isTie = homeScore === awayScore;
+        let isTie = homeScore === awayScore && !winnerOverride;
 
         if (tournament?.twoLegsKnockout) {
           if (fixture.matchNumber % 2 !== 0) {
@@ -764,6 +771,9 @@ export class FixturesService {
           `fixture-${updatedFixture.id}-kickoff`,
         )
         .catch(() => {});
+      this.pulseService
+        .recordFixtureState(updatedFixture.id, 'kickoff')
+        .catch(() => {});
     }
 
     // Race completion: official result notification with medalists,
@@ -798,6 +808,9 @@ export class FixturesService {
             `fixture-${updatedFixture.id}-result`,
           )
           .catch(() => {});
+        this.pulseService
+          .recordFixtureState(updatedFixture.id, 'race_result')
+          .catch(() => {});
       }
     }
 
@@ -828,6 +841,9 @@ export class FixturesService {
           url,
           `fixture-${updatedFixture.id}-completion`,
         )
+        .catch(() => {});
+      this.pulseService
+        .recordFixtureState(updatedFixture.id, 'full_time')
         .catch(() => {});
 
       // Medal notification: finals (gold/silver) and third-place matches (bronze)
@@ -866,6 +882,15 @@ export class FixturesService {
               `fixture-${updatedFixture.id}-medal`,
             )
             .catch(() => {});
+          this.pulseService
+            .recordFixtureState(updatedFixture.id, 'medal', {
+              medal: isFinal ? 'gold' : 'bronze',
+              winnerName,
+              loserName,
+              homeScore,
+              awayScore,
+            })
+            .catch(() => {});
         }
       }
     }
@@ -896,22 +921,30 @@ export class FixturesService {
       ['OWNER', 'ADMIN', 'MEMBER'],
     );
 
-    // Ranks: parse "10.42" / "2:03.44" numerically; lowest wins.
-    // Entries with an explicit rank (manual placement, no time) keep it.
+    // Ranks: parse "10.42" / "2:03.44" / "1:02:33.5" numerically; direction
+    // decides winner order ('low' = fastest, 'high' = biggest lift/distance).
+    // Entries with an explicit rank (manual placement, no value) keep it.
     const toSeconds = (v: string): number => {
       const parts = v.split(':');
+      if (parts.length === 3) {
+        return Number(parts[0]) * 3600 + Number(parts[1]) * 60 + Number(parts[2]);
+      }
       if (parts.length === 2) {
         return Number(parts[0]) * 60 + Number(parts[1]);
       }
       return Number(v);
     };
 
+    const direction = dto.direction ?? 'low';
+
     const explicitRanked = dto.results.filter((r) => r.rank != null);
     const timed = dto.results
       .filter((r) => r.rank == null && r.value)
       .map((r) => ({ ...r, seconds: toSeconds(r.value!) }))
       .filter((r) => !Number.isNaN(r.seconds))
-      .sort((a, b) => a.seconds - b.seconds);
+      .sort((a, b) =>
+        direction === 'high' ? b.seconds - a.seconds : a.seconds - b.seconds,
+      );
 
     // Timed entries fill the ranks not taken by explicit placements
     const takenRanks = new Set(explicitRanked.map((r) => r.rank as number));

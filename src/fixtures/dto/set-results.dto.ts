@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsIn,
   IsInt,
   IsOptional,
   IsString,
@@ -48,4 +49,14 @@ export class SetResultsDto {
   @ValidateNested({ each: true })
   @Type(() => ResultEntryDto)
   results: ResultEntryDto[];
+
+  @ApiPropertyOptional({
+    description:
+      'Ranking direction: "low" = lowest value wins (races, default); "high" = highest value wins (weightlifting, jumps, throws)',
+    enum: ['low', 'high'],
+    example: 'low',
+  })
+  @IsIn(['low', 'high'])
+  @IsOptional()
+  direction?: 'low' | 'high';
 }
