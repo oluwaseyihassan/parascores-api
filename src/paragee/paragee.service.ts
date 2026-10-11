@@ -388,7 +388,7 @@ function isSensitive(text: string): boolean {
 
 function classify(text: string): ParageeIntent {
   const q = text.toLowerCase();
-  if (/(next match|next fixture|when.*(do|to).*(play|match)|upcoming|my match|who.*(i|we).*play)/.test(q)) return 'nextMatch';
+  if (/(next match|next fixture|when.*(do|to).*(play|match)|upcoming|my match|who.*(i|we).*play|submit\s*score|report\s*score|enter\s*score)/.test(q)) return 'nextMatch';
   if (/(top ?scorer|most goals|golden boot|leading scorer|top scorer)/.test(q)) return 'topScorer';
   if (/(table|standing|league position|points)/.test(q)) return 'table';
   if (/(rule|allowed|format|walkover|best of|legs?|aggregate|screenshot)/.test(q)) return 'rules';
