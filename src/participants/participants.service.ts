@@ -19,6 +19,7 @@ import { ResponseUtil } from 'src/utils/api-response';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { EmailEvents } from 'src/email/email.events';
 import { PaystackService } from 'src/payments/paystack.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Injectable()
 export class ParticipantsService {
@@ -26,6 +27,7 @@ export class ParticipantsService {
     private readonly db: DatabaseService,
     private readonly eventEmitter: EventEmitter2,
     private readonly paystack: PaystackService,
+    private readonly redisService: RedisService,
   ) {}
 
   async addParticipant(
@@ -132,6 +134,7 @@ export class ParticipantsService {
 
       return created;
     });
+    await this.redisService.del(`standings:${tournament.id}`);
     return ResponseUtil.success(participant);
   }
 

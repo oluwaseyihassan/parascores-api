@@ -17,11 +17,12 @@ import {
   TournamentType,
 } from 'prisma/generated/client';
 import { ResponseUtil } from 'src/utils/api-response';
+import { RedisService } from 'src/redis/redis.service';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class FixtureGeneratorService {
-  constructor(private readonly db: DatabaseService) {}
+  constructor(private readonly db: DatabaseService, private readonly redisService: RedisService) {}
 
   // Generate fixtures for a tournament
   async generateFixtures(
@@ -213,6 +214,8 @@ export class FixtureGeneratorService {
       await this.initializeStandings(tournament);
     }
 
+    await this.redisService.del(`standings:${tournament.id}`);
+    if (tournament.customName) await this.redisService.del(`standings:${tournament.customName}`);
     const totalFixtures = rounds.reduce((sum, r) => sum + r.fixtures.length, 0);
 
     // Re-fetch everything with full relations to ensure frontend get all info (teams, groups, etc)

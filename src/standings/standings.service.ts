@@ -102,7 +102,7 @@ export class StandingsService {
       })),
     });
 
-    await this.redisService.set(cacheKey, response, 3600); // Cache for 1 hour
+    await this.redisService.set(cacheKey, response, 60); // Cache for 60s to prevent stale standings
 
     return response;
   }

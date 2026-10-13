@@ -176,9 +176,13 @@ export class ScoreSubmissionsService {
           cardPayload: {
             fixtureId,
             home, away,
+            homeTeamId: fixture.homeTeamId,
+            awayTeamId: fixture.awayTeamId,
+            submittedParticipantId: participant.id,
             score: { home: dto.homeScore, away: dto.awayScore },
             submittedBy: me,
             evidenceAttached: !!dto.evidenceUrl,
+            evidenceUrl: dto.evidenceUrl ?? null,
             href: `/t/${t.customName || t.id}/fixture/${fixtureId}`,
           },
         });
