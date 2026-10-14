@@ -198,6 +198,25 @@ export class FixtureGeneratorService {
             useExistingGroups: dto.useExistingGroups,
           },
         );
+
+        if (
+          tournament.type === TournamentType.HYBRID &&
+          dto.generateKnockoutStage
+        ) {
+          const knockoutRounds =
+            await this.generateHybridKnockoutPlaceholders(
+              tournament,
+              {
+                numberOfGroups: validNumGroups,
+                advancingPerGroup: dto.advancingPerGroup ?? 2,
+                hasThirdPlace:
+                  dto.hasThirdPlace ?? tournament.thirdPlaceMatch ?? false,
+                startDate: options.startDate,
+                intervalMinutes: options.intervalMinutes,
+              },
+            );
+          rounds.push(...knockoutRounds);
+        }
         break;
       default:
         throw new BadRequestException(
@@ -441,11 +460,39 @@ export class FixtureGeneratorService {
       });
     }
 
-    await this.generateKnockoutFixtures(tournament, knockoutParticipants, {
-      startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
-      intervalMinutes: 120, // Standard knockout time
-      stage: FixtureStage.KNOCKOUT,
-    });
+    // Check if knockout placeholder fixtures already exist (pre-generated during hybrid setup)
+    const existingKnockoutFixtures = tournament.fixtures.filter(
+      (f) => f.stage === FixtureStage.KNOCKOUT && f.round === 1,
+    );
+
+    if (existingKnockoutFixtures.length > 0) {
+      // Sort existing round 1 knockout fixtures by matchNumber
+      const sortedRound1 = existingKnockoutFixtures.sort(
+        (a, b) => a.matchNumber - b.matchNumber,
+      );
+
+      for (let i = 0; i < sortedRound1.length; i++) {
+        const fixture = sortedRound1[i];
+        const home = knockoutParticipants[i * 2];
+        const away = knockoutParticipants[i * 2 + 1];
+
+        await this.db.fixture.update({
+          where: { id: fixture.id },
+          data: {
+            homeTeamId: home?.id ?? null,
+            awayTeamId: away?.id ?? null,
+            ...(home && { homeTeamPlaceholder: null }),
+            ...(away && { awayTeamPlaceholder: null }),
+          },
+        });
+      }
+    } else {
+      await this.generateKnockoutFixtures(tournament, knockoutParticipants, {
+        startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
+        intervalMinutes: 120, // Standard knockout time
+        stage: FixtureStage.KNOCKOUT,
+      });
+    }
 
     // Re-fetch everything with full relations to ensure frontend get all info (teams, groups, etc)
     const freshFixturesResponse = await this.db.fixture.findMany({
@@ -802,6 +849,215 @@ export class FixtureGeneratorService {
   }
 
   // Get descriptive round name for knockout tournaments
+
+  // Generate Hybrid Knockout bracket with group placeholders
+  private async generateHybridKnockoutPlaceholders(
+    tournament: any,
+    options: {
+      numberOfGroups: number;
+      advancingPerGroup: number;
+      hasThirdPlace: boolean;
+      startDate: Date;
+      intervalMinutes: number;
+    },
+  ) {
+    const totalQualifiers = options.numberOfGroups * options.advancingPerGroup;
+    if (totalQualifiers < 2) return [];
+
+    const totalRounds = Math.ceil(Math.log2(totalQualifiers));
+    const perfectBracketSize = Math.pow(2, totalRounds);
+    const matchesInRound1 = perfectBracketSize / 2;
+
+    // Build round 1 cross-group placeholders
+    const round1Pairs: { homePlaceholder: string; awayPlaceholder: string }[] = [];
+
+    if (options.numberOfGroups === 2 && options.advancingPerGroup === 2) {
+      round1Pairs.push({ homePlaceholder: 'Winner Group A', awayPlaceholder: 'Runner-up Group B' });
+      round1Pairs.push({ homePlaceholder: 'Winner Group B', awayPlaceholder: 'Runner-up Group A' });
+    } else if (options.numberOfGroups === 4 && options.advancingPerGroup === 2) {
+      round1Pairs.push({ homePlaceholder: 'Winner Group A', awayPlaceholder: 'Runner-up Group B' });
+      round1Pairs.push({ homePlaceholder: 'Winner Group C', awayPlaceholder: 'Runner-up Group D' });
+      round1Pairs.push({ homePlaceholder: 'Winner Group B', awayPlaceholder: 'Runner-up Group A' });
+      round1Pairs.push({ homePlaceholder: 'Winner Group D', awayPlaceholder: 'Runner-up Group C' });
+    } else if (options.advancingPerGroup === 1) {
+      for (let i = 0; i < options.numberOfGroups; i += 2) {
+        const g1 = String.fromCharCode(65 + i);
+        const g2 = i + 1 < options.numberOfGroups ? String.fromCharCode(65 + i + 1) : null;
+        round1Pairs.push({
+          homePlaceholder: `Winner Group ${g1}`,
+          awayPlaceholder: g2 ? `Winner Group ${g2}` : 'BYE',
+        });
+      }
+    } else {
+      for (let i = 0; i < options.numberOfGroups; i++) {
+        const gHome = String.fromCharCode(65 + i);
+        const targetGroup = (i + 1) % options.numberOfGroups;
+        const gAway = String.fromCharCode(65 + targetGroup);
+        round1Pairs.push({
+          homePlaceholder: `Winner Group ${gHome}`,
+          awayPlaceholder: `Runner-up Group ${gAway}`,
+        });
+      }
+    }
+
+    const rounds: {
+      round: number;
+      roundName: string;
+      fixtures: Fixture[];
+      bracketFixtures?: Fixture[];
+    }[] = [];
+
+    let matchesInCurrentRound = matchesInRound1;
+    let currentTime = new Date(options.startDate);
+    const fixturesToInsert: any[] = [];
+
+    for (let round = 1; round <= totalRounds; round++) {
+      const roundName = this.getKnockoutRoundName(
+        round,
+        totalRounds,
+        perfectBracketSize,
+      );
+      const prevRoundName =
+        round > 1
+          ? this.getKnockoutRoundName(
+              round - 1,
+              totalRounds,
+              perfectBracketSize,
+            )
+          : null;
+      const prevRoundAbbrev = prevRoundName
+        ? this.getRoundAbbreviation(prevRoundName)
+        : null;
+
+      const bracketFixtures: Fixture[] = [];
+      const allRoundFixtures: Fixture[] = [];
+      let roundMatchNumber = 1;
+
+      for (let matchIndex = 0; matchIndex < matchesInCurrentRound; matchIndex++) {
+        let homeTeamPlaceholder = 'TBD';
+        let awayTeamPlaceholder = 'TBD';
+
+        if (round === 1) {
+          homeTeamPlaceholder = round1Pairs[matchIndex]?.homePlaceholder || 'TBD';
+          awayTeamPlaceholder = round1Pairs[matchIndex]?.awayPlaceholder || 'TBD';
+        } else {
+          const prevMatch1 = matchIndex * 2 + 1;
+          const prevMatch2 = matchIndex * 2 + 2;
+          homeTeamPlaceholder = `${prevRoundAbbrev}(${prevMatch1}) Winner`;
+          awayTeamPlaceholder = `${prevRoundAbbrev}(${prevMatch2}) Winner`;
+        }
+
+        const isTwoLegs = tournament.twoLegsKnockout && round < totalRounds;
+
+        const fixtureData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round,
+          roundName: isTwoLegs ? `${roundName} - Leg 1` : roundName,
+          matchNumber: roundMatchNumber++,
+          startTime: null,
+          homeTeamId: null,
+          awayTeamId: null,
+          homeTeamPlaceholder,
+          awayTeamPlaceholder,
+          status: 'SCHEDULED',
+          stage: FixtureStage.KNOCKOUT,
+        };
+
+        bracketFixtures.push(fixtureData as unknown as Fixture);
+        allRoundFixtures.push(fixtureData as unknown as Fixture);
+        fixturesToInsert.push(fixtureData);
+
+        if (isTwoLegs) {
+          const leg2Data = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round,
+            roundName: `${roundName} - Leg 2`,
+            matchNumber: roundMatchNumber++,
+            startTime: null,
+            homeTeamId: null,
+            awayTeamId: null,
+            homeTeamPlaceholder: awayTeamPlaceholder,
+            awayTeamPlaceholder: homeTeamPlaceholder,
+            status: 'SCHEDULED',
+            stage: FixtureStage.KNOCKOUT,
+          };
+          allRoundFixtures.push(leg2Data as unknown as Fixture);
+          fixturesToInsert.push(leg2Data);
+        }
+      }
+
+      if (round === totalRounds && (options.hasThirdPlace || tournament.thirdPlaceMatch)) {
+        const thirdPlaceData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round,
+          roundName: 'Third Place Match',
+          matchNumber: roundMatchNumber++,
+          startTime: null,
+          homeTeamPlaceholder: 'SF1 Loser',
+          awayTeamPlaceholder: 'SF2 Loser',
+          homeTeamId: null,
+          awayTeamId: null,
+          status: 'SCHEDULED',
+          stage: FixtureStage.KNOCKOUT,
+        };
+        allRoundFixtures.push(thirdPlaceData as unknown as Fixture);
+        fixturesToInsert.push(thirdPlaceData);
+      }
+
+      if (allRoundFixtures.length > 0) {
+        rounds.push({
+          round,
+          roundName,
+          fixtures: allRoundFixtures,
+          bracketFixtures,
+        });
+      }
+
+      matchesInCurrentRound = matchesInCurrentRound / 2;
+    }
+
+    // Link nextFixtureId
+    for (let roundIndex = 0; roundIndex < rounds.length - 1; roundIndex++) {
+      const currentRound = rounds[roundIndex];
+      const nextRound = rounds[roundIndex + 1];
+
+      if (!currentRound.bracketFixtures || !nextRound.bracketFixtures) continue;
+      const currentBracket = currentRound.bracketFixtures;
+      const nextBracket = nextRound.bracketFixtures;
+
+      for (let i = 0; i < currentBracket.length; i++) {
+        const nextFixtureIndex = Math.floor(i / 2);
+        const nextFixture = nextBracket[nextFixtureIndex];
+
+        if (nextFixture) {
+          currentBracket[i].nextFixtureId = nextFixture.id;
+
+          if (tournament.twoLegsKnockout) {
+            const leg2 = currentRound.fixtures.find(
+              (f) =>
+                f.round === currentBracket[i].round &&
+                f.matchNumber === currentBracket[i].matchNumber + 1 &&
+                f.id !== currentBracket[i].id,
+            );
+            if (leg2) {
+              leg2.nextFixtureId = nextFixture.id;
+            }
+          }
+        }
+      }
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
+    }
+
+    const finalRounds = rounds.map(({ bracketFixtures, ...rest }) => rest);
+    return finalRounds;
+  }
+
   private getKnockoutRoundName(
     round: number,
     totalRounds: number,
