@@ -80,4 +80,34 @@ export class GenerateFixturesDto {
   @IsBoolean()
   @IsOptional()
   useExistingGroups?: boolean;
+  @ApiPropertyOptional({
+    description:
+      'If true, pre-generates knockout stage fixtures with group placeholders for HYBRID tournaments',
+    example: true,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  generateKnockoutStage?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Number of teams advancing from each group to the knockout stage (default 2)',
+    example: 2,
+    default: 2,
+  })
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  advancingPerGroup?: number;
+
+  @ApiPropertyOptional({
+    description: 'Whether to include a 3rd place match in knockout stage',
+    example: false,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  hasThirdPlace?: boolean;
+
 }
