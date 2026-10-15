@@ -110,11 +110,28 @@ export class FixtureGeneratorService {
       participants = this.shuffleArray(participants);
     }
 
+    const isDoubleRoundRobin =
+      dto.doubleRoundRobin !== undefined
+        ? dto.doubleRoundRobin
+        : !!(tournament as any).doubleRoundRobin;
+
+    if (
+      dto.doubleRoundRobin !== undefined &&
+      dto.doubleRoundRobin !== (tournament as any).doubleRoundRobin
+    ) {
+      await this.db.tournament.update({
+        where: { id: tournament.id },
+        data: { doubleRoundRobin: dto.doubleRoundRobin },
+      });
+      (tournament as any).doubleRoundRobin = dto.doubleRoundRobin;
+    }
+
     const options = {
       startDate: dto.startDate
         ? new Date(dto.startDate)
         : new Date(tournament.start_date),
       intervalMinutes: dto.intervalMinutes ?? 90,
+      doubleRoundRobin: isDoubleRoundRobin,
     };
 
     let rounds: { round: number; roundName: string; fixtures: Fixture[] }[];
@@ -145,6 +162,7 @@ export class FixtureGeneratorService {
           participants,
           {
             ...options,
+            doubleRoundRobin: isDoubleRoundRobin,
           },
         );
         break;
@@ -196,6 +214,7 @@ export class FixtureGeneratorService {
             numberOfGroups: validNumGroups,
             groupAssignments: dto.groupAssignments,
             useExistingGroups: dto.useExistingGroups,
+            doubleRoundRobin: isDoubleRoundRobin,
           },
         );
 
@@ -1130,6 +1149,7 @@ export class FixtureGeneratorService {
       numberOfGroups: number;
       groupAssignments?: Record<string, string[]>;
       useExistingGroups?: boolean;
+      doubleRoundRobin?: boolean;
     },
   ) {
     const numGroups = Math.max(1, options.numberOfGroups);
@@ -1349,7 +1369,11 @@ export class FixtureGeneratorService {
     }
 
     // Handle Double Round Robin (Second Leg)
-    if ((tournament as any).doubleRoundRobin) {
+    const hasGroupDoubleRound =
+      options.doubleRoundRobin !== undefined
+        ? options.doubleRoundRobin
+        : !!(tournament as any).doubleRoundRobin;
+    if (hasGroupDoubleRound) {
       const numRoundsSingle = sortedRounds.length;
 
       for (const roundNum of sortedRounds) {
@@ -1403,6 +1427,7 @@ export class FixtureGeneratorService {
     options: {
       startDate: Date;
       intervalMinutes: number;
+      doubleRoundRobin?: boolean;
     },
   ) {
     const rounds: { round: number; roundName: string; fixtures: Fixture[] }[] =
@@ -1465,7 +1490,11 @@ export class FixtureGeneratorService {
     }
 
     // Handle Double Round Robin
-    if ((tournament as any).doubleRoundRobin) {
+    const hasRRDoubleRound =
+      options.doubleRoundRobin !== undefined
+        ? options.doubleRoundRobin
+        : !!(tournament as any).doubleRoundRobin;
+    if (hasRRDoubleRound) {
       const secondLegRounds: {
         round: number;
         roundName: string;

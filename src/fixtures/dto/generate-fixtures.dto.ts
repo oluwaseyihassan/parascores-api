@@ -111,6 +111,15 @@ export class GenerateFixturesDto {
   hasThirdPlace?: boolean;
 
   @ApiPropertyOptional({
+    description: 'Whether to generate double round-robin fixtures (home & away)',
+    example: false,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  doubleRoundRobin?: boolean;
+
+  @ApiPropertyOptional({
     description: 'Custom knockout first round matchups (placeholders for HYBRID tournaments)',
     example: [{ home: 'Winner Group A', away: 'Runner-up Group B' }],
   })
