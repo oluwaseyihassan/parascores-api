@@ -110,4 +110,16 @@ export class GenerateFixturesDto {
   @IsOptional()
   hasThirdPlace?: boolean;
 
+  @ApiPropertyOptional({
+    description: 'Custom knockout first round matchups (placeholders for HYBRID tournaments)',
+    example: [{ home: 'Winner Group A', away: 'Runner-up Group B' }],
+  })
+  @IsOptional()
+  knockoutMatchups?: {
+    home?: string;
+    away?: string;
+    homePlaceholder?: string;
+    awayPlaceholder?: string;
+  }[];
+
 }

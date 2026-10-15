@@ -213,6 +213,7 @@ export class FixtureGeneratorService {
                   dto.hasThirdPlace ?? tournament.thirdPlaceMatch ?? false,
                 startDate: options.startDate,
                 intervalMinutes: options.intervalMinutes,
+                knockoutMatchups: dto.knockoutMatchups,
               },
             );
           rounds.push(...knockoutRounds);
@@ -387,6 +388,15 @@ export class FixtureGeneratorService {
 
     let qualifiedParticipants: Participant[] = [];
 
+    const standings = await this.db.standing.findMany({
+      where: { tournament_id: tournament.id },
+      orderBy: [
+        { points: 'desc' },
+        { goalDiff: 'desc' },
+        { goalsFor: 'desc' },
+      ],
+    });
+
     if (dto.qualifiedParticipantIds && dto.qualifiedParticipantIds.length > 0) {
       // Manual selection
       qualifiedParticipants = tournament.participants.filter((p) =>
@@ -398,23 +408,6 @@ export class FixtureGeneratorService {
         );
       }
     } else {
-      // Auto selection (Top 2 from each group)
-      // We need to calculate standings first or trust current standings.
-      // Let's recalculate/ensure valid standings.
-      // (Assuming getStandings logic is robust or we just use simple logic here)
-
-      // This is complex to do "on the fly" perfectly without code duplication from `getStandings`.
-      // For this task, let's assume we fetch standings via internal method or just calculate quickly.
-      // Actually, `initializeStandings` created them. We can fetch them.
-
-      const standings = await this.db.standing.findMany({
-        where: { tournament_id: tournament.id },
-        orderBy: [
-          { points: 'desc' },
-          { goalDiff: 'desc' },
-          { goalsFor: 'desc' },
-        ],
-      });
 
       // Group them
       const groups = tournament.groups;
@@ -471,10 +464,45 @@ export class FixtureGeneratorService {
         (a, b) => a.matchNumber - b.matchNumber,
       );
 
+      const findParticipantByPlaceholder = (placeholder?: string | null) => {
+        if (!placeholder) return null;
+        const match = placeholder.match(/(Winner|Runner-up|1st|2nd|3rd|4th)(\s+Place)?\s+Group\s+([A-Z])/i);
+        if (!match) return null;
+        const rankStr = match[1].toLowerCase();
+        const groupLetter = match[3].toUpperCase();
+        const group = tournament.groups.find((g: any) =>
+          g.name.toUpperCase().endsWith(groupLetter) || g.name.toUpperCase() === `GROUP ${groupLetter}`
+        );
+        if (!group) return null;
+        let rank = 1;
+        if (rankStr === 'winner' || rankStr === '1st') rank = 1;
+        else if (rankStr === 'runner-up' || rankStr === '2nd') rank = 2;
+        else if (rankStr === '3rd') rank = 3;
+        else if (rankStr === '4th') rank = 4;
+
+        const groupStandings = standings
+          .filter((s: any) => {
+            const p = tournament.participants.find((p: any) => p.id === s.participant_id);
+            return p && p.groupId === group.id;
+          })
+          .sort((a: any, b: any) => {
+            if (a.points !== b.points) return b.points - a.points;
+            if (a.goalDiff !== b.goalDiff) return b.goalDiff - a.goalDiff;
+            return b.goalsFor - a.goalsFor;
+          });
+        const targetStanding = groupStandings[rank - 1];
+        if (!targetStanding) return null;
+        return tournament.participants.find((p: any) => p.id === targetStanding.participant_id) || null;
+      };
+
       for (let i = 0; i < sortedRound1.length; i++) {
         const fixture = sortedRound1[i];
-        const home = knockoutParticipants[i * 2];
-        const away = knockoutParticipants[i * 2 + 1];
+        const home = (dto.manualSeeding && dto.manualSeeding.length > 0)
+          ? knockoutParticipants[i * 2]
+          : (findParticipantByPlaceholder(fixture.homeTeamPlaceholder) || knockoutParticipants[i * 2]);
+        const away = (dto.manualSeeding && dto.manualSeeding.length > 0)
+          ? knockoutParticipants[i * 2 + 1]
+          : (findParticipantByPlaceholder(fixture.awayTeamPlaceholder) || knockoutParticipants[i * 2 + 1]);
 
         await this.db.fixture.update({
           where: { id: fixture.id },
@@ -859,6 +887,12 @@ export class FixtureGeneratorService {
       hasThirdPlace: boolean;
       startDate: Date;
       intervalMinutes: number;
+      knockoutMatchups?: {
+        home?: string;
+        away?: string;
+        homePlaceholder?: string;
+        awayPlaceholder?: string;
+      }[];
     },
   ) {
     const totalQualifiers = options.numberOfGroups * options.advancingPerGroup;
@@ -871,7 +905,14 @@ export class FixtureGeneratorService {
     // Build round 1 cross-group placeholders
     const round1Pairs: { homePlaceholder: string; awayPlaceholder: string }[] = [];
 
-    if (options.numberOfGroups === 2 && options.advancingPerGroup === 2) {
+    if (options.knockoutMatchups && options.knockoutMatchups.length > 0) {
+      for (const m of options.knockoutMatchups) {
+        round1Pairs.push({
+          homePlaceholder: m.homePlaceholder || m.home || 'TBD',
+          awayPlaceholder: m.awayPlaceholder || m.away || 'TBD',
+        });
+      }
+    } else if (options.numberOfGroups === 2 && options.advancingPerGroup === 2) {
       round1Pairs.push({ homePlaceholder: 'Winner Group A', awayPlaceholder: 'Runner-up Group B' });
       round1Pairs.push({ homePlaceholder: 'Winner Group B', awayPlaceholder: 'Runner-up Group A' });
     } else if (options.numberOfGroups === 4 && options.advancingPerGroup === 2) {
