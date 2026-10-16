@@ -480,6 +480,9 @@ export class ParticipantsService {
       return;
     }
 
+    const isUnified = !!(participant.tournament as any).unifiedStandings;
+    const groupName = isUnified ? null : (participant.group?.name || null);
+
     await this.db.standing.upsert({
       where: {
         tournament_id_participant_id: {
@@ -490,7 +493,7 @@ export class ParticipantsService {
       create: {
         tournament_id: participant.tournament_id,
         participant_id: participant.id,
-        group: participant.group?.name || null,
+        group: groupName,
         played: 0,
         wins: 0,
         draws: 0,
@@ -501,7 +504,7 @@ export class ParticipantsService {
         points: 0,
       },
       update: {
-        group: participant.group?.name || null,
+        group: groupName,
       },
     });
   }

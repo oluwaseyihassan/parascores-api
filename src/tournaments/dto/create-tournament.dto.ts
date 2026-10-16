@@ -241,6 +241,16 @@ export class CreateTournamentDto {
   doubleRoundRobin?: boolean;
 
   @ApiPropertyOptional({
+    description:
+      'If true, all teams share a single unified standings table (e.g. Champions League / Swiss model) regardless of group/pot assignments',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  unifiedStandings?: boolean;
+
+  @ApiPropertyOptional({
     description: 'URL for the tournament logo',
     example: 'https://example.com/logo.png',
   })
