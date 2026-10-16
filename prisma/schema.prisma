@@ -110,6 +110,7 @@ model Tournament {
   parent_id          String?
   seasonName         String?
   doubleRoundRobin   Boolean              @default(false)
+  unifiedStandings   Boolean              @default(false)
   isPremium          Boolean              @default(false)
   isPaidRegistration Boolean              @default(false)
   registrationFee    Int                  @default(0)

@@ -206,17 +206,50 @@ export class FixtureGeneratorService {
           );
         }
 
-        rounds = await this.generateGroupStageFixtures(
-          tournament,
-          participants,
-          {
-            ...options,
-            numberOfGroups: validNumGroups,
-            groupAssignments: dto.groupAssignments,
-            useExistingGroups: dto.useExistingGroups,
-            doubleRoundRobin: isDoubleRoundRobin,
-          },
-        );
+        const isUnified =
+          dto.unifiedStandings !== undefined
+            ? dto.unifiedStandings
+            : !!(tournament as any).unifiedStandings;
+
+        if (
+          dto.unifiedStandings !== undefined &&
+          dto.unifiedStandings !== (tournament as any).unifiedStandings
+        ) {
+          await this.db.tournament.update({
+            where: { id: tournament.id },
+            data: { unifiedStandings: dto.unifiedStandings },
+          });
+          (tournament as any).unifiedStandings = dto.unifiedStandings;
+        }
+
+        const isChampionsLeague =
+          dto.format === 'CHAMPIONS_LEAGUE' || dto.format === 'SWISS';
+
+        if (isChampionsLeague) {
+          rounds = await this.generateChampionsLeagueFixtures(
+            tournament,
+            participants,
+            {
+              ...options,
+              numberOfPots: validNumGroups,
+              matchesPerPot: dto.matchesPerPot ?? 2,
+              groupAssignments: dto.groupAssignments,
+              useExistingGroups: dto.useExistingGroups,
+            },
+          );
+        } else {
+          rounds = await this.generateGroupStageFixtures(
+            tournament,
+            participants,
+            {
+              ...options,
+              numberOfGroups: validNumGroups,
+              groupAssignments: dto.groupAssignments,
+              useExistingGroups: dto.useExistingGroups,
+              doubleRoundRobin: isDoubleRoundRobin,
+            },
+          );
+        }
 
         if (
           tournament.type === TournamentType.HYBRID &&
@@ -233,6 +266,7 @@ export class FixtureGeneratorService {
                 startDate: options.startDate,
                 intervalMinutes: options.intervalMinutes,
                 knockoutMatchups: dto.knockoutMatchups,
+                isUnifiedStandings: isUnified,
               },
             );
           rounds.push(...knockoutRounds);
@@ -426,6 +460,16 @@ export class FixtureGeneratorService {
           'One or more qualified participant IDs are invalid for this tournament',
         );
       }
+    } else if ((tournament as any).unifiedStandings) {
+      // For unified standings (Champions League / Swiss), advance top qualifiers globally
+      const totalQualifiers = tournament.groups.length > 0 ? tournament.groups.length * 2 : 8;
+      const topStandings = standings.slice(0, Math.min(totalQualifiers, standings.length));
+      for (const s of topStandings) {
+        const p = tournament.participants.find(
+          (part) => part.id === s.participant_id,
+        );
+        if (p) qualifiedParticipants.push(p);
+      }
     } else {
 
       // Group them
@@ -485,6 +529,17 @@ export class FixtureGeneratorService {
 
       const findParticipantByPlaceholder = (placeholder?: string | null) => {
         if (!placeholder) return null;
+
+        // Check for Seed N or Nth Place (League)
+        const seedMatch = placeholder.match(/(?:Seed|Rank|(\d+)(?:st|nd|rd|th)?\s+Place\s*\(League\))\s*(\d+)?/i);
+        if (seedMatch) {
+          const rank = parseInt(seedMatch[2] || seedMatch[1], 10);
+          const targetStanding = standings[rank - 1];
+          if (targetStanding) {
+            return tournament.participants.find((p: any) => p.id === targetStanding.participant_id) || null;
+          }
+        }
+
         const match = placeholder.match(/(Winner|Runner-up|1st|2nd|3rd|4th)(\s+Place)?\s+Group\s+([A-Z])/i);
         if (!match) return null;
         const rankStr = match[1].toLowerCase();
@@ -912,6 +967,7 @@ export class FixtureGeneratorService {
         homePlaceholder?: string;
         awayPlaceholder?: string;
       }[];
+      isUnifiedStandings?: boolean;
     },
   ) {
     const totalQualifiers = options.numberOfGroups * options.advancingPerGroup;
@@ -929,6 +985,30 @@ export class FixtureGeneratorService {
         round1Pairs.push({
           homePlaceholder: m.homePlaceholder || m.home || 'TBD',
           awayPlaceholder: m.awayPlaceholder || m.away || 'TBD',
+        });
+      }
+    } else if (options.isUnifiedStandings) {
+      const K = totalQualifiers;
+      const seedPairs: [number, number][] = [];
+      if (K === 4) {
+        seedPairs.push([1, 4], [2, 3]);
+      } else if (K === 8) {
+        seedPairs.push([1, 8], [4, 5], [2, 7], [3, 6]);
+      } else if (K === 16) {
+        seedPairs.push(
+          [1, 16], [8, 9], [4, 13], [5, 12],
+          [2, 15], [7, 10], [3, 14], [6, 11]
+        );
+      } else {
+        for (let i = 0; i < matchesInRound1; i++) {
+          seedPairs.push([i + 1, perfectBracketSize - i]);
+        }
+      }
+
+      for (const [sHome, sAway] of seedPairs) {
+        round1Pairs.push({
+          homePlaceholder: `Seed ${sHome}`,
+          awayPlaceholder: `Seed ${sAway}`,
         });
       }
     } else if (options.numberOfGroups === 2 && options.advancingPerGroup === 2) {
@@ -1656,7 +1736,10 @@ export class FixtureGeneratorService {
       include: { group: true },
     });
 
-    for (const participant of participants) {
+    const isUnified = !!(tournament as any).unifiedStandings;
+
+    for (let i = 0; i < participants.length; i++) {
+      const participant = participants[i];
       const existing = await this.db.standing.findUnique({
         where: {
           tournament_id_participant_id: {
@@ -1671,7 +1754,8 @@ export class FixtureGeneratorService {
           data: {
             tournament_id: tournament.id,
             participant_id: participant.id,
-            group: participant.group?.name,
+            group: isUnified ? null : participant.group?.name,
+            position: isUnified ? i + 1 : null,
             played: 0,
             wins: 0,
             draws: 0,
@@ -1761,4 +1845,274 @@ export class FixtureGeneratorService {
 
     return rounds;
   }
+  // Champions League / Swiss Pots fixture generation
+  private async generateChampionsLeagueFixtures(
+    tournament: Tournament,
+    participants: Participant[],
+    options: {
+      startDate: Date;
+      intervalMinutes: number;
+      numberOfPots?: number;
+      matchesPerPot?: number;
+      groupAssignments?: Record<string, string[]>;
+      useExistingGroups?: boolean;
+    },
+  ) {
+    const numPots = Math.max(2, options.numberOfPots ?? 4);
+    let createdPots: Group[] = [];
+
+    if (options.useExistingGroups) {
+      const existingGroups = await this.db.group.findMany({
+        where: { tournament_id: tournament.id },
+        include: { participants: true },
+        orderBy: { created_at: 'asc' },
+      });
+      if (existingGroups.length === 0) {
+        throw new BadRequestException('No existing pots/groups found for this tournament');
+      }
+      createdPots = existingGroups;
+    } else {
+      const potLabels = options.groupAssignments && Object.keys(options.groupAssignments).length > 0
+        ? Object.keys(options.groupAssignments)
+        : Array.from({ length: numPots }, (_, i) => `Pot ${i + 1}`);
+
+      for (const name of potLabels) {
+        const group = await this.db.group.create({
+          data: { name, tournament_id: tournament.id },
+        });
+        createdPots.push(group);
+      }
+    }
+
+    const actualNumPots = createdPots.length;
+    const distributedParticipants: Participant[][] = Array.from(
+      { length: actualNumPots },
+      () => [],
+    );
+
+    if (options.useExistingGroups) {
+      for (let g = 0; g < actualNumPots; g++) {
+        const group = createdPots[g];
+        const existingParticipantIds = group['participants'].map((p) => p.id);
+        for (const pid of existingParticipantIds) {
+          const participant = participants.find((p) => p.id === pid);
+          if (participant) distributedParticipants[g].push(participant);
+        }
+      }
+      const assignedIds = new Set(distributedParticipants.flat().map((p) => p.id));
+      const unassigned = participants.filter((p) => !assignedIds.has(p.id));
+      for (let i = 0; i < unassigned.length; i++) {
+        const groupIndex = i % actualNumPots;
+        const participant = unassigned[i];
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdPots[groupIndex].id },
+        });
+        distributedParticipants[groupIndex].push(participant);
+      }
+    } else if (options.groupAssignments && Object.keys(options.groupAssignments).length > 0) {
+      const groupNames = createdPots.map((g) => g.name);
+      for (let g = 0; g < actualNumPots; g++) {
+        const groupLabel = groupNames[g];
+        const assignedIds = options.groupAssignments[groupLabel] || [];
+        for (const pid of assignedIds) {
+          const participant = participants.find((p) => p.id === pid);
+          if (participant) {
+            await this.db.participant.update({
+              where: { id: participant.id },
+              data: { groupId: createdPots[g].id },
+            });
+            distributedParticipants[g].push(participant);
+          }
+        }
+      }
+      const assignedIds = new Set(Object.values(options.groupAssignments).flat());
+      const unassigned = participants.filter((p) => !assignedIds.has(p.id));
+      for (let i = 0; i < unassigned.length; i++) {
+        const groupIndex = i % actualNumPots;
+        const participant = unassigned[i];
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdPots[groupIndex].id },
+        });
+        distributedParticipants[groupIndex].push(participant);
+      }
+    } else {
+      // Pot distribution: chunks of equal size
+      const teamsPerPot = Math.ceil(participants.length / actualNumPots);
+      for (let i = 0; i < participants.length; i++) {
+        const groupIndex = Math.floor(i / teamsPerPot);
+        const potIdx = Math.min(groupIndex, actualNumPots - 1);
+        const participant = participants[i];
+        await this.db.participant.update({
+          where: { id: participant.id },
+          data: { groupId: createdPots[potIdx].id },
+        });
+        distributedParticipants[potIdx].push(participant);
+      }
+    }
+
+    // Now generate fixtures between and within pots
+    const allFixtures: { home: Participant; away: Participant; potHome: number; potAway: number }[] = [];
+
+    // 1. Intra-pot fixtures (1 Home, 1 Away inside each pot)
+    for (let p = 0; p < actualNumPots; p++) {
+      const pot = distributedParticipants[p];
+      const S = pot.length;
+      if (S < 2) continue;
+      for (let i = 0; i < S; i++) {
+        allFixtures.push({
+          home: pot[i],
+          away: pot[(i + 1) % S],
+          potHome: p,
+          potAway: p,
+        });
+      }
+    }
+
+    // 2. Inter-pot fixtures (1 Home, 1 Away between each pair of pots)
+    for (let a = 0; a < actualNumPots; a++) {
+      for (let b = a + 1; b < actualNumPots; b++) {
+        const potA = distributedParticipants[a];
+        const potB = distributedParticipants[b];
+        const S = Math.min(potA.length, potB.length);
+        if (S < 1) continue;
+        const off = (a * 2 + b * 3) % S;
+
+        for (let i = 0; i < S; i++) {
+          allFixtures.push({
+            home: potA[i],
+            away: potB[(i + off) % S],
+            potHome: a,
+            potAway: b,
+          });
+        }
+        for (let i = 0; i < S; i++) {
+          allFixtures.push({
+            home: potB[(i + off + 1) % S],
+            away: potA[i],
+            potHome: b,
+            potAway: a,
+          });
+        }
+      }
+    }
+
+    // Allocate into rounds
+    const totalTeams = participants.length;
+    const matchesPerRound = Math.max(1, Math.floor(totalTeams / 2));
+    const numRounds = Math.max(1, Math.round(allFixtures.length / matchesPerRound));
+
+    let scheduledRounds: { home: Participant; away: Participant }[][] | null = null;
+
+    for (let trial = 0; trial < 100; trial++) {
+      const tempRounds: { home: Participant; away: Participant }[][] = Array.from(
+        { length: numRounds },
+        () => [],
+      );
+      let remaining = [...allFixtures];
+      let failed = false;
+
+      for (let r = 0; r < numRounds; r++) {
+        if (r === numRounds - 1) {
+          tempRounds[r] = remaining;
+          break;
+        }
+
+        let foundMatching: typeof allFixtures | null = null;
+        for (let attempt = 0; attempt < 200; attempt++) {
+          const shuffled = [...remaining].sort(() => Math.random() - 0.5);
+          const currentMatching: typeof allFixtures = [];
+          const usedTeams = new Set<string>();
+
+          for (const fix of shuffled) {
+            if (!usedTeams.has(fix.home.id) && !usedTeams.has(fix.away.id)) {
+              currentMatching.push(fix);
+              usedTeams.add(fix.home.id);
+              usedTeams.add(fix.away.id);
+              if (currentMatching.length === matchesPerRound) break;
+            }
+          }
+
+          if (currentMatching.length === matchesPerRound) {
+            foundMatching = currentMatching;
+            break;
+          }
+        }
+
+        if (!foundMatching) {
+          failed = true;
+          break;
+        }
+
+        tempRounds[r] = foundMatching;
+        const matchingSet = new Set(foundMatching);
+        remaining = remaining.filter((f) => !matchingSet.has(f));
+      }
+
+      if (!failed) {
+        scheduledRounds = tempRounds;
+        break;
+      }
+    }
+
+    if (!scheduledRounds) {
+      scheduledRounds = [];
+      for (let i = 0; i < allFixtures.length; i += matchesPerRound) {
+        scheduledRounds.push(allFixtures.slice(i, i + matchesPerRound));
+      }
+    }
+
+    const rounds: {
+      round: number;
+      roundName: string;
+      fixtures: Fixture[];
+    }[] = [];
+    const fixturesToInsert: any[] = [];
+    let matchNumber = 1;
+    let currentTime = new Date(options.startDate);
+
+    for (let r = 0; r < scheduledRounds.length; r++) {
+      const roundFixtures: Fixture[] = [];
+      const roundNum = r + 1;
+      const roundName = `League Phase - Matchday ${roundNum}`;
+
+      for (const pair of scheduledRounds[r]) {
+        const fixtureData = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round: roundNum,
+          roundName,
+          matchNumber: matchNumber++,
+          startTime: currentTime ? new Date(currentTime) : null,
+          homeTeamId: pair.home.id,
+          awayTeamId: pair.away.id,
+          status: 'SCHEDULED' as any,
+          stage: FixtureStage.GROUP_STAGE,
+        };
+
+        fixturesToInsert.push(fixtureData);
+        roundFixtures.push(fixtureData as unknown as Fixture);
+      }
+
+      rounds.push({
+        round: roundNum,
+        roundName,
+        fixtures: roundFixtures,
+      });
+
+      if (currentTime) {
+        currentTime = new Date(
+          currentTime.getTime() + options.intervalMinutes * 60000,
+        );
+      }
+    }
+
+    if (fixturesToInsert.length > 0) {
+      await this.db.fixture.createMany({ data: fixturesToInsert });
+    }
+
+    return rounds;
+  }
+
 }

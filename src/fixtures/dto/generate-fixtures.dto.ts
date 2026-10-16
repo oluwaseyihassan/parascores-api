@@ -5,6 +5,7 @@ import {
   IsOptional,
   Min,
   IsObject,
+  IsString,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -130,5 +131,35 @@ export class GenerateFixturesDto {
     homePlaceholder?: string;
     awayPlaceholder?: string;
   }[];
+
+  @ApiPropertyOptional({
+    description:
+      'If true, all teams share a single unified standings table (e.g. Champions League / Swiss model) regardless of group/pot assignments',
+    example: false,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  unifiedStandings?: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Format for tournament scheduling: "ROUND_ROBIN" | "CHAMPIONS_LEAGUE" | "SWISS"',
+    example: 'CHAMPIONS_LEAGUE',
+  })
+  @IsString()
+  @IsOptional()
+  format?: 'ROUND_ROBIN' | 'CHAMPIONS_LEAGUE' | 'SWISS';
+
+  @ApiPropertyOptional({
+    description:
+      'Number of matches each team plays against teams from each pot in Champions League / Swiss format (default 2: 1 home, 1 away)',
+    example: 2,
+    default: 2,
+  })
+  @IsInt()
+  @Min(1)
+  @IsOptional()
+  matchesPerPot?: number;
 
 }

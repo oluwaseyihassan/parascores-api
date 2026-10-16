@@ -520,6 +520,7 @@ export class TournamentsService {
         numberOfGroups: parentTournament.numberOfGroups,
         teamsPerGroup: parentTournament.teamsPerGroup,
         doubleRoundRobin: (parentTournament as any).doubleRoundRobin,
+        unifiedStandings: (parentTournament as any).unifiedStandings,
         isPinned: false,
       },
     });

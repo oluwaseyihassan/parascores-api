@@ -1350,6 +1350,12 @@ export class FixturesService {
 
   // Update Standings (Recalculate for tournament)
   private async updateStandings(tournamentId: string) {
+    const tournament = await this.db.tournament.findUnique({
+      where: { id: tournamentId },
+      select: { id: true, unifiedStandings: true },
+    });
+    const isUnified = !!tournament?.unifiedStandings;
+
     const participants = await this.db.participant.findMany({
       where: { tournament_id: tournamentId },
       include: { group: true },
@@ -1416,8 +1422,22 @@ export class FixturesService {
       }
     }
 
-    for (const [pId, s] of stats.entries()) {
+    const sortedEntries = Array.from(stats.entries()).sort((a, b) => {
+      const sa = a[1];
+      const sb = b[1];
+      if (sb.points !== sa.points) return sb.points - sa.points;
+      const gdA = sa.goalsFor - sa.goalsAgainst;
+      const gdB = sb.goalsFor - sb.goalsAgainst;
+      if (gdB !== gdA) return gdB - gdA;
+      if (sb.goalsFor !== sa.goalsFor) return sb.goalsFor - sa.goalsFor;
+      if (sb.wins !== sa.wins) return sb.wins - sa.wins;
+      return sa.played - sb.played;
+    });
+
+    for (let i = 0; i < sortedEntries.length; i++) {
+      const [pId, s] = sortedEntries[i];
       const p = participants.find((part) => part.id === pId);
+      const groupName = isUnified ? null : (p?.group?.name || null);
       await this.db.standing.upsert({
         where: {
           tournament_id_participant_id: {
@@ -1428,14 +1448,16 @@ export class FixturesService {
         create: {
           tournament_id: tournamentId,
           participant_id: pId,
-          group: p?.group?.name || null,
+          group: groupName,
           ...s,
           goalDiff: s.goalsFor - s.goalsAgainst,
+          position: isUnified ? i + 1 : undefined,
         },
         update: {
-          group: p?.group?.name || null,
+          group: groupName,
           ...s,
           goalDiff: s.goalsFor - s.goalsAgainst,
+          position: isUnified ? i + 1 : undefined,
         },
       });
     }

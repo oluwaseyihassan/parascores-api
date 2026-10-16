@@ -72,6 +72,24 @@ export class StandingsService {
       return response;
     }
 
+    const isUnified = !!(tournament as any).unifiedStandings;
+
+    const orderBy: any[] = isUnified
+      ? [
+          { points: 'desc' },
+          { goalDiff: 'desc' },
+          { goalsFor: 'desc' },
+          { wins: 'desc' },
+          { played: 'asc' },
+        ]
+      : [
+          { group: 'asc' },
+          { points: 'desc' },
+          { goalDiff: 'desc' },
+          { goalsFor: 'desc' },
+          { played: 'asc' },
+        ];
+
     const standings = await this.db.standing.findMany({
       where: { tournament_id: tournament.id },
       include: {
@@ -82,18 +100,14 @@ export class StandingsService {
           },
         },
       },
-      orderBy: [
-        { group: 'asc' },
-        { points: 'desc' },
-        { goalDiff: 'desc' },
-        { goalsFor: 'desc' },
-        { played: 'asc' },
-      ],
+      orderBy,
     });
 
     const response = ResponseUtil.success({
-      standings: standings.map((s) => ({
+      standings: standings.map((s, idx) => ({
         ...s,
+        group: isUnified ? null : s.group,
+        position: isUnified ? idx + 1 : s.position,
         participantName:
           s.participant?.team?.name ||
           s.participant?.customName ||
