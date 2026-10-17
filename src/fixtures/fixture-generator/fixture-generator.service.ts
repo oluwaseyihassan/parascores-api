@@ -442,7 +442,7 @@ export class FixtureGeneratorService {
       }
     }
 
-    if (groupFixtures.length < expectedMinMatches) {
+    if (!(tournament as any).unifiedStandings && groupFixtures.length < expectedMinMatches) {
       throw new BadRequestException(
         `Group stage is incomplete. Expected at least ${expectedMinMatches} matches (Single Round Robin), but found ${groupFixtures.length}.`,
       );
@@ -546,8 +546,7 @@ export class FixtureGeneratorService {
       (f) => f.stage === FixtureStage.KNOCKOUT,
     );
 
-    if (existingKnockoutFixtures.length > 0) {
-      const findParticipantByPlaceholder = (placeholder?: string | null) => {
+    const findParticipantByPlaceholder = (placeholder?: string | null) => {
         if (!placeholder) return null;
 
         // Check for Seed N or Nth Place (League)
@@ -589,6 +588,7 @@ export class FixtureGeneratorService {
         return tournament.participants.find((p: any) => p.id === targetStanding.participant_id) || null;
       };
 
+    if (existingKnockoutFixtures.length > 0) {
       // Populate any knockout fixture whose placeholders match seeds or groups
       for (const fixture of existingKnockoutFixtures) {
         let home: any = findParticipantByPlaceholder(fixture.homeTeamPlaceholder);
@@ -630,11 +630,63 @@ export class FixtureGeneratorService {
         }
       }
     } else {
-      await this.generateKnockoutFixtures(tournament, knockoutParticipants, {
-        startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
-        intervalMinutes: 120, // Standard knockout time
-        stage: FixtureStage.KNOCKOUT,
-      });
+      if ((tournament as any).unifiedStandings && (tournament as any).hasKnockoutPlayoffs) {
+        await this.generateHybridKnockoutPlaceholders(
+          tournament,
+          {
+            numberOfGroups: tournament.groups.length || 1,
+            advancingPerGroup: Math.max(2, Math.floor(knockoutParticipants.length / (tournament.groups.length || 1))),
+            hasThirdPlace: tournament.thirdPlaceMatch ?? false,
+            startDate: new Date(Date.now() + 24 * 60 * 60 * 1000),
+            intervalMinutes: 120,
+            isUnifiedStandings: true,
+            hasKnockoutPlayoffs: true,
+          },
+        );
+
+        const newKnockoutFixtures = await this.db.fixture.findMany({
+          where: { tournament_id: tournament.id, stage: FixtureStage.KNOCKOUT },
+        });
+
+        for (const fixture of newKnockoutFixtures) {
+          let home: any = findParticipantByPlaceholder(fixture.homeTeamPlaceholder);
+          let away: any = findParticipantByPlaceholder(fixture.awayTeamPlaceholder);
+
+          if (home || away) {
+            await this.db.fixture.update({
+              where: { id: fixture.id },
+              data: {
+                ...(home ? { homeTeamId: home.id, homeTeamPlaceholder: null } : {}),
+                ...(away ? { awayTeamId: away.id, awayTeamPlaceholder: null } : {}),
+              },
+            });
+
+            if (tournament.twoLegsKnockout && fixture.roundName?.includes('Leg 1')) {
+              const leg2 = newKnockoutFixtures.find(
+                (f) =>
+                  f.round === fixture.round &&
+                  f.matchNumber === fixture.matchNumber + 1 &&
+                  f.roundName?.includes('Leg 2'),
+              );
+              if (leg2) {
+                await this.db.fixture.update({
+                  where: { id: leg2.id },
+                  data: {
+                    ...(home ? { awayTeamId: home.id, awayTeamPlaceholder: null } : {}),
+                    ...(away ? { homeTeamId: away.id, homeTeamPlaceholder: null } : {}),
+                  },
+                });
+              }
+            }
+          }
+        }
+      } else {
+        await this.generateKnockoutFixtures(tournament, knockoutParticipants, {
+          startDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // Start tomorrow? Or use end of group stage?
+          intervalMinutes: 120, // Standard knockout time
+          stage: FixtureStage.KNOCKOUT,
+        });
+      }
     }
 
     // Re-fetch everything with full relations to ensure frontend get all info (teams, groups, etc)
