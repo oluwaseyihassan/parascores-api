@@ -8,6 +8,7 @@ import { DatabaseService } from 'src/database/database.service';
 import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { SetResultsDto } from './dto/set-results.dto';
 import { CreateFixtureDto } from './dto/create-fixture.dto';
+import { CreateBulkFixturesDto } from './dto/create-bulk-fixtures.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
@@ -169,6 +170,89 @@ export class FixturesService {
     await this.redisService.delPattern('fixtures:live:org:*');
 
     return ResponseUtil.success(fixture);
+  }
+
+  
+  // Create fixtures in bulk (e.g. from manual schedule wizard)
+  async createBulk(
+    tournamentId: string,
+    dto: CreateBulkFixturesDto,
+    userId: string,
+  ) {
+    const tournament = await this.db.tournament.findFirst({
+      where: {
+        OR: [{ id: tournamentId }, { customName: tournamentId }],
+      },
+      include: {
+        organization: {
+          include: {
+            members: { where: { userId } },
+          },
+        },
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
+      throw new ForbiddenException(
+        'You are not authorized to create fixtures for this tournament',
+      );
+    }
+
+    if (!dto.fixtures || dto.fixtures.length === 0) {
+      return ResponseUtil.success([], 'No fixtures to create');
+    }
+
+    // Auto-calculate match numbers
+    const lastFixture = await this.db.fixture.findFirst({
+      where: { tournament_id: tournament.id },
+      orderBy: { matchNumber: 'desc' },
+    });
+    let startingMatchNumber = (lastFixture?.matchNumber ?? 0) + 1;
+
+    const fixturesToInsert = dto.fixtures.map((f) => ({
+      id: crypto.randomUUID(),
+      tournament_id: tournament.id,
+      homeTeamId: f.homeTeamId || null,
+      awayTeamId: f.awayTeamId || null,
+      round: f.round,
+      roundName: f.roundName || `Matchday ${f.round}`,
+      matchNumber: f.matchNumber ?? startingMatchNumber++,
+      startTime: f.startTime ? new Date(f.startTime) : null,
+      venue: f.venue || null,
+      groupId: f.groupId || null,
+      stage: f.stage || null,
+      status: 'SCHEDULED' as any,
+    }));
+
+    await this.db.fixture.createMany({
+      data: fixturesToInsert,
+    });
+
+    // Invalidate caches
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
+
+    return ResponseUtil.success(
+      fixturesToInsert,
+      `${fixturesToInsert.length} fixtures created successfully`,
+    );
   }
 
   // Get a single fixture by ID

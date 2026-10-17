@@ -47,7 +47,7 @@ import { APP_FILTER } from '@nestjs/core';
       {
         name: 'default',
         ttl: 60000, // 60 seconds in milliseconds
-        limit: 100,
+        limit: 300,
       },
     ]),
     EventEmitterModule.forRoot(),
