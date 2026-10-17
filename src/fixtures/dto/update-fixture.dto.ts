@@ -205,4 +205,12 @@ export class UpdateFixtureDto {
   @IsString()
   @IsOptional()
   livestreamPlatform?: string;
+
+  @ApiPropertyOptional({
+    description: 'Explicitly allow reopening a completed fixture back to LIVE',
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  allowReopen?: boolean;
 }

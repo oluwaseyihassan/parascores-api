@@ -482,6 +482,7 @@ export class FixturesService {
         'matchDuration',
         'manOfTheMatchPlayerId',
         'periodScores',
+        'allowReopen',
       ];
       const attemptedFields = Object.keys(dto).filter(
         (key) => dto[key] !== undefined,
@@ -562,6 +563,29 @@ export class FixturesService {
           );
         }
       }
+    }
+
+    // Guard: Prevent restarting a completed or cancelled fixture unless explicitly reopening
+    if (
+      dto.status === 'LIVE' &&
+      (fixture.status === 'COMPLETED' || fixture.status === 'CANCELLED') &&
+      !dto.allowReopen
+    ) {
+      throw new BadRequestException(
+        `Cannot start a fixture that is already ${fixture.status.toLowerCase()}. Refresh your page to see the latest state.`,
+      );
+    }
+
+    // Guard: Prevent starting a match that is already live (stale tab race condition)
+    if (
+      dto.status === 'LIVE' &&
+      fixture.status === 'LIVE' &&
+      dto.timerElapsedSeconds === 0 &&
+      !dto.allowReopen
+    ) {
+      throw new BadRequestException(
+        'This match is already live. Refresh your page to see the latest state.',
+      );
     }
 
     // Validate Leg 1 completion before starting Leg 2
