@@ -1084,11 +1084,36 @@ export class FixturesService {
           ? fixture.awayTeamId
           : fixture.homeTeamId;
 
+      const nextFixture = await this.db.fixture.findUnique({
+        where: { id: fixture.nextFixtureId },
+      });
+
       let isHomeFeed = fixture.matchNumber % 2 !== 0;
 
       if (tournament?.twoLegsKnockout) {
         const slotIndex = Math.ceil(fixture.matchNumber / 2);
         isHomeFeed = slotIndex % 2 !== 0;
+      }
+
+      // Special handling for playoff round or pre-seeded direct bye fixtures
+      if (nextFixture) {
+        if (
+          nextFixture.homeTeamPlaceholder?.startsWith('Seed ') &&
+          (nextFixture.awayTeamPlaceholder?.includes('PO(') ||
+           nextFixture.awayTeamPlaceholder?.includes('Winner'))
+        ) {
+          isHomeFeed = false;
+        } else if (
+          nextFixture.awayTeamPlaceholder?.startsWith('Seed ') &&
+          (nextFixture.homeTeamPlaceholder?.includes('PO(') ||
+           nextFixture.homeTeamPlaceholder?.includes('Winner'))
+        ) {
+          isHomeFeed = true;
+        } else if (nextFixture.homeTeamId && !nextFixture.awayTeamId) {
+          isHomeFeed = false;
+        } else if (nextFixture.awayTeamId && !nextFixture.homeTeamId) {
+          isHomeFeed = true;
+        }
       }
 
       await this.db.fixture.update({
@@ -1099,9 +1124,6 @@ export class FixturesService {
       });
 
       if (tournament?.twoLegsKnockout) {
-        const nextFixture = await this.db.fixture.findUnique({
-          where: { id: fixture.nextFixtureId },
-        });
 
         if (nextFixture && nextFixture.roundName?.includes('Leg 1')) {
           const leg2OfNext = await this.db.fixture.findFirst({

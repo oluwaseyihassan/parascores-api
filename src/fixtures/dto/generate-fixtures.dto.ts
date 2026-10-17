@@ -144,6 +144,16 @@ export class GenerateFixturesDto {
 
   @ApiPropertyOptional({
     description:
+      'If true, middle seeds compete in Knockout Play-offs before Round of 16 (UEFA Champions League format)',
+    example: true,
+    default: false,
+  })
+  @IsBoolean()
+  @IsOptional()
+  hasKnockoutPlayoffs?: boolean;
+
+  @ApiPropertyOptional({
+    description:
       'Format for tournament scheduling: "ROUND_ROBIN" | "CHAMPIONS_LEAGUE" | "SWISS"',
     example: 'CHAMPIONS_LEAGUE',
   })
