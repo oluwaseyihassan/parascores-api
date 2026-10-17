@@ -222,6 +222,22 @@ export class FixtureGeneratorService {
           (tournament as any).unifiedStandings = dto.unifiedStandings;
         }
 
+        const hasPlayoffs =
+          dto.hasKnockoutPlayoffs !== undefined
+            ? dto.hasKnockoutPlayoffs
+            : !!(tournament as any).hasKnockoutPlayoffs;
+
+        if (
+          dto.hasKnockoutPlayoffs !== undefined &&
+          dto.hasKnockoutPlayoffs !== (tournament as any).hasKnockoutPlayoffs
+        ) {
+          await this.db.tournament.update({
+            where: { id: tournament.id },
+            data: { hasKnockoutPlayoffs: dto.hasKnockoutPlayoffs },
+          });
+          (tournament as any).hasKnockoutPlayoffs = dto.hasKnockoutPlayoffs;
+        }
+
         const isChampionsLeague =
           dto.format === 'CHAMPIONS_LEAGUE' || dto.format === 'SWISS';
 
@@ -267,6 +283,7 @@ export class FixtureGeneratorService {
                 intervalMinutes: options.intervalMinutes,
                 knockoutMatchups: dto.knockoutMatchups,
                 isUnifiedStandings: isUnified,
+                hasKnockoutPlayoffs: hasPlayoffs,
               },
             );
           rounds.push(...knockoutRounds);
@@ -462,7 +479,15 @@ export class FixtureGeneratorService {
       }
     } else if ((tournament as any).unifiedStandings) {
       // For unified standings (Champions League / Swiss), advance top qualifiers globally
-      const totalQualifiers = tournament.groups.length > 0 ? tournament.groups.length * 2 : 8;
+      const hasPlayoffs = !!(tournament as any).hasKnockoutPlayoffs;
+      let totalQualifiers = 16;
+      if (hasPlayoffs) {
+        if (standings.length >= 24) totalQualifiers = 24;
+        else if (standings.length >= 12) totalQualifiers = 12;
+        else totalQualifiers = 6;
+      } else {
+        totalQualifiers = tournament.groups.length > 0 ? tournament.groups.length * 2 : 8;
+      }
       const topStandings = standings.slice(0, Math.min(totalQualifiers, standings.length));
       for (const s of topStandings) {
         const p = tournament.participants.find(
@@ -518,15 +543,10 @@ export class FixtureGeneratorService {
 
     // Check if knockout placeholder fixtures already exist (pre-generated during hybrid setup)
     const existingKnockoutFixtures = tournament.fixtures.filter(
-      (f) => f.stage === FixtureStage.KNOCKOUT && f.round === 1,
+      (f) => f.stage === FixtureStage.KNOCKOUT,
     );
 
     if (existingKnockoutFixtures.length > 0) {
-      // Sort existing round 1 knockout fixtures by matchNumber
-      const sortedRound1 = existingKnockoutFixtures.sort(
-        (a, b) => a.matchNumber - b.matchNumber,
-      );
-
       const findParticipantByPlaceholder = (placeholder?: string | null) => {
         if (!placeholder) return null;
 
@@ -569,24 +589,45 @@ export class FixtureGeneratorService {
         return tournament.participants.find((p: any) => p.id === targetStanding.participant_id) || null;
       };
 
-      for (let i = 0; i < sortedRound1.length; i++) {
-        const fixture = sortedRound1[i];
-        const home = (dto.manualSeeding && dto.manualSeeding.length > 0)
-          ? knockoutParticipants[i * 2]
-          : (findParticipantByPlaceholder(fixture.homeTeamPlaceholder) || knockoutParticipants[i * 2]);
-        const away = (dto.manualSeeding && dto.manualSeeding.length > 0)
-          ? knockoutParticipants[i * 2 + 1]
-          : (findParticipantByPlaceholder(fixture.awayTeamPlaceholder) || knockoutParticipants[i * 2 + 1]);
+      // Populate any knockout fixture whose placeholders match seeds or groups
+      for (const fixture of existingKnockoutFixtures) {
+        let home: any = findParticipantByPlaceholder(fixture.homeTeamPlaceholder);
+        let away: any = findParticipantByPlaceholder(fixture.awayTeamPlaceholder);
 
-        await this.db.fixture.update({
-          where: { id: fixture.id },
-          data: {
-            homeTeamId: home?.id ?? null,
-            awayTeamId: away?.id ?? null,
-            ...(home && { homeTeamPlaceholder: null }),
-            ...(away && { awayTeamPlaceholder: null }),
-          },
-        });
+        if (fixture.round === 1 && dto.manualSeeding && dto.manualSeeding.length > 0) {
+          const idx = fixture.matchNumber - 1;
+          home = knockoutParticipants[idx * 2] || home;
+          away = knockoutParticipants[idx * 2 + 1] || away;
+        }
+
+        if (home || away) {
+          await this.db.fixture.update({
+            where: { id: fixture.id },
+            data: {
+              ...(home ? { homeTeamId: home.id, homeTeamPlaceholder: null } : {}),
+              ...(away ? { awayTeamId: away.id, awayTeamPlaceholder: null } : {}),
+            },
+          });
+
+          // If two-legged and this is Leg 1, mirror to Leg 2
+          if (tournament.twoLegsKnockout && fixture.roundName?.includes('Leg 1')) {
+            const leg2 = existingKnockoutFixtures.find(
+              (f) =>
+                f.round === fixture.round &&
+                f.matchNumber === fixture.matchNumber + 1 &&
+                f.roundName?.includes('Leg 2'),
+            );
+            if (leg2) {
+              await this.db.fixture.update({
+                where: { id: leg2.id },
+                data: {
+                  ...(home ? { awayTeamId: home.id, awayTeamPlaceholder: null } : {}),
+                  ...(away ? { homeTeamId: away.id, homeTeamPlaceholder: null } : {}),
+                },
+              });
+            }
+          }
+        }
       }
     } else {
       await this.generateKnockoutFixtures(tournament, knockoutParticipants, {
@@ -968,6 +1009,7 @@ export class FixtureGeneratorService {
         awayPlaceholder?: string;
       }[];
       isUnifiedStandings?: boolean;
+      hasKnockoutPlayoffs?: boolean;
     },
   ) {
     const totalQualifiers = options.numberOfGroups * options.advancingPerGroup;
@@ -987,6 +1029,249 @@ export class FixtureGeneratorService {
           awayPlaceholder: m.awayPlaceholder || m.away || 'TBD',
         });
       }
+    } else if (options.isUnifiedStandings && options.hasKnockoutPlayoffs) {
+      let B = 16;
+      if (totalQualifiers < 12) B = 4;
+      else if (totalQualifiers < 24) B = 8;
+
+      const playoffMatches = B / 2;
+
+      const round1PairsPlayoffs: [number, number][] = [];
+      if (B === 16) {
+        round1PairsPlayoffs.push([9, 24], [16, 17], [13, 20], [12, 21], [14, 19], [11, 22], [15, 18], [10, 23]);
+      } else if (B === 8) {
+        round1PairsPlayoffs.push([5, 12], [8, 9], [6, 11], [7, 10]);
+      } else {
+        round1PairsPlayoffs.push([3, 6], [4, 5]);
+      }
+
+      const round2DirectSeeds: number[] = [];
+      if (B === 16) {
+        round2DirectSeeds.push(1, 8, 4, 5, 2, 7, 3, 6);
+      } else if (B === 8) {
+        round2DirectSeeds.push(1, 4, 2, 3);
+      } else {
+        round2DirectSeeds.push(1, 2);
+      }
+
+      const playoffRounds: {
+        round: number;
+        roundName: string;
+        fixtures: Fixture[];
+        bracketFixtures?: Fixture[];
+      }[] = [];
+      const playoffFixturesToInsert: any[] = [];
+
+      // Round 1: Knockout Play-offs
+      const r1RoundName = 'Knockout Play-offs';
+      const r1Bracket: Fixture[] = [];
+      const r1All: Fixture[] = [];
+      let r1MatchNumber = 1;
+
+      for (let m = 0; m < playoffMatches; m++) {
+        const [sHome, sAway] = round1PairsPlayoffs[m];
+        const isTwoLegs = tournament.twoLegsKnockout;
+        const fix1 = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round: 1,
+          roundName: isTwoLegs ? `${r1RoundName} - Leg 1` : r1RoundName,
+          matchNumber: r1MatchNumber++,
+          startTime: null,
+          homeTeamId: null,
+          awayTeamId: null,
+          homeTeamPlaceholder: `Seed ${sHome}`,
+          awayTeamPlaceholder: `Seed ${sAway}`,
+          status: 'SCHEDULED' as any,
+          stage: FixtureStage.KNOCKOUT,
+        };
+        r1Bracket.push(fix1 as unknown as Fixture);
+        r1All.push(fix1 as unknown as Fixture);
+        playoffFixturesToInsert.push(fix1);
+
+        if (isTwoLegs) {
+          const fix2 = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: 1,
+            roundName: `${r1RoundName} - Leg 2`,
+            matchNumber: r1MatchNumber++,
+            startTime: null,
+            homeTeamId: null,
+            awayTeamId: null,
+            homeTeamPlaceholder: `Seed ${sAway}`,
+            awayTeamPlaceholder: `Seed ${sHome}`,
+            status: 'SCHEDULED' as any,
+            stage: FixtureStage.KNOCKOUT,
+          };
+          r1All.push(fix2 as unknown as Fixture);
+          playoffFixturesToInsert.push(fix2);
+        }
+      }
+      playoffRounds.push({ round: 1, roundName: r1RoundName, fixtures: r1All, bracketFixtures: r1Bracket });
+
+      // Round 2: Main Round (Round of 16 / QF / SF)
+      const r2RoundName = B === 16 ? 'Round of 16' : B === 8 ? 'Quarter Final' : 'Semi Final';
+      const r2Bracket: Fixture[] = [];
+      const r2All: Fixture[] = [];
+      let r2MatchNumber = 1;
+
+      for (let m = 0; m < playoffMatches; m++) {
+        const seed = round2DirectSeeds[m];
+        const isTwoLegs = tournament.twoLegsKnockout;
+        const fix1 = {
+          id: crypto.randomUUID(),
+          tournament_id: tournament.id,
+          round: 2,
+          roundName: isTwoLegs ? `${r2RoundName} - Leg 1` : r2RoundName,
+          matchNumber: r2MatchNumber++,
+          startTime: null,
+          homeTeamId: null,
+          awayTeamId: null,
+          homeTeamPlaceholder: `Seed ${seed}`,
+          awayTeamPlaceholder: `PO(${m + 1}) Winner`,
+          status: 'SCHEDULED' as any,
+          stage: FixtureStage.KNOCKOUT,
+        };
+        r2Bracket.push(fix1 as unknown as Fixture);
+        r2All.push(fix1 as unknown as Fixture);
+        playoffFixturesToInsert.push(fix1);
+
+        if (isTwoLegs) {
+          const fix2 = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: 2,
+            roundName: `${r2RoundName} - Leg 2`,
+            matchNumber: r2MatchNumber++,
+            startTime: null,
+            homeTeamId: null,
+            awayTeamId: null,
+            homeTeamPlaceholder: `PO(${m + 1}) Winner`,
+            awayTeamPlaceholder: `Seed ${seed}`,
+            status: 'SCHEDULED' as any,
+            stage: FixtureStage.KNOCKOUT,
+          };
+          r2All.push(fix2 as unknown as Fixture);
+          playoffFixturesToInsert.push(fix2);
+        }
+      }
+      playoffRounds.push({ round: 2, roundName: r2RoundName, fixtures: r2All, bracketFixtures: r2Bracket });
+
+      // Link R1 -> R2
+      for (let m = 0; m < playoffMatches; m++) {
+        r1Bracket[m].nextFixtureId = r2Bracket[m].id;
+        if (tournament.twoLegsKnockout) {
+          const leg2 = r1All.find((f) => f.round === 1 && f.matchNumber === r1Bracket[m].matchNumber + 1);
+          if (leg2) leg2.nextFixtureId = r2Bracket[m].id;
+        }
+      }
+
+      // Subsequent rounds: QF, SF, Final
+      let curMatches = playoffMatches / 2;
+      let prevBracket = r2Bracket;
+      let prevAll = r2All;
+      let roundNum = 3;
+
+      while (curMatches >= 1) {
+        const curRoundName = curMatches === 4 ? 'Quarter Final' : curMatches === 2 ? 'Semi Final' : 'Final';
+        const curBracket: Fixture[] = [];
+        const curAll: Fixture[] = [];
+        const isFinal = curMatches === 1;
+        const isTwoLegs = tournament.twoLegsKnockout && !isFinal;
+        const prevAbbrev = prevBracket[0].roundName?.includes('Round of 16')
+          ? 'R16'
+          : prevBracket[0].roundName?.includes('Quarter Final')
+          ? 'QF'
+          : 'SF';
+        let roundMatchNumber = 1;
+
+        for (let m = 0; m < curMatches; m++) {
+          const prevM1 = m * 2 + 1;
+          const prevM2 = m * 2 + 2;
+          const fix1 = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: roundNum,
+            roundName: isTwoLegs ? `${curRoundName} - Leg 1` : curRoundName,
+            matchNumber: roundMatchNumber++,
+            startTime: null,
+            homeTeamId: null,
+            awayTeamId: null,
+            homeTeamPlaceholder: `${prevAbbrev}(${prevM1}) Winner`,
+            awayTeamPlaceholder: `${prevAbbrev}(${prevM2}) Winner`,
+            status: 'SCHEDULED' as any,
+            stage: FixtureStage.KNOCKOUT,
+          };
+          curBracket.push(fix1 as unknown as Fixture);
+          curAll.push(fix1 as unknown as Fixture);
+          playoffFixturesToInsert.push(fix1);
+
+          if (isTwoLegs) {
+            const fix2 = {
+              id: crypto.randomUUID(),
+              tournament_id: tournament.id,
+              round: roundNum,
+              roundName: `${curRoundName} - Leg 2`,
+              matchNumber: roundMatchNumber++,
+              startTime: null,
+              homeTeamId: null,
+              awayTeamId: null,
+              homeTeamPlaceholder: `${prevAbbrev}(${prevM2}) Winner`,
+              awayTeamPlaceholder: `${prevAbbrev}(${prevM1}) Winner`,
+              status: 'SCHEDULED' as any,
+              stage: FixtureStage.KNOCKOUT,
+            };
+            curAll.push(fix2 as unknown as Fixture);
+            playoffFixturesToInsert.push(fix2);
+          }
+        }
+
+        // Link previous round bracket to this round
+        for (let i = 0; i < prevBracket.length; i++) {
+          const targetNext = curBracket[Math.floor(i / 2)];
+          if (targetNext) {
+            prevBracket[i].nextFixtureId = targetNext.id;
+            if (tournament.twoLegsKnockout) {
+              const leg2 = prevAll.find(
+                (f) => f.round === prevBracket[i].round && f.matchNumber === prevBracket[i].matchNumber + 1
+              );
+              if (leg2) leg2.nextFixtureId = targetNext.id;
+            }
+          }
+        }
+
+        if (isFinal && (options.hasThirdPlace || tournament.thirdPlaceMatch)) {
+          const thirdPlace = {
+            id: crypto.randomUUID(),
+            tournament_id: tournament.id,
+            round: roundNum,
+            roundName: 'Third Place Match',
+            matchNumber: roundMatchNumber++,
+            startTime: null,
+            homeTeamId: null,
+            awayTeamId: null,
+            homeTeamPlaceholder: 'SF(1) Loser',
+            awayTeamPlaceholder: 'SF(2) Loser',
+            status: 'SCHEDULED' as any,
+            stage: FixtureStage.KNOCKOUT,
+          };
+          curAll.push(thirdPlace as unknown as Fixture);
+          playoffFixturesToInsert.push(thirdPlace);
+        }
+
+        playoffRounds.push({ round: roundNum, roundName: curRoundName, fixtures: curAll, bracketFixtures: curBracket });
+        prevBracket = curBracket;
+        prevAll = curAll;
+        curMatches /= 2;
+        roundNum++;
+      }
+
+      if (playoffFixturesToInsert.length > 0) {
+        await this.db.fixture.createMany({ data: playoffFixturesToInsert });
+      }
+
+      return playoffRounds.map(({ bracketFixtures, ...rest }) => rest);
     } else if (options.isUnifiedStandings) {
       const K = totalQualifiers;
       const seedPairs: [number, number][] = [];

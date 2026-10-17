@@ -84,6 +84,7 @@ export type TournamentMinAggregateOutputType = {
   seasonName: string | null
   doubleRoundRobin: boolean | null
   unifiedStandings: boolean | null
+  hasKnockoutPlayoffs: boolean | null
   isPremium: boolean | null
   isPaidRegistration: boolean | null
   registrationFee: number | null
@@ -129,6 +130,7 @@ export type TournamentMaxAggregateOutputType = {
   seasonName: string | null
   doubleRoundRobin: boolean | null
   unifiedStandings: boolean | null
+  hasKnockoutPlayoffs: boolean | null
   isPremium: boolean | null
   isPaidRegistration: boolean | null
   registrationFee: number | null
@@ -175,6 +177,7 @@ export type TournamentCountAggregateOutputType = {
   seasonName: number
   doubleRoundRobin: number
   unifiedStandings: number
+  hasKnockoutPlayoffs: number
   isPremium: number
   isPaidRegistration: number
   registrationFee: number
@@ -247,6 +250,7 @@ export type TournamentMinAggregateInputType = {
   seasonName?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
+  hasKnockoutPlayoffs?: true
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
@@ -292,6 +296,7 @@ export type TournamentMaxAggregateInputType = {
   seasonName?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
+  hasKnockoutPlayoffs?: true
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
@@ -338,6 +343,7 @@ export type TournamentCountAggregateInputType = {
   seasonName?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
+  hasKnockoutPlayoffs?: true
   isPremium?: true
   isPaidRegistration?: true
   registrationFee?: true
@@ -472,6 +478,7 @@ export type TournamentGroupByOutputType = {
   seasonName: string | null
   doubleRoundRobin: boolean
   unifiedStandings: boolean
+  hasKnockoutPlayoffs: boolean
   isPremium: boolean
   isPaidRegistration: boolean
   registrationFee: number
@@ -542,6 +549,7 @@ export type TournamentWhereInput = {
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
@@ -605,6 +613,7 @@ export type TournamentOrderByWithRelationInput = {
   seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
+  hasKnockoutPlayoffs?: Prisma.SortOrder
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
@@ -671,6 +680,7 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
@@ -734,6 +744,7 @@ export type TournamentOrderByWithAggregationInput = {
   seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
+  hasKnockoutPlayoffs?: Prisma.SortOrder
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
@@ -789,6 +800,7 @@ export type TournamentScalarWhereWithAggregatesInput = {
   seasonName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   doubleRoundRobin?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   isPremium?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntWithAggregatesFilter<"Tournament"> | number
@@ -834,6 +846,7 @@ export type TournamentCreateInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -897,6 +910,7 @@ export type TournamentUncheckedCreateInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -956,6 +970,7 @@ export type TournamentUpdateInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1019,6 +1034,7 @@ export type TournamentUncheckedUpdateInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1080,6 +1096,7 @@ export type TournamentCreateManyInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -1125,6 +1142,7 @@ export type TournamentUpdateManyMutationInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1172,6 +1190,7 @@ export type TournamentUncheckedUpdateManyInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -1234,6 +1253,7 @@ export type TournamentCountOrderByAggregateInput = {
   seasonName?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
+  hasKnockoutPlayoffs?: Prisma.SortOrder
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
@@ -1292,6 +1312,7 @@ export type TournamentMaxOrderByAggregateInput = {
   seasonName?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
+  hasKnockoutPlayoffs?: Prisma.SortOrder
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
@@ -1337,6 +1358,7 @@ export type TournamentMinOrderByAggregateInput = {
   seasonName?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
+  hasKnockoutPlayoffs?: Prisma.SortOrder
   isPremium?: Prisma.SortOrder
   isPaidRegistration?: Prisma.SortOrder
   registrationFee?: Prisma.SortOrder
@@ -1720,6 +1742,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -1781,6 +1804,7 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -1871,6 +1895,7 @@ export type TournamentScalarWhereInput = {
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
   isPremium?: Prisma.BoolFilter<"Tournament"> | boolean
   isPaidRegistration?: Prisma.BoolFilter<"Tournament"> | boolean
   registrationFee?: Prisma.IntFilter<"Tournament"> | number
@@ -1916,6 +1941,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -1978,6 +2004,7 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2041,6 +2068,7 @@ export type TournamentCreateWithoutParentInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2102,6 +2130,7 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2182,6 +2211,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2244,6 +2274,7 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2318,6 +2349,7 @@ export type TournamentCreateWithoutFollowersInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2380,6 +2412,7 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2454,6 +2487,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2516,6 +2550,7 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2574,6 +2609,7 @@ export type TournamentCreateWithoutGroupsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2636,6 +2672,7 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2710,6 +2747,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2772,6 +2810,7 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -2830,6 +2869,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2892,6 +2932,7 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -2966,6 +3007,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3028,6 +3070,7 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3086,6 +3129,7 @@ export type TournamentCreateWithoutFixturesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3148,6 +3192,7 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3222,6 +3267,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3284,6 +3330,7 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3342,6 +3389,7 @@ export type TournamentCreateWithoutStandingsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3404,6 +3452,7 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3478,6 +3527,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3540,6 +3590,7 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3598,6 +3649,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3660,6 +3712,7 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3734,6 +3787,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3796,6 +3850,7 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -3854,6 +3909,7 @@ export type TournamentCreateWithoutSocialsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3916,6 +3972,7 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -3990,6 +4047,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4052,6 +4110,7 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4110,6 +4169,7 @@ export type TournamentCreateWithoutVenuesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4172,6 +4232,7 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4246,6 +4307,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4308,6 +4370,7 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4366,6 +4429,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4428,6 +4492,7 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4502,6 +4567,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4564,6 +4630,7 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4622,6 +4689,7 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4684,6 +4752,7 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4758,6 +4827,7 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4820,6 +4890,7 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -4878,6 +4949,7 @@ export type TournamentCreateWithoutDiscountCodesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -4940,6 +5012,7 @@ export type TournamentUncheckedCreateWithoutDiscountCodesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5014,6 +5087,7 @@ export type TournamentUpdateWithoutDiscountCodesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5076,6 +5150,7 @@ export type TournamentUncheckedUpdateWithoutDiscountCodesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5134,6 +5209,7 @@ export type TournamentCreateWithoutPaymentsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5196,6 +5272,7 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5270,6 +5347,7 @@ export type TournamentUpdateWithoutPaymentsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5332,6 +5410,7 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5390,6 +5469,7 @@ export type TournamentCreateWithoutChatMessagesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5452,6 +5532,7 @@ export type TournamentUncheckedCreateWithoutChatMessagesInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5526,6 +5607,7 @@ export type TournamentUpdateWithoutChatMessagesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5588,6 +5670,7 @@ export type TournamentUncheckedUpdateWithoutChatMessagesInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5647,6 +5730,7 @@ export type TournamentCreateManyOrganizationInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5692,6 +5776,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5753,6 +5838,7 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5813,6 +5899,7 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5859,6 +5946,7 @@ export type TournamentCreateManyParentInput = {
   seasonName?: string | null
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: number
@@ -5904,6 +5992,7 @@ export type TournamentUpdateWithoutParentInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -5965,6 +6054,7 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -6025,6 +6115,7 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
   registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
@@ -6220,6 +6311,7 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   seasonName?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
@@ -6284,6 +6376,7 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   seasonName?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
@@ -6333,6 +6426,7 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   seasonName?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
@@ -6382,6 +6476,7 @@ export type TournamentSelectScalar = {
   seasonName?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
   isPremium?: boolean
   isPaidRegistration?: boolean
   registrationFee?: boolean
@@ -6394,7 +6489,7 @@ export type TournamentSelectScalar = {
   requiresScoreEvidence?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "unifiedStandings" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam" | "chatEnabled" | "chatRules" | "parageeBot" | "botCalls" | "requiresScoreEvidence", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "unifiedStandings" | "hasKnockoutPlayoffs" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam" | "chatEnabled" | "chatRules" | "parageeBot" | "botCalls" | "requiresScoreEvidence", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -6478,6 +6573,7 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     seasonName: string | null
     doubleRoundRobin: boolean
     unifiedStandings: boolean
+    hasKnockoutPlayoffs: boolean
     isPremium: boolean
     isPaidRegistration: boolean
     registrationFee: number
@@ -6961,6 +7057,7 @@ export interface TournamentFieldRefs {
   readonly seasonName: Prisma.FieldRef<"Tournament", 'String'>
   readonly doubleRoundRobin: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly unifiedStandings: Prisma.FieldRef<"Tournament", 'Boolean'>
+  readonly hasKnockoutPlayoffs: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly isPremium: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly isPaidRegistration: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly registrationFee: Prisma.FieldRef<"Tournament", 'Int'>

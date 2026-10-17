@@ -251,6 +251,16 @@ export class CreateTournamentDto {
   unifiedStandings?: boolean;
 
   @ApiPropertyOptional({
+    description:
+      'If true, middle seeds compete in Knockout Play-offs before Round of 16 (UEFA Champions League format)',
+    default: false,
+    example: true,
+  })
+  @IsBoolean()
+  @IsOptional()
+  hasKnockoutPlayoffs?: boolean;
+
+  @ApiPropertyOptional({
     description: 'URL for the tournament logo',
     example: 'https://example.com/logo.png',
   })

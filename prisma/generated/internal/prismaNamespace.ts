@@ -2857,6 +2857,7 @@ export const TournamentScalarFieldEnum = {
   seasonName: 'seasonName',
   doubleRoundRobin: 'doubleRoundRobin',
   unifiedStandings: 'unifiedStandings',
+  hasKnockoutPlayoffs: 'hasKnockoutPlayoffs',
   isPremium: 'isPremium',
   isPaidRegistration: 'isPaidRegistration',
   registrationFee: 'registrationFee',
