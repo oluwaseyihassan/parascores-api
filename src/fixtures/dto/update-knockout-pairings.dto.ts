@@ -1,19 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsArray, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsOptional, IsString, ValidateNested } from 'class-validator';
 
 export class KnockoutPairingItemDto {
   @ApiProperty({ description: 'Fixture ID of the match' })
   @IsString()
   fixtureId: string;
 
-  @ApiProperty({ description: 'Home participant ID' })
+  @ApiProperty({ description: 'Home participant ID', required: false })
+  @IsOptional()
   @IsString()
-  homeTeamId: string;
+  homeTeamId?: string;
 
-  @ApiProperty({ description: 'Away participant ID' })
+  @ApiProperty({ description: 'Away participant ID', required: false })
+  @IsOptional()
   @IsString()
-  awayTeamId: string;
+  awayTeamId?: string;
 }
 
 export class UpdateKnockoutPairingsDto {
