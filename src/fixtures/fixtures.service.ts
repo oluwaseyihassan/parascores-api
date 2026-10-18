@@ -9,6 +9,7 @@ import { UpdateFixtureDto } from './dto/update-fixture.dto';
 import { SetResultsDto } from './dto/set-results.dto';
 import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { CreateBulkFixturesDto } from './dto/create-bulk-fixtures.dto';
+import { UpdateKnockoutPairingsDto } from './dto/update-knockout-pairings.dto';
 import { ResponseUtil } from 'src/utils/api-response';
 import { Subject } from 'rxjs';
 import { OrganizationsService } from 'src/organizations/organizations.service';
@@ -1003,7 +1004,32 @@ export class FixturesService {
       }
     }
 
+        if (
+      (dto.homeTeamId !== undefined || dto.awayTeamId !== undefined) &&
+      fixture.tournament.twoLegsKnockout &&
+      fixture.roundName?.includes('Leg 1')
+    ) {
+      const leg2 = await this.db.fixture.findFirst({
+        where: {
+          tournament_id: fixture.tournament_id,
+          round: fixture.round,
+          matchNumber: fixture.matchNumber + 1,
+          roundName: { contains: 'Leg 2' },
+        },
+      });
+      if (leg2) {
+        await this.db.fixture.update({
+          where: { id: leg2.id },
+          data: {
+            ...(dto.awayTeamId !== undefined && { homeTeamId: dto.awayTeamId, homeTeamPlaceholder: null }),
+            ...(dto.homeTeamId !== undefined && { awayTeamId: dto.homeTeamId, awayTeamPlaceholder: null }),
+          },
+        });
+      }
+    }
+
     return ResponseUtil.success(updatedFixture);
+    // mirroringCodeAdded
   }
 
   // Set placement results for a race fixture (athletics, swimming).
@@ -1827,4 +1853,81 @@ export class FixturesService {
       message: 'All fixtures cleared successfully',
     });
   }
+
+  async updateKnockoutPairings(
+    tournamentId: string,
+    userId: string,
+    dto: UpdateKnockoutPairingsDto,
+  ) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+      include: {
+        organization: {
+          include: {
+            members: {
+              where: { userId },
+            },
+          },
+        },
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
+      throw new ForbiddenException(
+        'You are not authorized to update knockout pairings for this tournament',
+      );
+    }
+
+    for (const pair of dto.pairings) {
+      const fixture = await this.db.fixture.findUnique({
+        where: { id: pair.fixtureId },
+      });
+      if (!fixture || fixture.tournament_id !== tournament.id) continue;
+
+      await this.db.fixture.update({
+        where: { id: fixture.id },
+        data: {
+          homeTeamId: pair.homeTeamId,
+          awayTeamId: pair.awayTeamId,
+          homeTeamPlaceholder: null,
+          awayTeamPlaceholder: null,
+        },
+      });
+
+      // Mirror to Leg 2 if two-legged
+      if (tournament.twoLegsKnockout && fixture.roundName?.includes('Leg 1')) {
+        const leg2 = await this.db.fixture.findFirst({
+          where: {
+            tournament_id: tournament.id,
+            round: fixture.round,
+            matchNumber: fixture.matchNumber + 1,
+            roundName: { contains: 'Leg 2' },
+          },
+        });
+        if (leg2) {
+          await this.db.fixture.update({
+            where: { id: leg2.id },
+            data: {
+              homeTeamId: pair.awayTeamId,
+              awayTeamId: pair.homeTeamId,
+              homeTeamPlaceholder: null,
+              awayTeamPlaceholder: null,
+            },
+          });
+        }
+      }
+    }
+
+    return ResponseUtil.success({ message: 'Knockout pairings updated successfully' });
+  }
+
 }

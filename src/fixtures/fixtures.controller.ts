@@ -20,6 +20,7 @@ import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { CreateBulkFixturesDto } from './dto/create-bulk-fixtures.dto';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
+import { UpdateKnockoutPairingsDto } from './dto/update-knockout-pairings.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags, ApiQuery } from '@nestjs/swagger';
 import { SkipThrottle } from '@nestjs/throttler';
