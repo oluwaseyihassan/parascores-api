@@ -114,6 +114,21 @@ export class FixturesController {
     );
   }
 
+  // Update knockout fixture pairings
+  @Patch('tournaments/:tournamentId/knockout/pairings')
+  @ApiOperation({ summary: 'Update knockout fixture pairings' })
+  async updateKnockoutPairings(
+    @Param('tournamentId') tournamentId: string,
+    @Body() dto: UpdateKnockoutPairingsDto,
+    @Req() req,
+  ) {
+    return this.fixturesService.updateKnockoutPairings(
+      tournamentId,
+      req.user.sub,
+      dto,
+    );
+  }
+
   // SSE stream for live match updates
   @Public()
   @Sse('live/stream')
