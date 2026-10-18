@@ -1896,10 +1896,14 @@ export class FixturesService {
       await this.db.fixture.update({
         where: { id: fixture.id },
         data: {
-          homeTeamId: pair.homeTeamId,
-          awayTeamId: pair.awayTeamId,
-          homeTeamPlaceholder: null,
-          awayTeamPlaceholder: null,
+          ...(pair.homeTeamId !== undefined && {
+            homeTeamId: pair.homeTeamId,
+            homeTeamPlaceholder: null,
+          }),
+          ...(pair.awayTeamId !== undefined && {
+            awayTeamId: pair.awayTeamId,
+            awayTeamPlaceholder: null,
+          }),
         },
       });
 
@@ -1917,10 +1921,14 @@ export class FixturesService {
           await this.db.fixture.update({
             where: { id: leg2.id },
             data: {
-              homeTeamId: pair.awayTeamId,
-              awayTeamId: pair.homeTeamId,
-              homeTeamPlaceholder: null,
-              awayTeamPlaceholder: null,
+              ...(pair.awayTeamId !== undefined && {
+                homeTeamId: pair.awayTeamId,
+                homeTeamPlaceholder: null,
+              }),
+              ...(pair.homeTeamId !== undefined && {
+                awayTeamId: pair.homeTeamId,
+                awayTeamPlaceholder: null,
+              }),
             },
           });
         }
