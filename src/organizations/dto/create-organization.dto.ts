@@ -37,6 +37,19 @@ export class CreateOrganizationDto {
 
   @ApiPropertyOptional({ description: 'Optional contact phone number' })
   @IsOptional()
+  @Transform(({ value }) => {
+    if (!value || typeof value !== 'string') return value;
+    const trimmed = value.trim().replace(/[\s\-\(\)\.]/g, '');
+    if (!trimmed) return undefined;
+    if (trimmed.startsWith('+')) return trimmed;
+    if (/^0[789][01]\d{8}$/.test(trimmed)) {
+      return '+234' + trimmed.slice(1);
+    }
+    if (/^234\d{10}$/.test(trimmed)) {
+      return '+' + trimmed;
+    }
+    return trimmed;
+  })
   @IsPhoneNumber()
   phone?: string;
 }
