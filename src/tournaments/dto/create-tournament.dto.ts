@@ -40,6 +40,14 @@ export class CreateTournamentDto {
   customName?: string;
 
   @ApiPropertyOptional({
+    description: 'Season name or edition',
+    example: '2024/2025',
+  })
+  @IsString()
+  @IsOptional()
+  seasonName?: string;
+
+  @ApiPropertyOptional({
     description: 'A brief description of the tournament',
     example: 'Annual summer tournament for local teams.',
   })

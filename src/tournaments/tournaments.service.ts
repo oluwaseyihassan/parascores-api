@@ -750,7 +750,58 @@ export class TournamentsService {
     if (!tournament) {
       throw new NotFoundException('Tournament not found');
     }
-    return ResponseUtil.success(tournament);
+
+    const rootId = tournament.parent_id || tournament.id;
+    const seasons = await this.db.tournament.findMany({
+      where: {
+        OR: [{ id: rootId }, { parent_id: rootId }],
+      },
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        seasonName: true,
+        start_date: true,
+        end_date: true,
+      },
+      orderBy: {
+        start_date: 'desc',
+      },
+    });
+
+    return ResponseUtil.success({
+      ...tournament,
+      seasons,
+    });
+  }
+
+
+  async getSeasons(identifier: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: identifier }, { customName: identifier }] },
+      select: { id: true, parent_id: true },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    const rootId = tournament.parent_id || tournament.id;
+    const seasons = await this.db.tournament.findMany({
+      where: {
+        OR: [{ id: rootId }, { parent_id: rootId }],
+      },
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        seasonName: true,
+        start_date: true,
+        end_date: true,
+      },
+      orderBy: {
+        start_date: 'desc',
+      },
+    });
+
+    return ResponseUtil.success(seasons);
   }
 
   // fetch full tournament overview data to minimize concurrent API calls
@@ -854,8 +905,29 @@ export class TournamentsService {
         'Unknown',
     }));
 
+    const rootId = tournament.parent_id || tournament.id;
+    const seasons = await this.db.tournament.findMany({
+      where: {
+        OR: [{ id: rootId }, { parent_id: rootId }],
+      },
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        seasonName: true,
+        start_date: true,
+        end_date: true,
+      },
+      orderBy: {
+        start_date: 'desc',
+      },
+    });
+
     return ResponseUtil.success({
-      tournament: tournamentData,
+      tournament: {
+        ...tournamentData,
+        seasons,
+      },
       participants,
       fixtures,
       standings: formattedStandings,
