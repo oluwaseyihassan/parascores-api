@@ -81,7 +81,9 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   ChatMessage: 'ChatMessage',
   ChatReaction: 'ChatReaction',
-  ScoreSubmission: 'ScoreSubmission'
+  ScoreSubmission: 'ScoreSubmission',
+  Competition: 'Competition',
+  CompetitionFollower: 'CompetitionFollower'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -188,6 +190,8 @@ export const TournamentScalarFieldEnum = {
   organization_id: 'organization_id',
   parent_id: 'parent_id',
   seasonName: 'seasonName',
+  competition_id: 'competition_id',
+  isCurrentSeason: 'isCurrentSeason',
   doubleRoundRobin: 'doubleRoundRobin',
   unifiedStandings: 'unifiedStandings',
   hasKnockoutPlayoffs: 'hasKnockoutPlayoffs',
@@ -646,6 +650,31 @@ export const ScoreSubmissionScalarFieldEnum = {
 } as const
 
 export type ScoreSubmissionScalarFieldEnum = (typeof ScoreSubmissionScalarFieldEnum)[keyof typeof ScoreSubmissionScalarFieldEnum]
+
+
+export const CompetitionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  sport: 'sport',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
+  organization_id: 'organization_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CompetitionScalarFieldEnum = (typeof CompetitionScalarFieldEnum)[keyof typeof CompetitionScalarFieldEnum]
+
+
+export const CompetitionFollowerScalarFieldEnum = {
+  userId: 'userId',
+  competitionId: 'competitionId',
+  createdAt: 'createdAt'
+} as const
+
+export type CompetitionFollowerScalarFieldEnum = (typeof CompetitionFollowerScalarFieldEnum)[keyof typeof CompetitionFollowerScalarFieldEnum]
 
 
 export const SortOrder = {

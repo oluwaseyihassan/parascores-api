@@ -82,6 +82,8 @@ export type TournamentMinAggregateOutputType = {
   organization_id: string | null
   parent_id: string | null
   seasonName: string | null
+  competition_id: string | null
+  isCurrentSeason: boolean | null
   doubleRoundRobin: boolean | null
   unifiedStandings: boolean | null
   hasKnockoutPlayoffs: boolean | null
@@ -128,6 +130,8 @@ export type TournamentMaxAggregateOutputType = {
   organization_id: string | null
   parent_id: string | null
   seasonName: string | null
+  competition_id: string | null
+  isCurrentSeason: boolean | null
   doubleRoundRobin: boolean | null
   unifiedStandings: boolean | null
   hasKnockoutPlayoffs: boolean | null
@@ -175,6 +179,8 @@ export type TournamentCountAggregateOutputType = {
   organization_id: number
   parent_id: number
   seasonName: number
+  competition_id: number
+  isCurrentSeason: number
   doubleRoundRobin: number
   unifiedStandings: number
   hasKnockoutPlayoffs: number
@@ -248,6 +254,8 @@ export type TournamentMinAggregateInputType = {
   organization_id?: true
   parent_id?: true
   seasonName?: true
+  competition_id?: true
+  isCurrentSeason?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
   hasKnockoutPlayoffs?: true
@@ -294,6 +302,8 @@ export type TournamentMaxAggregateInputType = {
   organization_id?: true
   parent_id?: true
   seasonName?: true
+  competition_id?: true
+  isCurrentSeason?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
   hasKnockoutPlayoffs?: true
@@ -341,6 +351,8 @@ export type TournamentCountAggregateInputType = {
   organization_id?: true
   parent_id?: true
   seasonName?: true
+  competition_id?: true
+  isCurrentSeason?: true
   doubleRoundRobin?: true
   unifiedStandings?: true
   hasKnockoutPlayoffs?: true
@@ -476,6 +488,8 @@ export type TournamentGroupByOutputType = {
   organization_id: string | null
   parent_id: string | null
   seasonName: string | null
+  competition_id: string | null
+  isCurrentSeason: boolean
   doubleRoundRobin: boolean
   unifiedStandings: boolean
   hasKnockoutPlayoffs: boolean
@@ -547,6 +561,8 @@ export type TournamentWhereInput = {
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  competition_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isCurrentSeason?: Prisma.BoolFilter<"Tournament"> | boolean
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
@@ -568,6 +584,7 @@ export type TournamentWhereInput = {
   standings?: Prisma.StandingListRelationFilter
   team_invites?: Prisma.TeamInviteListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  competition?: Prisma.XOR<Prisma.CompetitionNullableScalarRelationFilter, Prisma.CompetitionWhereInput> | null
   parent?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   seasons?: Prisma.TournamentListRelationFilter
   followers?: Prisma.TournamentFollowerListRelationFilter
@@ -611,6 +628,8 @@ export type TournamentOrderByWithRelationInput = {
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
   seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
+  competition_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  isCurrentSeason?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
   hasKnockoutPlayoffs?: Prisma.SortOrder
@@ -632,6 +651,7 @@ export type TournamentOrderByWithRelationInput = {
   standings?: Prisma.StandingOrderByRelationAggregateInput
   team_invites?: Prisma.TeamInviteOrderByRelationAggregateInput
   organization?: Prisma.OrganizationOrderByWithRelationInput
+  competition?: Prisma.CompetitionOrderByWithRelationInput
   parent?: Prisma.TournamentOrderByWithRelationInput
   seasons?: Prisma.TournamentOrderByRelationAggregateInput
   followers?: Prisma.TournamentFollowerOrderByRelationAggregateInput
@@ -678,6 +698,8 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  competition_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isCurrentSeason?: Prisma.BoolFilter<"Tournament"> | boolean
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
@@ -699,6 +721,7 @@ export type TournamentWhereUniqueInput = Prisma.AtLeast<{
   standings?: Prisma.StandingListRelationFilter
   team_invites?: Prisma.TeamInviteListRelationFilter
   organization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  competition?: Prisma.XOR<Prisma.CompetitionNullableScalarRelationFilter, Prisma.CompetitionWhereInput> | null
   parent?: Prisma.XOR<Prisma.TournamentNullableScalarRelationFilter, Prisma.TournamentWhereInput> | null
   seasons?: Prisma.TournamentListRelationFilter
   followers?: Prisma.TournamentFollowerListRelationFilter
@@ -742,6 +765,8 @@ export type TournamentOrderByWithAggregationInput = {
   organization_id?: Prisma.SortOrderInput | Prisma.SortOrder
   parent_id?: Prisma.SortOrderInput | Prisma.SortOrder
   seasonName?: Prisma.SortOrderInput | Prisma.SortOrder
+  competition_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  isCurrentSeason?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
   hasKnockoutPlayoffs?: Prisma.SortOrder
@@ -798,6 +823,8 @@ export type TournamentScalarWhereWithAggregatesInput = {
   organization_id?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
   seasonName?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  competition_id?: Prisma.StringNullableWithAggregatesFilter<"Tournament"> | string | null
+  isCurrentSeason?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   doubleRoundRobin?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
   hasKnockoutPlayoffs?: Prisma.BoolWithAggregatesFilter<"Tournament"> | boolean
@@ -844,6 +871,7 @@ export type TournamentCreateInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -865,6 +893,7 @@ export type TournamentCreateInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -908,6 +937,8 @@ export type TournamentUncheckedCreateInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -968,6 +999,7 @@ export type TournamentUpdateInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -989,6 +1021,7 @@ export type TournamentUpdateInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -1032,6 +1065,8 @@ export type TournamentUncheckedUpdateInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1094,6 +1129,8 @@ export type TournamentCreateManyInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -1140,6 +1177,7 @@ export type TournamentUpdateManyMutationInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1188,6 +1226,8 @@ export type TournamentUncheckedUpdateManyInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1251,6 +1291,8 @@ export type TournamentCountOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   seasonName?: Prisma.SortOrder
+  competition_id?: Prisma.SortOrder
+  isCurrentSeason?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
   hasKnockoutPlayoffs?: Prisma.SortOrder
@@ -1310,6 +1352,8 @@ export type TournamentMaxOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   seasonName?: Prisma.SortOrder
+  competition_id?: Prisma.SortOrder
+  isCurrentSeason?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
   hasKnockoutPlayoffs?: Prisma.SortOrder
@@ -1356,6 +1400,8 @@ export type TournamentMinOrderByAggregateInput = {
   organization_id?: Prisma.SortOrder
   parent_id?: Prisma.SortOrder
   seasonName?: Prisma.SortOrder
+  competition_id?: Prisma.SortOrder
+  isCurrentSeason?: Prisma.SortOrder
   doubleRoundRobin?: Prisma.SortOrder
   unifiedStandings?: Prisma.SortOrder
   hasKnockoutPlayoffs?: Prisma.SortOrder
@@ -1709,6 +1755,48 @@ export type TournamentUpdateOneRequiredWithoutChatMessagesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.TournamentUpdateToOneWithWhereWithoutChatMessagesInput, Prisma.TournamentUpdateWithoutChatMessagesInput>, Prisma.TournamentUncheckedUpdateWithoutChatMessagesInput>
 }
 
+export type TournamentCreateNestedManyWithoutCompetitionInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput> | Prisma.TournamentCreateWithoutCompetitionInput[] | Prisma.TournamentUncheckedCreateWithoutCompetitionInput[]
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutCompetitionInput | Prisma.TournamentCreateOrConnectWithoutCompetitionInput[]
+  createMany?: Prisma.TournamentCreateManyCompetitionInputEnvelope
+  connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+}
+
+export type TournamentUncheckedCreateNestedManyWithoutCompetitionInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput> | Prisma.TournamentCreateWithoutCompetitionInput[] | Prisma.TournamentUncheckedCreateWithoutCompetitionInput[]
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutCompetitionInput | Prisma.TournamentCreateOrConnectWithoutCompetitionInput[]
+  createMany?: Prisma.TournamentCreateManyCompetitionInputEnvelope
+  connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+}
+
+export type TournamentUpdateManyWithoutCompetitionNestedInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput> | Prisma.TournamentCreateWithoutCompetitionInput[] | Prisma.TournamentUncheckedCreateWithoutCompetitionInput[]
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutCompetitionInput | Prisma.TournamentCreateOrConnectWithoutCompetitionInput[]
+  upsert?: Prisma.TournamentUpsertWithWhereUniqueWithoutCompetitionInput | Prisma.TournamentUpsertWithWhereUniqueWithoutCompetitionInput[]
+  createMany?: Prisma.TournamentCreateManyCompetitionInputEnvelope
+  set?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  disconnect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  delete?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  update?: Prisma.TournamentUpdateWithWhereUniqueWithoutCompetitionInput | Prisma.TournamentUpdateWithWhereUniqueWithoutCompetitionInput[]
+  updateMany?: Prisma.TournamentUpdateManyWithWhereWithoutCompetitionInput | Prisma.TournamentUpdateManyWithWhereWithoutCompetitionInput[]
+  deleteMany?: Prisma.TournamentScalarWhereInput | Prisma.TournamentScalarWhereInput[]
+}
+
+export type TournamentUncheckedUpdateManyWithoutCompetitionNestedInput = {
+  create?: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput> | Prisma.TournamentCreateWithoutCompetitionInput[] | Prisma.TournamentUncheckedCreateWithoutCompetitionInput[]
+  connectOrCreate?: Prisma.TournamentCreateOrConnectWithoutCompetitionInput | Prisma.TournamentCreateOrConnectWithoutCompetitionInput[]
+  upsert?: Prisma.TournamentUpsertWithWhereUniqueWithoutCompetitionInput | Prisma.TournamentUpsertWithWhereUniqueWithoutCompetitionInput[]
+  createMany?: Prisma.TournamentCreateManyCompetitionInputEnvelope
+  set?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  disconnect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  delete?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  connect?: Prisma.TournamentWhereUniqueInput | Prisma.TournamentWhereUniqueInput[]
+  update?: Prisma.TournamentUpdateWithWhereUniqueWithoutCompetitionInput | Prisma.TournamentUpdateWithWhereUniqueWithoutCompetitionInput[]
+  updateMany?: Prisma.TournamentUpdateManyWithWhereWithoutCompetitionInput | Prisma.TournamentUpdateManyWithWhereWithoutCompetitionInput[]
+  deleteMany?: Prisma.TournamentScalarWhereInput | Prisma.TournamentScalarWhereInput[]
+}
+
 export type TournamentCreateWithoutOrganizationInput = {
   id?: string
   name: string
@@ -1740,6 +1828,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -1760,6 +1849,7 @@ export type TournamentCreateWithoutOrganizationInput = {
   sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -1802,6 +1892,8 @@ export type TournamentUncheckedCreateWithoutOrganizationInput = {
   isPinned?: boolean
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -1893,6 +1985,8 @@ export type TournamentScalarWhereInput = {
   organization_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   parent_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
   seasonName?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  competition_id?: Prisma.StringNullableFilter<"Tournament"> | string | null
+  isCurrentSeason?: Prisma.BoolFilter<"Tournament"> | boolean
   doubleRoundRobin?: Prisma.BoolFilter<"Tournament"> | boolean
   unifiedStandings?: Prisma.BoolFilter<"Tournament"> | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFilter<"Tournament"> | boolean
@@ -1939,6 +2033,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -1960,6 +2055,7 @@ export type TournamentCreateWithoutSeasonsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
@@ -2002,6 +2098,8 @@ export type TournamentUncheckedCreateWithoutSeasonsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2066,6 +2164,7 @@ export type TournamentCreateWithoutParentInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2087,6 +2186,7 @@ export type TournamentCreateWithoutParentInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
@@ -2128,6 +2228,8 @@ export type TournamentUncheckedCreateWithoutParentInput = {
   isPinned?: boolean
   organization_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2209,6 +2311,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2230,6 +2333,7 @@ export type TournamentUpdateWithoutSeasonsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
@@ -2272,6 +2376,8 @@ export type TournamentUncheckedUpdateWithoutSeasonsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2347,6 +2453,7 @@ export type TournamentCreateWithoutFollowersInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2368,6 +2475,7 @@ export type TournamentCreateWithoutFollowersInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
@@ -2410,6 +2518,8 @@ export type TournamentUncheckedCreateWithoutFollowersInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2485,6 +2595,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2506,6 +2617,7 @@ export type TournamentUpdateWithoutFollowersInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
@@ -2548,6 +2660,8 @@ export type TournamentUncheckedUpdateWithoutFollowersInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2607,6 +2721,7 @@ export type TournamentCreateWithoutGroupsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2627,6 +2742,7 @@ export type TournamentCreateWithoutGroupsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -2670,6 +2786,8 @@ export type TournamentUncheckedCreateWithoutGroupsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2745,6 +2863,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2765,6 +2884,7 @@ export type TournamentUpdateWithoutGroupsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -2808,6 +2928,8 @@ export type TournamentUncheckedUpdateWithoutGroupsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -2867,6 +2989,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -2887,6 +3010,7 @@ export type TournamentCreateWithoutParticipantsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -2930,6 +3054,8 @@ export type TournamentUncheckedCreateWithoutParticipantsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3005,6 +3131,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3025,6 +3152,7 @@ export type TournamentUpdateWithoutParticipantsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -3068,6 +3196,8 @@ export type TournamentUncheckedUpdateWithoutParticipantsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3127,6 +3257,7 @@ export type TournamentCreateWithoutFixturesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3147,6 +3278,7 @@ export type TournamentCreateWithoutFixturesInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -3190,6 +3322,8 @@ export type TournamentUncheckedCreateWithoutFixturesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3265,6 +3399,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3285,6 +3420,7 @@ export type TournamentUpdateWithoutFixturesInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -3328,6 +3464,8 @@ export type TournamentUncheckedUpdateWithoutFixturesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3387,6 +3525,7 @@ export type TournamentCreateWithoutStandingsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3407,6 +3546,7 @@ export type TournamentCreateWithoutStandingsInput = {
   sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -3450,6 +3590,8 @@ export type TournamentUncheckedCreateWithoutStandingsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3525,6 +3667,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3545,6 +3688,7 @@ export type TournamentUpdateWithoutStandingsInput = {
   sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -3588,6 +3732,8 @@ export type TournamentUncheckedUpdateWithoutStandingsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3647,6 +3793,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3667,6 +3814,7 @@ export type TournamentCreateWithoutSponsorsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -3710,6 +3858,8 @@ export type TournamentUncheckedCreateWithoutSponsorsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3785,6 +3935,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3805,6 +3956,7 @@ export type TournamentUpdateWithoutSponsorsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -3848,6 +4000,8 @@ export type TournamentUncheckedUpdateWithoutSponsorsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -3907,6 +4061,7 @@ export type TournamentCreateWithoutSocialsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -3927,6 +4082,7 @@ export type TournamentCreateWithoutSocialsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -3970,6 +4126,8 @@ export type TournamentUncheckedCreateWithoutSocialsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4045,6 +4203,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4065,6 +4224,7 @@ export type TournamentUpdateWithoutSocialsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -4108,6 +4268,8 @@ export type TournamentUncheckedUpdateWithoutSocialsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4167,6 +4329,7 @@ export type TournamentCreateWithoutVenuesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4188,6 +4351,7 @@ export type TournamentCreateWithoutVenuesInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -4230,6 +4394,8 @@ export type TournamentUncheckedCreateWithoutVenuesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4305,6 +4471,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4326,6 +4493,7 @@ export type TournamentUpdateWithoutVenuesInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -4368,6 +4536,8 @@ export type TournamentUncheckedUpdateWithoutVenuesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4427,6 +4597,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4447,6 +4618,7 @@ export type TournamentCreateWithoutTeam_invitesInput = {
   sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -4490,6 +4662,8 @@ export type TournamentUncheckedCreateWithoutTeam_invitesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4565,6 +4739,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4585,6 +4760,7 @@ export type TournamentUpdateWithoutTeam_invitesInput = {
   sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -4628,6 +4804,8 @@ export type TournamentUncheckedUpdateWithoutTeam_invitesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4687,6 +4865,7 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4708,6 +4887,7 @@ export type TournamentCreateWithoutTournament_invitesInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -4750,6 +4930,8 @@ export type TournamentUncheckedCreateWithoutTournament_invitesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4825,6 +5007,7 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4846,6 +5029,7 @@ export type TournamentUpdateWithoutTournament_invitesInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -4888,6 +5072,8 @@ export type TournamentUncheckedUpdateWithoutTournament_invitesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -4947,6 +5133,7 @@ export type TournamentCreateWithoutDiscountCodesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -4968,6 +5155,7 @@ export type TournamentCreateWithoutDiscountCodesInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -5010,6 +5198,8 @@ export type TournamentUncheckedCreateWithoutDiscountCodesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5085,6 +5275,7 @@ export type TournamentUpdateWithoutDiscountCodesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5106,6 +5297,7 @@ export type TournamentUpdateWithoutDiscountCodesInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -5148,6 +5340,8 @@ export type TournamentUncheckedUpdateWithoutDiscountCodesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5207,6 +5401,7 @@ export type TournamentCreateWithoutPaymentsInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5228,6 +5423,7 @@ export type TournamentCreateWithoutPaymentsInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -5270,6 +5466,8 @@ export type TournamentUncheckedCreateWithoutPaymentsInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5345,6 +5543,7 @@ export type TournamentUpdateWithoutPaymentsInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5366,6 +5565,7 @@ export type TournamentUpdateWithoutPaymentsInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -5408,6 +5608,8 @@ export type TournamentUncheckedUpdateWithoutPaymentsInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5467,6 +5669,7 @@ export type TournamentCreateWithoutChatMessagesInput = {
   twoLegsKnockout?: boolean
   isPinned?: boolean
   seasonName?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5488,6 +5691,7 @@ export type TournamentCreateWithoutChatMessagesInput = {
   standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
   team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
   organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  competition?: Prisma.CompetitionCreateNestedOneWithoutSeasonsInput
   parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
   seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
   followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
@@ -5530,6 +5734,8 @@ export type TournamentUncheckedCreateWithoutChatMessagesInput = {
   organization_id?: string | null
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5605,6 +5811,7 @@ export type TournamentUpdateWithoutChatMessagesInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5626,6 +5833,7 @@ export type TournamentUpdateWithoutChatMessagesInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -5668,6 +5876,8 @@ export type TournamentUncheckedUpdateWithoutChatMessagesInput = {
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5694,6 +5904,158 @@ export type TournamentUncheckedUpdateWithoutChatMessagesInput = {
   venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
   discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentCreateWithoutCompetitionInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  isPractice?: boolean
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  seasonName?: string | null
+  isCurrentSeason?: boolean
+  doubleRoundRobin?: boolean
+  unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
+  fixtures?: Prisma.FixtureCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteCreateNestedManyWithoutTournamentInput
+  organization?: Prisma.OrganizationCreateNestedOneWithoutTournamentsInput
+  parent?: Prisma.TournamentCreateNestedOneWithoutSeasonsInput
+  seasons?: Prisma.TournamentCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutTournamentInput
+  discountCodes?: Prisma.DiscountCodeCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentUncheckedCreateWithoutCompetitionInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  isPractice?: boolean
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  organization_id?: string | null
+  parent_id?: string | null
+  seasonName?: string | null
+  isCurrentSeason?: boolean
+  doubleRoundRobin?: boolean
+  unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
+  fixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutTournamentInput
+  groups?: Prisma.GroupUncheckedCreateNestedManyWithoutTournamentInput
+  participants?: Prisma.ParticipantUncheckedCreateNestedManyWithoutTournamentInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutTournamentInput
+  sponsors?: Prisma.SponsorUncheckedCreateNestedManyWithoutTournamentInput
+  standings?: Prisma.StandingUncheckedCreateNestedManyWithoutTournamentInput
+  team_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutTournamentInput
+  seasons?: Prisma.TournamentUncheckedCreateNestedManyWithoutParentInput
+  followers?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutTournamentInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutTournamentInput
+  venues?: Prisma.VenueUncheckedCreateNestedManyWithoutTournamentInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutTournamentInput
+  discountCodes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutTournamentInput
+  chatMessages?: Prisma.ChatMessageUncheckedCreateNestedManyWithoutTournamentInput
+}
+
+export type TournamentCreateOrConnectWithoutCompetitionInput = {
+  where: Prisma.TournamentWhereUniqueInput
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput>
+}
+
+export type TournamentCreateManyCompetitionInputEnvelope = {
+  data: Prisma.TournamentCreateManyCompetitionInput | Prisma.TournamentCreateManyCompetitionInput[]
+  skipDuplicates?: boolean
+}
+
+export type TournamentUpsertWithWhereUniqueWithoutCompetitionInput = {
+  where: Prisma.TournamentWhereUniqueInput
+  update: Prisma.XOR<Prisma.TournamentUpdateWithoutCompetitionInput, Prisma.TournamentUncheckedUpdateWithoutCompetitionInput>
+  create: Prisma.XOR<Prisma.TournamentCreateWithoutCompetitionInput, Prisma.TournamentUncheckedCreateWithoutCompetitionInput>
+}
+
+export type TournamentUpdateWithWhereUniqueWithoutCompetitionInput = {
+  where: Prisma.TournamentWhereUniqueInput
+  data: Prisma.XOR<Prisma.TournamentUpdateWithoutCompetitionInput, Prisma.TournamentUncheckedUpdateWithoutCompetitionInput>
+}
+
+export type TournamentUpdateManyWithWhereWithoutCompetitionInput = {
+  where: Prisma.TournamentScalarWhereInput
+  data: Prisma.XOR<Prisma.TournamentUpdateManyMutationInput, Prisma.TournamentUncheckedUpdateManyWithoutCompetitionInput>
 }
 
 export type TournamentCreateManyOrganizationInput = {
@@ -5728,6 +6090,8 @@ export type TournamentCreateManyOrganizationInput = {
   isPinned?: boolean
   parent_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5774,6 +6138,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5794,6 +6159,7 @@ export type TournamentUpdateWithoutOrganizationInput = {
   sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
@@ -5836,6 +6202,8 @@ export type TournamentUncheckedUpdateWithoutOrganizationInput = {
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5897,6 +6265,8 @@ export type TournamentUncheckedUpdateManyWithoutOrganizationInput = {
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -5944,6 +6314,8 @@ export type TournamentCreateManyParentInput = {
   isPinned?: boolean
   organization_id?: string | null
   seasonName?: string | null
+  competition_id?: string | null
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -5990,6 +6362,7 @@ export type TournamentUpdateWithoutParentInput = {
   twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6011,6 +6384,7 @@ export type TournamentUpdateWithoutParentInput = {
   standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
   team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
   organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  competition?: Prisma.CompetitionUpdateOneWithoutSeasonsNestedInput
   seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
   followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
   tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
@@ -6052,6 +6426,8 @@ export type TournamentUncheckedUpdateWithoutParentInput = {
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6113,6 +6489,232 @@ export type TournamentUncheckedUpdateManyWithoutParentInput = {
   isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
   organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  competition_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
+}
+
+export type TournamentCreateManyCompetitionInput = {
+  id?: string
+  name: string
+  description?: string | null
+  start_date: Date | string
+  end_date: Date | string
+  created_at?: Date | string
+  updated_at?: Date | string
+  autoApprove?: boolean
+  bannerUrl?: string | null
+  isPractice?: boolean
+  location?: string | null
+  latitude?: number | null
+  longitude?: number | null
+  logoUrl?: string | null
+  maxParticipants?: number | null
+  participantType: $Enums.ParticipantType
+  registrationClose?: Date | string | null
+  registrationOpen?: Date | string | null
+  scoringRules: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport: string
+  timezone?: string
+  type: $Enums.TournamentType
+  visibility?: $Enums.Visibility
+  numberOfGroups?: number | null
+  teamsPerGroup?: number | null
+  customName?: string | null
+  thirdPlaceMatch?: boolean
+  twoLegsKnockout?: boolean
+  isPinned?: boolean
+  organization_id?: string | null
+  parent_id?: string | null
+  seasonName?: string | null
+  isCurrentSeason?: boolean
+  doubleRoundRobin?: boolean
+  unifiedStandings?: boolean
+  hasKnockoutPlayoffs?: boolean
+  isPremium?: boolean
+  isPaidRegistration?: boolean
+  registrationFee?: number
+  tournamentPrice?: number
+  paymentPerTeam?: number
+  chatEnabled?: boolean
+  chatRules?: string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: number
+  requiresScoreEvidence?: boolean
+}
+
+export type TournamentUpdateWithoutCompetitionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fixtures?: Prisma.FixtureUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUpdateManyWithoutTournamentNestedInput
+  organization?: Prisma.OrganizationUpdateOneWithoutTournamentsNestedInput
+  parent?: Prisma.TournamentUpdateOneWithoutSeasonsNestedInput
+  seasons?: Prisma.TournamentUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutTournamentNestedInput
+  discountCodes?: Prisma.DiscountCodeUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentUncheckedUpdateWithoutCompetitionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPaidRegistration?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  registrationFee?: Prisma.IntFieldUpdateOperationsInput | number
+  tournamentPrice?: Prisma.IntFieldUpdateOperationsInput | number
+  paymentPerTeam?: Prisma.IntFieldUpdateOperationsInput | number
+  chatEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  chatRules?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parageeBot?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  botCalls?: Prisma.IntFieldUpdateOperationsInput | number
+  requiresScoreEvidence?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  fixtures?: Prisma.FixtureUncheckedUpdateManyWithoutTournamentNestedInput
+  groups?: Prisma.GroupUncheckedUpdateManyWithoutTournamentNestedInput
+  participants?: Prisma.ParticipantUncheckedUpdateManyWithoutTournamentNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutTournamentNestedInput
+  sponsors?: Prisma.SponsorUncheckedUpdateManyWithoutTournamentNestedInput
+  standings?: Prisma.StandingUncheckedUpdateManyWithoutTournamentNestedInput
+  team_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  seasons?: Prisma.TournamentUncheckedUpdateManyWithoutParentNestedInput
+  followers?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutTournamentNestedInput
+  tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutTournamentNestedInput
+  venues?: Prisma.VenueUncheckedUpdateManyWithoutTournamentNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutTournamentNestedInput
+  discountCodes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutTournamentNestedInput
+  chatMessages?: Prisma.ChatMessageUncheckedUpdateManyWithoutTournamentNestedInput
+}
+
+export type TournamentUncheckedUpdateManyWithoutCompetitionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  start_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  end_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  autoApprove?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannerUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isPractice?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  latitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  longitude?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  maxParticipants?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  participantType?: Prisma.EnumParticipantTypeFieldUpdateOperationsInput | $Enums.ParticipantType
+  registrationClose?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationOpen?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  scoringRules?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  sport?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumTournamentTypeFieldUpdateOperationsInput | $Enums.TournamentType
+  visibility?: Prisma.EnumVisibilityFieldUpdateOperationsInput | $Enums.Visibility
+  numberOfGroups?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  teamsPerGroup?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  customName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  thirdPlaceMatch?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoLegsKnockout?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isPinned?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  organization_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  parent_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seasonName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isCurrentSeason?: Prisma.BoolFieldUpdateOperationsInput | boolean
   doubleRoundRobin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   unifiedStandings?: Prisma.BoolFieldUpdateOperationsInput | boolean
   hasKnockoutPlayoffs?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -6309,6 +6911,8 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   organization_id?: boolean
   parent_id?: boolean
   seasonName?: boolean
+  competition_id?: boolean
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -6330,6 +6934,7 @@ export type TournamentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   team_invites?: boolean | Prisma.Tournament$team_invitesArgs<ExtArgs>
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
   seasons?: boolean | Prisma.Tournament$seasonsArgs<ExtArgs>
   followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
@@ -6374,6 +6979,8 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   organization_id?: boolean
   parent_id?: boolean
   seasonName?: boolean
+  competition_id?: boolean
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -6388,6 +6995,7 @@ export type TournamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   botCalls?: boolean
   requiresScoreEvidence?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
 
@@ -6424,6 +7032,8 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   organization_id?: boolean
   parent_id?: boolean
   seasonName?: boolean
+  competition_id?: boolean
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -6438,6 +7048,7 @@ export type TournamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   botCalls?: boolean
   requiresScoreEvidence?: boolean
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }, ExtArgs["result"]["tournament"]>
 
@@ -6474,6 +7085,8 @@ export type TournamentSelectScalar = {
   organization_id?: boolean
   parent_id?: boolean
   seasonName?: boolean
+  competition_id?: boolean
+  isCurrentSeason?: boolean
   doubleRoundRobin?: boolean
   unifiedStandings?: boolean
   hasKnockoutPlayoffs?: boolean
@@ -6489,7 +7102,7 @@ export type TournamentSelectScalar = {
   requiresScoreEvidence?: boolean
 }
 
-export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "doubleRoundRobin" | "unifiedStandings" | "hasKnockoutPlayoffs" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam" | "chatEnabled" | "chatRules" | "parageeBot" | "botCalls" | "requiresScoreEvidence", ExtArgs["result"]["tournament"]>
+export type TournamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "start_date" | "end_date" | "created_at" | "updated_at" | "autoApprove" | "bannerUrl" | "isPractice" | "location" | "latitude" | "longitude" | "logoUrl" | "maxParticipants" | "participantType" | "registrationClose" | "registrationOpen" | "scoringRules" | "sport" | "timezone" | "type" | "visibility" | "numberOfGroups" | "teamsPerGroup" | "customName" | "thirdPlaceMatch" | "twoLegsKnockout" | "isPinned" | "organization_id" | "parent_id" | "seasonName" | "competition_id" | "isCurrentSeason" | "doubleRoundRobin" | "unifiedStandings" | "hasKnockoutPlayoffs" | "isPremium" | "isPaidRegistration" | "registrationFee" | "tournamentPrice" | "paymentPerTeam" | "chatEnabled" | "chatRules" | "parageeBot" | "botCalls" | "requiresScoreEvidence", ExtArgs["result"]["tournament"]>
 export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   fixtures?: boolean | Prisma.Tournament$fixturesArgs<ExtArgs>
   groups?: boolean | Prisma.Tournament$groupsArgs<ExtArgs>
@@ -6499,6 +7112,7 @@ export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   standings?: boolean | Prisma.Tournament$standingsArgs<ExtArgs>
   team_invites?: boolean | Prisma.Tournament$team_invitesArgs<ExtArgs>
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
   seasons?: boolean | Prisma.Tournament$seasonsArgs<ExtArgs>
   followers?: boolean | Prisma.Tournament$followersArgs<ExtArgs>
@@ -6511,10 +7125,12 @@ export type TournamentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
 }
 export type TournamentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }
 export type TournamentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.Tournament$organizationArgs<ExtArgs>
+  competition?: boolean | Prisma.Tournament$competitionArgs<ExtArgs>
   parent?: boolean | Prisma.Tournament$parentArgs<ExtArgs>
 }
 
@@ -6529,6 +7145,7 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     standings: Prisma.$StandingPayload<ExtArgs>[]
     team_invites: Prisma.$TeamInvitePayload<ExtArgs>[]
     organization: Prisma.$OrganizationPayload<ExtArgs> | null
+    competition: Prisma.$CompetitionPayload<ExtArgs> | null
     parent: Prisma.$TournamentPayload<ExtArgs> | null
     seasons: Prisma.$TournamentPayload<ExtArgs>[]
     followers: Prisma.$TournamentFollowerPayload<ExtArgs>[]
@@ -6571,6 +7188,8 @@ export type $TournamentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     organization_id: string | null
     parent_id: string | null
     seasonName: string | null
+    competition_id: string | null
+    isCurrentSeason: boolean
     doubleRoundRobin: boolean
     unifiedStandings: boolean
     hasKnockoutPlayoffs: boolean
@@ -6986,6 +7605,7 @@ export interface Prisma__TournamentClient<T, Null = never, ExtArgs extends runti
   standings<T extends Prisma.Tournament$standingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$standingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StandingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   team_invites<T extends Prisma.Tournament$team_invitesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$team_invitesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamInvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organization<T extends Prisma.Tournament$organizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$organizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  competition<T extends Prisma.Tournament$competitionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$competitionArgs<ExtArgs>>): Prisma.Prisma__CompetitionClient<runtime.Types.Result.GetResult<Prisma.$CompetitionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   parent<T extends Prisma.Tournament$parentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$parentArgs<ExtArgs>>): Prisma.Prisma__TournamentClient<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   seasons<T extends Prisma.Tournament$seasonsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$seasonsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   followers<T extends Prisma.Tournament$followersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Tournament$followersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentFollowerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -7055,6 +7675,8 @@ export interface TournamentFieldRefs {
   readonly organization_id: Prisma.FieldRef<"Tournament", 'String'>
   readonly parent_id: Prisma.FieldRef<"Tournament", 'String'>
   readonly seasonName: Prisma.FieldRef<"Tournament", 'String'>
+  readonly competition_id: Prisma.FieldRef<"Tournament", 'String'>
+  readonly isCurrentSeason: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly doubleRoundRobin: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly unifiedStandings: Prisma.FieldRef<"Tournament", 'Boolean'>
   readonly hasKnockoutPlayoffs: Prisma.FieldRef<"Tournament", 'Boolean'>
@@ -7648,6 +8270,25 @@ export type Tournament$organizationArgs<ExtArgs extends runtime.Types.Extensions
    */
   include?: Prisma.OrganizationInclude<ExtArgs> | null
   where?: Prisma.OrganizationWhereInput
+}
+
+/**
+ * Tournament.competition
+ */
+export type Tournament$competitionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Competition
+   */
+  select?: Prisma.CompetitionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Competition
+   */
+  omit?: Prisma.CompetitionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompetitionInclude<ExtArgs> | null
+  where?: Prisma.CompetitionWhereInput
 }
 
 /**
