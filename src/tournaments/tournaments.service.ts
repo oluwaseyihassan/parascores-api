@@ -473,7 +473,28 @@ export class TournamentsService {
       },
     });
 
-    return ResponseUtil.success(updated);
+    const rootId = updated.parent_id || updated.id;
+    const seasons = await this.db.tournament.findMany({
+      where: {
+        OR: [{ id: rootId }, { parent_id: rootId }],
+      },
+      select: {
+        id: true,
+        name: true,
+        customName: true,
+        seasonName: true,
+        start_date: true,
+        end_date: true,
+      },
+      orderBy: {
+        start_date: 'desc',
+      },
+    });
+
+    return ResponseUtil.success({
+      ...updated,
+      seasons,
+    });
   }
 
   async startSeason(id: string, userId: string, dto: StartSeasonDto) {
