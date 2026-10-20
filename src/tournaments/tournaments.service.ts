@@ -679,6 +679,15 @@ export class TournamentsService {
     return ResponseUtil.paginated(items, page, limit, total);
   }
 
+  private slugify(text: string): string {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
   private haversineKm(
     lat1: number,
     lon1: number,
@@ -769,19 +778,38 @@ export class TournamentsService {
       },
     });
     if (!tournament) {
+      const comp = await this.db.competition.findUnique({
+        where: { slug: identifier },
+        include: {
+          seasons: {
+            orderBy: [{ isCurrentSeason: 'desc' }, { start_date: 'desc' }],
+            take: 1,
+          },
+        },
+      });
+
+      if (comp && comp.seasons.length > 0) {
+        return this.getOverviewData(comp.seasons[0].id);
+      }
+
       throw new NotFoundException('Tournament not found');
     }
 
     const rootId = tournament.parent_id || tournament.id;
+    const seasonsWhere = tournament.competition_id
+      ? { competition_id: tournament.competition_id }
+      : {
+          OR: [{ id: rootId }, { parent_id: rootId }],
+        };
+
     const seasons = await this.db.tournament.findMany({
-      where: {
-        OR: [{ id: rootId }, { parent_id: rootId }],
-      },
+      where: seasonsWhere,
       select: {
         id: true,
         name: true,
         customName: true,
         seasonName: true,
+        isCurrentSeason: true,
         start_date: true,
         end_date: true,
       },
@@ -798,22 +826,45 @@ export class TournamentsService {
 
 
   async getSeasons(identifier: string) {
-    const tournament = await this.db.tournament.findFirst({
+    let tournament = await this.db.tournament.findFirst({
       where: { OR: [{ id: identifier }, { customName: identifier }] },
-      select: { id: true, parent_id: true },
+      select: { id: true, parent_id: true, competition_id: true },
     });
+
+    if (!tournament) {
+      const comp = await this.db.competition.findUnique({
+        where: { slug: identifier },
+        include: {
+          seasons: {
+            orderBy: [{ isCurrentSeason: 'desc' }, { start_date: 'desc' }],
+            take: 1,
+          },
+        },
+      });
+      if (comp && comp.seasons.length > 0) {
+        tournament = comp.seasons[0] as any;
+      }
+    }
+
     if (!tournament) throw new NotFoundException('Tournament not found');
 
-    const rootId = tournament.parent_id || tournament.id;
+    const seasonsWhere = tournament.competition_id
+      ? { competition_id: tournament.competition_id }
+      : {
+          OR: [
+            { id: tournament.parent_id || tournament.id },
+            { parent_id: tournament.parent_id || tournament.id },
+          ],
+        };
+
     const seasons = await this.db.tournament.findMany({
-      where: {
-        OR: [{ id: rootId }, { parent_id: rootId }],
-      },
+      where: seasonsWhere,
       select: {
         id: true,
         name: true,
         customName: true,
         seasonName: true,
+        isCurrentSeason: true,
         start_date: true,
         end_date: true,
       },
@@ -927,15 +978,20 @@ export class TournamentsService {
     }));
 
     const rootId = tournament.parent_id || tournament.id;
+    const seasonsWhere = tournament.competition_id
+      ? { competition_id: tournament.competition_id }
+      : {
+          OR: [{ id: rootId }, { parent_id: rootId }],
+        };
+
     const seasons = await this.db.tournament.findMany({
-      where: {
-        OR: [{ id: rootId }, { parent_id: rootId }],
-      },
+      where: seasonsWhere,
       select: {
         id: true,
         name: true,
         customName: true,
         seasonName: true,
+        isCurrentSeason: true,
         start_date: true,
         end_date: true,
       },

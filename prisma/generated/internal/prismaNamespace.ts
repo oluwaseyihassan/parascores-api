@@ -414,7 +414,9 @@ export const ModelName = {
   AuditLog: 'AuditLog',
   ChatMessage: 'ChatMessage',
   ChatReaction: 'ChatReaction',
-  ScoreSubmission: 'ScoreSubmission'
+  ScoreSubmission: 'ScoreSubmission',
+  Competition: 'Competition',
+  CompetitionFollower: 'CompetitionFollower'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -430,7 +432,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "pulseItem" | "pulseReaction" | "resultEntry" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "discountCode" | "subscription" | "payment" | "pushSubscription" | "auditLog" | "chatMessage" | "chatReaction" | "scoreSubmission"
+    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "pulseItem" | "pulseReaction" | "resultEntry" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "discountCode" | "subscription" | "payment" | "pushSubscription" | "auditLog" | "chatMessage" | "chatReaction" | "scoreSubmission" | "competition" | "competitionFollower"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2728,6 +2730,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Competition: {
+      payload: Prisma.$CompetitionPayload<ExtArgs>
+      fields: Prisma.CompetitionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompetitionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompetitionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        findFirst: {
+          args: Prisma.CompetitionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompetitionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        findMany: {
+          args: Prisma.CompetitionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>[]
+        }
+        create: {
+          args: Prisma.CompetitionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        createMany: {
+          args: Prisma.CompetitionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CompetitionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>[]
+        }
+        delete: {
+          args: Prisma.CompetitionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        update: {
+          args: Prisma.CompetitionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        deleteMany: {
+          args: Prisma.CompetitionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompetitionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CompetitionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>[]
+        }
+        upsert: {
+          args: Prisma.CompetitionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionPayload>
+        }
+        aggregate: {
+          args: Prisma.CompetitionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompetition>
+        }
+        groupBy: {
+          args: Prisma.CompetitionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompetitionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompetitionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompetitionCountAggregateOutputType> | number
+        }
+      }
+    }
+    CompetitionFollower: {
+      payload: Prisma.$CompetitionFollowerPayload<ExtArgs>
+      fields: Prisma.CompetitionFollowerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompetitionFollowerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompetitionFollowerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        findFirst: {
+          args: Prisma.CompetitionFollowerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompetitionFollowerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        findMany: {
+          args: Prisma.CompetitionFollowerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>[]
+        }
+        create: {
+          args: Prisma.CompetitionFollowerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        createMany: {
+          args: Prisma.CompetitionFollowerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CompetitionFollowerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>[]
+        }
+        delete: {
+          args: Prisma.CompetitionFollowerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        update: {
+          args: Prisma.CompetitionFollowerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        deleteMany: {
+          args: Prisma.CompetitionFollowerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompetitionFollowerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CompetitionFollowerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>[]
+        }
+        upsert: {
+          args: Prisma.CompetitionFollowerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompetitionFollowerPayload>
+        }
+        aggregate: {
+          args: Prisma.CompetitionFollowerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompetitionFollower>
+        }
+        groupBy: {
+          args: Prisma.CompetitionFollowerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompetitionFollowerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompetitionFollowerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompetitionFollowerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2855,6 +3005,8 @@ export const TournamentScalarFieldEnum = {
   organization_id: 'organization_id',
   parent_id: 'parent_id',
   seasonName: 'seasonName',
+  competition_id: 'competition_id',
+  isCurrentSeason: 'isCurrentSeason',
   doubleRoundRobin: 'doubleRoundRobin',
   unifiedStandings: 'unifiedStandings',
   hasKnockoutPlayoffs: 'hasKnockoutPlayoffs',
@@ -3313,6 +3465,31 @@ export const ScoreSubmissionScalarFieldEnum = {
 } as const
 
 export type ScoreSubmissionScalarFieldEnum = (typeof ScoreSubmissionScalarFieldEnum)[keyof typeof ScoreSubmissionScalarFieldEnum]
+
+
+export const CompetitionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  sport: 'sport',
+  logoUrl: 'logoUrl',
+  bannerUrl: 'bannerUrl',
+  organization_id: 'organization_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CompetitionScalarFieldEnum = (typeof CompetitionScalarFieldEnum)[keyof typeof CompetitionScalarFieldEnum]
+
+
+export const CompetitionFollowerScalarFieldEnum = {
+  userId: 'userId',
+  competitionId: 'competitionId',
+  createdAt: 'createdAt'
+} as const
+
+export type CompetitionFollowerScalarFieldEnum = (typeof CompetitionFollowerScalarFieldEnum)[keyof typeof CompetitionFollowerScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -3837,6 +4014,8 @@ export type GlobalOmitConfig = {
   chatMessage?: Prisma.ChatMessageOmit
   chatReaction?: Prisma.ChatReactionOmit
   scoreSubmission?: Prisma.ScoreSubmissionOmit
+  competition?: Prisma.CompetitionOmit
+  competitionFollower?: Prisma.CompetitionFollowerOmit
 }
 
 /* Types for Logging */

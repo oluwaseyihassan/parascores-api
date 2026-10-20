@@ -192,3 +192,13 @@ export type ChatReaction = Prisma.ChatReactionModel
  * 
  */
 export type ScoreSubmission = Prisma.ScoreSubmissionModel
+/**
+ * Model Competition
+ * 
+ */
+export type Competition = Prisma.CompetitionModel
+/**
+ * Model CompetitionFollower
+ * 
+ */
+export type CompetitionFollower = Prisma.CompetitionFollowerModel

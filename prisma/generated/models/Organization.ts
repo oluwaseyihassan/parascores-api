@@ -293,6 +293,7 @@ export type OrganizationWhereInput = {
   members?: Prisma.OrganizationMemberListRelationFilter
   socials?: Prisma.SocialListRelationFilter
   tournaments?: Prisma.TournamentListRelationFilter
+  competitions?: Prisma.CompetitionListRelationFilter
   roster?: Prisma.RosterEntryListRelationFilter
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -323,6 +324,7 @@ export type OrganizationOrderByWithRelationInput = {
   members?: Prisma.OrganizationMemberOrderByRelationAggregateInput
   socials?: Prisma.SocialOrderByRelationAggregateInput
   tournaments?: Prisma.TournamentOrderByRelationAggregateInput
+  competitions?: Prisma.CompetitionOrderByRelationAggregateInput
   roster?: Prisma.RosterEntryOrderByRelationAggregateInput
   pushSubscriptions?: Prisma.PushSubscriptionOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
@@ -356,6 +358,7 @@ export type OrganizationWhereUniqueInput = Prisma.AtLeast<{
   members?: Prisma.OrganizationMemberListRelationFilter
   socials?: Prisma.SocialListRelationFilter
   tournaments?: Prisma.TournamentListRelationFilter
+  competitions?: Prisma.CompetitionListRelationFilter
   roster?: Prisma.RosterEntryListRelationFilter
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
@@ -436,6 +439,7 @@ export type OrganizationCreateInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -466,6 +470,7 @@ export type OrganizationUncheckedCreateInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -496,6 +501,7 @@ export type OrganizationUpdateInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -526,6 +532,7 @@ export type OrganizationUncheckedUpdateInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -793,6 +800,20 @@ export type OrganizationUpdateOneWithoutPushSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutPushSubscriptionsInput, Prisma.OrganizationUpdateWithoutPushSubscriptionsInput>, Prisma.OrganizationUncheckedUpdateWithoutPushSubscriptionsInput>
 }
 
+export type OrganizationCreateNestedOneWithoutCompetitionsInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCompetitionsInput, Prisma.OrganizationUncheckedCreateWithoutCompetitionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCompetitionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+}
+
+export type OrganizationUpdateOneRequiredWithoutCompetitionsNestedInput = {
+  create?: Prisma.XOR<Prisma.OrganizationCreateWithoutCompetitionsInput, Prisma.OrganizationUncheckedCreateWithoutCompetitionsInput>
+  connectOrCreate?: Prisma.OrganizationCreateOrConnectWithoutCompetitionsInput
+  upsert?: Prisma.OrganizationUpsertWithoutCompetitionsInput
+  connect?: Prisma.OrganizationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.OrganizationUpdateToOneWithWhereWithoutCompetitionsInput, Prisma.OrganizationUpdateWithoutCompetitionsInput>, Prisma.OrganizationUncheckedUpdateWithoutCompetitionsInput>
+}
+
 export type OrganizationCreateWithoutMembersInput = {
   id?: string
   name: string
@@ -815,6 +836,7 @@ export type OrganizationCreateWithoutMembersInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -844,6 +866,7 @@ export type OrganizationUncheckedCreateWithoutMembersInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -889,6 +912,7 @@ export type OrganizationUpdateWithoutMembersInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -918,6 +942,7 @@ export type OrganizationUncheckedUpdateWithoutMembersInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -947,6 +972,7 @@ export type OrganizationCreateWithoutTournamentsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -976,6 +1002,7 @@ export type OrganizationUncheckedCreateWithoutTournamentsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -1021,6 +1048,7 @@ export type OrganizationUpdateWithoutTournamentsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -1050,6 +1078,7 @@ export type OrganizationUncheckedUpdateWithoutTournamentsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -1080,6 +1109,7 @@ export type OrganizationCreateWithoutRosterInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
@@ -1109,6 +1139,7 @@ export type OrganizationUncheckedCreateWithoutRosterInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1154,6 +1185,7 @@ export type OrganizationUpdateWithoutRosterInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
@@ -1183,6 +1215,7 @@ export type OrganizationUncheckedUpdateWithoutRosterInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1212,6 +1245,7 @@ export type OrganizationCreateWithoutPulseItemsInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -1241,6 +1275,7 @@ export type OrganizationUncheckedCreateWithoutPulseItemsInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -1286,6 +1321,7 @@ export type OrganizationUpdateWithoutPulseItemsInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -1315,6 +1351,7 @@ export type OrganizationUncheckedUpdateWithoutPulseItemsInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -1343,6 +1380,7 @@ export type OrganizationCreateWithoutSocialsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -1372,6 +1410,7 @@ export type OrganizationUncheckedCreateWithoutSocialsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -1417,6 +1456,7 @@ export type OrganizationUpdateWithoutSocialsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -1446,6 +1486,7 @@ export type OrganizationUncheckedUpdateWithoutSocialsInput = {
   brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -1476,6 +1517,7 @@ export type OrganizationCreateWithoutSubscriptionInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
@@ -1505,6 +1547,7 @@ export type OrganizationUncheckedCreateWithoutSubscriptionInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1550,6 +1593,7 @@ export type OrganizationUpdateWithoutSubscriptionInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
@@ -1579,6 +1623,7 @@ export type OrganizationUncheckedUpdateWithoutSubscriptionInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1608,6 +1653,7 @@ export type OrganizationCreateWithoutPaymentsInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
@@ -1637,6 +1683,7 @@ export type OrganizationUncheckedCreateWithoutPaymentsInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
@@ -1682,6 +1729,7 @@ export type OrganizationUpdateWithoutPaymentsInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
@@ -1711,6 +1759,7 @@ export type OrganizationUncheckedUpdateWithoutPaymentsInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
@@ -1740,6 +1789,7 @@ export type OrganizationCreateWithoutPushSubscriptionsInput = {
   members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
@@ -1769,6 +1819,7 @@ export type OrganizationUncheckedCreateWithoutPushSubscriptionsInput = {
   members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
   socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
   tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  competitions?: Prisma.CompetitionUncheckedCreateNestedManyWithoutOrganizationInput
   roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
@@ -1814,6 +1865,7 @@ export type OrganizationUpdateWithoutPushSubscriptionsInput = {
   members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
@@ -1843,7 +1895,144 @@ export type OrganizationUncheckedUpdateWithoutPushSubscriptionsInput = {
   members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
   socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
   tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  competitions?: Prisma.CompetitionUncheckedUpdateManyWithoutOrganizationNestedInput
   roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationCreateWithoutCompetitionsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
+  instantPayouts?: boolean
+  paystackRecipientCode?: string | null
+  subdomain?: string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentCreateNestedManyWithoutOrganizationInput
+  roster?: Prisma.RosterEntryCreateNestedManyWithoutOrganizationInput
+  pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationUncheckedCreateWithoutCompetitionsInput = {
+  id?: string
+  name: string
+  slug: string
+  logoUrl?: string | null
+  color?: string | null
+  phone?: string | null
+  isVerified?: boolean
+  created_at?: Date | string
+  updated_at?: Date | string
+  description?: string | null
+  paystackSubaccountCode?: string | null
+  settlementBankCode?: string | null
+  settlementAccountNumber?: string | null
+  settlementAccountName?: string | null
+  payoutAccountCreatedAt?: Date | string | null
+  instantPayouts?: boolean
+  paystackRecipientCode?: string | null
+  subdomain?: string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutOrganizationInput
+  socials?: Prisma.SocialUncheckedCreateNestedManyWithoutOrganizationInput
+  tournaments?: Prisma.TournamentUncheckedCreateNestedManyWithoutOrganizationInput
+  roster?: Prisma.RosterEntryUncheckedCreateNestedManyWithoutOrganizationInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutOrganizationInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutOrganizationInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutOrganizationInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutOrganizationInput
+}
+
+export type OrganizationCreateOrConnectWithoutCompetitionsInput = {
+  where: Prisma.OrganizationWhereUniqueInput
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCompetitionsInput, Prisma.OrganizationUncheckedCreateWithoutCompetitionsInput>
+}
+
+export type OrganizationUpsertWithoutCompetitionsInput = {
+  update: Prisma.XOR<Prisma.OrganizationUpdateWithoutCompetitionsInput, Prisma.OrganizationUncheckedUpdateWithoutCompetitionsInput>
+  create: Prisma.XOR<Prisma.OrganizationCreateWithoutCompetitionsInput, Prisma.OrganizationUncheckedCreateWithoutCompetitionsInput>
+  where?: Prisma.OrganizationWhereInput
+}
+
+export type OrganizationUpdateToOneWithWhereWithoutCompetitionsInput = {
+  where?: Prisma.OrganizationWhereInput
+  data: Prisma.XOR<Prisma.OrganizationUpdateWithoutCompetitionsInput, Prisma.OrganizationUncheckedUpdateWithoutCompetitionsInput>
+}
+
+export type OrganizationUpdateWithoutCompetitionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  instantPayouts?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paystackRecipientCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUpdateManyWithoutOrganizationNestedInput
+  roster?: Prisma.RosterEntryUpdateManyWithoutOrganizationNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUpdateManyWithoutOrganizationNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutOrganizationNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutOrganizationNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutOrganizationNestedInput
+}
+
+export type OrganizationUncheckedUpdateWithoutCompetitionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  paystackSubaccountCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementBankCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  settlementAccountName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  payoutAccountCreatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  instantPayouts?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  paystackRecipientCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  subdomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  brandConfig?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  members?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutOrganizationNestedInput
+  socials?: Prisma.SocialUncheckedUpdateManyWithoutOrganizationNestedInput
+  tournaments?: Prisma.TournamentUncheckedUpdateManyWithoutOrganizationNestedInput
+  roster?: Prisma.RosterEntryUncheckedUpdateManyWithoutOrganizationNestedInput
+  pushSubscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutOrganizationNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutOrganizationNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutOrganizationNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -1858,6 +2047,7 @@ export type OrganizationCountOutputType = {
   members: number
   socials: number
   tournaments: number
+  competitions: number
   roster: number
   pushSubscriptions: number
   payments: number
@@ -1868,6 +2058,7 @@ export type OrganizationCountOutputTypeSelect<ExtArgs extends runtime.Types.Exte
   members?: boolean | OrganizationCountOutputTypeCountMembersArgs
   socials?: boolean | OrganizationCountOutputTypeCountSocialsArgs
   tournaments?: boolean | OrganizationCountOutputTypeCountTournamentsArgs
+  competitions?: boolean | OrganizationCountOutputTypeCountCompetitionsArgs
   roster?: boolean | OrganizationCountOutputTypeCountRosterArgs
   pushSubscriptions?: boolean | OrganizationCountOutputTypeCountPushSubscriptionsArgs
   payments?: boolean | OrganizationCountOutputTypeCountPaymentsArgs
@@ -1903,6 +2094,13 @@ export type OrganizationCountOutputTypeCountSocialsArgs<ExtArgs extends runtime.
  */
 export type OrganizationCountOutputTypeCountTournamentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.TournamentWhereInput
+}
+
+/**
+ * OrganizationCountOutputType without action
+ */
+export type OrganizationCountOutputTypeCountCompetitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CompetitionWhereInput
 }
 
 /**
@@ -1957,6 +2155,7 @@ export type OrganizationSelect<ExtArgs extends runtime.Types.Extensions.Internal
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
   tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
+  competitions?: boolean | Prisma.Organization$competitionsArgs<ExtArgs>
   roster?: boolean | Prisma.Organization$rosterArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.Organization$pushSubscriptionsArgs<ExtArgs>
   subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
@@ -2036,6 +2235,7 @@ export type OrganizationInclude<ExtArgs extends runtime.Types.Extensions.Interna
   members?: boolean | Prisma.Organization$membersArgs<ExtArgs>
   socials?: boolean | Prisma.Organization$socialsArgs<ExtArgs>
   tournaments?: boolean | Prisma.Organization$tournamentsArgs<ExtArgs>
+  competitions?: boolean | Prisma.Organization$competitionsArgs<ExtArgs>
   roster?: boolean | Prisma.Organization$rosterArgs<ExtArgs>
   pushSubscriptions?: boolean | Prisma.Organization$pushSubscriptionsArgs<ExtArgs>
   subscription?: boolean | Prisma.Organization$subscriptionArgs<ExtArgs>
@@ -2052,6 +2252,7 @@ export type $OrganizationPayload<ExtArgs extends runtime.Types.Extensions.Intern
     members: Prisma.$OrganizationMemberPayload<ExtArgs>[]
     socials: Prisma.$SocialPayload<ExtArgs>[]
     tournaments: Prisma.$TournamentPayload<ExtArgs>[]
+    competitions: Prisma.$CompetitionPayload<ExtArgs>[]
     roster: Prisma.$RosterEntryPayload<ExtArgs>[]
     pushSubscriptions: Prisma.$PushSubscriptionPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
@@ -2475,6 +2676,7 @@ export interface Prisma__OrganizationClient<T, Null = never, ExtArgs extends run
   members<T extends Prisma.Organization$membersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$membersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   socials<T extends Prisma.Organization$socialsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$socialsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SocialPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tournaments<T extends Prisma.Organization$tournamentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$tournamentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  competitions<T extends Prisma.Organization$competitionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$competitionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompetitionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   roster<T extends Prisma.Organization$rosterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$rosterArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RosterEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pushSubscriptions<T extends Prisma.Organization$pushSubscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$pushSubscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Organization$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Organization$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2985,6 +3187,30 @@ export type Organization$tournamentsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.TournamentScalarFieldEnum | Prisma.TournamentScalarFieldEnum[]
+}
+
+/**
+ * Organization.competitions
+ */
+export type Organization$competitionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Competition
+   */
+  select?: Prisma.CompetitionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Competition
+   */
+  omit?: Prisma.CompetitionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CompetitionInclude<ExtArgs> | null
+  where?: Prisma.CompetitionWhereInput
+  orderBy?: Prisma.CompetitionOrderByWithRelationInput | Prisma.CompetitionOrderByWithRelationInput[]
+  cursor?: Prisma.CompetitionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CompetitionScalarFieldEnum | Prisma.CompetitionScalarFieldEnum[]
 }
 
 /**

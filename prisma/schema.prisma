@@ -28,6 +28,7 @@ model User {
   teams                      Team[]               @relation("UserTeams")
   created_invites            TeamInvite[]         @relation("InviteCreator")
   followed_tournaments       TournamentFollower[]
+  followed_competitions      CompetitionFollower[]
   push_subscriptions         PushSubscription[]
   created_tournament_invites TournamentInvite[]   @relation("TournamentInviteCreator")
   payments                   Payment[]
@@ -58,6 +59,7 @@ model Organization {
   members                 OrganizationMember[]
   socials                 Social[]
   tournaments             Tournament[]
+  competitions            Competition[]
   roster                  RosterEntry[]
   pushSubscriptions       PushSubscription[]
   subscription            Subscription?
@@ -109,6 +111,8 @@ model Tournament {
   organization_id    String?
   parent_id          String?
   seasonName         String?
+  competition_id     String?
+  isCurrentSeason    Boolean              @default(false)
   doubleRoundRobin   Boolean              @default(false)
   unifiedStandings   Boolean              @default(false)
   hasKnockoutPlayoffs Boolean              @default(false)
@@ -125,6 +129,7 @@ model Tournament {
   standings          Standing[]
   team_invites       TeamInvite[]
   organization       Organization?        @relation(fields: [organization_id], references: [id])
+  competition        Competition?         @relation(fields: [competition_id], references: [id])
   parent             Tournament?          @relation("TournamentSeasons", fields: [parent_id], references: [id])
   seasons            Tournament[]         @relation("TournamentSeasons")
   followers          TournamentFollower[]
@@ -787,4 +792,32 @@ model ScoreSubmission {
 
   @@unique([fixtureId, participantId])
   @@index([fixtureId, status])
+}
+
+model Competition {
+  id              String                @id @default(cuid())
+  name            String
+  slug            String                @unique
+  description     String?               @db.Text
+  sport           String
+  logoUrl         String?
+  bannerUrl       String?
+  organization_id String
+  organization    Organization          @relation(fields: [organization_id], references: [id], onDelete: Cascade)
+  seasons         Tournament[]
+  followers       CompetitionFollower[]
+  created_at      DateTime              @default(now())
+  updated_at      DateTime              @updatedAt
+
+  @@index([organization_id])
+}
+
+model CompetitionFollower {
+  userId        String
+  competitionId String
+  createdAt     DateTime    @default(now())
+  competition   Competition @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, competitionId])
 }
