@@ -228,6 +228,13 @@ export class TournamentsController {
   }
 
   @Public()
+  @Get(':id/seasons')
+  @ApiOperation({ summary: 'Get all seasons in this tournament series' })
+  async getSeasons(@Param('id') id: string) {
+    return this.tournamentsService.getSeasons(id);
+  }
+
+  @Public()
   @Get(':id/overview')
   @ApiOperation({ summary: 'Get full tournament overview data' })
   async getOverviewData(@Param('id') id: string) {
