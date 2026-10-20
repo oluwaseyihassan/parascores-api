@@ -513,6 +513,52 @@ export class TournamentsService {
       ['OWNER', 'ADMIN'],
     );
 
+    // Resolve or auto-create Competition for this series
+    let competitionId = parentTournament.competition_id;
+    if (!competitionId) {
+      const rootId = parentTournament.parent_id || parentTournament.id;
+      const rootTourney =
+        rootId === parentTournament.id
+          ? parentTournament
+          : await this.db.tournament.findUnique({ where: { id: rootId } });
+
+      if (rootTourney && rootTourney.organization_id) {
+        const baseSlug = rootTourney.customName || this.slugify(rootTourney.name);
+        let comp = await this.db.competition.findUnique({
+          where: { slug: baseSlug },
+        });
+
+        if (!comp) {
+          comp = await this.db.competition.create({
+            data: {
+              name: rootTourney.name,
+              slug: baseSlug,
+              description: rootTourney.description,
+              sport: rootTourney.sport,
+              logoUrl: rootTourney.logoUrl,
+              bannerUrl: rootTourney.bannerUrl,
+              organization_id: rootTourney.organization_id,
+            },
+          });
+        }
+        competitionId = comp.id;
+
+        // Link root tournament to competition
+        await this.db.tournament.update({
+          where: { id: rootTourney.id },
+          data: { competition_id: competitionId },
+        });
+      }
+    }
+
+    // Unset isCurrentSeason on previous seasons under this competition
+    if (competitionId) {
+      await this.db.tournament.updateMany({
+        where: { competition_id: competitionId },
+        data: { isCurrentSeason: false },
+      });
+    }
+
     // Create the new tournament using settings from parent
     const season = await this.db.tournament.create({
       data: {
@@ -522,6 +568,8 @@ export class TournamentsService {
         end_date: new Date(dto.end_date),
         organization_id: parentTournament.organization_id,
         parent_id: parentTournament.parent_id || parentTournament.id,
+        competition_id: competitionId || null,
+        isCurrentSeason: !!competitionId,
 
         sport: parentTournament.sport,
         type: parentTournament.type,
@@ -546,7 +594,68 @@ export class TournamentsService {
       },
     });
 
+    // Auto-migrate parent tournament followers to competition
+    if (competitionId) {
+      const followers = await this.db.tournamentFollower.findMany({
+        where: { tournamentId: parentTournament.id },
+      });
+      for (const f of followers) {
+        await this.db.competitionFollower.upsert({
+          where: {
+            userId_competitionId: {
+              userId: f.userId,
+              competitionId,
+            },
+          },
+          create: {
+            userId: f.userId,
+            competitionId,
+          },
+          update: {},
+        });
+      }
+    }
+
     return ResponseUtil.success(season);
+  }
+
+  async setActiveSeason(tournamentId: string, userId: string) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+    });
+    if (!tournament) throw new NotFoundException('Tournament not found');
+
+    if (!tournament.organization_id)
+      throw new ForbiddenException('Tournament has no organization');
+
+    await this.organizationsService.validateMemberRole(
+      tournament.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const compId = tournament.competition_id;
+    if (compId) {
+      await this.db.tournament.updateMany({
+        where: { competition_id: compId },
+        data: { isCurrentSeason: false },
+      });
+    } else {
+      const rootId = tournament.parent_id || tournament.id;
+      await this.db.tournament.updateMany({
+        where: {
+          OR: [{ id: rootId }, { parent_id: rootId }],
+        },
+        data: { isCurrentSeason: false },
+      });
+    }
+
+    const updated = await this.db.tournament.update({
+      where: { id: tournament.id },
+      data: { isCurrentSeason: true },
+    });
+
+    return ResponseUtil.success(updated, 'Active season updated');
   }
 
   async findAllPublic(

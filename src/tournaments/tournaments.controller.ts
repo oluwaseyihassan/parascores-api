@@ -162,6 +162,12 @@ export class TournamentsController {
     return this.tournamentsService.startSeason(id, req.user.sub, dto);
   }
 
+  @Patch(':id/set-active-season')
+  @ApiOperation({ summary: 'Set this tournament as the primary active season in its series' })
+  async setActiveSeason(@Param('id') id: string, @Req() req: any) {
+    return this.tournamentsService.setActiveSeason(id, req.user.sub);
+  }
+
   @Get('following/mine')
   @ApiOperation({ summary: 'Get followed tournaments' })
   @ApiQuery({ name: 'page', required: false, type: Number })
