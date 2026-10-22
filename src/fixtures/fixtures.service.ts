@@ -1795,6 +1795,19 @@ export class FixturesService {
       where: { id: fixtureId },
     });
 
+    // Invalidate caches
+    await this.redisService.del(`fixtures:single:${fixtureId}`);
+    await this.redisService.delPattern(
+      `fixtures:tournament:${fixture.tournament_id}:*`,
+    );
+    if (fixture.tournament?.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${fixture.tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
+
     // If it was a completed fixture, update standings for RR/League
     if (
       fixture.status === 'COMPLETED' &&
@@ -1847,7 +1860,23 @@ export class FixturesService {
       await this.db.standing.deleteMany({
         where: { tournament_id: tournament.id },
       });
+      await this.redisService.del(`standings:${tournament.id}`);
+      if (tournament.customName) {
+        await this.redisService.del(`standings:${tournament.customName}`);
+      }
     }
+
+    // Invalidate caches
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
 
     return ResponseUtil.success({
       message: 'All fixtures cleared successfully',
@@ -1934,6 +1963,18 @@ export class FixturesService {
         }
       }
     }
+
+    // Invalidate caches
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
 
     return ResponseUtil.success({ message: 'Knockout pairings updated successfully' });
   }
