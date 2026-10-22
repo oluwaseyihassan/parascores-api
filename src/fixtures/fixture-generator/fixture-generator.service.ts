@@ -7,6 +7,7 @@ import {
 import { DatabaseService } from 'src/database/database.service';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
+import { GenerateKnockoutPlaceholdersDto } from 'src/fixtures/dto/generate-knockout-placeholders.dto';
 import {
   Fixture,
   Participant,
@@ -742,6 +743,204 @@ export class FixtureGeneratorService {
         name: p.customName || p.user?.name || p.team?.name,
       })),
       rounds: freshRounds,
+    });
+  }
+
+  // Generate knockout stage placeholders (for hybrid tournaments or manual setups)
+  async generateKnockoutPlaceholders(
+    tournamentId: string,
+    userId: string,
+    dto: GenerateKnockoutPlaceholdersDto,
+  ) {
+    const tournament = await this.db.tournament.findFirst({
+      where: { OR: [{ id: tournamentId }, { customName: tournamentId }] },
+      include: {
+        organization: {
+          include: {
+            members: {
+              where: { userId },
+            },
+          },
+        },
+        participants: {
+          where: { status: 'CONFIRMED' },
+        },
+        groups: true,
+      },
+    });
+
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+
+    const membership = tournament.organization?.members[0];
+    const isAuthorized =
+      membership &&
+      (membership.role === 'OWNER' || membership.role === 'ADMIN');
+
+    if (!isAuthorized) {
+      throw new ForbiddenException(
+        'You are not authorized to generate fixtures for this tournament',
+      );
+    }
+
+    if (
+      tournament.type !== TournamentType.HYBRID &&
+      tournament.type !== TournamentType.GROUP
+    ) {
+      throw new BadRequestException(
+        'Knockout placeholders can only be generated for Hybrid or Group tournaments',
+      );
+    }
+
+    // Sync tournament settings if provided
+    if (
+      dto.unifiedStandings !== undefined &&
+      dto.unifiedStandings !== (tournament as any).unifiedStandings
+    ) {
+      await this.db.tournament.update({
+        where: { id: tournament.id },
+        data: { unifiedStandings: dto.unifiedStandings },
+      });
+      (tournament as any).unifiedStandings = dto.unifiedStandings;
+    }
+
+    if (
+      dto.hasKnockoutPlayoffs !== undefined &&
+      dto.hasKnockoutPlayoffs !== (tournament as any).hasKnockoutPlayoffs
+    ) {
+      await this.db.tournament.update({
+        where: { id: tournament.id },
+        data: { hasKnockoutPlayoffs: dto.hasKnockoutPlayoffs },
+      });
+      (tournament as any).hasKnockoutPlayoffs = dto.hasKnockoutPlayoffs;
+    }
+
+    // Optional: sync group assignments and standings if provided
+    if (dto.groupAssignments && Object.keys(dto.groupAssignments).length > 0) {
+      const assignmentLabels = Object.keys(dto.groupAssignments);
+      const existingGroups = await this.db.group.findMany({
+        where: { tournament_id: tournament.id },
+      });
+
+      const groupMap = new Map<string, any>();
+      for (const group of existingGroups) {
+        groupMap.set(group.name, group);
+      }
+
+      for (const name of assignmentLabels) {
+        if (!groupMap.has(name)) {
+          const newGroup = await this.db.group.create({
+            data: { name, tournament_id: tournament.id },
+          });
+          groupMap.set(name, newGroup);
+        }
+      }
+
+      for (const [groupName, participantIds] of Object.entries(
+        dto.groupAssignments,
+      )) {
+        const group = groupMap.get(groupName);
+        if (group && Array.isArray(participantIds) && participantIds.length > 0) {
+          await this.db.participant.updateMany({
+            where: {
+              id: { in: participantIds },
+              tournament_id: tournament.id,
+            },
+            data: { groupId: group.id },
+          });
+        }
+      }
+
+      await this.initializeStandings(tournament);
+      await this.redisService.del(`standings:${tournament.id}`);
+      if (tournament.customName) {
+        await this.redisService.del(`standings:${tournament.customName}`);
+      }
+    }
+
+    // Delete any existing knockout stage fixtures
+    await this.db.fixture.deleteMany({
+      where: {
+        tournament_id: tournament.id,
+        stage: FixtureStage.KNOCKOUT,
+      },
+    });
+
+    const isUnified =
+      dto.unifiedStandings !== undefined
+        ? dto.unifiedStandings
+        : !!(tournament as any).unifiedStandings;
+
+    const hasPlayoffs =
+      dto.hasKnockoutPlayoffs !== undefined
+        ? dto.hasKnockoutPlayoffs
+        : !!(tournament as any).hasKnockoutPlayoffs;
+
+    const startDate = dto.startDate
+      ? new Date(dto.startDate)
+      : new Date(tournament.start_date || Date.now());
+    const intervalMinutes = dto.intervalMinutes ?? 90;
+
+    const validNumGroups =
+      dto.numberOfGroups ??
+      ((dto.groupAssignments ? Object.keys(dto.groupAssignments).length : 0) ||
+        tournament.groups.length ||
+        2);
+
+    const knockoutRounds = await this.generateHybridKnockoutPlaceholders(
+      tournament,
+      {
+        numberOfGroups: validNumGroups,
+        advancingPerGroup: dto.advancingPerGroup ?? 2,
+        hasThirdPlace:
+          dto.hasThirdPlace ?? tournament.thirdPlaceMatch ?? false,
+        startDate,
+        intervalMinutes,
+        knockoutMatchups: dto.knockoutMatchups,
+        isUnifiedStandings: isUnified,
+        hasKnockoutPlayoffs: hasPlayoffs,
+      },
+    );
+
+    // Invalidate caches
+    await this.redisService.delPattern(`fixtures:tournament:${tournament.id}:*`);
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
+
+    // Fetch fresh knockout fixtures with full relations
+    const freshKnockoutFixtures = await this.db.fixture.findMany({
+      where: {
+        tournament_id: tournament.id,
+        stage: FixtureStage.KNOCKOUT,
+      },
+      include: {
+        homeTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        awayTeam: {
+          include: {
+            user: { select: { id: true, name: true } },
+            team: { select: { id: true, name: true } },
+          },
+        },
+        group: true,
+      },
+      orderBy: [{ round: 'asc' }, { matchNumber: 'asc' }],
+    });
+
+    return ResponseUtil.success({
+      message: 'Knockout stage fixtures generated successfully',
+      rounds: knockoutRounds,
+      fixtures: freshKnockoutFixtures,
     });
   }
 

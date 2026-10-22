@@ -20,6 +20,7 @@ import { CreateFixtureDto } from './dto/create-fixture.dto';
 import { CreateBulkFixturesDto } from './dto/create-bulk-fixtures.dto';
 import { GenerateFixturesDto } from 'src/fixtures/dto/generate-fixtures.dto';
 import { AdvanceGroupStageDto } from 'src/fixtures/dto/advance-group-stage.dto';
+import { GenerateKnockoutPlaceholdersDto } from './dto/generate-knockout-placeholders.dto';
 import { UpdateKnockoutPairingsDto } from './dto/update-knockout-pairings.dto';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { ApiOperation, ApiTags, ApiQuery } from '@nestjs/swagger';
@@ -108,6 +109,23 @@ export class FixturesController {
     @Req() req,
   ) {
     return this.fixtureGeneratorService.advanceGroupStage(
+      tournamentId,
+      req.user.sub,
+      dto,
+    );
+  }
+
+  // Generate knockout stage placeholders (for hybrid tournaments or manual setups)
+  @Post('tournaments/:tournamentId/knockout/placeholders')
+  @ApiOperation({
+    summary: 'Generate knockout stage placeholder fixtures for a hybrid tournament',
+  })
+  async generateKnockoutPlaceholders(
+    @Param('tournamentId') tournamentId: string,
+    @Body() dto: GenerateKnockoutPlaceholdersDto,
+    @Req() req,
+  ) {
+    return this.fixtureGeneratorService.generateKnockoutPlaceholders(
       tournamentId,
       req.user.sub,
       dto,
