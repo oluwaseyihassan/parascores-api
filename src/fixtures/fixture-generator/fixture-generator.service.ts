@@ -355,6 +355,18 @@ export class FixtureGeneratorService {
         });
       });
 
+    // Invalidate caches
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
+
     return ResponseUtil.success({
       message: `Generated ${totalFixtures} fixtures for ${tournament.type} tournament`,
       rounds: freshRounds,
@@ -735,6 +747,18 @@ export class FixtureGeneratorService {
           fixtures: groupedByRound[n],
         });
       });
+
+    // Invalidate caches
+    await this.redisService.delPattern(
+      `fixtures:tournament:${tournament.id}:*`,
+    );
+    if (tournament.customName) {
+      await this.redisService.delPattern(
+        `fixtures:tournament:${tournament.customName}:*`,
+      );
+    }
+    await this.redisService.del('fixtures:live');
+    await this.redisService.delPattern('fixtures:live:org:*');
 
     return ResponseUtil.success({
       message: `Advanced to knockout stage. Generated ${freshFixturesResponse.length} fixtures total with ${qualifiedParticipants.length} qualifiers.`,
