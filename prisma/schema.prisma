@@ -34,6 +34,7 @@ model User {
   payments                   Payment[]
   audit_logs                 AuditLog[]
   created_discount_codes     DiscountCode[]         @relation("DiscountCodeCreator")
+  predictions                Prediction[]
 }
 
 model Organization {
@@ -138,6 +139,7 @@ model Tournament {
   payments           Payment[]
   discountCodes      DiscountCode[]
   chatMessages       ChatMessage[]
+  predictions            Prediction[]
 
   // Esports package: tournament chat + Paragee (AI bot) + score submissions
   chatEnabled            Boolean  @default(false)
@@ -279,6 +281,7 @@ model Fixture {
   highlights            Highlight[]
   pulseItems            PulseItem[]
   scoreSubmissions      ScoreSubmission[]
+  predictions         Prediction[]
 
   // Fixture lists + Paragee intents filter by tournament (+ status)
   @@index([tournament_id, status])
@@ -820,4 +823,26 @@ model CompetitionFollower {
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, competitionId])
+}
+
+model Prediction {
+  id           String      @id @default(cuid())
+  tournamentId String      @map("tournament_id")
+  fixtureId    String      @map("fixture_id")
+  userId       String      @map("user_id")
+  homeScore    Int         @map("home_score")
+  awayScore    Int         @map("away_score")
+  points       Int?
+  status       String?
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+
+  tournament   Tournament  @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  fixture      Fixture     @relation(fields: [fixtureId], references: [id], onDelete: Cascade)
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, fixtureId])
+  @@index([tournamentId])
+  @@index([fixtureId])
+  @@map("predictions")
 }

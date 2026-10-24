@@ -6,9 +6,10 @@ import { FixtureGeneratorService } from './fixture-generator/fixture-generator.s
 import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { NotificationsModule } from '../notifications/notifications.module';
 import { PulseModule } from '../pulse/pulse.module';
+import { PredictionsModule } from '../predictions/predictions.module';
 
 @Module({
-  imports: [OrganizationsModule, NotificationsModule, PulseModule],
+  imports: [OrganizationsModule, NotificationsModule, PulseModule, PredictionsModule],
   controllers: [FixturesController],
   providers: [FixturesService, FixtureGeneratorService],
   exports: [FixturesService],

@@ -416,7 +416,8 @@ export const ModelName = {
   ChatReaction: 'ChatReaction',
   ScoreSubmission: 'ScoreSubmission',
   Competition: 'Competition',
-  CompetitionFollower: 'CompetitionFollower'
+  CompetitionFollower: 'CompetitionFollower',
+  Prediction: 'Prediction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -432,7 +433,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "pulseItem" | "pulseReaction" | "resultEntry" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "discountCode" | "subscription" | "payment" | "pushSubscription" | "auditLog" | "chatMessage" | "chatReaction" | "scoreSubmission" | "competition" | "competitionFollower"
+    modelProps: "user" | "organization" | "organizationMember" | "tournament" | "tournamentFollower" | "group" | "participant" | "rosterEntry" | "tournamentEntry" | "fixture" | "pulseItem" | "pulseReaction" | "resultEntry" | "team" | "matchEvent" | "standing" | "player" | "sponsor" | "social" | "venue" | "teamInvite" | "tournamentInvite" | "highlight" | "discountCode" | "subscription" | "payment" | "pushSubscription" | "auditLog" | "chatMessage" | "chatReaction" | "scoreSubmission" | "competition" | "competitionFollower" | "prediction"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2878,6 +2879,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Prediction: {
+      payload: Prisma.$PredictionPayload<ExtArgs>
+      fields: Prisma.PredictionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PredictionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PredictionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        findFirst: {
+          args: Prisma.PredictionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PredictionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        findMany: {
+          args: Prisma.PredictionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>[]
+        }
+        create: {
+          args: Prisma.PredictionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        createMany: {
+          args: Prisma.PredictionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PredictionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>[]
+        }
+        delete: {
+          args: Prisma.PredictionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        update: {
+          args: Prisma.PredictionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        deleteMany: {
+          args: Prisma.PredictionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PredictionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PredictionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>[]
+        }
+        upsert: {
+          args: Prisma.PredictionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PredictionPayload>
+        }
+        aggregate: {
+          args: Prisma.PredictionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrediction>
+        }
+        groupBy: {
+          args: Prisma.PredictionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PredictionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PredictionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PredictionCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -3492,6 +3567,22 @@ export const CompetitionFollowerScalarFieldEnum = {
 export type CompetitionFollowerScalarFieldEnum = (typeof CompetitionFollowerScalarFieldEnum)[keyof typeof CompetitionFollowerScalarFieldEnum]
 
 
+export const PredictionScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  fixtureId: 'fixtureId',
+  userId: 'userId',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  points: 'points',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PredictionScalarFieldEnum = (typeof PredictionScalarFieldEnum)[keyof typeof PredictionScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -4016,6 +4107,7 @@ export type GlobalOmitConfig = {
   scoreSubmission?: Prisma.ScoreSubmissionOmit
   competition?: Prisma.CompetitionOmit
   competitionFollower?: Prisma.CompetitionFollowerOmit
+  prediction?: Prisma.PredictionOmit
 }
 
 /* Types for Logging */

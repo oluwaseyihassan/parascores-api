@@ -16,6 +16,7 @@ import { OrganizationsService } from 'src/organizations/organizations.service';
 import { RedisService } from 'src/redis/redis.service';
 import { NotificationsService } from 'src/notifications/notifications.service';
 import { PulseService } from 'src/pulse/pulse.service';
+import { PredictionsService } from 'src/predictions/predictions.service';
 
 @Injectable()
 export class FixturesService {
@@ -27,6 +28,7 @@ export class FixturesService {
     private readonly redisService: RedisService,
     private readonly notificationsService: NotificationsService,
     private readonly pulseService: PulseService,
+    private readonly predictionsService: PredictionsService,
   ) {}
 
   // Create a single fixture manually
@@ -954,6 +956,7 @@ export class FixturesService {
       this.pulseService
         .recordFixtureState(updatedFixture.id, 'full_time')
         .catch(() => {});
+      this.predictionsService.evaluateFixturePredictions(updatedFixture.id).catch(() => {});
 
       // Medal notification: finals (gold/silver) and third-place matches (bronze)
       const roundName = updatedFixture.roundName;

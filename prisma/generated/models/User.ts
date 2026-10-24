@@ -262,6 +262,7 @@ export type UserWhereInput = {
   payments?: Prisma.PaymentListRelationFilter
   audit_logs?: Prisma.AuditLogListRelationFilter
   created_discount_codes?: Prisma.DiscountCodeListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -291,6 +292,7 @@ export type UserOrderByWithRelationInput = {
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   audit_logs?: Prisma.AuditLogOrderByRelationAggregateInput
   created_discount_codes?: Prisma.DiscountCodeOrderByRelationAggregateInput
+  predictions?: Prisma.PredictionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -323,6 +325,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   payments?: Prisma.PaymentListRelationFilter
   audit_logs?: Prisma.AuditLogListRelationFilter
   created_discount_codes?: Prisma.DiscountCodeListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -392,6 +395,7 @@ export type UserCreateInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -421,6 +425,7 @@ export type UserUncheckedCreateInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -450,6 +455,7 @@ export type UserUpdateInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -479,6 +485,7 @@ export type UserUncheckedUpdateInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -793,6 +800,20 @@ export type UserUpdateOneRequiredWithoutFollowed_competitionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFollowed_competitionsInput, Prisma.UserUpdateWithoutFollowed_competitionsInput>, Prisma.UserUncheckedUpdateWithoutFollowed_competitionsInput>
 }
 
+export type UserCreateNestedOneWithoutPredictionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPredictionsInput, Prisma.UserUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPredictionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPredictionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPredictionsInput, Prisma.UserUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPredictionsInput
+  upsert?: Prisma.UserUpsertWithoutPredictionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPredictionsInput, Prisma.UserUpdateWithoutPredictionsInput>, Prisma.UserUncheckedUpdateWithoutPredictionsInput>
+}
+
 export type UserCreateWithoutOrganizationsInput = {
   id?: string
   email: string
@@ -819,6 +840,7 @@ export type UserCreateWithoutOrganizationsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizationsInput = {
@@ -847,6 +869,7 @@ export type UserUncheckedCreateWithoutOrganizationsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizationsInput = {
@@ -891,6 +914,7 @@ export type UserUpdateWithoutOrganizationsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizationsInput = {
@@ -919,6 +943,7 @@ export type UserUncheckedUpdateWithoutOrganizationsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFollowed_tournamentsInput = {
@@ -947,6 +972,7 @@ export type UserCreateWithoutFollowed_tournamentsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowed_tournamentsInput = {
@@ -975,6 +1001,7 @@ export type UserUncheckedCreateWithoutFollowed_tournamentsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowed_tournamentsInput = {
@@ -1019,6 +1046,7 @@ export type UserUpdateWithoutFollowed_tournamentsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowed_tournamentsInput = {
@@ -1047,6 +1075,7 @@ export type UserUncheckedUpdateWithoutFollowed_tournamentsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlaying_inInput = {
@@ -1075,6 +1104,7 @@ export type UserCreateWithoutPlaying_inInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlaying_inInput = {
@@ -1103,6 +1133,7 @@ export type UserUncheckedCreateWithoutPlaying_inInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlaying_inInput = {
@@ -1147,6 +1178,7 @@ export type UserUpdateWithoutPlaying_inInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlaying_inInput = {
@@ -1175,6 +1207,7 @@ export type UserUncheckedUpdateWithoutPlaying_inInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTeamsInput = {
@@ -1203,6 +1236,7 @@ export type UserCreateWithoutTeamsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTeamsInput = {
@@ -1231,6 +1265,7 @@ export type UserUncheckedCreateWithoutTeamsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTeamsInput = {
@@ -1275,6 +1310,7 @@ export type UserUpdateWithoutTeamsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTeamsInput = {
@@ -1303,6 +1339,7 @@ export type UserUncheckedUpdateWithoutTeamsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPlayer_profilesInput = {
@@ -1331,6 +1368,7 @@ export type UserCreateWithoutPlayer_profilesInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPlayer_profilesInput = {
@@ -1359,6 +1397,7 @@ export type UserUncheckedCreateWithoutPlayer_profilesInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPlayer_profilesInput = {
@@ -1403,6 +1442,7 @@ export type UserUpdateWithoutPlayer_profilesInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
@@ -1431,6 +1471,7 @@ export type UserUncheckedUpdateWithoutPlayer_profilesInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_invitesInput = {
@@ -1459,6 +1500,7 @@ export type UserCreateWithoutCreated_invitesInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_invitesInput = {
@@ -1487,6 +1529,7 @@ export type UserUncheckedCreateWithoutCreated_invitesInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_invitesInput = {
@@ -1531,6 +1574,7 @@ export type UserUpdateWithoutCreated_invitesInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_invitesInput = {
@@ -1559,6 +1603,7 @@ export type UserUncheckedUpdateWithoutCreated_invitesInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_tournament_invitesInput = {
@@ -1587,6 +1632,7 @@ export type UserCreateWithoutCreated_tournament_invitesInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_tournament_invitesInput = {
@@ -1615,6 +1661,7 @@ export type UserUncheckedCreateWithoutCreated_tournament_invitesInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_tournament_invitesInput = {
@@ -1659,6 +1706,7 @@ export type UserUpdateWithoutCreated_tournament_invitesInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_tournament_invitesInput = {
@@ -1687,6 +1735,7 @@ export type UserUncheckedUpdateWithoutCreated_tournament_invitesInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCreated_discount_codesInput = {
@@ -1715,6 +1764,7 @@ export type UserCreateWithoutCreated_discount_codesInput = {
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCreated_discount_codesInput = {
@@ -1743,6 +1793,7 @@ export type UserUncheckedCreateWithoutCreated_discount_codesInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCreated_discount_codesInput = {
@@ -1787,6 +1838,7 @@ export type UserUpdateWithoutCreated_discount_codesInput = {
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCreated_discount_codesInput = {
@@ -1815,6 +1867,7 @@ export type UserUncheckedUpdateWithoutCreated_discount_codesInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPaymentsInput = {
@@ -1843,6 +1896,7 @@ export type UserCreateWithoutPaymentsInput = {
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
@@ -1871,6 +1925,7 @@ export type UserUncheckedCreateWithoutPaymentsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPaymentsInput = {
@@ -1915,6 +1970,7 @@ export type UserUpdateWithoutPaymentsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
@@ -1943,6 +1999,7 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPush_subscriptionsInput = {
@@ -1971,6 +2028,7 @@ export type UserCreateWithoutPush_subscriptionsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPush_subscriptionsInput = {
@@ -1999,6 +2057,7 @@ export type UserUncheckedCreateWithoutPush_subscriptionsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPush_subscriptionsInput = {
@@ -2043,6 +2102,7 @@ export type UserUpdateWithoutPush_subscriptionsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPush_subscriptionsInput = {
@@ -2071,6 +2131,7 @@ export type UserUncheckedUpdateWithoutPush_subscriptionsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAudit_logsInput = {
@@ -2099,6 +2160,7 @@ export type UserCreateWithoutAudit_logsInput = {
   created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAudit_logsInput = {
@@ -2127,6 +2189,7 @@ export type UserUncheckedCreateWithoutAudit_logsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAudit_logsInput = {
@@ -2171,6 +2234,7 @@ export type UserUpdateWithoutAudit_logsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAudit_logsInput = {
@@ -2199,6 +2263,7 @@ export type UserUncheckedUpdateWithoutAudit_logsInput = {
   created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFollowed_competitionsInput = {
@@ -2227,6 +2292,7 @@ export type UserCreateWithoutFollowed_competitionsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowed_competitionsInput = {
@@ -2255,6 +2321,7 @@ export type UserUncheckedCreateWithoutFollowed_competitionsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
   audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowed_competitionsInput = {
@@ -2299,6 +2366,7 @@ export type UserUpdateWithoutFollowed_competitionsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowed_competitionsInput = {
@@ -2327,6 +2395,139 @@ export type UserUncheckedUpdateWithoutFollowed_competitionsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
   audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutPredictionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerCreateNestedManyWithoutUserInput
+  followed_competitions?: Prisma.CompetitionFollowerCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  audit_logs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  created_discount_codes?: Prisma.DiscountCodeCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutPredictionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  role?: $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Date | string
+  updated_at?: Date | string
+  picture?: string | null
+  emailVerificationExpiry?: Date | string | null
+  emailVerificationToken?: string | null
+  isEmailVerified?: boolean
+  passwordResetExpiry?: Date | string | null
+  passwordResetToken?: string | null
+  organizations?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  playing_in?: Prisma.ParticipantUncheckedCreateNestedManyWithoutUserInput
+  player_profiles?: Prisma.PlayerUncheckedCreateNestedManyWithoutUserInput
+  teams?: Prisma.TeamUncheckedCreateNestedManyWithoutOwnerInput
+  created_invites?: Prisma.TeamInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedCreateNestedManyWithoutUserInput
+  followed_competitions?: Prisma.CompetitionFollowerUncheckedCreateNestedManyWithoutUserInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedCreateNestedManyWithoutCreatedByInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  audit_logs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  created_discount_codes?: Prisma.DiscountCodeUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutPredictionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPredictionsInput, Prisma.UserUncheckedCreateWithoutPredictionsInput>
+}
+
+export type UserUpsertWithoutPredictionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPredictionsInput, Prisma.UserUncheckedUpdateWithoutPredictionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPredictionsInput, Prisma.UserUncheckedCreateWithoutPredictionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPredictionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPredictionsInput, Prisma.UserUncheckedUpdateWithoutPredictionsInput>
+}
+
+export type UserUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUpdateManyWithoutUserNestedInput
+  followed_competitions?: Prisma.CompetitionFollowerUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  audit_logs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  created_discount_codes?: Prisma.DiscountCodeUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  picture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerificationExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  emailVerificationToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isEmailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  passwordResetExpiry?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  passwordResetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizations?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  playing_in?: Prisma.ParticipantUncheckedUpdateManyWithoutUserNestedInput
+  player_profiles?: Prisma.PlayerUncheckedUpdateManyWithoutUserNestedInput
+  teams?: Prisma.TeamUncheckedUpdateManyWithoutOwnerNestedInput
+  created_invites?: Prisma.TeamInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  followed_tournaments?: Prisma.TournamentFollowerUncheckedUpdateManyWithoutUserNestedInput
+  followed_competitions?: Prisma.CompetitionFollowerUncheckedUpdateManyWithoutUserNestedInput
+  push_subscriptions?: Prisma.PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
+  created_tournament_invites?: Prisma.TournamentInviteUncheckedUpdateManyWithoutCreatedByNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  audit_logs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  created_discount_codes?: Prisma.DiscountCodeUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 
@@ -2347,6 +2548,7 @@ export type UserCountOutputType = {
   payments: number
   audit_logs: number
   created_discount_codes: number
+  predictions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2362,6 +2564,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
   audit_logs?: boolean | UserCountOutputTypeCountAudit_logsArgs
   created_discount_codes?: boolean | UserCountOutputTypeCountCreated_discount_codesArgs
+  predictions?: boolean | UserCountOutputTypeCountPredictionsArgs
 }
 
 /**
@@ -2458,6 +2661,13 @@ export type UserCountOutputTypeCountCreated_discount_codesArgs<ExtArgs extends r
   where?: Prisma.DiscountCodeWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPredictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PredictionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2486,6 +2696,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   audit_logs?: boolean | Prisma.User$audit_logsArgs<ExtArgs>
   created_discount_codes?: boolean | Prisma.User$created_discount_codesArgs<ExtArgs>
+  predictions?: boolean | Prisma.User$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -2554,6 +2765,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
   audit_logs?: boolean | Prisma.User$audit_logsArgs<ExtArgs>
   created_discount_codes?: boolean | Prisma.User$created_discount_codesArgs<ExtArgs>
+  predictions?: boolean | Prisma.User$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -2574,6 +2786,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     audit_logs: Prisma.$AuditLogPayload<ExtArgs>[]
     created_discount_codes: Prisma.$DiscountCodePayload<ExtArgs>[]
+    predictions: Prisma.$PredictionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2996,6 +3209,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   audit_logs<T extends Prisma.User$audit_logsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$audit_logsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   created_discount_codes<T extends Prisma.User$created_discount_codesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$created_discount_codesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscountCodePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  predictions<T extends Prisma.User$predictionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$predictionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PredictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3712,6 +3926,30 @@ export type User$created_discount_codesArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.DiscountCodeScalarFieldEnum | Prisma.DiscountCodeScalarFieldEnum[]
+}
+
+/**
+ * User.predictions
+ */
+export type User$predictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Prediction
+   */
+  select?: Prisma.PredictionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Prediction
+   */
+  omit?: Prisma.PredictionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PredictionInclude<ExtArgs> | null
+  where?: Prisma.PredictionWhereInput
+  orderBy?: Prisma.PredictionOrderByWithRelationInput | Prisma.PredictionOrderByWithRelationInput[]
+  cursor?: Prisma.PredictionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PredictionScalarFieldEnum | Prisma.PredictionScalarFieldEnum[]
 }
 
 /**

@@ -83,7 +83,8 @@ export const ModelName = {
   ChatReaction: 'ChatReaction',
   ScoreSubmission: 'ScoreSubmission',
   Competition: 'Competition',
-  CompetitionFollower: 'CompetitionFollower'
+  CompetitionFollower: 'CompetitionFollower',
+  Prediction: 'Prediction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -675,6 +676,22 @@ export const CompetitionFollowerScalarFieldEnum = {
 } as const
 
 export type CompetitionFollowerScalarFieldEnum = (typeof CompetitionFollowerScalarFieldEnum)[keyof typeof CompetitionFollowerScalarFieldEnum]
+
+
+export const PredictionScalarFieldEnum = {
+  id: 'id',
+  tournamentId: 'tournamentId',
+  fixtureId: 'fixtureId',
+  userId: 'userId',
+  homeScore: 'homeScore',
+  awayScore: 'awayScore',
+  points: 'points',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PredictionScalarFieldEnum = (typeof PredictionScalarFieldEnum)[keyof typeof PredictionScalarFieldEnum]
 
 
 export const SortOrder = {

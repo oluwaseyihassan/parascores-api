@@ -202,3 +202,8 @@ export type Competition = Prisma.CompetitionModel
  * 
  */
 export type CompetitionFollower = Prisma.CompetitionFollowerModel
+/**
+ * Model Prediction
+ * 
+ */
+export type Prediction = Prisma.PredictionModel
