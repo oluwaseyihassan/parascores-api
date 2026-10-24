@@ -37,6 +37,7 @@ import { ParageeModule } from './paragee/paragee.module';
 import { AiModule } from './ai/ai.module';
 import { ScoreSubmissionsModule } from './score-submissions/score-submissions.module';
 import { CompetitionsModule } from './competitions/competitions.module';
+import { PredictionsModule } from './predictions/predictions.module';
 // import { SentryModule } from '@sentry/nestjs/setup';
 // import { SentryGlobalFilter } from '@sentry/nestjs/setup';
 import { APP_FILTER } from '@nestjs/core';
@@ -83,6 +84,7 @@ import { APP_FILTER } from '@nestjs/core';
     AiModule,
     ScoreSubmissionsModule,
     CompetitionsModule,
+    PredictionsModule,
   ],
   controllers: [AppController],
   providers: [

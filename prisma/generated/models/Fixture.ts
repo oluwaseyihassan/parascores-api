@@ -477,6 +477,7 @@ export type FixtureWhereInput = {
   highlights?: Prisma.HighlightListRelationFilter
   pulseItems?: Prisma.PulseItemListRelationFilter
   scoreSubmissions?: Prisma.ScoreSubmissionListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }
 
 export type FixtureOrderByWithRelationInput = {
@@ -527,6 +528,7 @@ export type FixtureOrderByWithRelationInput = {
   highlights?: Prisma.HighlightOrderByRelationAggregateInput
   pulseItems?: Prisma.PulseItemOrderByRelationAggregateInput
   scoreSubmissions?: Prisma.ScoreSubmissionOrderByRelationAggregateInput
+  predictions?: Prisma.PredictionOrderByRelationAggregateInput
 }
 
 export type FixtureWhereUniqueInput = Prisma.AtLeast<{
@@ -580,6 +582,7 @@ export type FixtureWhereUniqueInput = Prisma.AtLeast<{
   highlights?: Prisma.HighlightListRelationFilter
   pulseItems?: Prisma.PulseItemListRelationFilter
   scoreSubmissions?: Prisma.ScoreSubmissionListRelationFilter
+  predictions?: Prisma.PredictionListRelationFilter
 }, "id">
 
 export type FixtureOrderByWithAggregationInput = {
@@ -706,6 +709,7 @@ export type FixtureCreateInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateInput = {
@@ -750,6 +754,7 @@ export type FixtureUncheckedCreateInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUpdateInput = {
@@ -794,6 +799,7 @@ export type FixtureUpdateInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateInput = {
@@ -838,6 +844,7 @@ export type FixtureUncheckedUpdateInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateManyInput = {
@@ -1482,6 +1489,20 @@ export type FixtureUpdateOneRequiredWithoutScoreSubmissionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FixtureUpdateToOneWithWhereWithoutScoreSubmissionsInput, Prisma.FixtureUpdateWithoutScoreSubmissionsInput>, Prisma.FixtureUncheckedUpdateWithoutScoreSubmissionsInput>
 }
 
+export type FixtureCreateNestedOneWithoutPredictionsInput = {
+  create?: Prisma.XOR<Prisma.FixtureCreateWithoutPredictionsInput, Prisma.FixtureUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.FixtureCreateOrConnectWithoutPredictionsInput
+  connect?: Prisma.FixtureWhereUniqueInput
+}
+
+export type FixtureUpdateOneRequiredWithoutPredictionsNestedInput = {
+  create?: Prisma.XOR<Prisma.FixtureCreateWithoutPredictionsInput, Prisma.FixtureUncheckedCreateWithoutPredictionsInput>
+  connectOrCreate?: Prisma.FixtureCreateOrConnectWithoutPredictionsInput
+  upsert?: Prisma.FixtureUpsertWithoutPredictionsInput
+  connect?: Prisma.FixtureWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FixtureUpdateToOneWithWhereWithoutPredictionsInput, Prisma.FixtureUpdateWithoutPredictionsInput>, Prisma.FixtureUncheckedUpdateWithoutPredictionsInput>
+}
+
 export type FixtureCreateWithoutTournamentInput = {
   id?: string
   round: number
@@ -1523,6 +1544,7 @@ export type FixtureCreateWithoutTournamentInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutTournamentInput = {
@@ -1566,6 +1588,7 @@ export type FixtureUncheckedCreateWithoutTournamentInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutTournamentInput = {
@@ -1675,6 +1698,7 @@ export type FixtureCreateWithoutGroupInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutGroupInput = {
@@ -1718,6 +1742,7 @@ export type FixtureUncheckedCreateWithoutGroupInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutGroupInput = {
@@ -1787,6 +1812,7 @@ export type FixtureCreateWithoutAwayTeamInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutAwayTeamInput = {
@@ -1830,6 +1856,7 @@ export type FixtureUncheckedCreateWithoutAwayTeamInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutAwayTeamInput = {
@@ -1883,6 +1910,7 @@ export type FixtureCreateWithoutHomeTeamInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutHomeTeamInput = {
@@ -1926,6 +1954,7 @@ export type FixtureUncheckedCreateWithoutHomeTeamInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutHomeTeamInput = {
@@ -2011,6 +2040,7 @@ export type FixtureCreateWithoutSourceFixturesInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutSourceFixturesInput = {
@@ -2054,6 +2084,7 @@ export type FixtureUncheckedCreateWithoutSourceFixturesInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutSourceFixturesInput = {
@@ -2102,6 +2133,7 @@ export type FixtureCreateWithoutNextFixtureInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutNextFixtureInput = {
@@ -2145,6 +2177,7 @@ export type FixtureUncheckedCreateWithoutNextFixtureInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutNextFixtureInput = {
@@ -2209,6 +2242,7 @@ export type FixtureUpdateWithoutSourceFixturesInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutSourceFixturesInput = {
@@ -2252,6 +2286,7 @@ export type FixtureUncheckedUpdateWithoutSourceFixturesInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUpsertWithWhereUniqueWithoutNextFixtureInput = {
@@ -2311,6 +2346,7 @@ export type FixtureCreateWithoutPulseItemsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerCreateNestedOneWithoutManOfTheMatchFixturesInput
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutPulseItemsInput = {
@@ -2354,6 +2390,7 @@ export type FixtureUncheckedCreateWithoutPulseItemsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutPulseItemsInput = {
@@ -2413,6 +2450,7 @@ export type FixtureUpdateWithoutPulseItemsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerUpdateOneWithoutManOfTheMatchFixturesNestedInput
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutPulseItemsInput = {
@@ -2456,6 +2494,7 @@ export type FixtureUncheckedUpdateWithoutPulseItemsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateWithoutResultEntriesInput = {
@@ -2499,6 +2538,7 @@ export type FixtureCreateWithoutResultEntriesInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutResultEntriesInput = {
@@ -2542,6 +2582,7 @@ export type FixtureUncheckedCreateWithoutResultEntriesInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutResultEntriesInput = {
@@ -2601,6 +2642,7 @@ export type FixtureUpdateWithoutResultEntriesInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutResultEntriesInput = {
@@ -2644,6 +2686,7 @@ export type FixtureUncheckedUpdateWithoutResultEntriesInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateWithoutMatchEventsInput = {
@@ -2687,6 +2730,7 @@ export type FixtureCreateWithoutMatchEventsInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutMatchEventsInput = {
@@ -2730,6 +2774,7 @@ export type FixtureUncheckedCreateWithoutMatchEventsInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutMatchEventsInput = {
@@ -2789,6 +2834,7 @@ export type FixtureUpdateWithoutMatchEventsInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
@@ -2832,6 +2878,7 @@ export type FixtureUncheckedUpdateWithoutMatchEventsInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateWithoutLineupPlayersInput = {
@@ -2875,6 +2922,7 @@ export type FixtureCreateWithoutLineupPlayersInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutLineupPlayersInput = {
@@ -2918,6 +2966,7 @@ export type FixtureUncheckedCreateWithoutLineupPlayersInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutLineupPlayersInput = {
@@ -2966,6 +3015,7 @@ export type FixtureCreateWithoutManOfTheMatchPlayerInput = {
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutManOfTheMatchPlayerInput = {
@@ -3009,6 +3059,7 @@ export type FixtureUncheckedCreateWithoutManOfTheMatchPlayerInput = {
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutManOfTheMatchPlayerInput = {
@@ -3094,6 +3145,7 @@ export type FixtureCreateWithoutHighlightsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerCreateNestedOneWithoutManOfTheMatchFixturesInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutHighlightsInput = {
@@ -3137,6 +3189,7 @@ export type FixtureUncheckedCreateWithoutHighlightsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutHighlightsInput = {
@@ -3196,6 +3249,7 @@ export type FixtureUpdateWithoutHighlightsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerUpdateOneWithoutManOfTheMatchFixturesNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutHighlightsInput = {
@@ -3239,6 +3293,7 @@ export type FixtureUncheckedUpdateWithoutHighlightsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateWithoutScoreSubmissionsInput = {
@@ -3282,6 +3337,7 @@ export type FixtureCreateWithoutScoreSubmissionsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerCreateNestedOneWithoutManOfTheMatchFixturesInput
   highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureUncheckedCreateWithoutScoreSubmissionsInput = {
@@ -3325,6 +3381,7 @@ export type FixtureUncheckedCreateWithoutScoreSubmissionsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
   highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
   pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
+  predictions?: Prisma.PredictionUncheckedCreateNestedManyWithoutFixtureInput
 }
 
 export type FixtureCreateOrConnectWithoutScoreSubmissionsInput = {
@@ -3384,6 +3441,7 @@ export type FixtureUpdateWithoutScoreSubmissionsInput = {
   manOfTheMatchPlayer?: Prisma.PlayerUpdateOneWithoutManOfTheMatchFixturesNestedInput
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutScoreSubmissionsInput = {
@@ -3427,6 +3485,199 @@ export type FixtureUncheckedUpdateWithoutScoreSubmissionsInput = {
   lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
+}
+
+export type FixtureCreateWithoutPredictionsInput = {
+  id?: string
+  round: number
+  matchNumber: number
+  startTime?: Date | string | null
+  homeScore?: number | null
+  awayScore?: number | null
+  status?: $Enums.FixtureStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  awayPenaltyScore?: number | null
+  awayTeamPlaceholder?: string | null
+  homePenaltyScore?: number | null
+  homeTeamPlaceholder?: string | null
+  roundName?: string | null
+  stage?: $Enums.FixtureStage | null
+  venue?: string | null
+  homeFormation?: string | null
+  awayFormation?: string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Date | string | null
+  timerElapsedSeconds?: number
+  timerIsRunning?: boolean
+  matchDuration?: number
+  half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  livestreamUrl?: string | null
+  livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryCreateNestedManyWithoutFixtureInput
+  awayTeam?: Prisma.ParticipantCreateNestedOneWithoutAway_fixturesInput
+  group?: Prisma.GroupCreateNestedOneWithoutFixturesInput
+  homeTeam?: Prisma.ParticipantCreateNestedOneWithoutHome_fixturesInput
+  nextFixture?: Prisma.FixtureCreateNestedOneWithoutSourceFixturesInput
+  sourceFixtures?: Prisma.FixtureCreateNestedManyWithoutNextFixtureInput
+  tournament: Prisma.TournamentCreateNestedOneWithoutFixturesInput
+  matchEvents?: Prisma.MatchEventCreateNestedManyWithoutFixtureInput
+  lineupPlayers?: Prisma.PlayerCreateNestedManyWithoutLineupsInput
+  manOfTheMatchPlayer?: Prisma.PlayerCreateNestedOneWithoutManOfTheMatchFixturesInput
+  highlights?: Prisma.HighlightCreateNestedManyWithoutFixtureInput
+  pulseItems?: Prisma.PulseItemCreateNestedManyWithoutFixtureInput
+  scoreSubmissions?: Prisma.ScoreSubmissionCreateNestedManyWithoutFixtureInput
+}
+
+export type FixtureUncheckedCreateWithoutPredictionsInput = {
+  id?: string
+  tournament_id: string
+  round: number
+  matchNumber: number
+  startTime?: Date | string | null
+  homeTeamId?: string | null
+  awayTeamId?: string | null
+  homeScore?: number | null
+  awayScore?: number | null
+  status?: $Enums.FixtureStatus
+  created_at?: Date | string
+  updated_at?: Date | string
+  awayPenaltyScore?: number | null
+  awayTeamPlaceholder?: string | null
+  groupId?: string | null
+  homePenaltyScore?: number | null
+  homeTeamPlaceholder?: string | null
+  nextFixtureId?: string | null
+  roundName?: string | null
+  stage?: $Enums.FixtureStage | null
+  venue?: string | null
+  homeFormation?: string | null
+  awayFormation?: string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Date | string | null
+  timerElapsedSeconds?: number
+  timerIsRunning?: boolean
+  matchDuration?: number
+  half?: $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  manOfTheMatchPlayerId?: string | null
+  livestreamUrl?: string | null
+  livestreamPlatform?: string | null
+  resultEntries?: Prisma.ResultEntryUncheckedCreateNestedManyWithoutFixtureInput
+  sourceFixtures?: Prisma.FixtureUncheckedCreateNestedManyWithoutNextFixtureInput
+  matchEvents?: Prisma.MatchEventUncheckedCreateNestedManyWithoutFixtureInput
+  lineupPlayers?: Prisma.PlayerUncheckedCreateNestedManyWithoutLineupsInput
+  highlights?: Prisma.HighlightUncheckedCreateNestedManyWithoutFixtureInput
+  pulseItems?: Prisma.PulseItemUncheckedCreateNestedManyWithoutFixtureInput
+  scoreSubmissions?: Prisma.ScoreSubmissionUncheckedCreateNestedManyWithoutFixtureInput
+}
+
+export type FixtureCreateOrConnectWithoutPredictionsInput = {
+  where: Prisma.FixtureWhereUniqueInput
+  create: Prisma.XOR<Prisma.FixtureCreateWithoutPredictionsInput, Prisma.FixtureUncheckedCreateWithoutPredictionsInput>
+}
+
+export type FixtureUpsertWithoutPredictionsInput = {
+  update: Prisma.XOR<Prisma.FixtureUpdateWithoutPredictionsInput, Prisma.FixtureUncheckedUpdateWithoutPredictionsInput>
+  create: Prisma.XOR<Prisma.FixtureCreateWithoutPredictionsInput, Prisma.FixtureUncheckedCreateWithoutPredictionsInput>
+  where?: Prisma.FixtureWhereInput
+}
+
+export type FixtureUpdateToOneWithWhereWithoutPredictionsInput = {
+  where?: Prisma.FixtureWhereInput
+  data: Prisma.XOR<Prisma.FixtureUpdateWithoutPredictionsInput, Prisma.FixtureUncheckedUpdateWithoutPredictionsInput>
+}
+
+export type FixtureUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFixtureStatusFieldUpdateOperationsInput | $Enums.FixtureStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awayPenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timerElapsedSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUpdateManyWithoutFixtureNestedInput
+  awayTeam?: Prisma.ParticipantUpdateOneWithoutAway_fixturesNestedInput
+  group?: Prisma.GroupUpdateOneWithoutFixturesNestedInput
+  homeTeam?: Prisma.ParticipantUpdateOneWithoutHome_fixturesNestedInput
+  nextFixture?: Prisma.FixtureUpdateOneWithoutSourceFixturesNestedInput
+  sourceFixtures?: Prisma.FixtureUpdateManyWithoutNextFixtureNestedInput
+  tournament?: Prisma.TournamentUpdateOneRequiredWithoutFixturesNestedInput
+  matchEvents?: Prisma.MatchEventUpdateManyWithoutFixtureNestedInput
+  lineupPlayers?: Prisma.PlayerUpdateManyWithoutLineupsNestedInput
+  manOfTheMatchPlayer?: Prisma.PlayerUpdateOneWithoutManOfTheMatchFixturesNestedInput
+  highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
+  pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
+  scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+}
+
+export type FixtureUncheckedUpdateWithoutPredictionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tournament_id?: Prisma.StringFieldUpdateOperationsInput | string
+  round?: Prisma.IntFieldUpdateOperationsInput | number
+  matchNumber?: Prisma.IntFieldUpdateOperationsInput | number
+  startTime?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  homeTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayTeamId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  status?: Prisma.EnumFixtureStatusFieldUpdateOperationsInput | $Enums.FixtureStatus
+  created_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updated_at?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  awayPenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  awayTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  groupId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homePenaltyScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  homeTeamPlaceholder?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  nextFixtureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  roundName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stage?: Prisma.NullableEnumFixtureStageFieldUpdateOperationsInput | $Enums.FixtureStage | null
+  venue?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  homeFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  awayFormation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lineupPositions?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  timerStartedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  timerElapsedSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  timerIsRunning?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  matchDuration?: Prisma.IntFieldUpdateOperationsInput | number
+  half?: Prisma.NullableEnumMatchHalfFieldUpdateOperationsInput | $Enums.MatchHalf | null
+  periodScores?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  config?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  manOfTheMatchPlayerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  livestreamPlatform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resultEntries?: Prisma.ResultEntryUncheckedUpdateManyWithoutFixtureNestedInput
+  sourceFixtures?: Prisma.FixtureUncheckedUpdateManyWithoutNextFixtureNestedInput
+  matchEvents?: Prisma.MatchEventUncheckedUpdateManyWithoutFixtureNestedInput
+  lineupPlayers?: Prisma.PlayerUncheckedUpdateManyWithoutLineupsNestedInput
+  highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
+  pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
+  scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureCreateManyTournamentInput = {
@@ -3506,6 +3757,7 @@ export type FixtureUpdateWithoutTournamentInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutTournamentInput = {
@@ -3549,6 +3801,7 @@ export type FixtureUncheckedUpdateWithoutTournamentInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutTournamentInput = {
@@ -3664,6 +3917,7 @@ export type FixtureUpdateWithoutGroupInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutGroupInput = {
@@ -3707,6 +3961,7 @@ export type FixtureUncheckedUpdateWithoutGroupInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutGroupInput = {
@@ -3858,6 +4113,7 @@ export type FixtureUpdateWithoutAwayTeamInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutAwayTeamInput = {
@@ -3901,6 +4157,7 @@ export type FixtureUncheckedUpdateWithoutAwayTeamInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutAwayTeamInput = {
@@ -3980,6 +4237,7 @@ export type FixtureUpdateWithoutHomeTeamInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutHomeTeamInput = {
@@ -4023,6 +4281,7 @@ export type FixtureUncheckedUpdateWithoutHomeTeamInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutHomeTeamInput = {
@@ -4138,6 +4397,7 @@ export type FixtureUpdateWithoutNextFixtureInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutNextFixtureInput = {
@@ -4181,6 +4441,7 @@ export type FixtureUncheckedUpdateWithoutNextFixtureInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutNextFixtureInput = {
@@ -4296,6 +4557,7 @@ export type FixtureUpdateWithoutLineupPlayersInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutLineupPlayersInput = {
@@ -4339,6 +4601,7 @@ export type FixtureUncheckedUpdateWithoutLineupPlayersInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutLineupPlayersInput = {
@@ -4419,6 +4682,7 @@ export type FixtureUpdateWithoutManOfTheMatchPlayerInput = {
   highlights?: Prisma.HighlightUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateWithoutManOfTheMatchPlayerInput = {
@@ -4462,6 +4726,7 @@ export type FixtureUncheckedUpdateWithoutManOfTheMatchPlayerInput = {
   highlights?: Prisma.HighlightUncheckedUpdateManyWithoutFixtureNestedInput
   pulseItems?: Prisma.PulseItemUncheckedUpdateManyWithoutFixtureNestedInput
   scoreSubmissions?: Prisma.ScoreSubmissionUncheckedUpdateManyWithoutFixtureNestedInput
+  predictions?: Prisma.PredictionUncheckedUpdateManyWithoutFixtureNestedInput
 }
 
 export type FixtureUncheckedUpdateManyWithoutManOfTheMatchPlayerInput = {
@@ -4513,6 +4778,7 @@ export type FixtureCountOutputType = {
   highlights: number
   pulseItems: number
   scoreSubmissions: number
+  predictions: number
 }
 
 export type FixtureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4523,6 +4789,7 @@ export type FixtureCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   highlights?: boolean | FixtureCountOutputTypeCountHighlightsArgs
   pulseItems?: boolean | FixtureCountOutputTypeCountPulseItemsArgs
   scoreSubmissions?: boolean | FixtureCountOutputTypeCountScoreSubmissionsArgs
+  predictions?: boolean | FixtureCountOutputTypeCountPredictionsArgs
 }
 
 /**
@@ -4584,6 +4851,13 @@ export type FixtureCountOutputTypeCountScoreSubmissionsArgs<ExtArgs extends runt
   where?: Prisma.ScoreSubmissionWhereInput
 }
 
+/**
+ * FixtureCountOutputType without action
+ */
+export type FixtureCountOutputTypeCountPredictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PredictionWhereInput
+}
+
 
 export type FixtureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -4633,6 +4907,7 @@ export type FixtureSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   highlights?: boolean | Prisma.Fixture$highlightsArgs<ExtArgs>
   pulseItems?: boolean | Prisma.Fixture$pulseItemsArgs<ExtArgs>
   scoreSubmissions?: boolean | Prisma.Fixture$scoreSubmissionsArgs<ExtArgs>
+  predictions?: boolean | Prisma.Fixture$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.FixtureCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fixture"]>
 
@@ -4774,6 +5049,7 @@ export type FixtureInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   highlights?: boolean | Prisma.Fixture$highlightsArgs<ExtArgs>
   pulseItems?: boolean | Prisma.Fixture$pulseItemsArgs<ExtArgs>
   scoreSubmissions?: boolean | Prisma.Fixture$scoreSubmissionsArgs<ExtArgs>
+  predictions?: boolean | Prisma.Fixture$predictionsArgs<ExtArgs>
   _count?: boolean | Prisma.FixtureCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FixtureIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4809,6 +5085,7 @@ export type $FixturePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     highlights: Prisma.$HighlightPayload<ExtArgs>[]
     pulseItems: Prisma.$PulseItemPayload<ExtArgs>[]
     scoreSubmissions: Prisma.$ScoreSubmissionPayload<ExtArgs>[]
+    predictions: Prisma.$PredictionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -5252,6 +5529,7 @@ export interface Prisma__FixtureClient<T, Null = never, ExtArgs extends runtime.
   highlights<T extends Prisma.Fixture$highlightsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$highlightsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$HighlightPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pulseItems<T extends Prisma.Fixture$pulseItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$pulseItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PulseItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   scoreSubmissions<T extends Prisma.Fixture$scoreSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$scoreSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ScoreSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  predictions<T extends Prisma.Fixture$predictionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Fixture$predictionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PredictionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5971,6 +6249,30 @@ export type Fixture$scoreSubmissionsArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   distinct?: Prisma.ScoreSubmissionScalarFieldEnum | Prisma.ScoreSubmissionScalarFieldEnum[]
+}
+
+/**
+ * Fixture.predictions
+ */
+export type Fixture$predictionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Prediction
+   */
+  select?: Prisma.PredictionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Prediction
+   */
+  omit?: Prisma.PredictionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PredictionInclude<ExtArgs> | null
+  where?: Prisma.PredictionWhereInput
+  orderBy?: Prisma.PredictionOrderByWithRelationInput | Prisma.PredictionOrderByWithRelationInput[]
+  cursor?: Prisma.PredictionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PredictionScalarFieldEnum | Prisma.PredictionScalarFieldEnum[]
 }
 
 /**
