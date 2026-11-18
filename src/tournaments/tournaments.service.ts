@@ -881,6 +881,16 @@ export class TournamentsService {
         sponsors: true,
         socials: true,
         venues: true,
+        competition: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            sport: true,
+            logoUrl: true,
+            _count: { select: { followers: true } },
+          },
+        },
         _count: {
           select: { followers: true },
         },
@@ -891,6 +901,7 @@ export class TournamentsService {
         where: { slug: identifier },
         include: {
           seasons: {
+            where: { visibility: Visibility.PUBLIC },
             orderBy: [{ isCurrentSeason: 'desc' }, { start_date: 'desc' }],
             take: 1,
           },
@@ -912,7 +923,12 @@ export class TournamentsService {
         };
 
     const seasons = await this.db.tournament.findMany({
-      where: seasonsWhere,
+      where: {
+        AND: [
+          seasonsWhere,
+          { OR: [{ visibility: Visibility.PUBLIC }, { id: tournament.id }] },
+        ],
+      },
       select: {
         id: true,
         name: true,
@@ -945,6 +961,7 @@ export class TournamentsService {
         where: { slug: identifier },
         include: {
           seasons: {
+            where: { visibility: Visibility.PUBLIC },
             orderBy: [{ isCurrentSeason: 'desc' }, { start_date: 'desc' }],
             take: 1,
           },
@@ -967,7 +984,12 @@ export class TournamentsService {
         };
 
     const seasons = await this.db.tournament.findMany({
-      where: seasonsWhere,
+      where: {
+        AND: [
+          seasonsWhere,
+          { OR: [{ visibility: Visibility.PUBLIC }, { id: tournament.id }] },
+        ],
+      },
       select: {
         id: true,
         name: true,
@@ -995,6 +1017,16 @@ export class TournamentsService {
         sponsors: true,
         socials: true,
         venues: true,
+        competition: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            sport: true,
+            logoUrl: true,
+            _count: { select: { followers: true } },
+          },
+        },
         _count: {
           select: { followers: true },
         },
@@ -1063,6 +1095,19 @@ export class TournamentsService {
     });
 
     if (!tournament) {
+      const comp = await this.db.competition.findUnique({
+        where: { slug: identifier },
+        include: {
+          seasons: {
+            where: { visibility: Visibility.PUBLIC },
+            orderBy: [{ isCurrentSeason: 'desc' }, { start_date: 'desc' }],
+            take: 1,
+          },
+        },
+      });
+      if (comp && comp.seasons.length > 0) {
+        return this.getOverviewData(comp.seasons[0].id);
+      }
       throw new NotFoundException('Tournament not found');
     }
 
@@ -1094,7 +1139,12 @@ export class TournamentsService {
         };
 
     const seasons = await this.db.tournament.findMany({
-      where: seasonsWhere,
+      where: {
+        AND: [
+          seasonsWhere,
+          { OR: [{ visibility: Visibility.PUBLIC }, { id: tournament.id }] },
+        ],
+      },
       select: {
         id: true,
         name: true,
