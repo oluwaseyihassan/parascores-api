@@ -22,6 +22,30 @@ export class CompetitionsController {
   constructor(private readonly competitionsService: CompetitionsService) {}
 
   @Public()
+  @Get('public')
+  @ApiOperation({ summary: 'Browse public competitions with public editions' })
+  @ApiQuery({ name: 'search', required: false, type: String })
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  async getPublic(
+    @Query('search') search?: string,
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '12',
+  ) {
+    return this.competitionsService.findAllPublic(
+      Math.max(1, parseInt(page, 10) || 1),
+      Math.min(50, Math.max(1, parseInt(limit, 10) || 12)),
+      search,
+    );
+  }
+
+  @Get('following/mine')
+  @ApiOperation({ summary: 'Get competitions followed by the current user' })
+  async getFollowed(@Req() req: any) {
+    return this.competitionsService.findFollowedByUser(req.user.sub);
+  }
+
+  @Public()
   @Get(':slug')
   @ApiOperation({ summary: 'Get competition overview with all season editions' })
   async getBySlug(@Param('slug') slug: string) {
