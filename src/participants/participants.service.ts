@@ -282,7 +282,8 @@ export class ParticipantsService {
 
   // Add player to participant
   async addPlayer(participantId: string, dto: AddPlayerDto, userId: string) {
-    const participant = await this.assertCanManageRoster(participantId, userId);
+    const { participant, isOrganizerOrAdmin } =
+      await this.assertCanManageRoster(participantId, userId);
 
     if (participant.tournament.participantType === 'INDIVIDUAL') {
       throw new BadRequestException(
@@ -290,15 +291,19 @@ export class ParticipantsService {
       );
     }
 
+    const status =
+      isOrganizerOrAdmin || participant.tournament.autoApprove
+        ? 'APPROVED'
+        : 'PENDING';
+
     const player = await this.db.player.create({
       data: {
         participantId: participant.id,
         name: dto.name,
         number: dto.number,
         position: dto.position,
-        // Same rule as self-join: instant in auto-approve tournaments,
-        // otherwise the organizer approves the roster addition
-        status: participant.tournament.autoApprove ? 'APPROVED' : 'PENDING',
+        // Organizers/admins bypass approval; team accounts respect tournament.autoApprove
+        status,
       },
     });
     return ResponseUtil.success(player);
@@ -310,7 +315,8 @@ export class ParticipantsService {
     dto: BulkAddPlayerDto,
     userId: string,
   ) {
-    const participant = await this.assertCanManageRoster(participantId, userId);
+    const { participant, isOrganizerOrAdmin } =
+      await this.assertCanManageRoster(participantId, userId);
 
     if (participant.tournament.participantType === 'INDIVIDUAL') {
       throw new BadRequestException(
@@ -318,7 +324,10 @@ export class ParticipantsService {
       );
     }
 
-    const status = participant.tournament.autoApprove ? 'APPROVED' : 'PENDING';
+    const status =
+      isOrganizerOrAdmin || participant.tournament.autoApprove
+        ? 'APPROVED'
+        : 'PENDING';
     const playersData = dto.players.map((p) => ({
       participantId: participant.id,
       name: p.name,
@@ -335,9 +344,9 @@ export class ParticipantsService {
   }
 
   /**
-   * Roster management permission: the team account (owner of the linked team
-   * profile, or the user who registered the team) OR any member of the
-   * organization that owns the tournament.
+   * Roster management permission: any member of the tournament's owning
+   * organization (or SUPER_ADMIN), OR the team account (owner of the linked
+   * team profile, or the user who registered the team).
    */
   private async assertCanManageRoster(participantId: string, userId: string) {
     const participant = await this.db.participant.findUnique({
@@ -349,18 +358,30 @@ export class ParticipantsService {
       throw new NotFoundException('Participant not found');
     }
 
+    const [membership, user] = await Promise.all([
+      participant.tournament.organization_id
+        ? this.db.organizationMember.findFirst({
+            where: {
+              organizationId: participant.tournament.organization_id,
+              userId,
+            },
+          })
+        : Promise.resolve(null),
+      this.db.user.findUnique({
+        where: { id: userId },
+        select: { role: true },
+      }),
+    ]);
+
+    const isOrganizerOrAdmin = Boolean(membership) || user?.role === 'SUPER_ADMIN';
+    if (isOrganizerOrAdmin) {
+      return { participant, isOrganizerOrAdmin: true };
+    }
+
     const isTeamAccount =
       participant.team?.ownerId === userId || participant.user_id === userId;
-    if (isTeamAccount) return participant;
-
-    if (participant.tournament.organization_id) {
-      const membership = await this.db.organizationMember.findFirst({
-        where: {
-          organizationId: participant.tournament.organization_id,
-          userId,
-        },
-      });
-      if (membership) return participant;
+    if (isTeamAccount) {
+      return { participant, isOrganizerOrAdmin: false };
     }
 
     throw new ForbiddenException(
