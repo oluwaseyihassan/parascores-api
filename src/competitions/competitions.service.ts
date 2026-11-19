@@ -563,6 +563,15 @@ export class CompetitionsService {
     const competitions = await this.db.competition.findMany({
       where: { organization_id: organizationId },
       include: {
+        organization: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+            logoUrl: true,
+            isVerified: true,
+          },
+        },
         _count: {
           select: {
             followers: true,
@@ -578,6 +587,15 @@ export class CompetitionsService {
             isCurrentSeason: true,
             start_date: true,
             end_date: true,
+            visibility: true,
+            sport: true,
+            type: true,
+            logoUrl: true,
+            _count: {
+              select: {
+                participants: true,
+              },
+            },
           },
           orderBy: {
             start_date: 'desc',
@@ -589,7 +607,201 @@ export class CompetitionsService {
       },
     });
 
-    return ResponseUtil.success(competitions);
+    const mapped = competitions.map((comp) => {
+      const seasonsWithStatus = comp.seasons.map((s) => ({
+        ...s,
+        status: this.deriveSeasonStatus(s.start_date, s.end_date),
+      }));
+      const active = this.pickActiveSeason(seasonsWithStatus);
+      return {
+        ...comp,
+        seasons: seasonsWithStatus,
+        activeSeasonId: active?.id || null,
+        activeSeasonSlug: active?.customName || active?.id || null,
+      };
+    });
+
+    return ResponseUtil.success(mapped);
+  }
+
+  async attachSeason(
+    competitionId: string,
+    userId: string,
+    body: {
+      tournamentId: string;
+      seasonName?: string;
+      setAsCurrent?: boolean;
+    },
+  ) {
+    if (!body?.tournamentId) {
+      throw new BadRequestException('tournamentId is required');
+    }
+
+    const competition = await this.db.competition.findUnique({
+      where: { id: competitionId },
+      include: { _count: { select: { seasons: true } } },
+    });
+    if (!competition) {
+      throw new NotFoundException('Competition not found');
+    }
+
+    await this.organizationsService.validateMemberRole(
+      competition.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const tournament = await this.db.tournament.findUnique({
+      where: { id: body.tournamentId },
+    });
+    if (!tournament) {
+      throw new NotFoundException('Tournament not found');
+    }
+    if (tournament.organization_id !== competition.organization_id) {
+      throw new BadRequestException(
+        'Tournament must belong to the same organization',
+      );
+    }
+
+    const shouldSetCurrent =
+      Boolean(body.setAsCurrent) || competition._count.seasons === 0;
+
+    if (shouldSetCurrent) {
+      await this.db.tournament.updateMany({
+        where: { competition_id: competition.id },
+        data: { isCurrentSeason: false },
+      });
+    }
+
+    const updated = await this.db.tournament.update({
+      where: { id: tournament.id },
+      data: {
+        competition_id: competition.id,
+        ...(body.seasonName !== undefined
+          ? { seasonName: body.seasonName.trim() || null }
+          : {}),
+        ...(shouldSetCurrent ? { isCurrentSeason: true } : {}),
+      },
+    });
+
+    // Migrate existing tournament followers to competition followers
+    const followers = await this.db.tournamentFollower.findMany({
+      where: { tournamentId: tournament.id },
+    });
+    for (const f of followers) {
+      await this.db.competitionFollower.upsert({
+        where: {
+          userId_competitionId: {
+            userId: f.userId,
+            competitionId: competition.id,
+          },
+        },
+        create: {
+          userId: f.userId,
+          competitionId: competition.id,
+        },
+        update: {},
+      });
+    }
+
+    return ResponseUtil.success(updated, 'Edition attached to competition');
+  }
+
+  async updateSeason(
+    competitionId: string,
+    tournamentId: string,
+    userId: string,
+    body: { seasonName?: string; isCurrentSeason?: boolean },
+  ) {
+    const competition = await this.db.competition.findUnique({
+      where: { id: competitionId },
+    });
+    if (!competition) {
+      throw new NotFoundException('Competition not found');
+    }
+
+    await this.organizationsService.validateMemberRole(
+      competition.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const tournament = await this.db.tournament.findUnique({
+      where: { id: tournamentId },
+    });
+    if (!tournament || tournament.competition_id !== competition.id) {
+      throw new NotFoundException('Edition not found in this competition');
+    }
+
+    if (body.isCurrentSeason) {
+      await this.db.tournament.updateMany({
+        where: { competition_id: competition.id },
+        data: { isCurrentSeason: false },
+      });
+    }
+
+    const updated = await this.db.tournament.update({
+      where: { id: tournament.id },
+      data: {
+        ...(body.seasonName !== undefined
+          ? { seasonName: body.seasonName.trim() || null }
+          : {}),
+        ...(body.isCurrentSeason !== undefined
+          ? { isCurrentSeason: Boolean(body.isCurrentSeason) }
+          : {}),
+      },
+    });
+
+    return ResponseUtil.success(updated, 'Edition updated');
+  }
+
+  async detachSeason(
+    competitionId: string,
+    tournamentId: string,
+    userId: string,
+  ) {
+    const competition = await this.db.competition.findUnique({
+      where: { id: competitionId },
+    });
+    if (!competition) {
+      throw new NotFoundException('Competition not found');
+    }
+
+    await this.organizationsService.validateMemberRole(
+      competition.organization_id,
+      userId,
+      ['OWNER', 'ADMIN'],
+    );
+
+    const tournament = await this.db.tournament.findUnique({
+      where: { id: tournamentId },
+    });
+    if (!tournament || tournament.competition_id !== competition.id) {
+      throw new NotFoundException('Edition not found in this competition');
+    }
+
+    await this.db.tournament.update({
+      where: { id: tournament.id },
+      data: {
+        competition_id: null,
+        isCurrentSeason: false,
+      },
+    });
+
+    if (tournament.isCurrentSeason) {
+      const nextActive = await this.db.tournament.findFirst({
+        where: { competition_id: competition.id },
+        orderBy: { start_date: 'desc' },
+      });
+      if (nextActive) {
+        await this.db.tournament.update({
+          where: { id: nextActive.id },
+          data: { isCurrentSeason: true },
+        });
+      }
+    }
+
+    return ResponseUtil.success({ detached: true }, 'Edition detached');
   }
 
   async follow(competitionId: string, userId: string) {
