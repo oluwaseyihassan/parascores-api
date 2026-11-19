@@ -78,6 +78,47 @@ export class CompetitionsController {
     return this.competitionsService.update(id, req.user.sub, dto);
   }
 
+  @Post(':id/seasons/attach')
+  @ApiOperation({ summary: 'Attach an existing tournament as an edition of this competition' })
+  async attachSeason(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body()
+    body: {
+      tournamentId: string;
+      seasonName?: string;
+      setAsCurrent?: boolean;
+    },
+  ) {
+    return this.competitionsService.attachSeason(id, req.user.sub, body);
+  }
+
+  @Patch(':id/seasons/:tournamentId')
+  @ApiOperation({ summary: 'Update an edition season label or active status' })
+  async updateSeason(
+    @Param('id') id: string,
+    @Param('tournamentId') tournamentId: string,
+    @Req() req: any,
+    @Body() body: { seasonName?: string; isCurrentSeason?: boolean },
+  ) {
+    return this.competitionsService.updateSeason(
+      id,
+      tournamentId,
+      req.user.sub,
+      body,
+    );
+  }
+
+  @Delete(':id/seasons/:tournamentId')
+  @ApiOperation({ summary: 'Detach a tournament edition from this competition' })
+  async detachSeason(
+    @Param('id') id: string,
+    @Param('tournamentId') tournamentId: string,
+    @Req() req: any,
+  ) {
+    return this.competitionsService.detachSeason(id, tournamentId, req.user.sub);
+  }
+
   @Post(':id/follow')
   @ApiOperation({ summary: 'Follow a competition across all seasons' })
   async follow(@Param('id') id: string, @Req() req: any) {

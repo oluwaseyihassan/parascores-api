@@ -543,9 +543,11 @@ export class TournamentsService {
         }
         competitionId = comp.id;
 
-        // Link root tournament to competition
-        await this.db.tournament.update({
-          where: { id: rootTourney.id },
+        // Link root tournament and any legacy parent_id seasons to competition
+        await this.db.tournament.updateMany({
+          where: {
+            OR: [{ id: rootTourney.id }, { parent_id: rootTourney.id }],
+          },
           data: { competition_id: competitionId },
         });
       }

@@ -16,15 +16,41 @@ export class NotificationListener {
   @OnEvent(NotificationEvents.SEND_TOURNAMENT_PUSH, { async: true })
   async handleSendTournamentPush(payload: SendTournamentPushPayload) {
     try {
-      const followers = await this.db.tournamentFollower.findMany({
-        where: { tournamentId: payload.tournamentId },
-        include: {
-          user: {
-            include: {
-              push_subscriptions: true,
+      const tournament = await this.db.tournament.findUnique({
+        where: { id: payload.tournamentId },
+        select: { competition_id: true },
+      });
+
+      const [tourneyFollowers, compFollowers] = await Promise.all([
+        this.db.tournamentFollower.findMany({
+          where: { tournamentId: payload.tournamentId },
+          include: {
+            user: {
+              include: {
+                push_subscriptions: true,
+              },
             },
           },
-        },
+        }),
+        tournament?.competition_id
+          ? this.db.competitionFollower.findMany({
+              where: { competitionId: tournament.competition_id },
+              include: {
+                user: {
+                  include: {
+                    push_subscriptions: true,
+                  },
+                },
+              },
+            })
+          : Promise.resolve([]),
+      ]);
+
+      const seenUserIds = new Set<string>();
+      const followers = [...tourneyFollowers, ...compFollowers].filter((f) => {
+        if (seenUserIds.has(f.userId)) return false;
+        seenUserIds.add(f.userId);
+        return true;
       });
 
       const pushPayload = JSON.stringify({
